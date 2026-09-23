@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Decupează un grid de populație la București și compară vizual celulele populate cu poziția școlilor și cabinetelor de medicină de familie."><title>T05 · Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală · Explorare geospațială</title><link rel="icon" type="image/svg+xml" href="../assets/ui/favicon.svg"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/tutorials.css"><link rel="stylesheet" href="../css/design-system.css"><script src="../data/content-manifest.js" defer></script><script src="../js/site.js" defer></script><script src="../js/tutorials.js" defer></script></head><body data-page="tutorial" data-page-id="T05" data-root="../"><a class="skip-link" href="#main-content">Sari la conținut</a><header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="../index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="../resources.html">Resurse</a><a class="quiet-button about-link" href="../lesson.html?id=about">Despre proiect</a></header><div class="workspace site-workspace"><aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside><main id="main-content" class="workshop-main"><div class="lesson-breadcrumb"><a href="../index.html">Explorare geospațială</a> → <a href="index.html">Ateliere QGIS</a> → T05</div><section class="lesson-hero workshop-hero"><span class="eyebrow">TUTORIAL T05</span><h1>Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală</h1><p class="lead">Decupează un grid de populație la București și compară vizual celulele populate cu poziția școlilor și cabinetelor de medicină de familie.</p><div class="tutorial-meta"><span>mediu</span><span>120 min</span><span>Grid + puncte</span></div><nav class="tutorial-progress" aria-label="Secvența atelierelor"><a href="t01.html" ><span>T01</span><i aria-hidden="true">●</i></a><a href="t02.html" ><span>T02</span><i aria-hidden="true">●</i></a><a href="t03.html" ><span>T03</span><i aria-hidden="true">●</i></a><a href="t04.html" ><span>T04</span><i aria-hidden="true">●</i></a><a href="t05.html" aria-current="page"><span>T05</span><i aria-hidden="true">●</i></a><a href="t06.html" ><span>T06</span><i aria-hidden="true">●</i></a></nav></section><details class="tutorial-toc"><summary>Cuprinsul tutorialului</summary><nav aria-label="Secțiunile tutorialului"><a href="#section-1">Titlu</a><a href="#section-5">Date necesare</a><a href="#section-9">Încărcarea gridului de recensământ</a><a href="#section-10">Încărcarea limitei București</a><a href="#section-11">Încărcarea școlilor și cabinetelor medicale</a><a href="#section-14">Decuparea gridului după limita Municipiului București, opțional/recomandat</a><a href="#section-16">Simbolizarea populației totale</a><a href="#section-18">Simbolizarea populației sub 15 ani</a><a href="#section-19">Calcularea ponderii populației sub 15 ani</a><a href="#section-22">Pregătirea layoutului</a><a href="#section-25">Interpretarea hărții finale</a><a href="#section-26">Ce nu putem concluziona doar din această hartă</a><a href="#section-28">Exercițiu suplimentar</a></nav></details><section class="tutorial-overview"><div class="section-heading"><div><span class="eyebrow">CE VEI ÎNVĂȚA</span><h2>Competențe în acest atelier</h2></div></div><ul><li>gestionare grid vectorial mare</li><li>verificare CRS mixte</li><li>Processing Clip vectorial</li><li>filtrare celule populate</li><li>calcul pondere demografică</li><li>suprapunere servicii</li></ul></section><section class="tutorial-data" id="date-pentru-exercitiu"><div class="section-heading"><div><span class="eyebrow">DATE PENTRU EXERCIȚIU</span><h2>Fișierele de lucru</h2></div></div><div class="dataset-grid"><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>Recensamant2021_GridData.gpkg</h3><p>Grid vectorial de recensământ, cu populația totală și grupe de vârstă; se poate decupa la București.</p><dl><div><dt>Layere</dt><dd>recensamant2021_griddata</dd></div><div><dt>CRS în document</dt><dd>EPSG:3844, menționat în T05.</dd></div><div><dt>Folosit în</dt><dd><a href="t05.html">T05</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>02_Unități Învățământ_Preuniv_București_2022-2023.gpkg</h3><p>Puncte de școli și limita Bucureștiului; limita este și masca pentru Clip în T05.</p><dl><div><dt>Layere</dt><dd>Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023<br>Limită Administrativă - Municipiul București</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T05; T01 nu precizează codul.</dd></div><div><dt>Folosit în</dt><dd><a href="t01.html">T01</a> · <a href="t05.html">T05</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>Cabinete Medicină de Familie (Primary Care).gpkg</h3><p>Puncte ale cabinetelor de medicină de familie, folosite și în comparația populație–servicii.</p><dl><div><dt>Layere</dt><dd>Cabinete Medicină de Familie (Primary Care)</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T05; T03 nu precizează codul.</dd></div><div><dt>Folosit în</dt><dd><a href="t03.html">T03</a> · <a href="t05.html">T05</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article></div></section><section class="tutorial-source-flow" aria-label="Conținutul tutorialului"><div class="tutorial-phase" id="phase-1"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-1" data-source-section="1"><div class="step-heading"><span class="step-number">01</span><h3>Titlu</h3></div><div class="tutorial-prose"><p><strong>Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală</strong></p>
+<p>În acest tutorial construim o hartă coropletică folosind gridul Recensământ 2021 și suprapunem peste el două tipuri de servicii publice: unități de învățământ și cabinete de medicină de familie.</p>
+<p>Harta este o comparație vizuală. Ea nu calculează distanțe, timpi de deplasare, capacitate de deservire sau echitate teritorială.</p>
+</div></article><article class="tutorial-step " id="section-2" data-source-section="2"><div class="step-heading"><span class="step-number">02</span><h3>Durată estimată</h3></div><div class="tutorial-prose"><p><strong>120 minute.</strong></p>
+<p>Tutorialul poate dura mai mult pe calculatoare mai lente, deoarece gridul Recensământ 2021 are multe entități.</p>
+</div></article><article class="tutorial-step " id="section-3" data-source-section="3"><div class="step-heading"><span class="step-number">03</span><h3>Nivel de dificultate</h3></div><div class="tutorial-prose"><p><strong>Mediu.</strong></p>
+<p>Tutorialul este potrivit pentru cursanți care au parcurs tutorialele anterioare și știu deja să încarce layere, să simbolizeze date, să folosească filtre și să pregătească un layout.</p>
+</div></article><article class="tutorial-step " id="section-4" data-source-section="4"><div class="step-heading"><span class="step-number">04</span><h3>Ce vom învăța</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursanții vor putea:</p>
+<ul>
+<li>să încarce un grid de populație;</li>
+<li>să înțeleagă diferența dintre un strat de poligoane tip grid și un strat punctual;</li>
+<li>să verifice diferența dintre <code>EPSG:3844</code> și <code>EPSG:4326</code>;</li>
+<li>să lucreze prudent cu un strat mare;</li>
+<li>să decupeze opțional gridul după limita Municipiului București;</li>
+<li>să inspecteze câmpuri de populație;</li>
+<li>să simbolizeze populația totală cu o rampă secvențială;</li>
+<li>să filtreze celulele fără populație;</li>
+<li>să simbolizeze populația sub 15 ani;</li>
+<li>să calculeze ponderea populației sub 15 ani prin expresie QGIS;</li>
+<li>să suprapună școli și cabinete medicale peste grid;</li>
+<li>să ajusteze transparența gridului și simbolurile punctuale;</li>
+<li>să exporte harta finală ca PNG și PDF;</li>
+<li>să explice limitele unei suprapuneri vizuale populație-servicii.</li>
+</ul>
+</div></article><article class="tutorial-step " id="section-5" data-source-section="5"><div class="step-heading"><span class="step-number">05</span><h3>Date necesare</h3></div><div class="tutorial-prose"><h4>Grid Recensământ 2021</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Recensamant2021_GridData.gpkg
+</code></pre></div>
+<p>Layer:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">recensamant2021_griddata
+</code></pre></div>
+<h4>Unități de învățământ București</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">02_Unități Învățământ_Preuniv_București_2022-2023.gpkg
+</code></pre></div>
+<p>Layere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limită Administrativă - Municipiul București
+</code></pre></div>
+<h4>Cabinete medicină de familie</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care).gpkg
+</code></pre></div>
+<p>Layer:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care)
+</code></pre></div>
+<p>Nu modificați datele originale, nu redenumiți layerele originale și nu ștergeți nimic.</p>
+</div></article><article class="tutorial-step " id="section-6" data-source-section="6"><div class="step-heading"><span class="step-number">06</span><h3>Întrebarea de lucru</h3></div><div class="tutorial-prose"><p><strong>Cum putem compara distribuția populației cu poziția serviciilor publice?</strong></p>
+<p>În acest tutorial, comparația este vizuală. Vom observa dacă punctele serviciilor apar peste sau lângă zone cu populație mai numeroasă, dar nu vom calcula accesibilitate reală.</p>
+</div></article><article class="tutorial-step " id="section-7" data-source-section="7"><div class="step-heading"><span class="step-number">07</span><h3>Rezultatul final</h3></div><div class="tutorial-prose"><p>La final, cursantul va exporta două fișiere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii.png
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii.pdf
+</code></pre></div>
+<p>Titlul hărții finale va fi:</p>
+<p><strong>Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală</strong></p>
+<p>Proiectul QGIS se recomandă să fie salvat aici:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P05_populatie_servicii.qgz
+</code></pre></div>
+<p>Dacă se face decuparea gridului, rezultatul intermediar se salvează aici:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">grid_recensamant_bucuresti.gpkg
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-2"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-8" data-source-section="8"><div class="step-heading"><span class="step-number">08</span><h3>Pregătirea proiectului QGIS</h3></div><div class="tutorial-prose"><ol>
+<li>Deschideți QGIS.</li>
+<li>Alegeți <strong>Project &gt; New</strong>.</li>
+<li>Salvați proiectul cu <strong>Project &gt; Save As...</strong>.</li>
+<li>Salvați proiectul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P05_populatie_servicii.qgz
+</code></pre></div>
+<p>Explicație: proiectul QGIS va păstra stilurile, filtrele, layoutul și legăturile către date. Datele originale rămân neschimbate.</p>
+</div></article><article class="tutorial-step " id="section-9" data-source-section="9"><div class="step-heading"><span class="step-number">09</span><h3>Încărcarea gridului de recensământ</h3></div><div class="tutorial-prose"><ol>
+<li>Alegeți <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>.</li>
+<li>Selectați fișierul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Recensamant2021_GridData.gpkg
+</code></pre></div>
+<ol start="3">
+<li>Încărcați layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">recensamant2021_griddata
+</code></pre></div>
+<p>Gridul este un strat de poligoane. Fiecare celulă are valori demografice asociate.</p>
+</div></article><article class="tutorial-step " id="section-10" data-source-section="10"><div class="step-heading"><span class="step-number">10</span><h3>Încărcarea limitei București</h3></div><div class="tutorial-prose"><ol>
+<li>Alegeți <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>.</li>
+<li>Selectați fișierul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">02_Unități Învățământ_Preuniv_București_2022-2023.gpkg
+</code></pre></div>
+<ol start="3">
+<li>Încărcați layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limită Administrativă - Municipiul București
+</code></pre></div>
+<ol start="4">
+<li>Așezați limita deasupra gridului sau sub puncte, dar păstrați-o vizibilă.</li>
+<li>Simbolizați limita cu umplere transparentă și contur discret.</li>
+</ol>
+</div></article><article class="tutorial-step " id="section-11" data-source-section="11"><div class="step-heading"><span class="step-number">11</span><h3>Încărcarea școlilor și cabinetelor medicale</h3></div><div class="tutorial-prose"><h4>Unități de învățământ</h4>
+<ol>
+<li>Din același GeoPackage al școlilor, încărcați layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023
+</code></pre></div>
+<ol start="2">
+<li>Acesta este un layer punctual.</li>
+</ol>
+<h4>Cabinete medicină de familie</h4>
+<ol>
+<li>Alegeți <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>.</li>
+<li>Selectați fișierul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care).gpkg
+</code></pre></div>
+<ol start="3">
+<li>Încărcați layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care)
+</code></pre></div>
+<p>Recomandare: puneți școlile și cabinetele medicale deasupra gridului în panoul <strong>Layers</strong>.</p>
+</div></article><article class="tutorial-step " id="section-12" data-source-section="12"><div class="step-heading"><span class="step-number">12</span><h3>Verificarea CRS-ului</h3></div><div class="tutorial-prose"><p>Verificați CRS-ul fiecărui layer:</p>
+<ul>
+<li>gridul Recensământ 2021: <code>EPSG:3844 - Pulkovo 1942(58) / Stereo70</code>;</li>
+<li>limita București, școlile și cabinetele medicale: <code>EPSG:4326 - WGS 84</code>.</li>
+</ul>
+<h4>Diferența dintre EPSG:3844 și EPSG:4326</h4>
+<p><code>EPSG:4326</code> este un sistem geografic, exprimat în grade latitudine/longitudine. Este foarte folosit pentru date web și localizare globală.</p>
+<p><code>EPSG:3844</code> este un sistem proiectat, exprimat în metri, potrivit pentru România. Este mai potrivit pentru calcule de distanță, arie și lucrări tehnice.</p>
+<p>QGIS poate suprapune vizual layere în CRS-uri diferite prin reproiectare dinamică. Totuși, pentru instrumente de procesare, cum ar fi <strong>Clip</strong>, este bine să verificăm atent CRS-ul și rezultatul.</p>
+</div></article><div class="tutorial-phase" id="phase-3"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-13" data-source-section="13"><div class="step-heading"><span class="step-number">13</span><h3>Observație despre performanță și dimensiunea gridului</h3></div><div class="tutorial-prose"><p>Gridul Recensământ 2021 are multe entități și poate fi lent pe unele calculatoare. Pentru curs este recomandată decuparea lui la zona București sau lucrul la o scară potrivită.</p>
+<p>Recomandări practice:</p>
+<ul>
+<li>nu activați etichete pe grid;</li>
+<li>folosiți 4-5 clase de simbolizare, nu foarte multe;</li>
+<li>aplicați filtrul <code>&quot;Populatia_totala_T&quot; &gt; 0</code>;</li>
+<li>lucrați cu un grid decupat la București, dacă randarea devine lentă;</li>
+<li>salvați proiectul înainte de operații de procesare.</li>
+</ul>
+</div></article><article class="tutorial-step " id="section-14" data-source-section="14"><div class="step-heading"><span class="step-number">14</span><h3>Decuparea gridului după limita Municipiului București, opțional/recomandat</h3></div><div class="tutorial-prose"><p>Decuparea gridului nu modifică datele originale dacă salvați rezultatul într-un fișier nou. Pentru curs, decuparea este recomandată deoarece reduce numărul de celule afișate.</p>
+<ol>
+<li>Deschideți <strong>Processing &gt; Toolbox</strong>.</li>
+<li>Căutați instrumentul <strong>Clip</strong>.</li>
+<li>La <strong>Input layer</strong>, alegeți <code>recensamant2021_griddata</code>.</li>
+<li>La <strong>Overlay layer</strong>, alegeți <code>Limită Administrativă - Municipiul București</code>.</li>
+<li>La <strong>Clipped</strong>, salvați rezultatul ca fișier nou:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">grid_recensamant_bucuresti.gpkg
+</code></pre></div>
+<ol start="6">
+<li>Rulați instrumentul.</li>
+<li>După verificare, puteți dezactiva gridul original și lucra cu stratul decupat.</li>
+</ol>
+<p>Explicație: rezultatul intermediar este o copie de lucru pentru curs. Datele originale din <code>date_vector</code> nu sunt modificate.</p>
+<p>Dacă apar avertismente de CRS, verificați ca rezultatul să se suprapună corect peste limita Bucureștiului. QGIS gestionează de obicei transformările, dar este bine să verificați vizual.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T05/screenshots/T05_01_vector_clip_grid.png" data-caption="Clip folosește gridul și limita Bucureștiului pentru a crea un strat de lucru decupat." data-alt="Dialogul QGIS Clip pentru gridul de recensământ și limita Bucureștiului." aria-label="Mărește captura: Clip folosește gridul și limita Bucureștiului pentru a crea un strat de lucru decupat."><img src="../assets/tutorials/T05/screenshots/T05_01_vector_clip_grid.png" alt="Dialogul QGIS Clip pentru gridul de recensământ și limita Bucureștiului." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T05 · CAPTURĂ QGIS</span><p>Clip folosește gridul și limita Bucureștiului pentru a crea un strat de lucru decupat.</p></figcaption></figure></article><div class="tutorial-phase" id="phase-4"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-15" data-source-section="15"><div class="step-heading"><span class="step-number">15</span><h3>Inspectarea câmpurilor de populație</h3></div><div class="tutorial-prose"><p>Deschideți tabelul de atribute al gridului sau al gridului decupat.</p>
+<p>Câmpuri importante:</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+<th>Utilitate în hartă</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>gid</code></td>
+<td>identificator intern</td>
+<td>util pentru verificare, nu pentru simbolizare</td>
+</tr>
+<tr>
+<td><code>GRD_ID</code></td>
+<td>identificator al celulei de grid</td>
+<td>util pentru referință</td>
+</tr>
+<tr>
+<td><code>Populatia_totala_T</code></td>
+<td>populația totală</td>
+<td>câmp principal pentru coropletă</td>
+</tr>
+<tr>
+<td><code>Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15</code></td>
+<td>populația sub 15 ani</td>
+<td>analiză demografică educațională</td>
+</tr>
+<tr>
+<td><code>Persoane_cu_varsta_cuprinsa_intre_15_si_65_de_ani_Y15_64</code></td>
+<td>populația 15-65 ani</td>
+<td>structură pe vârste</td>
+</tr>
+<tr>
+<td><code>Persoane_cu_varsta_de_65_ani_si_peste_Y_GE65</code></td>
+<td>populația de 65 ani și peste</td>
+<td>analiză pentru servicii sociale/medicale</td>
+</tr>
+<tr>
+<td><code>Populatia_sex_feminin_F</code></td>
+<td>populația feminină</td>
+<td>analiză demografică suplimentară</td>
+</tr>
+<tr>
+<td><code>Populatia_sex_masculin_M</code></td>
+<td>populația masculină</td>
+<td>analiză demografică suplimentară</td>
+</tr>
+</tbody></table>
+<p>Aceste câmpuri sunt numerice. Pot fi folosite pentru clasificare, filtre și expresii.</p>
+</div></article><div class="tutorial-phase" id="phase-5"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-16" data-source-section="16"><div class="step-heading"><span class="step-number">16</span><h3>Simbolizarea populației totale</h3></div><div class="tutorial-prose"><ol>
+<li>Faceți clic dreapta pe grid sau pe gridul decupat.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Alegeți <strong>Graduated</strong>.</li>
+<li>La <strong>Value</strong>, selectați:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Populatia_totala_T&quot;
+</code></pre></div>
+<ol start="5">
+<li>Alegeți o rampă secvențială, de exemplu galben deschis spre roșu închis.</li>
+<li>Folosiți 4 sau 5 clase.</li>
+<li>Alegeți o metodă de clasificare simplă: <strong>Natural Breaks</strong> sau <strong>Quantile</strong>.</li>
+<li>Apăsați <strong>Classify</strong>, apoi <strong>Apply</strong>.</li>
+<li>Setați transparența gridului la aproximativ 25-40%, pentru ca punctele serviciilor să rămână vizibile.</li>
+</ol>
+<p>Explicație: populația totală este o variabilă numerică. Culorile mai intense pot indica celule cu populație mai mare, dar legenda trebuie citită cu atenție.</p>
+</div></article><article class="tutorial-step " id="section-17" data-source-section="17"><div class="step-heading"><span class="step-number">17</span><h3>Filtrarea celulelor fără populație</h3></div><div class="tutorial-prose"><p>Unele celule pot avea populație zero. Pentru o hartă mai clară, le putem ascunde.</p>
+<ol>
+<li>Faceți clic dreapta pe grid.</li>
+<li>Alegeți <strong>Filter...</strong> sau <strong>Properties &gt; Source &gt; Query Builder</strong>.</li>
+<li>Introduceți expresia:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Populatia_totala_T&quot; &gt; 0
+</code></pre></div>
+<ol start="4">
+<li>Apăsați <strong>OK</strong>.</li>
+</ol>
+<p>Explicație: filtrul păstrează doar celulele populate. Nu șterge celulele din fișier; doar controlează ce se afișează în proiect.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T05/screenshots/T05_02_population_grid_classes.png" data-caption="Numărul total de locuitori este clasificat pe celulele gridului." data-alt="Gridul de populație din București colorat pe clase ale numărului total de locuitori." aria-label="Mărește captura: Numărul total de locuitori este clasificat pe celulele gridului."><img src="../assets/tutorials/T05/screenshots/T05_02_population_grid_classes.png" alt="Gridul de populație din București colorat pe clase ale numărului total de locuitori." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T05 · CAPTURĂ QGIS</span><p>Numărul total de locuitori este clasificat pe celulele gridului.</p></figcaption></figure></article><article class="tutorial-step " id="section-18" data-source-section="18"><div class="step-heading"><span class="step-number">18</span><h3>Simbolizarea populației sub 15 ani</h3></div><div class="tutorial-prose"><p>Pentru o discuție legată de servicii educaționale, putem simboliza câmpul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15&quot;
+</code></pre></div>
+<p>Pași:</p>
+<ol>
+<li>Deschideți <strong>Properties &gt; Symbology</strong> pentru grid.</li>
+<li>Alegeți <strong>Graduated</strong>.</li>
+<li>La <strong>Value</strong>, selectați câmpul populației sub 15 ani.</li>
+<li>Folosiți o rampă secvențială.</li>
+<li>Folosiți 4 sau 5 clase.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Explicație: aceasta arată numărul persoanelor sub 15 ani pe celulă, nu procentul lor din total. Zonele cu multe persoane sub 15 ani pot fi și zone cu populație totală mare.</p>
+</div></article><article class="tutorial-step " id="section-19" data-source-section="19"><div class="step-heading"><span class="step-number">19</span><h3>Calcularea ponderii populației sub 15 ani</h3></div><div class="tutorial-prose"><div class="tutorial-callout"><strong>COMPARĂ CELE DOUĂ HĂRȚI</strong><p><a href="#section-17">Număr total de locuitori</a> arată câte persoane sunt în fiecare celulă. <a href="#section-19">Ponderea sub 15 ani</a> arată ce parte din populația celulei aparține acelei grupe. Un număr mare nu implică automat un procent mare.</p></div><p>Pentru a calcula o pondere, folosim o expresie QGIS. Ea nu modifică datele originale dacă este folosită direct în simbolizare sau într-un câmp virtual al proiectului.</p>
+<h4>Ponderea populației sub 15 ani</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">CASE
+WHEN &quot;Populatia_totala_T&quot; IS NULL OR &quot;Populatia_totala_T&quot; = 0 THEN NULL
+ELSE round(100.0 * &quot;Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15&quot; / &quot;Populatia_totala_T&quot;, 1)
+END
+</code></pre></div>
+<p>Explicație:</p>
+<ul>
+<li><code>CASE</code> pornește o expresie condițională;</li>
+<li>verificăm întâi dacă populația totală este <code>NULL</code> sau <code>0</code>;</li>
+<li>dacă totalul lipsește sau este zero, rezultatul devine <code>NULL</code>;</li>
+<li>altfel calculăm procentul persoanelor sub 15 ani;</li>
+<li><code>round(..., 1)</code> rotunjește la o zecimală.</li>
+</ul>
+<h4>Ponderea populației de 65 ani și peste</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">CASE
+WHEN &quot;Populatia_totala_T&quot; IS NULL OR &quot;Populatia_totala_T&quot; = 0 THEN NULL
+ELSE round(100.0 * &quot;Persoane_cu_varsta_de_65_ani_si_peste_Y_GE65&quot; / &quot;Populatia_totala_T&quot;, 1)
+END
+</code></pre></div>
+<p>Această expresie este utilă pentru discuții despre servicii sociale sau medicale, dar în harta finală a tutorialului vom păstra accentul pe populația totală și suprapunerea serviciilor.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T05/screenshots/T05_04_under15_share_map.png" data-caption="Ponderea persoanelor sub 15 ani este un procent, nu un număr total de persoane." data-alt="Gridul din București simbolizat după ponderea populației sub 15 ani." aria-label="Mărește captura: Ponderea persoanelor sub 15 ani este un procent, nu un număr total de persoane."><img src="../assets/tutorials/T05/screenshots/T05_04_under15_share_map.png" alt="Gridul din București simbolizat după ponderea populației sub 15 ani." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T05 · CAPTURĂ QGIS</span><p>Ponderea persoanelor sub 15 ani este un procent, nu un număr total de persoane.</p></figcaption></figure></article><article class="tutorial-step " id="section-20" data-source-section="20"><div class="step-heading"><span class="step-number">20</span><h3>Suprapunerea școlilor peste grid</h3></div><div class="tutorial-prose"><ol>
+<li>Asigurați-vă că layerul școlilor este deasupra gridului.</li>
+<li>Faceți clic dreapta pe layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023
+</code></pre></div>
+<ol start="3">
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Folosiți un simbol punctual simplu, de exemplu cerc sau triunghi.</li>
+<li>Alegeți o culoare contrastantă față de grid, de exemplu albastru închis.</li>
+<li>Setați dimensiunea la aproximativ <code>1.7-2.2 mm</code>.</li>
+<li>Dacă punctele se pierd, adăugați contur alb subțire.</li>
+</ol>
+<p>Explicație: școlile sunt servicii publice punctuale. Prin suprapunere, observăm vizual relația lor cu zonele populate, dar nu calculăm distanțe sau capacitate.</p>
+</div></article><article class="tutorial-step " id="section-21" data-source-section="21"><div class="step-heading"><span class="step-number">21</span><h3>Suprapunerea cabinetelor medicale peste grid</h3></div><div class="tutorial-prose"><ol>
+<li>Asigurați-vă că layerul <code>Cabinete Medicină de Familie (Primary Care)</code> este deasupra gridului.</li>
+<li>Deschideți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Folosiți un simbol diferit de cel al școlilor, de exemplu pătrat sau cruce mică.</li>
+<li>Alegeți o culoare diferită, de exemplu verde închis.</li>
+<li>Setați dimensiunea la aproximativ <code>1.5-2 mm</code>.</li>
+<li>Dacă harta devine aglomerată, reduceți dimensiunea simbolului sau creșteți transparența.</li>
+</ol>
+<p>Explicație: cabinetele de medicină de familie sunt numeroase. Este important să fie vizibile, dar să nu acopere complet gridul.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T05/screenshots/T05_03_population_services_overlay.png" data-caption="Școlile și cabinetele pot fi comparate vizual cu distribuția populației, fără a deduce accesibilitatea." data-alt="Gridul populației din București cu puncte distincte pentru școli și cabinete medicale." aria-label="Mărește captura: Școlile și cabinetele pot fi comparate vizual cu distribuția populației, fără a deduce accesibilitatea."><img src="../assets/tutorials/T05/screenshots/T05_03_population_services_overlay.png" alt="Gridul populației din București cu puncte distincte pentru școli și cabinete medicale." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T05 · CAPTURĂ QGIS</span><p>Școlile și cabinetele pot fi comparate vizual cu distribuția populației, fără a deduce accesibilitatea.</p></figcaption></figure></article><div class="tutorial-phase" id="phase-6"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Layout și export</h2></div><article class="tutorial-step " id="section-22" data-source-section="22"><div class="step-heading"><span class="step-number">22</span><h3>Pregătirea layoutului</h3></div><div class="tutorial-prose"><ol>
+<li>Alegeți <strong>Project &gt; New Print Layout...</strong>.</li>
+<li>Dați layoutului numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii
+</code></pre></div>
+<ol start="3">
+<li>Setați pagina la <strong>A4 landscape</strong> sau <strong>A3 landscape</strong>.</li>
+<li>Folosiți <strong>Add Map</strong> pentru a adăuga harta pe pagină.</li>
+<li>Ajustați extinderea astfel încât Municipiul București să fie vizibil complet.</li>
+</ol>
+<h4>Elemente obligatorii</h4>
+<p>Adăugați:</p>
+<ol>
+<li><strong>Titlu</strong></li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală
+</code></pre></div>
+<ol start="2">
+<li><p><strong>Legendă</strong><br>Includeți clasele de populație, școlile, cabinetele medicale și limita Bucureștiului. Eliminați intrările inutile.</p>
+</li>
+<li><p><strong>Scară grafică</strong><br>Adăugați o scară discretă.</p>
+</li>
+<li><p><strong>Nord</strong><br>Adăugați un simbol de nord simplu.</p>
+</li>
+<li><p><strong>Sursa datelor</strong></p>
+</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sursa: Recensământul Populației și Locuințelor 2021; Observatorul Urban Metropolitan București / ADIZMB, date prelucrate pentru cursul „Tehnici de vizualizare a datelor”.
+</code></pre></div>
+<ol start="6">
+<li><strong>Notă metodologică</strong></li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Harta compară vizual distribuția populației și poziția unor servicii publice; nu calculează distanțe reale, timp de deplasare sau capacitate de deservire.
+</code></pre></div>
+</div></article><article class="tutorial-step " id="section-23" data-source-section="23"><div class="step-heading"><span class="step-number">23</span><h3>Exportul hărții finale ca PNG</h3></div><div class="tutorial-prose"><ol>
+<li>În fereastra de layout, alegeți <strong>Layout &gt; Export as Image...</strong>.</li>
+<li>Selectați folderul de export al tutorialului:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_populatie_servicii_grid_recensamant
+</code></pre></div>
+<ol start="3">
+<li>Salvați fișierul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii.png
+</code></pre></div>
+<ol start="4">
+<li>Dacă QGIS cere rezoluția, folosiți <code>300 dpi</code>.</li>
+<li>Apăsați <strong>Save</strong>.</li>
+</ol>
+<p>Fișierul final PNG trebuie să fie:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii.png
+</code></pre></div>
+</div></article><article class="tutorial-step " id="section-24" data-source-section="24"><div class="step-heading"><span class="step-number">24</span><h3>Exportul hărții finale ca PDF</h3></div><div class="tutorial-prose"><ol>
+<li>În fereastra de layout, alegeți <strong>Layout &gt; Export as PDF...</strong>.</li>
+<li>Selectați același folder:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_populatie_servicii_grid_recensamant
+</code></pre></div>
+<ol start="3">
+<li>Salvați fișierul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii.pdf
+</code></pre></div>
+<ol start="4">
+<li>Apăsați <strong>Save</strong>.</li>
+</ol>
+<p>Fișierul final PDF trebuie să fie:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T05_harta_populatie_servicii.pdf
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-7"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-25" data-source-section="25"><div class="step-heading"><span class="step-number">25</span><h3>Interpretarea hărții finale</h3></div><div class="tutorial-prose"><p>Harta finală permite observații descriptive:</p>
+<ul>
+<li>unde apar celule cu populație totală mai mare;</li>
+<li>unde se suprapun vizual școlile peste zone populate;</li>
+<li>unde se suprapun vizual cabinetele medicale peste zone populate;</li>
+<li>unde apar zone cu populație vizibilă și mai puține puncte de servicii;</li>
+<li>cum se schimbă lectura hărții când activăm/dezactivăm școlile sau cabinetele.</li>
+</ul>
+<p>Formulare recomandată:</p>
+<p>„Harta compară vizual distribuția populației și poziția unor servicii publice. Ea este un punct de plecare pentru întrebări, nu o analiză completă de accesibilitate.”</p>
+</div></article><article class="tutorial-step caution" id="section-26" data-source-section="26"><div class="step-heading"><span class="step-number">26</span><h3>Ce nu putem concluziona doar din această hartă</h3></div><div class="tutorial-prose"><p>Această hartă nu demonstrează:</p>
+<ul>
+<li>accesibilitatea reală la școli sau cabinete medicale;</li>
+<li>timpul de deplasare;</li>
+<li>capacitatea de deservire;</li>
+<li>suficiența serviciilor publice;</li>
+<li>echitatea distribuției;</li>
+<li>calitatea serviciilor;</li>
+<li>relația dintre domiciliul real al elevilor/pacienților și serviciile folosite;</li>
+<li>traseele pe rețeaua stradală sau transport public.</li>
+</ul>
+<p>Pentru astfel de concluzii ar fi nevoie de date suplimentare și metode mai avansate: rețea de drumuri, timpi de deplasare, transport public, capacitate, populație pe vârste, arii de deservire și eventual analize de accesibilitate.</p>
+</div></article><article class="tutorial-step caution" id="section-27" data-source-section="27"><div class="step-heading"><span class="step-number">27</span><h3>Erori frecvente</h3></div><div class="tutorial-prose"><p><strong>Gridul se încarcă greu</strong><br>Aveți răbdare, salvați proiectul și luați în calcul decuparea la București.</p>
+<p><strong>Harta este prea încărcată</strong><br>Filtrați celulele populate, creșteți transparența gridului sau micșorați simbolurile punctuale.</p>
+<p><strong>Punctele nu se văd peste grid</strong><br>Mutați școlile și cabinetele deasupra gridului și folosiți contur alb pentru simboluri.</p>
+<p><strong>Filtrul nu funcționează</strong><br>Verificați numele exact al câmpului:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Populatia_totala_T&quot; &gt; 0
+</code></pre></div>
+<p><strong>Expresia ponderii dă erori</strong><br>Verificați ghilimelele duble și câmpurile lungi:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15&quot;
+</code></pre></div>
+<p><strong>Rezultatul decupării nu se suprapune corect</strong><br>Verificați CRS-ul layerelor și rulați din nou <strong>Clip</strong> după ce proiectul are transformări corecte.</p>
+<p><strong>Legenda este prea complicată</strong><br>Păstrați doar populația totală, școli, cabinete și limită. Expresiile alternative pot fi discutate în clasă, nu neapărat afișate în harta finală.</p>
+</div></article><article class="tutorial-step " id="section-28" data-source-section="28"><div class="step-heading"><span class="step-number">28</span><h3>Exercițiu suplimentar</h3></div><div class="tutorial-prose"><p>Construiți o hartă alternativă a ponderii populației de 65 ani și peste folosind expresia:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">CASE
+WHEN &quot;Populatia_totala_T&quot; IS NULL OR &quot;Populatia_totala_T&quot; = 0 THEN NULL
+ELSE round(100.0 * &quot;Persoane_cu_varsta_de_65_ani_si_peste_Y_GE65&quot; / &quot;Populatia_totala_T&quot;, 1)
+END
+</code></pre></div>
+<p>Apoi suprapuneți doar cabinetele de medicină de familie.</p>
+<p>Întrebare de reflecție:</p>
+<p><strong>Ce întrebări apar când comparăm populația vârstnică și poziția cabinetelor de medicină de familie? Ce date ne-ar mai trebui ca să discutăm accesibilitatea reală?</strong></p>
+</div></article></section><section class="tutorial-result" id="verifica-rezultatul"><span class="eyebrow">REZULTAT AȘTEPTAT</span><h2>Verifică rezultatul</h2><p>Documentul sursă cere exportul hărții în ambele formate. Verifică lizibilitatea titlului, legendei, scării, sursei și notei metodologice.</p><div class="file-badges"><code>T05_harta_populatie_servicii.png</code><code>T05_harta_populatie_servicii.pdf</code></div></section><section class="tutorial-links"><div><span class="eyebrow">CONCEPTE ASOCIATE</span><h2>Legături cu teoria</h2><div class="concept-grid"><a class="concept-link" href="../lesson.html?id=rectangular-coordinates"><span>VEZI CONCEPTUL</span><strong>Coordonate și CRS →</strong></a><a class="concept-link" href="../lesson.html?id=method-choropleth"><span>VEZI CONCEPTUL</span><strong>Cartograma →</strong></a><a class="concept-link" href="../lesson.html?id=method-signs"><span>VEZI CONCEPTUL</span><strong>Metoda semnelor →</strong></a><a class="concept-link" href="../geospatial-data.html#vector"><span>MODELUL DE DATE</span><strong>Date vectoriale →</strong></a></div></div><div><span class="eyebrow">RESURSE QGIS</span><h2>Documentația 3.44</h2><div class="qgis-doc-grid"><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_analysis/reproject_transform.html" target="_blank" rel="noopener noreferrer"><strong>CRS, reproiectare și transformare</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/classification.html" target="_blank" rel="noopener noreferrer"><strong>Clasificare nominală și cantitativă</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/basic_map/symbology.html" target="_blank" rel="noopener noreferrer"><strong>Simbolizarea straturilor vectoriale</strong><span>Vezi și în QGIS Training Manual ↗</span></a></div></div></section><nav class="tutorial-prev-next" aria-label="Tutorial anterior și următor"><a href="t04.html">← T04 · Tutorial anterior</a><a href="t06.html">T06 · Tutorial următor →</a></nav><footer class="page-footer site-footer"><div><strong>Explorare geospațială · Ateliere QGIS</strong><p>Material procedural original al cursului; legăturile teoretice păstrează atribuirea pe paginile lor.</p></div><nav aria-label="Legături în subsol"><a href="index.html">Toate atelierele</a><a href="../resources.html">Resurse</a></nav></footer></main><aside class="site-context workshop-context"><span class="eyebrow">ATELIERE QGIS</span><h2>Învață în pași</h2><p class="small">Șase exerciții progresive. Fiecare hartă este însoțită de o limită de interpretare.</p><a class="outline-button full-button" href="../workflow.html">Recapitulează fluxul QGIS →</a></aside></div><button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button><dialog id="tutorial-dialog" class="tutorial-dialog" aria-labelledby="tutorial-dialog-title"><div class="dialog-header"><h2 id="tutorial-dialog-title">Captură QGIS</h2><div class="tutorial-dialog-actions"><button type="button" class="outline-button" data-zoom-tutorial-dialog aria-pressed="false">Mărește detaliile</button><button type="button" class="icon-button" data-close-tutorial-dialog aria-label="Închide imaginea mărită">×</button></div></div><div class="tutorial-dialog-viewport"><img id="tutorial-dialog-image" alt=""></div><p id="tutorial-dialog-caption"></p></dialog></body></html>

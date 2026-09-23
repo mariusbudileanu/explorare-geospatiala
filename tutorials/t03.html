@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Organizează trei layere punctuale de servicii medicale într-o ierarhie vizuală și explorează simboluri după paturi și filtre de dotări."><title>T03 · Infrastructura medicală București–Ilfov: primary, secondary și tertiary care · Explorare geospațială</title><link rel="icon" type="image/svg+xml" href="../assets/ui/favicon.svg"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/tutorials.css"><link rel="stylesheet" href="../css/design-system.css"><script src="../data/content-manifest.js" defer></script><script src="../js/site.js" defer></script><script src="../js/tutorials.js" defer></script></head><body data-page="tutorial" data-page-id="T03" data-root="../"><a class="skip-link" href="#main-content">Sari la conținut</a><header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="../index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="../resources.html">Resurse</a><a class="quiet-button about-link" href="../lesson.html?id=about">Despre proiect</a></header><div class="workspace site-workspace"><aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside><main id="main-content" class="workshop-main"><div class="lesson-breadcrumb"><a href="../index.html">Explorare geospațială</a> → <a href="index.html">Ateliere QGIS</a> → T03</div><section class="lesson-hero workshop-hero"><span class="eyebrow">TUTORIAL T03</span><h1>Infrastructura medicală București–Ilfov: primary, secondary și tertiary care</h1><p class="lead">Organizează trei layere punctuale de servicii medicale într-o ierarhie vizuală și explorează simboluri după paturi și filtre de dotări.</p><div class="tutorial-meta"><span>ușor spre mediu</span><span>90–120 min</span><span>Date vectoriale</span></div><nav class="tutorial-progress" aria-label="Secvența atelierelor"><a href="t01.html" ><span>T01</span><i aria-hidden="true">●</i></a><a href="t02.html" ><span>T02</span><i aria-hidden="true">●</i></a><a href="t03.html" aria-current="page"><span>T03</span><i aria-hidden="true">●</i></a><a href="t04.html" ><span>T04</span><i aria-hidden="true">●</i></a><a href="t05.html" ><span>T05</span><i aria-hidden="true">●</i></a><a href="t06.html" ><span>T06</span><i aria-hidden="true">●</i></a></nav></section><details class="tutorial-toc"><summary>Cuprinsul tutorialului</summary><nav aria-label="Secțiunile tutorialului"><a href="#section-1">Titlu</a><a href="#section-5">Date necesare</a><a href="#section-9">Încărcarea layerelor medicale</a><a href="#section-10">Încărcarea limitei administrative</a><a href="#section-14">Simbolizarea layerului primary care</a><a href="#section-15">Simbolizarea layerului secondary care</a><a href="#section-16">Simbolizarea layerului tertiary care</a><a href="#section-21">Pregătirea layoutului</a><a href="#section-24">Interpretarea hărții finale</a><a href="#section-25">Ce nu putem concluziona doar din această hartă</a><a href="#section-27">Exercițiu suplimentar</a></nav></details><section class="tutorial-overview"><div class="section-heading"><div><span class="eyebrow">CE VEI ÎNVĂȚA</span><h2>Competențe în acest atelier</h2></div></div><ul><li>organizare layerelor</li><li>simboluri punctuale diferențiate</li><li>simboluri după atribut numeric</li><li>filtre binare</li><li>legendă multi-layer</li></ul></section><section class="tutorial-data" id="date-pentru-exercitiu"><div class="section-heading"><div><span class="eyebrow">DATE PENTRU EXERCIȚIU</span><h2>Fișierele de lucru</h2></div></div><div class="dataset-grid"><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>Cabinete Medicină de Familie (Primary Care).gpkg</h3><p>Puncte ale cabinetelor de medicină de familie, folosite și în comparația populație–servicii.</p><dl><div><dt>Layere</dt><dd>Cabinete Medicină de Familie (Primary Care)</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T05; T03 nu precizează codul.</dd></div><div><dt>Folosit în</dt><dd><a href="t03.html">T03</a> · <a href="t05.html">T05</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>Cabinete și Ambulatorii de Specialitate (Secondary Care).gpkg</h3><p>Cabinete de specialitate și ambulatorii; exemplu de filtrare a serviciilor de ecografie.</p><dl><div><dt>Layere</dt><dd>Cabinete și Ambulatorii de Specialitate (Secondary Care)</dd></div><div><dt>CRS în document</dt><dd>Codul CRS nu este precizat în T03; verifică proprietățile stratului.</dd></div><div><dt>Folosit în</dt><dd><a href="t03.html">T03</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>Spitale București-Ilfov (Tertiary Care).gpkg</h3><p>Spitale; filtre CT/RMN și simboluri opționale dimensionate după numărul de paturi.</p><dl><div><dt>Layere</dt><dd>Spitale București-Ilfov (Tertiary Care)</dd></div><div><dt>CRS în document</dt><dd>Codul CRS nu este precizat în T03; verifică proprietățile stratului.</dd></div><div><dt>Folosit în</dt><dd><a href="t03.html">T03</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>Limită_Administrativă.gpkg</h3><p>Context administrativ pentru harta medicală București–Ilfov.</p><dl><div><dt>Layere</dt><dd>Limita_IF</dd></div><div><dt>CRS în document</dt><dd>Codul CRS nu este precizat în T03; verifică proprietățile stratului.</dd></div><div><dt>Folosit în</dt><dd><a href="t03.html">T03</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article></div></section><section class="tutorial-source-flow" aria-label="Conținutul tutorialului"><div class="tutorial-phase" id="phase-1"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-1" data-source-section="1"><div class="step-heading"><span class="step-number">01</span><h3>Titlu</h3></div><div class="tutorial-prose"><p><strong>Infrastructura medicală București–Ilfov: primary, secondary și tertiary care</strong></p>
+<p>În acest tutorial construim o hartă tematică folosind mai multe layere punctuale. Vom reprezenta împreună cabinetele de medicină de familie, cabinetele și ambulatoriile de specialitate și spitalele din București–Ilfov.</p>
+<p>Scopul principal nu este să realizăm o analiză medicală completă, ci să învățăm cum organizăm vizual mai multe categorii de puncte pe aceeași hartă. Pentru un cursant aflat la început, această lecție este importantă deoarece arată că o hartă poate deveni rapid aglomerată dacă toate informațiile sunt tratate la fel. De aceea, vom lucra cu o ierarhie vizuală: simboluri mai mici pentru serviciile numeroase, simboluri mai clare pentru serviciile specializate și simboluri mai vizibile pentru spitale.</p>
+<p>Vom păstra cele trei categorii în layere separate. Această alegere este intenționată. Pentru începători, layerele separate sunt mai ușor de controlat, iar legenda finală este mai simplu de explicat.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-2" data-source-section="2"><div class="step-heading"><span class="step-number">02</span><h3>Durată estimată</h3></div><div class="tutorial-prose"><p>Durata estimată este de <strong>90–120 de minute</strong>.</p>
+<p>Timpul poate varia în funcție de ritmul grupei, de nivelul de familiaritate cu QGIS și de cât de mult se insistă pe filtrare, simbolizare și interpretarea legendei. Dacă participanții lucrează pentru prima dată cu trei layere punctuale în paralel, este util să fie alocat timp suplimentar pentru organizarea panoului <strong>Layers</strong> și pentru testarea mai multor variante de simbolizare.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-3" data-source-section="3"><div class="step-heading"><span class="step-number">03</span><h3>Nivel de dificultate</h3></div><div class="tutorial-prose"><p>Nivelul tutorialului este <strong>ușor spre mediu</strong>.</p>
+<p>Tutorialul este potrivit pentru cursanți care au parcurs primele două exerciții și știu deja să deschidă un proiect QGIS, să încarce date vectoriale, să verifice un tabel de atribute și să aplice o simbolizare simplă. Elementul nou este lucrul simultan cu mai multe layere punctuale și construirea unei ierarhii vizuale între ele.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-4" data-source-section="4"><div class="step-heading"><span class="step-number">04</span><h3>Ce vom învăța</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursanții vor putea să încarce mai multe fișiere GeoPackage, să verifice dacă layerele se suprapun corect, să compare tabele de atribute cu structuri diferite și să construiască o hartă cu trei niveluri tematice.</p>
+<p>În mod concret, vom exersa:</p>
+<ul>
+<li>încărcarea separată a layerelor pentru primary care, secondary care și tertiary care;</li>
+<li>folosirea limitei administrative ca fundal cartografic;</li>
+<li>verificarea CRS-ului pentru mai multe layere;</li>
+<li>citirea câmpurilor atributare relevante pentru fiecare tip de serviciu;</li>
+<li>simbolizarea diferențiată a mai multor layere punctuale;</li>
+<li>folosirea simbolurilor proporționale pentru spitale;</li>
+<li>aplicarea unor filtre simple pentru contract ecograf, CT și RMN;</li>
+<li>organizarea unei legende clare;</li>
+<li>construirea unui layout final;</li>
+<li>exportul hărții finale ca PNG și PDF;</li>
+<li>formularea prudentă a interpretării.</li>
+</ul>
+<p>Acest tutorial urmărește și o competență foarte importantă: separarea dintre ceea ce harta arată efectiv și ceea ce am fi tentați să concluzionăm în plus. O hartă cu puncte medicale arată localizarea furnizorilor din datele disponibile. Ea nu demonstrează automat accesibilitatea reală, calitatea serviciilor sau capacitatea de deservire.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-5" data-source-section="5"><div class="step-heading"><span class="step-number">05</span><h3>Date necesare</h3></div><div class="tutorial-prose"><p>Vom folosi patru fișiere principale:</p>
+<table>
+<thead>
+<tr>
+<th>Rol în hartă</th>
+<th>Fișier</th>
+<th>Layer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Primary care</td>
+<td><code>Cabinete Medicină de Familie (Primary Care).gpkg</code></td>
+<td><code>Cabinete Medicină de Familie (Primary Care)</code></td>
+</tr>
+<tr>
+<td>Secondary care</td>
+<td><code>Cabinete și Ambulatorii de Specialitate (Secondary Care).gpkg</code></td>
+<td><code>Cabinete și Ambulatorii de Specialitate (Secondary Care)</code></td>
+</tr>
+<tr>
+<td>Tertiary care</td>
+<td><code>Spitale București-Ilfov (Tertiary Care).gpkg</code></td>
+<td><code>Spitale București-Ilfov (Tertiary Care)</code></td>
+</tr>
+<tr>
+<td>Fundal administrativ</td>
+<td><code>Limită_Administrativă.gpkg</code></td>
+<td><code>Limita_IF</code></td>
+</tr>
+</tbody></table>
+<p>În tutorialul de bază folosim layerul <code>Limita_IF</code> ca fundal administrativ. Dacă lectorul are la dispoziție un alt layer de limită București–Ilfov mai potrivit pentru compoziția finală, acesta poate fi folosit ca variantă opțională.</p>
+<p>Nu modificați datele originale, nu redenumiți layerele în fișierele sursă și nu ștergeți nimic. Toate schimbările de aspect se fac în proiectul QGIS, prin stiluri, filtre temporare și layout.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-6" data-source-section="6"><div class="step-heading"><span class="step-number">06</span><h3>Întrebarea de lucru</h3></div><div class="tutorial-prose"><p><strong>Cum se distribuie serviciile medicale pe niveluri de îngrijire în București–Ilfov?</strong></p>
+<p>Această întrebare este descriptivă. În acest tutorial vrem să vedem unde sunt localizate serviciile medicale din seturile de date disponibile și cum putem diferenția vizual trei tipuri de servicii.</p>
+<p>Este important să stabilim de la început limita exercițiului. Harta nu răspunde la întrebări precum „cine are acces mai bun la servicii medicale?”, „unde este calitatea mai ridicată?” sau „care zone sunt defavorizate medical?”. Pentru astfel de întrebări ar fi necesare date suplimentare și analize mai complexe.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-7" data-source-section="7"><div class="step-heading"><span class="step-number">07</span><h3>Rezultatul final</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursantul va exporta două fișiere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T03_harta_infrastructura_medicala.png
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T03_harta_infrastructura_medicala.pdf
+</code></pre></div>
+<p>Titlul hărții finale va fi:</p>
+<p><strong>Infrastructura medicală București–Ilfov: primary, secondary și tertiary care</strong></p>
+<p>Proiectul QGIS poate fi salvat cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P03_medical_bucuresti_ilfov.qgz
+</code></pre></div>
+<hr>
+</div></article><div class="tutorial-phase" id="phase-2"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-8" data-source-section="8"><div class="step-heading"><span class="step-number">08</span><h3>Pregătirea proiectului QGIS</h3></div><div class="tutorial-prose"><p>Deschideți QGIS și creați un proiect nou folosind <strong>Project &gt; New</strong>. Salvați proiectul încă de la început, cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P03_medical_bucuresti_ilfov.qgz
+</code></pre></div>
+<p>Salvarea proiectului la început este o bună practică. Proiectul QGIS nu copiază automat datele și nu modifică fișierele GeoPackage. El salvează felul în care sunt afișate datele: ordinea layerelor, stilurile, filtrele, etichetele, layouturile și setările generale ale proiectului.</p>
+<p>În acest fel, datele originale rămân curate, iar cursantul poate reveni oricând asupra stilizării fără să afecteze sursa.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-9" data-source-section="9"><div class="step-heading"><span class="step-number">09</span><h3>Încărcarea layerelor medicale</h3></div><div class="tutorial-prose"><p>Vom încărca pe rând cele trei layere medicale. Nu le combinăm într-un singur layer, deoarece fiecare are câmpuri diferite și un rol diferit în hartă.</p>
+<h4>9.1. Încărcarea layerului primary care</h4>
+<p>În QGIS, accesați <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong> și selectați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care).gpkg
+</code></pre></div>
+<p>Încărcați layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care)
+</code></pre></div>
+<p>Acest layer conține cabinete de medicină de familie. Ele reprezintă primul nivel de contact al populației cu sistemul medical. Pentru hartă, aceste puncte vor fi numeroase, deci trebuie simbolizate discret.</p>
+<h4>9.2. Încărcarea layerului secondary care</h4>
+<p>Repetați procedura pentru fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete și Ambulatorii de Specialitate (Secondary Care).gpkg
+</code></pre></div>
+<p>Încărcați layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete și Ambulatorii de Specialitate (Secondary Care)
+</code></pre></div>
+<p>Acest layer conține cabinete și ambulatorii de specialitate. Aici apar câmpuri pentru specializări precum cardiologie, pediatrie, neurologie, psihiatrie, stomatologie și altele. Pentru hartă, aceste servicii trebuie să se distingă de cabinetele de medicină de familie, dar să nu concureze vizual cu spitalele.</p>
+<h4>9.3. Încărcarea layerului tertiary care</h4>
+<p>Încărcați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Spitale București-Ilfov (Tertiary Care).gpkg
+</code></pre></div>
+<p>și layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Spitale București-Ilfov (Tertiary Care)
+</code></pre></div>
+<p>Spitalele sunt mai puține decât cabinetele, dar au un rol mai complex. În harta finală, ele trebuie să fie ușor de identificat. De aceea, vor primi simboluri mai mari sau mai puternice vizual.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-10" data-source-section="10"><div class="step-heading"><span class="step-number">10</span><h3>Încărcarea limitei administrative</h3></div><div class="tutorial-prose"><p>Încărcați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limită_Administrativă.gpkg
+</code></pre></div>
+<p>și layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limita_IF
+</code></pre></div>
+<p>După încărcare, mutați layerul <code>Limita_IF</code> sub cele trei layere medicale în panoul <strong>Layers</strong>. Limita administrativă trebuie să funcționeze ca reper spațial, nu ca temă principală.</p>
+<p>O ordine recomandată a layerelor este:</p>
+<ol>
+<li><code>Spitale București-Ilfov (Tertiary Care)</code></li>
+<li><code>Cabinete și Ambulatorii de Specialitate (Secondary Care)</code></li>
+<li><code>Cabinete Medicină de Familie (Primary Care)</code></li>
+<li><code>Limita_IF</code></li>
+</ol>
+<p>Această ordine face ca spitalele să rămână vizibile peste celelalte puncte, iar limita administrativă să rămână în fundal.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-11" data-source-section="11"><div class="step-heading"><span class="step-number">11</span><h3>Verificarea CRS-ului</h3></div><div class="tutorial-prose"><p>CRS înseamnă <strong>Coordinate Reference System</strong>, adică sistemul de coordonate folosit pentru poziționarea datelor pe hartă.</p>
+<p>Pentru fiecare layer, faceți clic dreapta pe numele layerului, alegeți <strong>Properties</strong>, apoi consultați secțiunea <strong>Information</strong> sau <strong>Source</strong>. Verificați dacă datele se suprapun corect pe hartă.</p>
+<p>În acest tutorial nu calculăm distanțe reale, arii sau timpi de acces. Prin urmare, cel mai important este ca toate layerele să se afișeze corect împreună. Dacă un layer apare deplasat sau nu este vizibil, folosiți <strong>Zoom to Layer</strong> și verificați CRS-ul proiectului din colțul din dreapta jos al ferestrei QGIS.</p>
+<p>Dacă QGIS reproiectează datele „din mers”, acest lucru este suficient pentru scopul vizual al exercițiului.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-12" data-source-section="12"><div class="step-heading"><span class="step-number">12</span><h3>Inspectarea tabelelor de atribute</h3></div><div class="tutorial-prose"><p>În acest tutorial lucrăm cu trei tabele diferite. Nu trebuie să memorăm toate câmpurile, ci să înțelegem care sunt câmpurile utile pentru hartă și care sunt doar informații de identificare.</p>
+<h4>12.1. Cabinete Medicină de Familie</h4>
+<p>Deschideți tabelul layerului:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete Medicină de Familie (Primary Care)
+</code></pre></div>
+<p>Câmpurile importante sunt:</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+<th>Utilitate în tutorial</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Județ</code></td>
+<td>județul în care se află cabinetul</td>
+<td>verificare și filtrare</td>
+</tr>
+<tr>
+<td><code>UAT</code></td>
+<td>unitatea administrativ-teritorială</td>
+<td>localizare administrativă</td>
+</tr>
+<tr>
+<td><code>Sat/Sector</code></td>
+<td>satul sau sectorul</td>
+<td>localizare mai detaliată</td>
+</tr>
+<tr>
+<td><code>Adresă</code></td>
+<td>adresa cabinetului</td>
+<td>identificare, nu simbolizare principală</td>
+</tr>
+<tr>
+<td><code>Nume Medic</code></td>
+<td>numele medicului</td>
+<td>identificare în tabel</td>
+</tr>
+<tr>
+<td><code>Nume Firmă</code></td>
+<td>entitatea juridică</td>
+<td>identificare în tabel</td>
+</tr>
+<tr>
+<td><code>Contract Ecograf</code></td>
+<td>câmp numeric 0/1</td>
+<td>filtru didactic</td>
+</tr>
+<tr>
+<td><code>Contract CNAS</code></td>
+<td>câmp numeric 0/1</td>
+<td>informație contractuală</td>
+</tr>
+</tbody></table>
+<p>Pentru această hartă, layerul de primary care va fi folosit în principal pentru distribuția punctelor. Nu vom transforma fiecare câmp într-o hartă, deoarece rezultatul ar deveni prea încărcat.</p>
+<h4>12.2. Cabinete și Ambulatorii de Specialitate</h4>
+<p>Deschideți tabelul layerului:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete și Ambulatorii de Specialitate (Secondary Care)
+</code></pre></div>
+<p>Câmpurile importante sunt:</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+<th>Utilitate în tutorial</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Județ</code></td>
+<td>județul</td>
+<td>verificare și filtrare</td>
+</tr>
+<tr>
+<td><code>UAT</code></td>
+<td>unitatea administrativ-teritorială</td>
+<td>localizare administrativă</td>
+</tr>
+<tr>
+<td><code>Sat/Sector</code></td>
+<td>satul sau sectorul</td>
+<td>localizare detaliată</td>
+</tr>
+<tr>
+<td><code>Nume firmă</code></td>
+<td>furnizorul</td>
+<td>identificare</td>
+</tr>
+<tr>
+<td><code>Cardiologie</code></td>
+<td>specialitate, câmp 0/1</td>
+<td>filtru tematic</td>
+</tr>
+<tr>
+<td><code>Pediatrie</code></td>
+<td>specialitate, câmp 0/1</td>
+<td>filtru tematic</td>
+</tr>
+<tr>
+<td><code>Neurologie</code></td>
+<td>specialitate, câmp 0/1</td>
+<td>filtru tematic</td>
+</tr>
+<tr>
+<td><code>Psihiatrie</code></td>
+<td>specialitate, câmp 0/1</td>
+<td>filtru tematic</td>
+</tr>
+<tr>
+<td><code>Stomatologie</code></td>
+<td>specialitate, câmp 0/1</td>
+<td>filtru tematic</td>
+</tr>
+<tr>
+<td><code>Contract Ecograf</code></td>
+<td>câmp 0/1</td>
+<td>filtru pentru contract ecograf</td>
+</tr>
+<tr>
+<td><code>Contract CNAS</code></td>
+<td>câmp 0/1</td>
+<td>informație contractuală</td>
+</tr>
+</tbody></table>
+<p>În acest tabel apar multe specialități, ceea ce poate fi tentant pentru cursanți. Totuși, pentru o primă hartă trebuie să alegem doar câteva filtre de exemplu. Altfel, harta și legenda devin greu de controlat.</p>
+<h4>12.3. Spitale</h4>
+<p>Deschideți tabelul layerului:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Spitale București-Ilfov (Tertiary Care)
+</code></pre></div>
+<p>Câmpurile importante sunt:</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+<th>Utilitate în tutorial</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Nume spital</code></td>
+<td>numele spitalului</td>
+<td>etichetare selectivă</td>
+</tr>
+<tr>
+<td><code>Tip</code></td>
+<td>tipul unității</td>
+<td>interpretare și filtrare</td>
+</tr>
+<tr>
+<td><code>Spitalizare continua (paturi)</code></td>
+<td>număr de paturi pentru spitalizare continuă</td>
+<td>simbolizare proporțională</td>
+</tr>
+<tr>
+<td><code>Spitalizare de zi (paturi)</code></td>
+<td>număr de paturi pentru spitalizare de zi</td>
+<td>discuție suplimentară</td>
+</tr>
+<tr>
+<td><code>CPU - Compartiment Primiri Urgențe</code></td>
+<td>câmp 0/1</td>
+<td>identifică existența CPU</td>
+</tr>
+<tr>
+<td><code>UPU - Unitate Primiri Urgențe</code></td>
+<td>câmp 0/1</td>
+<td>identifică existența UPU</td>
+</tr>
+<tr>
+<td><code>CT - Computer Tomograf</code></td>
+<td>câmp 0/1</td>
+<td>filtru pentru CT</td>
+</tr>
+<tr>
+<td><code>RMN - Rezonanță Magnetică Nucleară</code></td>
+<td>câmp 0/1</td>
+<td>filtru pentru RMN</td>
+</tr>
+</tbody></table>
+<p>Atenție: câmpurile cu spații, diacritice sau paranteze trebuie scrise între ghilimele duble în expresiile QGIS. De exemplu:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;CT - Computer Tomograf&quot; = 1
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;RMN - Rezonanță Magnetică Nucleară&quot; = 1
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Spitalizare continua (paturi)&quot;
+</code></pre></div>
+<p>Această regulă este importantă. Multe erori de expresie în QGIS apar din cauza numelor de câmp scrise fără ghilimele sau scrise incomplet.</p>
+<hr>
+</div></article><div class="tutorial-phase" id="phase-3"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-13" data-source-section="13"><div class="step-heading"><span class="step-number">13</span><h3>Diferența dintre cele trei niveluri de servicii</h3></div><div class="tutorial-prose"><p>În acest tutorial folosim o clasificare didactică simplificată:</p>
+<p><strong>Primary care</strong> se referă la cabinetele de medicină de familie. Ele reprezintă primul contact al populației cu sistemul medical.</p>
+<p><strong>Secondary care</strong> se referă la cabinete și ambulatorii de specialitate. Acestea oferă servicii specializate, cum ar fi cardiologie, pediatrie, neurologie sau psihiatrie.</p>
+<p><strong>Tertiary care</strong> se referă la spitale. Ele au o funcție mai complexă și pot include paturi, servicii de urgență, investigații și specializări multiple.</p>
+<p>Această împărțire ne ajută să construim o hartă clară. Ea nu epuizează însă complexitatea sistemului medical. Într-o analiză avansată ar trebui discutate mai multe detalii, precum capacitatea reală, programul, personalul disponibil, gradul de adresabilitate și relația cu populația.</p>
+<hr>
+</div></article><div class="tutorial-phase" id="phase-4"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-14" data-source-section="14"><div class="step-heading"><span class="step-number">14</span><h3>Simbolizarea layerului primary care</h3></div><div class="tutorial-prose"><p>Faceți clic dreapta pe <code>Cabinete Medicină de Familie (Primary Care)</code> și deschideți <strong>Properties &gt; Symbology</strong>. Alegeți <strong>Single Symbol</strong>.</p>
+<p>Pentru primary care este recomandat un simbol mic, de tip cerc. Dimensiunea poate fi în jur de <code>1.4–1.8 mm</code>. Dacă punctele sunt foarte dense, puteți crește transparența. O culoare discretă, dar vizibilă, este mai potrivită decât o culoare foarte puternică.</p>
+<p>Explicația cartografică este simplă: cabinetele de medicină de familie sunt multe și pot încărca vizual harta. Ele trebuie să fie vizibile, dar să nu acopere celelalte niveluri de servicii.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-15" data-source-section="15"><div class="step-heading"><span class="step-number">15</span><h3>Simbolizarea layerului secondary care</h3></div><div class="tutorial-prose"><p>Deschideți <strong>Properties &gt; Symbology</strong> pentru <code>Cabinete și Ambulatorii de Specialitate (Secondary Care)</code>.</p>
+<p>Alegeți un simbol diferit de cel folosit pentru primary care, de exemplu un pătrat, romb sau cerc cu altă culoare. Dimensiunea poate fi în jur de <code>2–2.4 mm</code>.</p>
+<p>Scopul este ca secondary care să fie perceput ca o categorie distinctă. Dacă folosiți același simbol ca la primary care, cititorul nu va înțelege ușor diferența dintre cele două layere.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-16" data-source-section="16"><div class="step-heading"><span class="step-number">16</span><h3>Simbolizarea layerului tertiary care</h3></div><div class="tutorial-prose"><p>Deschideți <strong>Properties &gt; Symbology</strong> pentru <code>Spitale București-Ilfov (Tertiary Care)</code>.</p>
+<p>Pentru spitale folosiți un simbol mai mare, mai vizibil și ușor de diferențiat. Poate fi o cruce medicală, un cerc cu contur gros sau un marker distinct. Dimensiunea poate fi în jur de <code>3.5–4.5 mm</code>.</p>
+<p>Spitalele sunt mai puține, deci pot fi reprezentate cu simboluri mai mari fără să aglomereze excesiv harta. În același timp, ele trebuie să fie clar vizibile peste celelalte puncte.</p>
+<hr>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T03/screenshots/T03_01_medical_layer_hierarchy.png" data-caption="Cele trei tipuri de servicii sunt păstrate în layere separate, cu spitalele desenate deasupra." data-alt="Panoul Layers și harta punctelor pentru cabinete de familie, ambulatorii și spitale din București–Ilfov." aria-label="Mărește captura: Cele trei tipuri de servicii sunt păstrate în layere separate, cu spitalele desenate deasupra."><img src="../assets/tutorials/T03/screenshots/T03_01_medical_layer_hierarchy.png" alt="Panoul Layers și harta punctelor pentru cabinete de familie, ambulatorii și spitale din București–Ilfov." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T03 · CAPTURĂ QGIS</span><p>Cele trei tipuri de servicii sunt păstrate în layere separate, cu spitalele desenate deasupra.</p></figcaption></figure></article><article class="tutorial-step " id="section-17" data-source-section="17"><div class="step-heading"><span class="step-number">17</span><h3>Simbolizare proporțională pentru spitale după număr de paturi</h3></div><div class="tutorial-prose"><p>O variantă alternativă este să reprezentăm spitalele și după numărul de paturi pentru spitalizare continuă.</p>
+<p>Deschideți <strong>Properties &gt; Symbology</strong> pentru layerul spitalelor. În funcție de versiunea QGIS, puteți folosi simbolizare <strong>Graduated</strong> sau puteți controla dimensiunea simbolului cu un câmp numeric. Folosiți câmpul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Spitalizare continua (paturi)&quot;
+</code></pre></div>
+<p>Alegeți 4 sau 5 clase. Nu folosiți prea multe clase, deoarece legenda devine greu de citit. Simbolurile proporționale sunt utile pentru a sugera diferențe de mărime între spitale, dar trebuie interpretate prudent.</p>
+<p>Numărul de paturi nu este același lucru cu performanța, calitatea serviciilor sau accesibilitatea. El este doar un atribut care poate fi reprezentat vizual.</p>
+<p>Pentru harta finală, lectorul poate alege una dintre două variante:</p>
+<ul>
+<li>simboluri fixe pentru spitale, dacă se dorește o hartă mai simplă;</li>
+<li>simboluri proporționale după paturi, dacă grupa este pregătită pentru o legendă mai complexă.</li>
+</ul>
+<hr>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T03/screenshots/T03_02_hospital_bed_symbols.png" data-caption="Dimensiunea simbolurilor de spital poate reprezenta numărul de paturi raportat." data-alt="Dialogul de simbolizare a spitalelor după paturi și harta cu simboluri de mărimi diferite." aria-label="Mărește captura: Dimensiunea simbolurilor de spital poate reprezenta numărul de paturi raportat."><img src="../assets/tutorials/T03/screenshots/T03_02_hospital_bed_symbols.png" alt="Dialogul de simbolizare a spitalelor după paturi și harta cu simboluri de mărimi diferite." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T03 · CAPTURĂ QGIS</span><p>Dimensiunea simbolurilor de spital poate reprezenta numărul de paturi raportat.</p></figcaption></figure></article><article class="tutorial-step " id="section-18" data-source-section="18"><div class="step-heading"><span class="step-number">18</span><h3>Filtrare simplă: ambulatorii cu contract de ecografie</h3></div><div class="tutorial-prose"><p>Pentru a testa filtrarea, lucrăm cu layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Cabinete și Ambulatorii de Specialitate (Secondary Care)
+</code></pre></div>
+<p>Deschideți fereastra de filtrare din <strong>Filter...</strong> sau <strong>Properties &gt; Source &gt; Query Builder</strong> și introduceți expresia:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Contract Ecograf&quot; = 1
+</code></pre></div>
+<p>Acest filtru afișează doar entitățile care au valoarea <code>1</code> la câmpul <code>Contract Ecograf</code>.</p>
+<p>Filtrul este util pentru a arăta cum putem extrage rapid o subcategorie dintr-un layer. Totuși, trebuie avut grijă: dacă păstrăm filtrul pentru harta finală, harta nu mai arată toate ambulatoriile, ci doar pe cele care îndeplinesc această condiție. În acest caz, titlul și legenda trebuie să spună clar acest lucru.</p>
+<p>Pentru harta finală generală, recomandarea este să folosiți filtrul doar ca exercițiu și apoi să îl ștergeți.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-19" data-source-section="19"><div class="step-heading"><span class="step-number">19</span><h3>Filtrare simplă: spitale cu CT sau RMN</h3></div><div class="tutorial-prose"><p>Filtrele pot fi testate și pe layerul spitalelor.</p>
+<p>Pentru spitalele cu CT, folosiți:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;CT - Computer Tomograf&quot; = 1
+</code></pre></div>
+<p>Pentru spitalele cu RMN, folosiți:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;RMN - Rezonanță Magnetică Nucleară&quot; = 1
+</code></pre></div>
+<p>Pentru spitalele care au CT sau RMN, folosiți:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;CT - Computer Tomograf&quot; = 1 OR &quot;RMN - Rezonanță Magnetică Nucleară&quot; = 1
+</code></pre></div>
+<p>Operatorul <code>OR</code> înseamnă „sau”. QGIS va afișa entitățile pentru care cel puțin una dintre condiții este adevărată.</p>
+<p>Aceste filtre sunt foarte bune pentru demonstrație, deoarece folosesc câmpuri binare 0/1 și arată legătura directă dintre tabel și hartă. Totuși, ca în cazul filtrului pentru contract ecograf, decideți la final dacă păstrați sau eliminați filtrul. O hartă filtrată trebuie să fie explicată ca atare.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-20" data-source-section="20"><div class="step-heading"><span class="step-number">20</span><h3>Organizarea legendei și a ierarhiei vizuale</h3></div><div class="tutorial-prose"><p>Pentru harta finală, legenda trebuie să fie scurtă și ușor de citit. O legendă prea lungă îi poate face pe cursanți să piardă tema principală.</p>
+<p>O variantă simplă de legendă este:</p>
+<ul>
+<li>Primary care – cabinete medicină de familie;</li>
+<li>Secondary care – cabinete și ambulatorii de specialitate;</li>
+<li>Tertiary care – spitale;</li>
+<li>Limită administrativă București–Ilfov.</li>
+</ul>
+<p>Dacă simbolizați spitalele proporțional după paturi, legenda trebuie să explice și mărimea simbolurilor. În acest caz, evitați să adăugați prea multe alte filtre sau categorii, pentru că harta poate deveni dificil de citit.</p>
+<p>În QGIS puteți ajusta numele afișate în legendă fără să redenumiți fișierele originale. Această ajustare se face în proiect sau direct în elementul de legendă din layout.</p>
+<hr>
+</div></article><div class="tutorial-phase" id="phase-5"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Layout și export</h2></div><article class="tutorial-step " id="section-21" data-source-section="21"><div class="step-heading"><span class="step-number">21</span><h3>Pregătirea layoutului</h3></div><div class="tutorial-prose"><p>Deschideți <strong>Project &gt; New Print Layout...</strong> și creați un layout cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T03_harta_infrastructura_medicala
+</code></pre></div>
+<p>Setați pagina la <strong>A4 landscape</strong>. Dacă legenda ocupă prea mult spațiu, puteți folosi <strong>A3 landscape</strong>. Adăugați harta cu instrumentul <strong>Add Map</strong> și ajustați extinderea astfel încât București–Ilfov să fie vizibil complet.</p>
+<p>Layoutul final trebuie să conțină următoarele elemente:</p>
+<p><strong>Titlu</strong></p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Infrastructura medicală București–Ilfov: primary, secondary și tertiary care
+</code></pre></div>
+<p><strong>Legendă</strong><br>Păstrați doar cele trei niveluri medicale și limita administrativă. Dacă ați folosit simboluri proporționale pentru spitale, explicați clar ce reprezintă dimensiunea simbolurilor.</p>
+<p><strong>Scară grafică</strong><br>Adăugați o scară grafică discretă. Ea ajută cititorul să înțeleagă dimensiunea spațiului reprezentat.</p>
+<p><strong>Nord</strong><br>Adăugați un simbol de nord simplu, fără să îl faceți dominant.</p>
+<p><strong>Sursa datelor</strong></p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sursa: Observatorul Urban Metropolitan București / ADIZMB, date prelucrate pentru cursul „Tehnici de vizualizare a datelor”.
+</code></pre></div>
+<p><strong>Notă metodologică</strong></p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Harta arată distribuția furnizorilor medicali din datele disponibile, nu accesibilitatea reală, calitatea serviciilor sau capacitatea efectivă de deservire.
+</code></pre></div>
+<p>Nota metodologică este esențială. Ea protejează harta de interpretări excesive. Localizarea pe hartă este doar primul pas; accesibilitatea reală depinde de multe alte informații.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-22" data-source-section="22"><div class="step-heading"><span class="step-number">22</span><h3>Exportul hărții finale ca PNG</h3></div><div class="tutorial-prose"><p>În fereastra de layout, alegeți <strong>Layout &gt; Export as Image...</strong>.</p>
+<p>Salvați fișierul cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T03_harta_infrastructura_medicala.png
+</code></pre></div>
+<p>Dacă QGIS cere rezoluția, folosiți <code>300 dpi</code>. Această rezoluție este potrivită pentru o hartă clară, care poate fi inserată într-un document sau într-o prezentare.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-23" data-source-section="23"><div class="step-heading"><span class="step-number">23</span><h3>Exportul hărții finale ca PDF</h3></div><div class="tutorial-prose"><p>În aceeași fereastră de layout, alegeți <strong>Layout &gt; Export as PDF...</strong>.</p>
+<p>Salvați fișierul cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T03_harta_infrastructura_medicala.pdf
+</code></pre></div>
+<p>Formatul PDF este potrivit pentru imprimare, arhivare și distribuire. Dacă harta va fi proiectată pe ecran, PNG-ul este de obicei suficient; dacă va fi păstrată ca produs final, PDF-ul este recomandat.</p>
+<hr>
+</div></article><div class="tutorial-phase" id="phase-6"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-24" data-source-section="24"><div class="step-heading"><span class="step-number">24</span><h3>Interpretarea hărții finale</h3></div><div class="tutorial-prose"><p>Harta finală permite observații descriptive despre distribuția furnizorilor medicali din datele disponibile.</p>
+<p>Putem observa unde apar concentrări vizuale de cabinete de medicină de familie, unde se află cabinetele și ambulatoriile de specialitate și unde sunt localizate spitalele în raport cu Bucureștiul și Ilfovul. Dacă folosim simboluri proporționale pentru spitale, putem observa și diferențe vizuale între spitale în funcție de numărul de paturi pentru spitalizare continuă.</p>
+<p>O formulare potrivită pentru discuția cu grupa este:</p>
+<blockquote>
+<p>Harta arată poziția furnizorilor medicali din seturile de date disponibile și ajută la compararea vizuală a celor trei niveluri de servicii. Ea este o hartă descriptivă, nu o analiză de accesibilitate medicală.</p>
+</blockquote>
+<p>Această formulare este importantă pentru că menține interpretarea la nivelul potrivit. O hartă descriptivă este valoroasă, dar nu trebuie confundată cu o analiză completă.</p>
+<hr>
+</div></article><article class="tutorial-step caution" id="section-25" data-source-section="25"><div class="step-heading"><span class="step-number">25</span><h3>Ce nu putem concluziona doar din această hartă</h3></div><div class="tutorial-prose"><p>Această hartă nu demonstrează accesibilitatea medicală reală. Nu știm cât timp face o persoană până la un serviciu, ce traseu folosește, dacă serviciul are program disponibil, dacă există locuri pentru pacienți sau dacă dotarea este funcțională.</p>
+<p>De asemenea, harta nu demonstrează calitatea serviciilor medicale, capacitatea efectivă de deservire, numărul de pacienți, nevoia medicală reală a populației sau echitatea teritorială a serviciilor.</p>
+<p>Pentru concluzii mai puternice ar fi nevoie de date suplimentare: populație, structură pe vârste, rețea rutieră, transport public, program de funcționare, capacitate reală, personal medical, fluxuri de pacienți și metode de analiză spațială mai avansate.</p>
+<hr>
+</div></article><article class="tutorial-step caution" id="section-26" data-source-section="26"><div class="step-heading"><span class="step-number">26</span><h3>Erori frecvente</h3></div><div class="tutorial-prose"><p><strong>Toate punctele arată la fel.</strong><br>Verificați dacă ați simbolizat separat fiecare layer. Pentru o hartă cu mai multe categorii, diferențele de formă, mărime și culoare sunt foarte importante.</p>
+<p><strong>Spitalele nu se văd peste celelalte puncte.</strong><br>Mutați layerul spitalelor deasupra celorlalte layere și folosiți simboluri mai mari.</p>
+<p><strong>Harta este foarte aglomerată.</strong><br>Micșorați simbolurile pentru primary care, folosiți transparență sau dezactivați temporar un layer pentru comparații. Aglomerația vizuală nu este o problemă doar estetică; ea poate împiedica citirea corectă a hărții.</p>
+<p><strong>Filtrul nu funcționează.</strong><br>Verificați numele exact al câmpului și ghilimelele duble:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Contract Ecograf&quot; = 1
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;CT - Computer Tomograf&quot; = 1
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;RMN - Rezonanță Magnetică Nucleară&quot; = 1
+</code></pre></div>
+<p><strong>Simbolizarea după paturi nu apare corect.</strong><br>Verificați dacă ați folosit câmpul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Spitalizare continua (paturi)&quot;
+</code></pre></div>
+<p>și dacă valorile sunt numerice.</p>
+<p><strong>Legenda este prea lungă.</strong><br>Editați legenda în layout și păstrați doar informațiile necesare. Pentru prima hartă medicală, legenda trebuie să explice nivelurile de servicii, nu toate câmpurile disponibile.</p>
+<p><strong>Se confundă localizarea cu accesibilitatea.</strong><br>Reamintiți cursanților că prezența unui punct pe hartă nu spune cât de ușor ajunge populația la acel serviciu.</p>
+<hr>
+</div></article><article class="tutorial-step " id="section-27" data-source-section="27"><div class="step-heading"><span class="step-number">27</span><h3>Exercițiu suplimentar</h3></div><div class="tutorial-prose"><p>Construiți o variantă a hărții în care layerul de secondary care este filtrat cu:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Contract Ecograf&quot; = 1
+</code></pre></div>
+<p>Apoi filtrați spitalele cu expresia:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;CT - Computer Tomograf&quot; = 1 OR &quot;RMN - Rezonanță Magnetică Nucleară&quot; = 1
+</code></pre></div>
+<p>Păstrați primary care ca fundal punctual discret.</p>
+<p>După aplicarea filtrelor, comparați harta rezultată cu harta generală. Întrebarea de reflecție este:</p>
+<p><strong>Cum se schimbă lectura hărții când afișăm doar anumite servicii sau dotări, nu toți furnizorii?</strong></p>
+<p>Această variantă este utilă pentru discuții, dar nu trebuie prezentată ca hartă completă a infrastructurii medicale. Ea arată doar o selecție de servicii pe baza câmpurilor alese.</p>
+<hr>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T03/screenshots/T03_03_filtered_services.png" data-caption="Filtrarea selectează numai anumite servicii sau dotări; rezultatul nu reprezintă toate serviciile medicale." data-alt="Fereastra de filtrare QGIS peste harta serviciilor medicale; configurație pentru un subset de servicii." aria-label="Mărește captura: Filtrarea selectează numai anumite servicii sau dotări; rezultatul nu reprezintă toate serviciile medicale."><img src="../assets/tutorials/T03/screenshots/T03_03_filtered_services.png" alt="Fereastra de filtrare QGIS peste harta serviciilor medicale; configurație pentru un subset de servicii." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T03 · CAPTURĂ QGIS</span><p>Filtrarea selectează numai anumite servicii sau dotări; rezultatul nu reprezintă toate serviciile medicale.</p></figcaption></figure></article></section><section class="tutorial-result" id="verifica-rezultatul"><span class="eyebrow">REZULTAT AȘTEPTAT</span><h2>Verifică rezultatul</h2><p>Documentul sursă cere exportul hărții în ambele formate. Verifică lizibilitatea titlului, legendei, scării, sursei și notei metodologice.</p><div class="file-badges"><code>T03_harta_infrastructura_medicala.png</code><code>T03_harta_infrastructura_medicala.pdf</code></div></section><section class="tutorial-links"><div><span class="eyebrow">CONCEPTE ASOCIATE</span><h2>Legături cu teoria</h2><div class="concept-grid"><a class="concept-link" href="../lesson.html?id=method-signs"><span>VEZI CONCEPTUL</span><strong>Metoda semnelor →</strong></a><a class="concept-link" href="../lesson.html?id=method-cartodiagram"><span>VEZI CONCEPTUL</span><strong>Cartodiagrama și simbolurile proporționale →</strong></a><a class="concept-link" href="../lesson.html?id=map-exterior"><span>VEZI CONCEPTUL</span><strong>Elementele hărții →</strong></a><a class="concept-link" href="../geospatial-data.html#vector"><span>MODELUL DE DATE</span><strong>Date vectoriale →</strong></a></div></div><div><span class="eyebrow">RESURSE QGIS</span><h2>Documentația 3.44</h2><div class="qgis-doc-grid"><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/basic_map/symbology.html" target="_blank" rel="noopener noreferrer"><strong>Simbolizarea straturilor vectoriale</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/classification.html" target="_blank" rel="noopener noreferrer"><strong>Clasificare nominală și cantitativă</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/map_composer/map_composer.html" target="_blank" rel="noopener noreferrer"><strong>Compoziție cartografică</strong><span>Vezi și în QGIS Training Manual ↗</span></a></div></div></section><nav class="tutorial-prev-next" aria-label="Tutorial anterior și următor"><a href="t02.html">← T02 · Tutorial anterior</a><a href="t04.html">T04 · Tutorial următor →</a></nav><footer class="page-footer site-footer"><div><strong>Explorare geospațială · Ateliere QGIS</strong><p>Material procedural original al cursului; legăturile teoretice păstrează atribuirea pe paginile lor.</p></div><nav aria-label="Legături în subsol"><a href="index.html">Toate atelierele</a><a href="../resources.html">Resurse</a></nav></footer></main><aside class="site-context workshop-context"><span class="eyebrow">ATELIERE QGIS</span><h2>Învață în pași</h2><p class="small">Șase exerciții progresive. Fiecare hartă este însoțită de o limită de interpretare.</p><a class="outline-button full-button" href="../workflow.html">Recapitulează fluxul QGIS →</a></aside></div><button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button><dialog id="tutorial-dialog" class="tutorial-dialog" aria-labelledby="tutorial-dialog-title"><div class="dialog-header"><h2 id="tutorial-dialog-title">Captură QGIS</h2><div class="tutorial-dialog-actions"><button type="button" class="outline-button" data-zoom-tutorial-dialog aria-pressed="false">Mărește detaliile</button><button type="button" class="icon-button" data-close-tutorial-dialog aria-label="Închide imaginea mărită">×</button></div></div><div class="tutorial-dialog-viewport"><img id="tutorial-dialog-image" alt=""></div><p id="tutorial-dialog-caption"></p></dialog></body></html>

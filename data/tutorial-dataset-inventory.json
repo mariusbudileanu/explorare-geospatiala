@@ -1,0 +1,386 @@
+{
+  "scope": "Preliminary inventory of source datasets named in T01–T06 DOCX files; generated projects, clipped grids, Suceava subsets and exported maps are not source datasets.",
+  "size_context": "Owner-provided aggregate only: all vectors approximately 500 MB; two main rasters approximately 4 GB together (one approximately 1.5 GB and one approximately 2.5 GB). No size is assigned to any individual file.",
+  "distribution_note": "Seturile GIS nu sunt incluse în repository. Sursele externe vor fi legate după verificare; fișierele de curs se obțin separat de la cadrul didactic.",
+  "datasets": [
+    {
+      "dataset_id": "schools_bucharest_2022_2023",
+      "filename": "02_Unități Învățământ_Preuniv_București_2022-2023.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T01",
+        "T05"
+      ],
+      "layers": [
+        "Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023",
+        "Limită Administrativă - Municipiul București"
+      ],
+      "crs": "EPSG:4326 — explicitly stated for these T05 layers; T01 itself gives no EPSG code",
+      "role": "School points and București administrative context; city boundary also masks T05 grid Clip.",
+      "shared_between_tutorials": true,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "Keep both exact layer names; T05 reuses this source rather than a second copy.",
+      "role_ro": "Puncte de școli și limita Bucureștiului; limita este și masca pentru Clip în T05.",
+      "crs_ro": "EPSG:4326, menționat în T05; T01 nu precizează codul.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "school_catchments_bucharest_2022_2023",
+      "filename": "05_Circumscripții Școlare_București_2022-2023.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T02"
+      ],
+      "layers": [
+        "Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023",
+        "Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023",
+        "Limită Administrativă - Municipiul București"
+      ],
+      "crs": "EPSG:4326 — explicitly stated in T02 for all three layers",
+      "role": "School catchment polygons, associated school points and city boundary for pupils-per-classroom thematic map.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "Its boundary layer has the same display name as one in the separate T01/T05 package; identity is not assumed.",
+      "role_ro": "Circumscripții școlare, puncte de școli și limita orașului pentru harta elevilor pe sală de clasă.",
+      "crs_ro": "EPSG:4326, menționat în T02 pentru toate cele trei layere.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "medical_primary_care",
+      "filename": "Cabinete Medicină de Familie (Primary Care).gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T03",
+        "T05"
+      ],
+      "layers": [
+        "Cabinete Medicină de Familie (Primary Care)"
+      ],
+      "crs": "EPSG:4326 — explicitly stated for the T05 service layers; T03 itself gives no EPSG code",
+      "role": "Family-practice points in medical hierarchy and population/services overlay.",
+      "shared_between_tutorials": true,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "Do not duplicate for T05.",
+      "role_ro": "Puncte ale cabinetelor de medicină de familie, folosite și în comparația populație–servicii.",
+      "crs_ro": "EPSG:4326, menționat în T05; T03 nu precizează codul.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "medical_secondary_care",
+      "filename": "Cabinete și Ambulatorii de Specialitate (Secondary Care).gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T03"
+      ],
+      "layers": [
+        "Cabinete și Ambulatorii de Specialitate (Secondary Care)"
+      ],
+      "crs": "not explicitly stated in T03",
+      "role": "Specialist-clinic points; ecography-contract filter example.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "T03 uses Contract Ecograf on this secondary-care layer.",
+      "role_ro": "Cabinete de specialitate și ambulatorii; exemplu de filtrare a serviciilor de ecografie.",
+      "crs_ro": "Codul CRS nu este precizat în T03; verifică proprietățile stratului.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "medical_tertiary_care",
+      "filename": "Spitale București-Ilfov (Tertiary Care).gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T03"
+      ],
+      "layers": [
+        "Spitale București-Ilfov (Tertiary Care)"
+      ],
+      "crs": "not explicitly stated in T03",
+      "role": "Hospital points; CT/RMN filters and optional bed-count marker sizes.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "Bed-count styling is an optional map variant in the source.",
+      "role_ro": "Spitale; filtre CT/RMN și simboluri opționale dimensionate după numărul de paturi.",
+      "crs_ro": "Codul CRS nu este precizat în T03; verifică proprietățile stratului.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "medical_admin_boundary_if",
+      "filename": "Limită_Administrativă.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T03"
+      ],
+      "layers": [
+        "Limita_IF"
+      ],
+      "crs": "not explicitly stated in T03",
+      "role": "Administrative background for București–Ilfov medical map.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "T03 allows an unspecified alternative boundary as an option; no unidentified alternative is inventoried.",
+      "role_ro": "Context administrativ pentru harta medicală București–Ilfov.",
+      "crs_ro": "Codul CRS nu este precizat în T03; verifică proprietățile stratului.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "sports_sites_bucharest",
+      "filename": "02_Baze_Sportive_București_1990-2024.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T04"
+      ],
+      "layers": [
+        "02_Baze_Sportive_București_1991-2024"
+      ],
+      "crs": "EPSG:4326 — explicitly stated in T04",
+      "role": "Sports-site polygons for status and ownership thematic maps, optional hectare calculation.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "DOCX filename uses 1990-2024 while named internal layer uses 1991-2024; verify actual package without silently renaming.",
+      "role_ro": "Poligoane ale bazelor sportive; hărți după stare și proprietate, cu calcul opțional de arie.",
+      "crs_ro": "EPSG:4326, menționat în T04.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "sports_admin_boundary",
+      "filename": "04_Limită_Administrativă_București-Ilfov.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T04"
+      ],
+      "layers": [
+        "Limită Administrativă"
+      ],
+      "crs": "EPSG:4326 — explicitly stated in T04",
+      "role": "Administrative background beneath sports polygons.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "Separate filename and layer name from the T03 and T01/T05 boundary sources.",
+      "role_ro": "Limita administrativă folosită sub poligoanele bazelor sportive.",
+      "crs_ro": "EPSG:4326, menționat în T04.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "census_2021_grid",
+      "filename": "Recensamant2021_GridData.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T05"
+      ],
+      "layers": [
+        "recensamant2021_griddata"
+      ],
+      "crs": "EPSG:3844 — explicitly stated in T05",
+      "role": "National population-grid polygons with total and age-band counts; source for optional/recommended București Clip.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Acces separat pentru curs; sursa externă urmează să fie verificată și legată din Resurse.",
+      "notes": "DOCX reports many features and possible slow rendering. `grid_recensamant_bucuresti.gpkg` is a derived output, not this source.",
+      "role_ro": "Grid vectorial de recensământ, cu populația totală și grupe de vârstă; se poate decupa la București.",
+      "crs_ro": "EPSG:3844, menționat în T05.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": false
+    },
+    {
+      "dataset_id": "copernicus_dem_30m",
+      "filename": "cop30m_3844.tif",
+      "type": "raster",
+      "format": "GeoTIFF",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "cop30m_3844.tif"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; verify this raster's actual CRS metadata",
+      "role": "Continuous elevation DEM for Suceava hypsometry, hillshade and mask clipping.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "Create/validate a local Suceava DEM subset later; do not assign one of the owner-provided individual raster sizes to this file.",
+      "role_ro": "DEM pentru hipsometrie, hillshade și decupare la masca județului Suceava.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "hansen_lossyear_2024",
+      "filename": "Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif",
+      "type": "raster",
+      "format": "GeoTIFF",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; verify this raster's actual CRS metadata",
+      "role": "Thematic loss-year raster for Suceava period classes and protected-area visual overlay.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "Verify product metadata, 0/no-loss meaning and 1–24/year mapping before styling or captions; do not assign an individual size.",
+      "role_ro": "Raster tematic cu anul pierderii forestiere, grupat pe perioade și comparat vizual cu date de context.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "protected_areas_ro",
+      "filename": "limite_arii_naturale_protejate.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "limite_arii_naturale_protejate"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; no layer-specific code",
+      "role": "Protected-area polygon outlines above the Suceava rasters.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "National source named in T06; use transparent fill for map context.",
+      "role_ro": "Contururi poligonale ale ariilor protejate pentru contextul hărții Sucevei.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "relief_units_ro",
+      "filename": "limite_unitati_relief.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "limite_unitati_relief"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; no layer-specific code",
+      "role": "Optional relief-unit context and advanced comparison.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "Listed in the DOCX but not required for the final map.",
+      "role_ro": "Unități de relief, ca strat contextual opțional.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "geomorphometry_landforms_ro",
+      "filename": "ro_geomorphometry_landforms_all.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "ro_geomorphometry_landforms_all"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; no layer-specific code",
+      "role": "Optional geomorphometric landform context and advanced comparison.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "Alternative to relief units in the core workflow; not required for the final map.",
+      "role_ro": "Forme de relief geomorfometrice, pentru comparația avansată opțională.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "counties_ro",
+      "filename": "ro_judete_poligon.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "ro_judete_poligon"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; no layer-specific code",
+      "role": "County polygons; select `name` = `Suceava` and make the raster mask.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "`judet_suceava.gpkg` is a derived mask, not a source dataset.",
+      "role_ro": "Poligoane de județe; selecția Suceava formează masca de decupare a rasterelor.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "rivers_ro",
+      "filename": "retea_hidrografica_riuri.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "retea_hidrografica_riuri"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; no layer-specific code",
+      "role": "River line context for the Suceava environmental map.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "Do not label all rivers; `nameText` is mentioned for identification.",
+      "role_ro": "Linii de râuri, ca strat de context pentru Suceava.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    },
+    {
+      "dataset_id": "lakes_ro",
+      "filename": "retea_hidrografica_lacuri.gpkg",
+      "type": "vector",
+      "format": "GeoPackage",
+      "used_in": [
+        "T06"
+      ],
+      "layers": [
+        "retea_hidrografica_lacuri"
+      ],
+      "crs": "T06 states the main data are EPSG:3844 in general; no layer-specific code",
+      "role": "Lake polygon context for the Suceava environmental map.",
+      "shared_between_tutorials": false,
+      "distribution_plan": "Subset Suceava furnizat separat pentru curs; site-ul nu găzduiește datele.",
+      "notes": "Keep symbology subdued; `nameText` is mentioned for identification.",
+      "role_ro": "Poligoane de lacuri, ca strat de context pentru Suceava.",
+      "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
+      "source_url": null,
+      "access_status": "course-files-not-hosted",
+      "course_subset": true
+    }
+  ]
+}

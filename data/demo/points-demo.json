@@ -1,0 +1,13 @@
+{
+  "title":"Centre Atlas — set fictiv",
+  "note":"Valorile și pozițiile sunt sintetice.",
+  "points":[
+    {"name":"Arin","x":25,"y":25,"value":38,"category":"A"},
+    {"name":"Brum","x":66,"y":27,"value":92,"category":"B"},
+    {"name":"Coral","x":25,"y":59,"value":55,"category":"C"},
+    {"name":"Dora","x":54,"y":57,"value":130,"category":"D"},
+    {"name":"Elin","x":45,"y":83,"value":78,"category":"E"},
+    {"name":"Faron","x":82,"y":66,"value":110,"category":"F"},
+    {"name":"Gala","x":70,"y":87,"value":64,"category":"F"}
+  ]
+}

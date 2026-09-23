@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Combină subseturi raster de DEM și pierdere forestieră pentru Suceava cu arii protejate și hidrografie într-o hartă de interpretare vizuală."><title>T06 · Relief, arii naturale protejate și pierdere forestieră · Explorare geospațială</title><link rel="icon" type="image/svg+xml" href="../assets/ui/favicon.svg"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/tutorials.css"><link rel="stylesheet" href="../css/design-system.css"><script src="../data/content-manifest.js" defer></script><script src="../js/site.js" defer></script><script src="../js/tutorials.js" defer></script></head><body data-page="tutorial" data-page-id="T06" data-root="../"><a class="skip-link" href="#main-content">Sari la conținut</a><header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="../index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="../resources.html">Resurse</a><a class="quiet-button about-link" href="../lesson.html?id=about">Despre proiect</a></header><div class="workspace site-workspace"><aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside><main id="main-content" class="workshop-main"><div class="lesson-breadcrumb"><a href="../index.html">Explorare geospațială</a> → <a href="index.html">Ateliere QGIS</a> → T06</div><section class="lesson-hero workshop-hero"><span class="eyebrow">TUTORIAL T06</span><h1>Relief, arii naturale protejate și pierdere forestieră</h1><p class="lead">Combină subseturi raster de DEM și pierdere forestieră pentru Suceava cu arii protejate și hidrografie într-o hartă de interpretare vizuală.</p><div class="tutorial-meta"><span>mediu spre avansat</span><span>120–150 min</span><span>Raster + vector</span></div><nav class="tutorial-progress" aria-label="Secvența atelierelor"><a href="t01.html" ><span>T01</span><i aria-hidden="true">●</i></a><a href="t02.html" ><span>T02</span><i aria-hidden="true">●</i></a><a href="t03.html" ><span>T03</span><i aria-hidden="true">●</i></a><a href="t04.html" ><span>T04</span><i aria-hidden="true">●</i></a><a href="t05.html" ><span>T05</span><i aria-hidden="true">●</i></a><a href="t06.html" aria-current="page"><span>T06</span><i aria-hidden="true">●</i></a></nav></section><details class="tutorial-toc"><summary>Cuprinsul tutorialului</summary><nav aria-label="Secțiunile tutorialului"><a href="#section-1">Titlu</a><a href="#section-5">Date necesare</a><a href="#section-9">Încărcarea DEM-ului Copernicus 30 m</a><a href="#section-10">Încărcarea rasterului Hansen forest loss</a><a href="#section-11">Încărcarea ariilor naturale protejate</a><a href="#section-12">Încărcarea județelor, râurilor și lacurilor</a><a href="#section-16">Decuparea rasterelor, dacă este necesară</a><a href="#section-17">Simbolizarea DEM-ului</a><a href="#section-19">Simbolizarea rasterului forest loss</a><a href="#section-20">Interpretarea valorilor rasterului forest loss</a><a href="#section-23">Pregătirea layoutului</a><a href="#section-26">Interpretarea hărții finale</a><a href="#section-27">Ce nu putem concluziona doar din această hartă</a><a href="#section-29">Exercițiu suplimentar</a></nav></details><section class="tutorial-overview"><div class="section-heading"><div><span class="eyebrow">CE VEI ÎNVĂȚA</span><h2>Competențe în acest atelier</h2></div></div><ul><li>selecție județ Suceava</li><li>Clip Raster by Mask Layer</li><li>Singleband pseudocolor</li><li>hillshade</li><li>simbolizare raster tematic</li><li>suprapunere raster-vector</li></ul></section><section class="tutorial-data" id="date-pentru-exercitiu"><div class="section-heading"><div><span class="eyebrow">DATE PENTRU EXERCIȚIU</span><h2>Fișierele de lucru</h2></div></div><div class="tutorial-callout"><strong>PACHETUL DE CURS · SUCEAVA</strong><p>DEM Suceava, forest loss Suceava, limita județului și, opțional, vectorii de context. Fișierele se obțin separat pentru curs; site-ul nu le găzduiește.</p></div><div class="dataset-grid"><article class="dataset-card"><span class="source-tag qgis-tag">RASTER · GeoTIFF</span><h3>cop30m_3844.tif</h3><p>DEM pentru hipsometrie, hillshade și decupare la masca județului Suceava.</p><dl><div><dt>Layere</dt><dd>cop30m_3844.tif</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">RASTER · GeoTIFF</span><h3>Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif</h3><p>Raster tematic cu anul pierderii forestiere, grupat pe perioade și comparat vizual cu date de context.</p><dl><div><dt>Layere</dt><dd>Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>limite_arii_naturale_protejate.gpkg</h3><p>Contururi poligonale ale ariilor protejate pentru contextul hărții Sucevei.</p><dl><div><dt>Layere</dt><dd>limite_arii_naturale_protejate</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>limite_unitati_relief.gpkg</h3><p>Unități de relief, ca strat contextual opțional.</p><dl><div><dt>Layere</dt><dd>limite_unitati_relief</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>ro_geomorphometry_landforms_all.gpkg</h3><p>Forme de relief geomorfometrice, pentru comparația avansată opțională.</p><dl><div><dt>Layere</dt><dd>ro_geomorphometry_landforms_all</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>ro_judete_poligon.gpkg</h3><p>Poligoane de județe; selecția Suceava formează masca de decupare a rasterelor.</p><dl><div><dt>Layere</dt><dd>ro_judete_poligon</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>retea_hidrografica_riuri.gpkg</h3><p>Linii de râuri, ca strat de context pentru Suceava.</p><dl><div><dt>Layere</dt><dd>retea_hidrografica_riuri</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>retea_hidrografica_lacuri.gpkg</h3><p>Poligoane de lacuri, ca strat de context pentru Suceava.</p><dl><div><dt>Layere</dt><dd>retea_hidrografica_lacuri</dd></div><div><dt>CRS în document</dt><dd>T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.</dd></div><div><dt>Folosit în</dt><dd><a href="t06.html">T06</a></dd></div></dl><p class="small"><strong>Pachet de curs:</strong> subset Suceava; sursa completă nu este pachetul standard pentru studenți.</p><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article></div></section><section class="tutorial-source-flow" aria-label="Conținutul tutorialului"><div class="tutorial-phase" id="phase-1"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-1" data-source-section="1"><div class="step-heading"><span class="step-number">01</span><h3>Titlu</h3></div><div class="tutorial-prose"><p><strong>Relief, arii naturale protejate și pierdere forestieră</strong></p>
+<p>În acest tutorial construim o hartă de mediu în QGIS, combinând date raster și vectoriale. Vom lucra cu un model digital al terenului, cu un raster de pierdere forestieră, cu arii naturale protejate, județe, râuri și lacuri. Scopul este să înțelegem cum se pot suprapune surse diferite de date și cum se poate construi o hartă de interpretare vizuală.</p>
+<p>Tutorialul trebuie citit cu prudență. Harta finală nu demonstrează cauze ale pierderii forestiere și nu dovedește impact direct asupra ariilor naturale protejate. Ea ne ajută să observăm relații spațiale posibile și să formulăm întrebări mai bune.</p>
+</div></article><article class="tutorial-step " id="section-2" data-source-section="2"><div class="step-heading"><span class="step-number">02</span><h3>Durată estimată</h3></div><div class="tutorial-prose"><p><strong>120–150 minute.</strong></p>
+<p>Durata depinde mult de performanța calculatorului. Rasterele folosite în acest exercițiu sunt mari și pot randa lent. De aceea, o parte importantă a tutorialului este alegerea unei zone de lucru mai mici și, dacă este necesar, decuparea rasterelor într-un fișier intermediar.</p>
+</div></article><article class="tutorial-step " id="section-3" data-source-section="3"><div class="step-heading"><span class="step-number">03</span><h3>Nivel de dificultate</h3></div><div class="tutorial-prose"><p><strong>Mediu spre avansat.</strong></p>
+<p>Tutorialul este potrivit pentru cursanți care au parcurs tutorialele anterioare și pot lucra deja cu simbolizare, verificarea CRS-ului, layere vectoriale, layere raster și Layout Manager. Este cel mai complex tutorial din serie, deoarece introduce diferența dintre rastere continue, rastere tematice și date vectoriale.</p>
+</div></article><article class="tutorial-step " id="section-4" data-source-section="4"><div class="step-heading"><span class="step-number">04</span><h3>Ce vom învăța</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursanții vor putea să încarce rastere mari în QGIS, să verifice dacă acestea se suprapun corect cu datele vectoriale și să diferențieze între mai multe tipuri de date geospațiale. Un DEM este un raster continuu, deoarece fiecare pixel conține o valoare numerică de altitudine. Rasterul Hansen forest loss este un raster tematic, deoarece valorile pixelilor reprezintă clase sau ani de pierdere forestieră. Ariile protejate, județele, râurile și lacurile sunt date vectoriale.</p>
+<p>Pe lângă aceste concepte, cursanții vor exersa simbolizarea unui DEM cu o rampă hipsometrică, folosirea unui hillshade pentru a evidenția formele de relief, simbolizarea discretă a unui raster tematic, suprapunerea ariilor protejate peste rastere și construirea unei hărți finale cu legendă, surse și notă metodologică.</p>
+</div></article><article class="tutorial-step " id="section-5" data-source-section="5"><div class="step-heading"><span class="step-number">05</span><h3>Date necesare</h3></div><div class="tutorial-prose"><p>Vom folosi două rastere principale:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">cop30m_3844.tif
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif
+</code></pre></div>
+<p>Primul fișier este DEM-ul Copernicus 30 m, util pentru reprezentarea reliefului. Al doilea este rasterul Hansen / Global Forest Watch pentru pierdere forestieră.</p>
+<p>Vom folosi și mai multe layere vectoriale:</p>
+<table>
+<thead>
+<tr>
+<th>Rol</th>
+<th>Fișier</th>
+<th>Layer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Arii naturale protejate</td>
+<td><code>limite_arii_naturale_protejate.gpkg</code></td>
+<td><code>limite_arii_naturale_protejate</code></td>
+</tr>
+<tr>
+<td>Unități de relief</td>
+<td><code>limite_unitati_relief.gpkg</code></td>
+<td><code>limite_unitati_relief</code></td>
+</tr>
+<tr>
+<td>Landforms geomorfometrice</td>
+<td><code>ro_geomorphometry_landforms_all.gpkg</code></td>
+<td><code>ro_geomorphometry_landforms_all</code></td>
+</tr>
+<tr>
+<td>Județe</td>
+<td><code>ro_judete_poligon.gpkg</code></td>
+<td><code>ro_judete_poligon</code></td>
+</tr>
+<tr>
+<td>Râuri</td>
+<td><code>retea_hidrografica_riuri.gpkg</code></td>
+<td><code>retea_hidrografica_riuri</code></td>
+</tr>
+<tr>
+<td>Lacuri</td>
+<td><code>retea_hidrografica_lacuri.gpkg</code></td>
+<td><code>retea_hidrografica_lacuri</code></td>
+</tr>
+</tbody></table>
+<p>Nu modificați datele originale, nu redenumiți layerele originale și nu ștergeți nimic. Dacă aveți nevoie de fișiere intermediare, salvați-le separat, de exemplu într-un folder de lucru numit <code>intermediare_T06</code>.</p>
+</div></article><article class="tutorial-step " id="section-6" data-source-section="6"><div class="step-heading"><span class="step-number">06</span><h3>Întrebarea de lucru</h3></div><div class="tutorial-prose"><p><strong>Cum pot fi combinate rasterele de relief și mediu cu limite vectoriale pentru a construi o hartă de interpretare?</strong></p>
+<p>Această întrebare este în primul rând cartografică. Ne interesează cum construim o hartă lizibilă din date diferite. Nu încercăm să explicăm de ce apar pierderile forestiere și nici să demonstrăm o relație cauzală între relief, arii protejate și pierdere forestieră.</p>
+</div></article><article class="tutorial-step " id="section-7" data-source-section="7"><div class="step-heading"><span class="step-number">07</span><h3>Rezultatul final</h3></div><div class="tutorial-prose"><p>La final, cursantul va exporta două fișiere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T06_harta_relief_arii_forest_loss.png
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T06_harta_relief_arii_forest_loss.pdf
+</code></pre></div>
+<p>Titlul hărții finale va fi:</p>
+<p><strong>Relief, arii naturale protejate și pierdere forestieră</strong></p>
+<p>Proiectul QGIS poate fi salvat cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P06_relief_mediu.qgz
+</code></pre></div>
+<p>Dacă se creează fișiere intermediare, acestea pot fi salvate într-un folder separat:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">intermediare_T06
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-2"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-8" data-source-section="8"><div class="step-heading"><span class="step-number">08</span><h3>Pregătirea proiectului QGIS</h3></div><div class="tutorial-prose"><p>Deschideți QGIS și creați un proiect nou cu <strong>Project &gt; New</strong>. Salvați proiectul de la început, de exemplu cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P06_relief_mediu.qgz
+</code></pre></div>
+<p>Salvarea proiectului la început este importantă mai ales în acest tutorial, deoarece lucrul cu rastere mari poate fi solicitant pentru calculator. Proiectul QGIS va păstra stilurile, ordinea layerelor, setările de vizualizare și layoutul. Datele originale rămân neschimbate.</p>
+</div></article><article class="tutorial-step " id="section-9" data-source-section="9"><div class="step-heading"><span class="step-number">09</span><h3>Încărcarea DEM-ului Copernicus 30 m</h3></div><div class="tutorial-prose"><p>Pentru a încărca DEM-ul, folosiți <strong>Layer &gt; Add Layer &gt; Add Raster Layer...</strong> și selectați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">cop30m_3844.tif
+</code></pre></div>
+<p>DEM-ul este un raster continuu. Fiecare pixel conține o valoare de altitudine. Din acest motiv, DEM-ul este potrivit pentru hărți hipsometrice, pentru hillshade și pentru interpretarea generală a reliefului.</p>
+<p>După încărcare, este posibil ca rasterul să apară inițial în tonuri de gri sau să se afișeze lent. Acest lucru este normal pentru un raster mare. În această etapă nu ne interesează încă aspectul final, ci doar să verificăm că rasterul se încarcă și acoperă zona de lucru.</p>
+</div></article><article class="tutorial-step " id="section-10" data-source-section="10"><div class="step-heading"><span class="step-number">10</span><h3>Încărcarea rasterului Hansen forest loss</h3></div><div class="tutorial-prose"><p>Încărcați al doilea raster cu <strong>Layer &gt; Add Layer &gt; Add Raster Layer...</strong> și selectați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif
+</code></pre></div>
+<p>Acest raster este diferit de DEM. El nu reprezintă altitudine, ci un fenomen tematic: pierdere forestieră. Valorile pixelilor trebuie interpretate conform documentației produsului. În multe versiuni ale setului Hansen / Global Forest Watch, valoarea <code>0</code> indică lipsa pierderii forestiere în intervalul analizat, iar valorile <code>1</code>, <code>2</code>, ..., <code>24</code> corespund anilor 2001, 2002, ..., 2024.</p>
+<p>Pentru curs este important să rețineți ideea generală: rasterul forest loss se simbolizează ca raster tematic, nu ca suprafață continuă. Valorile lui reprezintă clase sau ani, nu o mărime care crește gradual precum altitudinea.</p>
+</div></article><article class="tutorial-step " id="section-11" data-source-section="11"><div class="step-heading"><span class="step-number">11</span><h3>Încărcarea ariilor naturale protejate</h3></div><div class="tutorial-prose"><p>Încărcați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">limite_arii_naturale_protejate.gpkg
+</code></pre></div>
+<p>și selectați layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">limite_arii_naturale_protejate
+</code></pre></div>
+<p>Ariile protejate sunt poligoane vectoriale. Ele delimitează zone, dar nu descriu singure ce se întâmplă în interiorul acestora. În harta finală, ele vor fi reprezentate cu umplere transparentă sau foarte discretă și cu un contur vizibil, astfel încât să se poată vedea dedesubt DEM-ul, hillshade-ul și eventualele valori de forest loss.</p>
+</div></article><article class="tutorial-step " id="section-12" data-source-section="12"><div class="step-heading"><span class="step-number">12</span><h3>Încărcarea județelor, râurilor și lacurilor</h3></div><div class="tutorial-prose"><p>Încărcați următoarele layere vectoriale:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">ro_judete_poligon.gpkg
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">retea_hidrografica_riuri.gpkg
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">retea_hidrografica_lacuri.gpkg
+</code></pre></div>
+<p>Pentru județe, folosiți layerul <code>ro_judete_poligon</code>. Pentru râuri, folosiți <code>retea_hidrografica_riuri</code>, iar pentru lacuri, <code>retea_hidrografica_lacuri</code>.</p>
+<p>Opțional, puteți încărca și unul dintre straturile de relief:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">limite_unitati_relief.gpkg
+</code></pre></div>
+<p>sau:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">ro_geomorphometry_landforms_all.gpkg
+</code></pre></div>
+<p>Aceste layere pot fi utile pentru discuții despre unități de relief, dar nu sunt obligatorii pentru harta finală. Într-un tutorial pentru începători, este mai bine să păstrăm compoziția clară decât să încărcăm prea multe straturi.</p>
+</div></article><article class="tutorial-step " id="section-13" data-source-section="13"><div class="step-heading"><span class="step-number">13</span><h3>Verificarea CRS-ului</h3></div><div class="tutorial-prose"><p>Verificați CRS-ul fiecărui layer din <strong>Layer Properties &gt; Information</strong> sau <strong>Layer Properties &gt; Source</strong>. În acest tutorial, datele principale sunt în <code>EPSG:3844</code>, un sistem proiectat în metri, potrivit pentru România.</p>
+<p>Este posibil ca QGIS sau GDAL să afișeze pentru rastere o formulare tehnică a sistemului Stereo70. Important este ca rasterele să se suprapună corect cu județele, râurile și ariile protejate. Verificarea vizuală este esențială: dacă limitele județelor cad peste rastere în poziția corectă, proiectul este pregătit pentru pașii următori.</p>
+<p>Dacă un layer pare deplasat, folosiți <strong>Zoom to Layer</strong> și verificați CRS-ul proiectului din colțul dreapta-jos al ferestrei QGIS.</p>
+</div></article><div class="tutorial-phase" id="phase-3"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-14" data-source-section="14"><div class="step-heading"><span class="step-number">14</span><h3>Observație despre performanță și dimensiunea rasterelor</h3></div><div class="tutorial-prose"><p>Rasterele folosite în acest tutorial sunt mari. Pe unele calculatoare, ele pot încărca lent, se pot randa greu sau pot face proiectul mai dificil de utilizat.</p>
+<p>Pentru curs, scopul nu este să forțăm calculatorul să afișeze toată România la rezoluție maximă. Scopul este să înțelegem cum funcționează datele raster și cum le combinăm cu date vectoriale. De aceea, este recomandat să alegem o zonă de lucru mai mică, de exemplu un județ.</p>
+<p>Recomandări practice:</p>
+<ul>
+<li>lucrați pe o zonă mai mică;</li>
+<li>nu activați simultan toate layerele dacă QGIS devine lent;</li>
+<li>folosiți overviews/piramide dacă QGIS le propune;</li>
+<li>decupați rasterele într-un fișier intermediar, fără a modifica originalele;</li>
+<li>salvați proiectul înainte de operații de procesare;</li>
+<li>evitați etichetarea automată a tuturor râurilor, lacurilor sau ariilor protejate.</li>
+</ul>
+</div></article><article class="tutorial-step " id="section-15" data-source-section="15"><div class="step-heading"><span class="step-number">15</span><h3>Alegerea unei zone de lucru</h3></div><div class="tutorial-prose"><div class="tutorial-callout"><strong>DECIZIE PENTRU CURS</strong><p>Exercițiul publicat folosește Suceava. Alte județe rămân variante menționate în documentul sursă.</p></div><p>Pentru acest tutorial, o alegere bună este <strong>județul Suceava</strong>, deoarece are relief variat, arii protejate și zone forestiere vizibile. Puteți alege și alt județ cu relief și vegetație forestieră, de exemplu Maramureș, Brașov, Neamț sau Hunedoara.</p>
+<p>Pentru a selecta județul Suceava:</p>
+<ol>
+<li>Deschideți tabelul de atribute al layerului <code>ro_judete_poligon</code>.</li>
+<li>Găsiți câmpul <code>name</code>.</li>
+<li>Selectați rândul cu valoarea <code>Suceava</code>.</li>
+<li>Folosiți <strong>Zoom to Selection</strong>.</li>
+</ol>
+<p>Această selecție va fi utilă și dacă decideți să decupați rasterele după județ. Alegerea unei zone de lucru mai mici face harta mai clară și reduce timpul de randare.</p>
+</div></article><article class="tutorial-step " id="section-16" data-source-section="16"><div class="step-heading"><span class="step-number">16</span><h3>Decuparea rasterelor, dacă este necesară</h3></div><div class="tutorial-prose"><p>Dacă QGIS randează greu, decupați rasterele după județul ales. Decuparea trebuie făcută într-un fișier nou, astfel încât datele originale să rămână neschimbate.</p>
+<p>O variantă sigură este să salvați mai întâi județul selectat într-un layer intermediar, de exemplu:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">judet_suceava.gpkg
+</code></pre></div>
+<p>Apoi folosiți instrumentul <strong>Clip Raster by Mask Layer</strong> din <strong>Processing Toolbox</strong>.</p>
+<p>Pentru DEM:</p>
+<ol>
+<li>Deschideți <strong>Processing &gt; Toolbox</strong>.</li>
+<li>Căutați <strong>Clip Raster by Mask Layer</strong>.</li>
+<li>La <strong>Input layer</strong>, alegeți DEM-ul <code>cop30m_3844.tif</code>.</li>
+<li>La <strong>Mask layer</strong>, alegeți județul selectat sau layerul <code>judet_suceava.gpkg</code>.</li>
+<li>Salvați rezultatul ca:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">dem_suceava.tif
+</code></pre></div>
+<p>Pentru rasterul forest loss, repetați operația și salvați rezultatul ca:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">forest_loss_suceava.tif
+</code></pre></div>
+<p>Aceste fișiere sunt copii de lucru. Dacă nu apar probleme de performanță, puteți continua și fără decupare, dar pentru cursanți decuparea este adesea o soluție mai sigură.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T06/screenshots/T06_01_suceava_raster_mask.png" data-caption="DEM-ul este decupat folosind masca județului Suceava." data-alt="Dialogul Clip Raster by Mask Layer, cu județul Suceava conturat peste un raster de relief." aria-label="Mărește captura: DEM-ul este decupat folosind masca județului Suceava."><img src="../assets/tutorials/T06/screenshots/T06_01_suceava_raster_mask.png" alt="Dialogul Clip Raster by Mask Layer, cu județul Suceava conturat peste un raster de relief." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T06 · CAPTURĂ QGIS</span><p>DEM-ul este decupat folosind masca județului Suceava.</p></figcaption></figure></article><article class="tutorial-step " id="section-17" data-source-section="17"><div class="step-heading"><span class="step-number">17</span><h3>Simbolizarea DEM-ului</h3></div><div class="tutorial-prose"><p>DEM-ul este baza vizuală pentru relief. Faceți clic dreapta pe DEM sau pe DEM-ul decupat și deschideți <strong>Properties &gt; Symbology</strong>. La <strong>Render type</strong>, alegeți <strong>Singleband pseudocolor</strong>.</p>
+<p>Alegeți o rampă hipsometrică potrivită pentru relief. O rampă bună poate merge de la verde pentru altitudini joase, la galben și brun pentru altitudini medii, apoi spre alb sau gri deschis pentru altitudini mari. Apăsați <strong>Classify</strong> și verificați rezultatul pe hartă.</p>
+<p>Explicație: DEM-ul este un raster continuu. Culorile nu reprezintă categorii separate, ci valori de altitudine care se schimbă treptat. De aceea, o rampă graduală este mai potrivită decât o paletă categorială.</p>
+</div></article><article class="tutorial-step " id="section-18" data-source-section="18"><div class="step-heading"><span class="step-number">18</span><h3>Crearea sau folosirea unui hillshade</h3></div><div class="tutorial-prose"><p>Hillshade-ul simulează umbrirea reliefului și ajută cititorul să vadă formele terenului. El nu înlocuiește DEM-ul, ci îl completează vizual.</p>
+<p>Există două variante.</p>
+<h4>Variantă simplă: hillshade din stil</h4>
+<p>În unele versiuni QGIS, puteți folosi direct opțiuni de umbrire din <strong>Properties &gt; Symbology</strong>. Această variantă este rapidă și potrivită pentru demonstrații scurte.</p>
+<h4>Variantă prin Processing</h4>
+<p>Pentru un rezultat mai controlat, folosiți <strong>Processing &gt; Toolbox &gt; Hillshade</strong>. Alegeți DEM-ul sau DEM-ul decupat ca input și salvați rezultatul ca:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">hillshade_suceava.tif
+</code></pre></div>
+<p>Puneți hillshade-ul peste DEM și reglați transparența sau blending mode-ul, de exemplu <strong>Multiply</strong> sau <strong>Overlay</strong>, dacă rezultatul este lizibil.</p>
+<p>Un hillshade bun trebuie să ajute cititorul să vadă relieful. Dacă întunecă prea mult harta sau acoperă simbolizarea forest loss, reduceți opacitatea.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T06/screenshots/T06_02_suceava_dem_hillshade.png" data-caption="Rampa hipsometrică colorează altitudinea, iar umbrirea ajută la citirea reliefului." data-alt="Dialogul de simbolizare pseudocolor a DEM-ului lângă relieful colorat al Sucevei." aria-label="Mărește captura: Rampa hipsometrică colorează altitudinea, iar umbrirea ajută la citirea reliefului."><img src="../assets/tutorials/T06/screenshots/T06_02_suceava_dem_hillshade.png" alt="Dialogul de simbolizare pseudocolor a DEM-ului lângă relieful colorat al Sucevei." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T06 · CAPTURĂ QGIS</span><p>Rampa hipsometrică colorează altitudinea, iar umbrirea ajută la citirea reliefului.</p></figcaption></figure></article><article class="tutorial-step " id="section-19" data-source-section="19"><div class="step-heading"><span class="step-number">19</span><h3>Simbolizarea rasterului forest loss</h3></div><div class="tutorial-prose"><div class="tutorial-callout warning"><strong>ATENȚIE</strong><p>Verificați valorile rasterului în metadatele produsului înainte de a fixa transparența valorii 0 sau intervalele din legendă.</p></div><p>Rasterul forest loss trebuie tratat ca raster tematic, nu ca DEM. Faceți clic dreapta pe rasterul original sau pe decuparea lui și deschideți <strong>Properties &gt; Symbology</strong>.</p>
+<p>Folosiți o simbolizare cu valori discrete sau o paletă clasificată. Tratați valoarea <code>0</code> ca fundal sau ca transparentă, dacă în documentația produsului aceasta indică lipsa pierderii forestiere în intervalul analizat. Pentru valorile pozitive, folosiți culori vizibile, de exemplu de la galben/oranj la roșu.</p>
+<p>Dacă legenda devine prea lungă, grupați anii în perioade:</p>
+<ul>
+<li>2001–2005;</li>
+<li>2006–2010;</li>
+<li>2011–2015;</li>
+<li>2016–2020;</li>
+<li>2021–2024.</li>
+</ul>
+<p>Această grupare simplifică lectura hărții. Pierdem detaliul anual, dar câștigăm o legendă mai clară pentru publicul începător.</p>
+</div></article><div class="tutorial-phase" id="phase-4"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-20" data-source-section="20"><div class="step-heading"><span class="step-number">20</span><h3>Interpretarea valorilor rasterului forest loss</h3></div><div class="tutorial-prose"><p>Într-un raster tematic, valoarea pixelului reprezintă o clasă sau o categorie. Pentru forest loss, valorile pozitive indică de regulă anul sau clasa de pierdere forestieră. Interpretarea exactă trebuie verificată în metadatele oficiale ale setului Hansen / Global Forest Watch.</p>
+<p>Pentru scopul cursului, rețineți trei idei:</p>
+<ul>
+<li>valoarea <code>0</code> este de obicei fundal sau lipsă de pierdere forestieră;</li>
+<li>valorile pozitive indică existența unui semnal de pierdere forestieră într-un anumit an sau interval;</li>
+<li>harta arată unde apar acești pixeli, nu explică de ce apar.</li>
+</ul>
+<p>Nu interpretați cauzal pierderea forestieră doar din această hartă. Pentru cauze ar fi nevoie de date suplimentare, verificări de teren, serii temporale, documente silvice și analiză spațială mai avansată.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T06/screenshots/T06_03_suceava_forest_loss_overlay.png" data-caption="Rasterul de pierdere forestieră este suprapus peste hillshade pentru a compara vizual distribuția pierderii cu contextul reliefului." data-alt="Județul Suceava cu pixeli colorați de pierdere forestieră peste un hillshade gri și conturul județului; fără arii protejate sau hidrografie." aria-label="Mărește captura: Rasterul de pierdere forestieră este suprapus peste hillshade pentru a compara vizual distribuția pierderii cu contextul reliefului."><img src="../assets/tutorials/T06/screenshots/T06_03_suceava_forest_loss_overlay.png" alt="Județul Suceava cu pixeli colorați de pierdere forestieră peste un hillshade gri și conturul județului; fără arii protejate sau hidrografie." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T06 · CAPTURĂ QGIS</span><p>Rasterul de pierdere forestieră este suprapus peste hillshade pentru a compara vizual distribuția pierderii cu contextul reliefului.</p></figcaption></figure></article><div class="tutorial-phase" id="phase-5"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-21" data-source-section="21"><div class="step-heading"><span class="step-number">21</span><h3>Suprapunerea ariilor naturale protejate</h3></div><div class="tutorial-prose"><p>Puneți layerul <code>limite_arii_naturale_protejate</code> deasupra rasterelor. În <strong>Properties &gt; Symbology</strong>, setați umplerea la transparentă sau foarte transparentă și alegeți un contur vizibil, de exemplu verde închis.</p>
+<p>Dacă harta este aglomerată, afișați doar conturul ariilor protejate. Umplerea transparentă este importantă deoarece vrem să vedem rasterele de dedesubt.</p>
+<p>Câmpuri utile pentru interpretare:</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>gml_id</code></td>
+<td>identificator tehnic</td>
+</tr>
+<tr>
+<td><code>localId</code></td>
+<td>identificator local</td>
+</tr>
+<tr>
+<td><code>designatio</code></td>
+<td>tip/categorie de desemnare</td>
+</tr>
+<tr>
+<td><code>designat_1</code></td>
+<td>câmp asociat desemnării</td>
+</tr>
+<tr>
+<td><code>text</code></td>
+<td>denumire sau descriere textuală</td>
+</tr>
+</tbody></table>
+<p>Ariile protejate delimitează zone, dar nu spun singure ce se întâmplă în interior. Suprapunerea lor peste forest loss este o observație vizuală, nu o demonstrație de impact.</p>
+</div></article><article class="tutorial-step " id="section-22" data-source-section="22"><div class="step-heading"><span class="step-number">22</span><h3>Suprapunerea hidrografiei</h3></div><div class="tutorial-prose"><p>Râurile și lacurile adaugă context fizico-geografic. Ele ajută cititorul să se orienteze și să înțeleagă mai bine peisajul.</p>
+<p>Pentru râuri, puneți layerul <code>retea_hidrografica_riuri</code> deasupra rasterelor și simbolizați-l cu albastru, linie subțire. Dacă harta devine aglomerată, creșteți transparența sau afișați doar râurile principale.</p>
+<p>Pentru lacuri, puneți layerul <code>retea_hidrografica_lacuri</code> deasupra rasterelor și folosiți o umplere albastru deschis, cu contur discret. Evitați culorile foarte saturate, deoarece tema principală rămâne relația dintre relief, forest loss și arii protejate.</p>
+<p>Câmpul <code>nameText</code> poate fi folosit pentru identificarea râurilor și lacurilor, dar etichetarea tuturor elementelor de hidrografie nu este recomandată într-o hartă introductivă.</p>
+</div></article><div class="tutorial-phase" id="phase-6"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Layout și export</h2></div><article class="tutorial-step " id="section-23" data-source-section="23"><div class="step-heading"><span class="step-number">23</span><h3>Pregătirea layoutului</h3></div><div class="tutorial-prose"><p>Deschideți <strong>Project &gt; New Print Layout...</strong> și dați layoutului numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T06_harta_relief_arii_forest_loss
+</code></pre></div>
+<p>Setați pagina la <strong>A4 landscape</strong> sau <strong>A3 landscape</strong>. Pentru o hartă de mediu, A3 landscape poate fi mai potrivit dacă legenda este lungă sau dacă doriți să afișați clar zona de lucru.</p>
+<p>Adăugați cadrul hărții cu <strong>Add Map</strong> și ajustați extinderea la zona aleasă, de exemplu județul Suceava.</p>
+<h4>Elemente obligatorii în layout</h4>
+<p>Adăugați titlul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Relief, arii naturale protejate și pierdere forestieră
+</code></pre></div>
+<p>Adăugați o legendă care să includă DEM-ul sau hillshade-ul, forest loss, ariile protejate, râurile, lacurile și limita județului. Dacă forest loss are multe clase, grupați legenda pe perioade.</p>
+<p>Adăugați o scară grafică potrivită pentru zona aleasă, un simbol de nord discret și sursa datelor:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sursa: Copernicus DEM 30 m; Hansen / Global Forest Watch; date vectoriale naționale, prelucrate pentru cursul „Tehnici de vizualizare a datelor”.
+</code></pre></div>
+<p>Adăugați și o notă metodologică:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Harta combină date raster și vectoriale pentru interpretare vizuală. Nu reprezintă o analiză completă a cauzelor pierderii forestiere sau a impactului asupra ariilor protejate.
+</code></pre></div>
+<p>Această notă este esențială. Ea clarifică faptul că harta este un instrument de observație și discuție, nu o dovadă cauzală.</p>
+</div></article><article class="tutorial-step " id="section-24" data-source-section="24"><div class="step-heading"><span class="step-number">24</span><h3>Exportul hărții finale ca PNG</h3></div><div class="tutorial-prose"><p>În fereastra de layout, alegeți <strong>Layout &gt; Export as Image...</strong>. Salvați harta cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T06_harta_relief_arii_forest_loss.png
+</code></pre></div>
+<p>Folosiți <code>300 dpi</code> pentru un export clar. Formatul PNG este potrivit pentru inserarea hărții în prezentări, documente sau materiale de curs.</p>
+</div></article><article class="tutorial-step " id="section-25" data-source-section="25"><div class="step-heading"><span class="step-number">25</span><h3>Exportul hărții finale ca PDF</h3></div><div class="tutorial-prose"><p>În aceeași fereastră de layout, alegeți <strong>Layout &gt; Export as PDF...</strong>. Salvați harta cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T06_harta_relief_arii_forest_loss.pdf
+</code></pre></div>
+<p>Formatul PDF este potrivit pentru imprimare, arhivare și distribuirea hărții în format stabil.</p>
+</div></article><div class="tutorial-phase" id="phase-7"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-26" data-source-section="26"><div class="step-heading"><span class="step-number">26</span><h3>Interpretarea hărții finale</h3></div><div class="tutorial-prose"><p>Harta finală permite observații vizuale despre zona aleasă. Putem observa cum se distribuie altitudinea, unde apar arii naturale protejate, unde apar pixeli de forest loss în raport cu relieful și cum ajută hidrografia la citirea peisajului.</p>
+<p>O formulare potrivită pentru discuția cu grupa este:</p>
+<p>„Harta combină relief, arii naturale protejate, hidrografie și un raster tematic de pierdere forestieră. Ea este utilă pentru observații vizuale și pentru formularea de întrebări, nu pentru concluzii cauzale.”</p>
+<p>Este important să încurajăm cursanții să folosească harta ca punct de plecare. O hartă bună nu închide discuția, ci o face mai clară.</p>
+</div></article><article class="tutorial-step caution" id="section-27" data-source-section="27"><div class="step-heading"><span class="step-number">27</span><h3>Ce nu putem concluziona doar din această hartă</h3></div><div class="tutorial-prose"><p>Această hartă nu demonstrează cauza pierderii forestiere, legalitatea sau ilegalitatea unor tăieri, impact direct asupra ariilor protejate, schimbări ale biodiversității, severitatea ecologică a pierderii sau cine a produs schimbarea.</p>
+<p>De asemenea, harta nu ne spune dacă pierderea forestieră este temporară sau permanentă și nu explică relația exactă dintre relief, protecție și pierdere forestieră.</p>
+<p>Pentru astfel de concluzii ar fi necesare date suplimentare: imagini satelitare detaliate, date silvice, limite administrative forestiere, verificări de teren, serii temporale, documente de management și metode de analiză spațială mai avansate.</p>
+</div></article><article class="tutorial-step caution" id="section-28" data-source-section="28"><div class="step-heading"><span class="step-number">28</span><h3>Erori frecvente</h3></div><div class="tutorial-prose"><p><strong>Rasterele se încarcă greu</strong><br>Alegeți o zonă de lucru mai mică și decupați rasterele în folderul <code>intermediare_T06</code>.</p>
+<p><strong>Forest loss acoperă complet DEM-ul</strong><br>Faceți valoarea <code>0</code> transparentă și reduceți opacitatea rasterului forest loss.</p>
+<p><strong>Hillshade-ul întunecă prea mult harta</strong><br>Reduceți opacitatea sau schimbați blending mode-ul. Hillshade-ul trebuie să ajute, nu să domine.</p>
+<p><strong>Ariile protejate nu se văd</strong><br>Folosiți umplere transparentă și contur mai vizibil.</p>
+<p><strong>Hidrografia aglomerează harta</strong><br>Reduceți grosimea liniilor, creșteți transparența sau afișați doar râurile principale.</p>
+<p><strong>Legenda forest loss este prea lungă</strong><br>Grupați valorile pe perioade, de exemplu 2001–2005, 2006–2010, 2011–2015, 2016–2020, 2021–2024.</p>
+<p><strong>QGIS afișează avertismente despre CRS-ul rasterului</strong><br>Verificați dacă rasterele se suprapun corect cu județele și ariile protejate. Dacă suprapunerea este corectă, continuați tutorialul, dar menționați observația la discuția tehnică.</p>
+</div></article><article class="tutorial-step " id="section-29" data-source-section="29"><div class="step-heading"><span class="step-number">29</span><h3>Exercițiu suplimentar</h3></div><div class="tutorial-prose"><p>Construiți o variantă a hărții în care forest loss este grupat pe două perioade:</p>
+<ul>
+<li>pierderi mai vechi: 2001–2012;</li>
+<li>pierderi recente: 2013–2024.</li>
+</ul>
+<p>Comparați această variantă cu harta care afișează mai multe clase anuale sau perioade mai scurte.</p>
+<p>Întrebare de reflecție:</p>
+<p><strong>Cum se schimbă interpretarea vizuală când grupăm anii în perioade mai largi? Ce pierdem și ce câștigăm prin simplificarea legendei?</strong></p>
+<p>Pentru o variantă mai avansată, încercați să comparați vizual forest loss cu <code>limite_unitati_relief</code> sau cu <code>ro_geomorphometry_landforms_all</code>, fără a formula concluzii cauzale.</p>
+</div></article></section><section class="tutorial-result" id="verifica-rezultatul"><span class="eyebrow">REZULTAT AȘTEPTAT</span><h2>Verifică rezultatul</h2><p>Documentul sursă cere exportul hărții în ambele formate. Verifică lizibilitatea titlului, legendei, scării, sursei și notei metodologice.</p><div class="file-badges"><code>T06_harta_relief_arii_forest_loss.png</code><code>T06_harta_relief_arii_forest_loss.pdf</code></div></section><section class="tutorial-links"><div><span class="eyebrow">CONCEPTE ASOCIATE</span><h2>Legături cu teoria</h2><div class="concept-grid"><a class="concept-link" href="../lesson.html?id=relief-models"><span>VEZI CONCEPTUL</span><strong>Reprezentarea reliefului →</strong></a><a class="concept-link" href="../lesson.html?id=method-areas"><span>VEZI CONCEPTUL</span><strong>Metoda arealelor →</strong></a><a class="concept-link" href="../lesson.html?id=rectangular-coordinates"><span>VEZI CONCEPTUL</span><strong>Coordonate și CRS →</strong></a><a class="concept-link" href="../geospatial-data.html#raster"><span>MODELUL DE DATE</span><strong>Raster și vector →</strong></a></div></div><div><span class="eyebrow">RESURSE QGIS</span><h2>Documentația 3.44</h2><div class="qgis-doc-grid"><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/rasters/data_manipulation.html" target="_blank" rel="noopener noreferrer"><strong>Date raster</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/rasters/changing_symbology.html" target="_blank" rel="noopener noreferrer"><strong>Simbolizare raster</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/rasters/terrain_analysis.html" target="_blank" rel="noopener noreferrer"><strong>Analiză de teren</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/map_composer/map_composer.html" target="_blank" rel="noopener noreferrer"><strong>Compoziție cartografică</strong><span>Vezi și în QGIS Training Manual ↗</span></a></div></div></section><nav class="tutorial-prev-next" aria-label="Tutorial anterior și următor"><a href="t05.html">← T05 · Tutorial anterior</a><a href="../workflow.html">Recapitulează fluxul QGIS →</a></nav><footer class="page-footer site-footer"><div><strong>Explorare geospațială · Ateliere QGIS</strong><p>Material procedural original al cursului; legăturile teoretice păstrează atribuirea pe paginile lor.</p></div><nav aria-label="Legături în subsol"><a href="index.html">Toate atelierele</a><a href="../resources.html">Resurse</a></nav></footer></main><aside class="site-context workshop-context"><span class="eyebrow">ATELIERE QGIS</span><h2>Învață în pași</h2><p class="small">Șase exerciții progresive. Fiecare hartă este însoțită de o limită de interpretare.</p><a class="outline-button full-button" href="../workflow.html">Recapitulează fluxul QGIS →</a></aside></div><button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button><dialog id="tutorial-dialog" class="tutorial-dialog" aria-labelledby="tutorial-dialog-title"><div class="dialog-header"><h2 id="tutorial-dialog-title">Captură QGIS</h2><div class="tutorial-dialog-actions"><button type="button" class="outline-button" data-zoom-tutorial-dialog aria-pressed="false">Mărește detaliile</button><button type="button" class="icon-button" data-close-tutorial-dialog aria-label="Închide imaginea mărită">×</button></div></div><div class="tutorial-dialog-viewport"><img id="tutorial-dialog-image" alt=""></div><p id="tutorial-dialog-caption"></p></dialog></body></html>

@@ -1,0 +1,344 @@
+{
+  "qgis_version": "3.44",
+  "verified_on": "2026-09-23",
+  "links": [
+    {
+      "concept": "CRS, reproiectare și transformare",
+      "qgis_version": "3.44",
+      "title": "6.1. Lesson: Reprojecting and Transforming Data",
+      "id": "reproject",
+      "verified": true,
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/vector_analysis/reproject_transform.html",
+      "used_in": [
+        "coordinates",
+        "rectangular-coordinates",
+        "projection-basics"
+      ],
+      "source_type": "QGIS Training Manual"
+    },
+    {
+      "id": "symbology",
+      "concept": "Simbolizarea straturilor vectoriale",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "2.4. Lesson: Symbology",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/basic_map/symbology.html",
+      "verified": true,
+      "used_in": [
+        "method-signs",
+        "method-areas",
+        "method-qualitative"
+      ]
+    },
+    {
+      "id": "attributes",
+      "concept": "Date atribut",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "3.1. Lesson: Vector Attribute Data",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/attribute_data.html",
+      "verified": true,
+      "used_in": [
+        "method-diagrams",
+        "method-choropleth",
+        "method-cartodiagram"
+      ]
+    },
+    {
+      "id": "labels",
+      "concept": "Etichete pe hartă",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "3.2. Lesson: Labels",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/label_tool.html",
+      "verified": true,
+      "used_in": [
+        "map-interior"
+      ]
+    },
+    {
+      "id": "classification",
+      "concept": "Clasificare nominală și cantitativă",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "3.3. Lesson: Classification",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/classification.html",
+      "verified": true,
+      "used_in": [
+        "method-choropleth",
+        "method-signs",
+        "method-qualitative"
+      ]
+    },
+    {
+      "id": "layout",
+      "concept": "Compoziție cartografică",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "4.1. Lesson: Using Print Layout",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/map_composer/map_composer.html",
+      "verified": true,
+      "used_in": [
+        "map-exterior",
+        "map-frame",
+        "map-interior"
+      ]
+    },
+    {
+      "id": "dynamic-layout",
+      "concept": "Compoziție dinamică",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "4.2. Lesson: Creating a Dynamic Print Layout",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/map_composer/dynamic_layout.html",
+      "verified": true,
+      "used_in": [
+        "map-frame"
+      ]
+    },
+    {
+      "id": "raster-data",
+      "concept": "Date raster",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "7.1. Lesson: Working with Raster Data",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/rasters/data_manipulation.html",
+      "verified": true,
+      "used_in": [
+        "relief-models"
+      ]
+    },
+    {
+      "id": "raster-symbology",
+      "concept": "Simbolizare raster",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "7.2. Lesson: Changing Raster Symbology",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/rasters/changing_symbology.html",
+      "verified": true,
+      "used_in": [
+        "relief-models"
+      ]
+    },
+    {
+      "id": "terrain",
+      "concept": "Analiză de teren",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "7.3. Lesson: Terrain Analysis",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/rasters/terrain_analysis.html",
+      "verified": true,
+      "used_in": [
+        "relief-models"
+      ]
+    },
+    {
+      "id": "contours",
+      "concept": "Interpolare și izolinii",
+      "qgis_version": "3.44",
+      "source_type": "QGIS Training Manual",
+      "title": "18.30. Interpolation and contouring",
+      "url": "https://docs.qgis.org/3.44/en/docs/training_manual/processing/interp_contour.html",
+      "verified": true,
+      "used_in": [
+        "method-isolines"
+      ]
+    },
+    {
+      "id": "diagrams",
+      "concept": "Diagrame pe obiecte vectoriale",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "12.1.5. Diagrams Properties",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/vector_properties.html",
+      "verified": true,
+      "used_in": [
+        "method-diagrams",
+        "method-cartodiagram"
+      ]
+    },
+    {
+      "id": "arrow-symbols",
+      "concept": "Săgeți și linii tematice",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "10.2. The Symbol Selector",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/style_library/symbol_selector.html",
+      "verified": true,
+      "used_in": [
+        "method-flows"
+      ]
+    },
+    {
+      "id": "points-in-polygons",
+      "concept": "Puncte în poligoane",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "24.1.24. Vector creation — Random points inside polygons",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorcreation.html",
+      "verified": true,
+      "used_in": [
+        "method-dots"
+      ]
+    }
+  ],
+  "bridges": [
+    {
+      "lesson_id": "method-diagrams",
+      "historical": "Diagrame",
+      "modern": "Diagrams pe obiecte vectoriale",
+      "confidence": "close",
+      "explanation": "Valorile pentru consum domestic, industrie și servicii sunt atribute ale unor localități fictive. În QGIS, fila Diagrams poate plasa diagrame circulare sau histograme peste obiecte vectoriale; exercițiul de aici rămâne o reconstrucție didactică.",
+      "where": "Layer Properties → Diagrams",
+      "primary": "diagrams",
+      "secondary": [
+        "attributes"
+      ]
+    },
+    {
+      "lesson_id": "method-choropleth",
+      "historical": "Cartogramă",
+      "modern": "Graduated classification",
+      "confidence": "direct",
+      "explanation": "O valoare numerică, precum densitatea populației, este împărțită în clase și redată printr-o rampă de culori. În QGIS, clasificarea Graduated se aplică unui atribut al poligoanelor; legenda explică intervalele alese.",
+      "where": "Layer Properties → Symbology → Graduated",
+      "primary": "classification",
+      "secondary": [
+        "attributes"
+      ]
+    },
+    {
+      "lesson_id": "method-cartodiagram",
+      "historical": "Cartodiagramă",
+      "modern": "Diagrams peste poligoane",
+      "confidence": "close",
+      "explanation": "Poligoanele oferă contextul geografic, iar diagrama suprapusă compară producția solară, eoliană și hidro. QGIS poate desena pie charts și alte diagrame pe obiecte vectoriale; echivalarea cu toate variantele istorice ale cartodiagramei este aproximativă.",
+      "where": "Layer Properties → Diagrams",
+      "primary": "diagrams",
+      "secondary": [
+        "attributes"
+      ]
+    },
+    {
+      "lesson_id": "method-signs",
+      "historical": "Metoda semnelor",
+      "modern": "Marker symbols și Categorized",
+      "confidence": "close",
+      "explanation": "Școlile, spitalele, bibliotecile și gările fictive sunt obiecte punctuale cu un atribut de tip. În QGIS poți schimba simbolul fiecărui tip prin Categorized; aceasta este o corespondență apropiată, nu o identitate de terminologie.",
+      "where": "Layer Properties → Symbology",
+      "primary": "symbology",
+      "secondary": [
+        "classification"
+      ]
+    },
+    {
+      "lesson_id": "method-areas",
+      "historical": "Metoda arealelor",
+      "modern": "Poligoane tematice cu contur și umplere",
+      "confidence": "conceptual",
+      "explanation": "Arealul indică întinderea unui fenomen și nu trebuie să urmeze limite administrative. În QGIS, un strat de poligoane cu umplere și contur poate vizualiza astfel de limite; trasarea arealului și justificarea sa rămân decizii cartografice separate.",
+      "where": "Layer Properties → Symbology",
+      "primary": "symbology",
+      "secondary": []
+    },
+    {
+      "lesson_id": "method-qualitative",
+      "historical": "Fond calitativ",
+      "modern": "Categorized symbology",
+      "confidence": "direct",
+      "explanation": "Teritoriul fictiv este împărțit complet în tipuri nominale de utilizare a terenului. În QGIS, clasificarea Categorized atribuie simboluri distincte valorilor unui câmp, fără a sugera o ordine cantitativă.",
+      "where": "Layer Properties → Symbology → Categorized",
+      "primary": "classification",
+      "secondary": [
+        "symbology"
+      ]
+    },
+    {
+      "lesson_id": "method-flows",
+      "historical": "Linii de mișcare",
+      "modern": "Arrow line symbols",
+      "confidence": "conceptual",
+      "explanation": "Liniile arată relații origine–destinație, iar grosimea redă un volum fictiv de deplasări. Manualul QGIS descrie simboluri de tip Arrow și linii cu lățime variabilă, dar nu oferă în Training Manual un exercițiu direct pentru o hartă completă de fluxuri.",
+      "where": "Layer Properties → Symbology → Arrow",
+      "primary": "arrow-symbols",
+      "secondary": []
+    },
+    {
+      "lesson_id": "method-isolines",
+      "historical": "Izolinii",
+      "modern": "Interpolation și Contour",
+      "confidence": "direct",
+      "explanation": "Punctele cu valori numerice pot fi interpolate într-o suprafață continuă, din care se extrag linii de valoare egală. Exercițiul QGIS arată explicit interpolarea și conturarea; aici folosim un câmp sintetic local.",
+      "where": "Processing → Interpolation / Contour",
+      "primary": "contours",
+      "secondary": []
+    },
+    {
+      "lesson_id": "method-dots",
+      "historical": "Metoda punctului",
+      "modern": "Puncte generate în poligoane",
+      "confidence": "conceptual",
+      "explanation": "Un punct din hartă reprezintă o cantitate statistică, nu localizarea exactă a unei persoane. Manualul QGIS descrie generarea de puncte în poligoane, dar transformarea valorii statistice în număr de puncte trebuie decisă separat; Training Manual nu are o lecție directă de dot-density.",
+      "where": "Processing → Vector creation",
+      "primary": "points-in-polygons",
+      "secondary": []
+    },
+    {
+      "lesson_id": "relief-models",
+      "historical": "Machetă fizică de relief",
+      "modern": "DEM, hillshade și slope",
+      "confidence": "conceptual",
+      "explanation": "Macheta istorică suprapune decupaje de altitudine. În QGIS, un DEM raster poate fi simbolizat și analizat prin hillshade sau slope; această pagină folosește în continuare numai terenul sintetic inclus local.",
+      "where": "Raster → Raster terrain analysis",
+      "primary": "terrain",
+      "secondary": [
+        "raster-data",
+        "raster-symbology"
+      ]
+    },
+    {
+      "lesson_id": "map-exterior",
+      "historical": "Elementele exterioare ale hărții",
+      "modern": "Print Layout",
+      "confidence": "close",
+      "explanation": "Titlul, legenda și scara sunt elemente ale compoziției hărții. În QGIS, Print Layout permite adăugarea și aranjarea acestor elemente înainte de export.",
+      "where": "Project → New Print Layout",
+      "primary": "layout",
+      "secondary": []
+    },
+    {
+      "lesson_id": "map-frame",
+      "historical": "Cadrul hărții",
+      "modern": "Map item și Print Layout",
+      "confidence": "close",
+      "explanation": "Cadrul delimitează câmpul cartografic și face parte din compoziția paginii. Print Layout oferă un obiect de hartă, legendă, scară și export; lecția despre compoziție dinamică este o continuare practică.",
+      "where": "Project → New Print Layout",
+      "primary": "layout",
+      "secondary": [
+        "dynamic-layout"
+      ]
+    },
+    {
+      "lesson_id": "map-interior",
+      "historical": "Elemente interioare și inscripții",
+      "modern": "Labels și Print Layout",
+      "confidence": "close",
+      "explanation": "Numele și textele descriptive pot fi etichete legate de obiecte geografice. În QGIS, Labels controlează această afișare, iar Print Layout organizează harta finală împreună cu legenda și scara.",
+      "where": "Layer Properties → Labels",
+      "primary": "labels",
+      "secondary": [
+        "layout"
+      ]
+    },
+    {
+      "primary": "reproject",
+      "where": "Project CRS / Export → Save Features As",
+      "historical": "Familii de proiecții",
+      "confidence": "conceptual",
+      "explanation": "O proiecție este doar una dintre componentele unui CRS; QGIS folosește CRS-ul proiectului pentru afișare și poate exporta un strat în alt CRS.",
+      "secondary": [],
+      "lesson_id": "projection-basics",
+      "modern": "CRS de proiect și reproiectarea straturilor"
+    }
+  ]
+}

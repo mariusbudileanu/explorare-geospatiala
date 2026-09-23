@@ -1,0 +1,12 @@
+{
+  "title": "Regiunile Atlas — set fictiv",
+  "note": "Date sintetice create exclusiv pentru demonstrații educaționale.",
+  "regions": [
+    {"id":"A","name":"Nordia","population":72,"production":34,"category":"munte","polygon":[[16,12],[44,9],[50,30],[37,43],[12,35]]},
+    {"id":"B","name":"Estalia","population":118,"production":81,"category":"deal","polygon":[[44,9],[79,15],[91,38],[63,47],[50,30]]},
+    {"id":"C","name":"Vestara","population":45,"production":57,"category":"câmpie","polygon":[[12,35],[37,43],[43,67],[17,83],[5,60]]},
+    {"id":"D","name":"Centria","population":154,"production":103,"category":"urban","polygon":[[37,43],[63,47],[69,72],[43,67]]},
+    {"id":"E","name":"Sudica","population":91,"production":69,"category":"câmpie","polygon":[[17,83],[43,67],[69,72],[80,94],[36,97]]},
+    {"id":"F","name":"Riviera","population":127,"production":43,"category":"litoral","polygon":[[63,47],[91,38],[97,73],[80,94],[69,72]]}
+  ]
+}

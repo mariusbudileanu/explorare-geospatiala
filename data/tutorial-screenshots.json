@@ -1,0 +1,173 @@
+[
+  {
+    "tutorial_id": "T01",
+    "filename": "T01_01_attribute_table.png",
+    "public_path": "assets/tutorials/T01/screenshots/T01_01_attribute_table.png",
+    "after_section": 10,
+    "caption_ro": "Tabelul de atribute leagă fiecare unitate școlară de informațiile sale.",
+    "alt_ro": "Tabelul de atribute al unităților școlare deschis peste harta Bucureștiului.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T01",
+    "filename": "T01_02_categorized_schools.png",
+    "public_path": "assets/tutorials/T01/screenshots/T01_02_categorized_schools.png",
+    "after_section": 15,
+    "caption_ro": "Categoriile educaționale sunt configurate în simbolizarea punctelor.",
+    "alt_ro": "Fereastra de simbolizare categorială a școlilor și punctele colorate pe harta Bucureștiului.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T01",
+    "filename": "T01_03_first_map_layout.png",
+    "public_path": "assets/tutorials/T01/screenshots/T01_03_first_map_layout.png",
+    "after_section": 18,
+    "caption_ro": "Prima compoziție cartografică în fereastra de layout QGIS.",
+    "alt_ro": "Fereastra Print Layout cu pagina unei hărți a școlilor din București.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T02",
+    "filename": "T02_01_derived_indicator_classes.png",
+    "public_path": "assets/tutorials/T02/screenshots/T02_01_derived_indicator_classes.png",
+    "after_section": 17,
+    "caption_ro": "Indicatorul elevi per sală de clasă este clasificat prin simbolizare graduată.",
+    "alt_ro": "Dialogul Graduated și harta circumscripțiilor colorate după raportul elevi per sală.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T02",
+    "filename": "T02_02_catchment_result.png",
+    "public_path": "assets/tutorials/T02/screenshots/T02_02_catchment_result.png",
+    "after_section": 18,
+    "caption_ro": "Punctele școlilor sunt vizibile deasupra poligoanelor clasificate.",
+    "alt_ro": "Harta Bucureștiului cu circumscripții școlare colorate și școli marcate prin puncte.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T02",
+    "filename": "T02_03_shifts_comparison.png",
+    "public_path": "assets/tutorials/T02/screenshots/T02_03_shifts_comparison.png",
+    "after_section": 26,
+    "caption_ro": "Varianta după numărul de schimburi folosește categorii discrete, spre deosebire de indicatorul elevi per sală.",
+    "alt_ro": "Dialogul Categorized pentru numărul de schimburi și harta alternativă a circumscripțiilor.",
+    "priority": "optional"
+  },
+  {
+    "tutorial_id": "T03",
+    "filename": "T03_01_medical_layer_hierarchy.png",
+    "public_path": "assets/tutorials/T03/screenshots/T03_01_medical_layer_hierarchy.png",
+    "after_section": 16,
+    "caption_ro": "Cele trei tipuri de servicii sunt păstrate în layere separate, cu spitalele desenate deasupra.",
+    "alt_ro": "Panoul Layers și harta punctelor pentru cabinete de familie, ambulatorii și spitale din București–Ilfov.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T03",
+    "filename": "T03_02_hospital_bed_symbols.png",
+    "public_path": "assets/tutorials/T03/screenshots/T03_02_hospital_bed_symbols.png",
+    "after_section": 17,
+    "caption_ro": "Dimensiunea simbolurilor de spital poate reprezenta numărul de paturi raportat.",
+    "alt_ro": "Dialogul de simbolizare a spitalelor după paturi și harta cu simboluri de mărimi diferite.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T03",
+    "filename": "T03_03_filtered_services.png",
+    "public_path": "assets/tutorials/T03/screenshots/T03_03_filtered_services.png",
+    "after_section": 27,
+    "caption_ro": "Filtrarea selectează numai anumite servicii sau dotări; rezultatul nu reprezintă toate serviciile medicale.",
+    "alt_ro": "Fereastra de filtrare QGIS peste harta serviciilor medicale; configurație pentru un subset de servicii.",
+    "priority": "optional"
+  },
+  {
+    "tutorial_id": "T04",
+    "filename": "T04_01_sports_status_categorie.png",
+    "public_path": "assets/tutorials/T04/screenshots/T04_01_sports_status_categorie.png",
+    "after_section": 13,
+    "caption_ro": "Legenda diferențiază bazele sportive după starea consemnată în date.",
+    "alt_ro": "Panoul Layers cu stările bazelor sportive și harta poligoanelor din București.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T04",
+    "filename": "T04_02_sports_status_map.png",
+    "public_path": "assets/tutorials/T04/screenshots/T04_02_sports_status_map.png",
+    "after_section": 17,
+    "caption_ro": "Simbolizarea după Stare rămâne harta principală a exercițiului.",
+    "alt_ro": "Harta bazelor sportive cu categorii de stare, vizibilă lângă fereastra de simbolizare QGIS.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T04",
+    "filename": "T04_03_ownership_comparison.png",
+    "public_path": "assets/tutorials/T04/screenshots/T04_03_ownership_comparison.png",
+    "after_section": 24,
+    "caption_ro": "Tipul proprietății oferă o altă clasificare a acelorași poligoane; harta nu stabilește cauza stării lor.",
+    "alt_ro": "Fereastra de simbolizare după Tip proprietate și harta alternativă a bazelor sportive.",
+    "priority": "optional"
+  },
+  {
+    "tutorial_id": "T05",
+    "filename": "T05_01_vector_clip_grid.png",
+    "public_path": "assets/tutorials/T05/screenshots/T05_01_vector_clip_grid.png",
+    "after_section": 14,
+    "caption_ro": "Clip folosește gridul și limita Bucureștiului pentru a crea un strat de lucru decupat.",
+    "alt_ro": "Dialogul QGIS Clip pentru gridul de recensământ și limita Bucureștiului.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T05",
+    "filename": "T05_02_population_grid_classes.png",
+    "public_path": "assets/tutorials/T05/screenshots/T05_02_population_grid_classes.png",
+    "after_section": 17,
+    "caption_ro": "Numărul total de locuitori este clasificat pe celulele gridului.",
+    "alt_ro": "Gridul de populație din București colorat pe clase ale numărului total de locuitori.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T05",
+    "filename": "T05_03_population_services_overlay.png",
+    "public_path": "assets/tutorials/T05/screenshots/T05_03_population_services_overlay.png",
+    "after_section": 21,
+    "caption_ro": "Școlile și cabinetele pot fi comparate vizual cu distribuția populației, fără a deduce accesibilitatea.",
+    "alt_ro": "Gridul populației din București cu puncte distincte pentru școli și cabinete medicale.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T05",
+    "filename": "T05_04_under15_share_map.png",
+    "public_path": "assets/tutorials/T05/screenshots/T05_04_under15_share_map.png",
+    "after_section": 19,
+    "caption_ro": "Ponderea persoanelor sub 15 ani este un procent, nu un număr total de persoane.",
+    "alt_ro": "Gridul din București simbolizat după ponderea populației sub 15 ani.",
+    "priority": "optional"
+  },
+  {
+    "tutorial_id": "T06",
+    "filename": "T06_01_suceava_raster_mask.png",
+    "public_path": "assets/tutorials/T06/screenshots/T06_01_suceava_raster_mask.png",
+    "after_section": 16,
+    "caption_ro": "DEM-ul este decupat folosind masca județului Suceava.",
+    "alt_ro": "Dialogul Clip Raster by Mask Layer, cu județul Suceava conturat peste un raster de relief.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T06",
+    "filename": "T06_02_suceava_dem_hillshade.png",
+    "public_path": "assets/tutorials/T06/screenshots/T06_02_suceava_dem_hillshade.png",
+    "after_section": 18,
+    "caption_ro": "Rampa hipsometrică colorează altitudinea, iar umbrirea ajută la citirea reliefului.",
+    "alt_ro": "Dialogul de simbolizare pseudocolor a DEM-ului lângă relieful colorat al Sucevei.",
+    "priority": "essential"
+  },
+  {
+    "tutorial_id": "T06",
+    "filename": "T06_03_suceava_forest_loss_overlay.png",
+    "public_path": "assets/tutorials/T06/screenshots/T06_03_suceava_forest_loss_overlay.png",
+    "after_section": 20,
+    "caption_ro": "Rasterul de pierdere forestieră este suprapus peste hillshade pentru a compara vizual distribuția pierderii cu contextul reliefului.",
+    "alt_ro": "Județul Suceava cu pixeli colorați de pierdere forestieră peste un hillshade gri și conturul județului; fără arii protejate sau hidrografie.",
+    "priority": "essential"
+  }
+]

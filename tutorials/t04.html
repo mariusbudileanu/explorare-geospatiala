@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Reprezintă calitativ starea bazelor sportive și compară alternativ tipul proprietății, cu o interpretare civică prudentă."><title>T04 · Baze sportive în Municipiul București: stare, proprietate și transformare urbană · Explorare geospațială</title><link rel="icon" type="image/svg+xml" href="../assets/ui/favicon.svg"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/tutorials.css"><link rel="stylesheet" href="../css/design-system.css"><script src="../data/content-manifest.js" defer></script><script src="../js/site.js" defer></script><script src="../js/tutorials.js" defer></script></head><body data-page="tutorial" data-page-id="T04" data-root="../"><a class="skip-link" href="#main-content">Sari la conținut</a><header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="../index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="../resources.html">Resurse</a><a class="quiet-button about-link" href="../lesson.html?id=about">Despre proiect</a></header><div class="workspace site-workspace"><aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside><main id="main-content" class="workshop-main"><div class="lesson-breadcrumb"><a href="../index.html">Explorare geospațială</a> → <a href="index.html">Ateliere QGIS</a> → T04</div><section class="lesson-hero workshop-hero"><span class="eyebrow">TUTORIAL T04</span><h1>Baze sportive în Municipiul București: stare, proprietate și transformare urbană</h1><p class="lead">Reprezintă calitativ starea bazelor sportive și compară alternativ tipul proprietății, cu o interpretare civică prudentă.</p><div class="tutorial-meta"><span>mediu</span><span>90–120 min</span><span>Poligoane + puncte</span></div><nav class="tutorial-progress" aria-label="Secvența atelierelor"><a href="t01.html" ><span>T01</span><i aria-hidden="true">●</i></a><a href="t02.html" ><span>T02</span><i aria-hidden="true">●</i></a><a href="t03.html" ><span>T03</span><i aria-hidden="true">●</i></a><a href="t04.html" aria-current="page"><span>T04</span><i aria-hidden="true">●</i></a><a href="t05.html" ><span>T05</span><i aria-hidden="true">●</i></a><a href="t06.html" ><span>T06</span><i aria-hidden="true">●</i></a></nav></section><details class="tutorial-toc"><summary>Cuprinsul tutorialului</summary><nav aria-label="Secțiunile tutorialului"><a href="#section-1">Titlu</a><a href="#section-5">Date necesare</a><a href="#section-9">Încărcarea datelor</a><a href="#section-13">Simbolizarea bazelor sportive după stare</a><a href="#section-14">Simbolizarea alternativă după tip proprietate</a><a href="#section-16">Calcularea ariei, opțional, fără modificarea datelor originale</a><a href="#section-18">Pregătirea layoutului</a><a href="#section-21">Interpretarea hărții finale</a><a href="#section-22">Ce nu putem concluziona doar din această hartă</a><a href="#section-24">Exercițiu suplimentar</a></nav></details><section class="tutorial-overview"><div class="section-heading"><div><span class="eyebrow">CE VEI ÎNVĂȚA</span><h2>Competențe în acest atelier</h2></div></div><ul><li>Categorized pe poligoane</li><li>filtre text ILIKE</li><li>calcul opțional de arie în hectare</li><li>etichetare selectivă</li><li>note metodologice</li></ul></section><section class="tutorial-data" id="date-pentru-exercitiu"><div class="section-heading"><div><span class="eyebrow">DATE PENTRU EXERCIȚIU</span><h2>Fișierele de lucru</h2></div></div><div class="dataset-grid"><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>02_Baze_Sportive_București_1990-2024.gpkg</h3><p>Poligoane ale bazelor sportive; hărți după stare și proprietate, cu calcul opțional de arie.</p><dl><div><dt>Layere</dt><dd>02_Baze_Sportive_București_1991-2024</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T04.</dd></div><div><dt>Folosit în</dt><dd><a href="t04.html">T04</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>04_Limită_Administrativă_București-Ilfov.gpkg</h3><p>Limita administrativă folosită sub poligoanele bazelor sportive.</p><dl><div><dt>Layere</dt><dd>Limită Administrativă</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T04.</dd></div><div><dt>Folosit în</dt><dd><a href="t04.html">T04</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article></div></section><section class="tutorial-source-flow" aria-label="Conținutul tutorialului"><div class="tutorial-phase" id="phase-1"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-1" data-source-section="1"><div class="step-heading"><span class="step-number">01</span><h3>Titlu</h3></div><div class="tutorial-prose"><p><strong>Baze sportive în Municipiul București: stare, proprietate și transformare urbană</strong></p>
+<p>În acest tutorial construim o hartă tematică folosind poligoane urbane: bazele sportive din București. Vom lucra cu date calitative, vom simboliza poligoane după <code>Stare</code> și <code>Tip proprietate</code> și vom discuta cum poate fi folosită o hartă pentru o narațiune civică și didactică despre transformarea funcțiunilor urbane.</p>
+<p>Tutorialul nu este o analiză juridică. Unele câmpuri au valoare juridică sau administrativă și trebuie interpretate cu prudență. Scopul nostru este reprezentarea cartografică și formularea unor observații preliminare.</p>
+</div></article><article class="tutorial-step " id="section-2" data-source-section="2"><div class="step-heading"><span class="step-number">02</span><h3>Durată estimată</h3></div><div class="tutorial-prose"><p><strong>90–120 minute.</strong></p>
+<p>Durata poate crește dacă grupa discută în detaliu diferența dintre <code>Funcțional</code>, <code>Dezafectat</code> și <code>Desființat</code> sau dacă se testează calculul ariei.</p>
+</div></article><article class="tutorial-step " id="section-3" data-source-section="3"><div class="step-heading"><span class="step-number">03</span><h3>Nivel de dificultate</h3></div><div class="tutorial-prose"><p><strong>Mediu.</strong></p>
+<p>Tutorialul este potrivit pentru cursanți care au parcurs primele trei tutoriale și pot lucra deja cu layere, tabele de atribute, simbolizare și filtre simple.</p>
+</div></article><article class="tutorial-step " id="section-4" data-source-section="4"><div class="step-heading"><span class="step-number">04</span><h3>Ce vom învăța</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursanții vor putea:</p>
+<ul>
+<li>să creeze și să salveze un proiect QGIS nou;</li>
+<li>să încarce un layer poligonal urban și o limită administrativă;</li>
+<li>să verifice CRS-ul layerelor;</li>
+<li>să inspecteze câmpuri calitative și câmpuri administrative;</li>
+<li>să simbolizeze poligoane după <code>Stare</code>;</li>
+<li>să construiască o simbolizare alternativă după <code>Tip proprietate</code>;</li>
+<li>să aplice filtre simple pentru baze funcționale, dezafectate, desființate, publice sau private;</li>
+<li>să calculeze opțional aria în hectare fără a modifica datele originale;</li>
+<li>să eticheteze selectiv câteva baze sportive;</li>
+<li>să pregătească un layout și să exporte harta finală ca PNG și PDF;</li>
+<li>să formuleze prudent concluzii cartografice, fără a transforma harta într-o analiză juridică.</li>
+</ul>
+</div></article><article class="tutorial-step " id="section-5" data-source-section="5"><div class="step-heading"><span class="step-number">05</span><h3>Date necesare</h3></div><div class="tutorial-prose"><p>Vom folosi datele ADIZMB despre bazele sportive din București. Pentru tutorial sunt necesare două fișiere:</p>
+<table>
+<thead>
+<tr>
+<th>Rol</th>
+<th>Fișier</th>
+<th>Layer</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Baze sportive</td>
+<td><code>02_Baze_Sportive_București_1990-2024.gpkg</code></td>
+<td><code>02_Baze_Sportive_București_1991-2024</code></td>
+</tr>
+<tr>
+<td>Limită administrativă</td>
+<td><code>04_Limită_Administrativă_București-Ilfov.gpkg</code></td>
+<td><code>Limită Administrativă</code></td>
+</tr>
+</tbody></table>
+<p>Nu modificați datele originale, nu redenumiți layerele originale și nu ștergeți nimic. Toate stilurile, filtrele și layouturile se salvează în proiectul QGIS.</p>
+</div></article><article class="tutorial-step " id="section-6" data-source-section="6"><div class="step-heading"><span class="step-number">06</span><h3>Întrebarea de lucru</h3></div><div class="tutorial-prose"><p><strong>Ce spune harta bazelor sportive despre stare, proprietate și transformarea funcțiunilor urbane?</strong></p>
+<p>Această întrebare are un caracter cartografic și civic. Harta ne ajută să vedem unde apar diferite stări ale bazelor sportive și ce tipuri de proprietate sunt asociate lor, dar nu demonstrează singură cauze juridice, responsabilități instituționale sau oportunitatea unor intervenții urbanistice.</p>
+</div></article><article class="tutorial-step " id="section-7" data-source-section="7"><div class="step-heading"><span class="step-number">07</span><h3>Rezultatul final</h3></div><div class="tutorial-prose"><p>La final, cursantul va exporta două fișiere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive.png
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive.pdf
+</code></pre></div>
+<p>Titlul hărții finale va fi:</p>
+<p><strong>Baze sportive în Municipiul București: stare, proprietate și transformare urbană</strong></p>
+<p>Proiectul QGIS se recomandă să fie salvat aici:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P04_baze_sportive.qgz
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-2"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-8" data-source-section="8"><div class="step-heading"><span class="step-number">08</span><h3>Pregătirea proiectului QGIS</h3></div><div class="tutorial-prose"><ol>
+<li>Deschideți QGIS.</li>
+<li>Alegeți <strong>Project &gt; New</strong>.</li>
+<li>Salvați proiectul cu <strong>Project &gt; Save As...</strong>.</li>
+<li>Salvați proiectul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P04_baze_sportive.qgz
+</code></pre></div>
+<p>Explicație: proiectul QGIS va păstra stilurile, filtrele, layoutul și eventualele câmpuri virtuale. Fișierele GeoPackage originale rămân neschimbate.</p>
+</div></article><article class="tutorial-step " id="section-9" data-source-section="9"><div class="step-heading"><span class="step-number">09</span><h3>Încărcarea datelor</h3></div><div class="tutorial-prose"><h4>9.1. Încărcarea layerului cu baze sportive</h4>
+<ol>
+<li>Alegeți <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>.</li>
+<li>Selectați fișierul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">02_Baze_Sportive_București_1990-2024.gpkg
+</code></pre></div>
+<ol start="3">
+<li>Încărcați layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">02_Baze_Sportive_București_1991-2024
+</code></pre></div>
+<h4>9.2. Încărcarea limitei administrative</h4>
+<ol>
+<li>Alegeți din nou <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>.</li>
+<li>Selectați fișierul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">04_Limită_Administrativă_București-Ilfov.gpkg
+</code></pre></div>
+<ol start="3">
+<li>Încărcați layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limită Administrativă
+</code></pre></div>
+<ol start="4">
+<li>În panoul <strong>Layers</strong>, așezați limita administrativă sub layerul bazelor sportive.</li>
+</ol>
+<p>După încărcare, ar trebui să vedeți poligoanele bazelor sportive peste limita administrativă.</p>
+</div></article><article class="tutorial-step " id="section-10" data-source-section="10"><div class="step-heading"><span class="step-number">10</span><h3>Verificarea CRS-ului</h3></div><div class="tutorial-prose"><ol>
+<li>Faceți clic dreapta pe layerul <code>02_Baze_Sportive_București_1991-2024</code>.</li>
+<li>Alegeți <strong>Properties</strong>.</li>
+<li>Verificați secțiunea <strong>Information</strong> sau <strong>Source</strong>.</li>
+<li>Repetați verificarea pentru layerul <code>Limită Administrativă</code>.</li>
+</ol>
+<p>În aceste date, layerele sunt în <code>EPSG:4326 - WGS 84</code>. Pentru afișare și simbolizare, acest lucru este suficient. Pentru calcul de arie, vom folosi o expresie care transformă geometria în <code>EPSG:3844</code>, potrivit pentru calcule metrice în România.</p>
+</div></article><article class="tutorial-step " id="section-11" data-source-section="11"><div class="step-heading"><span class="step-number">11</span><h3>Inspectarea tabelului de atribute</h3></div><div class="tutorial-prose"><ol>
+<li>Faceți clic dreapta pe layerul bazelor sportive.</li>
+<li>Alegeți <strong>Open Attribute Table</strong>.</li>
+<li>Observați că fiecare rând reprezintă o bază sportivă sau un teren asociat unei baze sportive.</li>
+<li>Observați câmpurile descriptive, administrative și juridico-administrative.</li>
+</ol>
+<p>Explicație: în acest tutorial, informația principală nu este doar poziția poligonului, ci felul în care atributele descriu starea, proprietatea și funcțiunea actuală.</p>
+</div></article><article class="tutorial-step " id="section-12" data-source-section="12"><div class="step-heading"><span class="step-number">12</span><h3>Înțelegerea câmpurilor calitative</h3></div><div class="tutorial-prose"><p>Pentru această hartă, câmpurile cele mai importante sunt calitative: conțin categorii, nume sau descrieri. Ele nu se interpretează ca numere, ci ca etichete sau clase.</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+<th>Utilitate în hartă</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Nume</code></td>
+<td>denumirea bazei sportive</td>
+<td>identificare și etichetare selectivă</td>
+</tr>
+<tr>
+<td><code>AKA</code></td>
+<td>denumire alternativă sau populară</td>
+<td>context local</td>
+</tr>
+<tr>
+<td><code>Sector</code></td>
+<td>sectorul Bucureștiului</td>
+<td>filtrare sau discuție administrativă</td>
+</tr>
+<tr>
+<td><code>Adresa</code></td>
+<td>adresa bazei</td>
+<td>identificare</td>
+</tr>
+<tr>
+<td><code>Proprietar actual</code></td>
+<td>proprietarul actual declarat în date</td>
+<td>interpretare prudentă</td>
+</tr>
+<tr>
+<td><code>Administrator</code></td>
+<td>entitatea care administrează baza</td>
+<td>context administrativ</td>
+</tr>
+<tr>
+<td><code>Tip proprietate</code></td>
+<td>tipul proprietății</td>
+<td>simbolizare alternativă</td>
+</tr>
+<tr>
+<td><code>Stare</code></td>
+<td>starea bazei sportive</td>
+<td>câmp principal pentru harta finală</td>
+</tr>
+<tr>
+<td><code>Funcțiune actuală</code></td>
+<td>funcțiunea prezentă a parcelei</td>
+<td>discuție despre transformare urbană</td>
+</tr>
+<tr>
+<td><code>Bunuri administrate</code></td>
+<td>elemente sau bunuri administrate</td>
+<td>detaliu descriptiv</td>
+</tr>
+<tr>
+<td><code>Sarcini</code></td>
+<td>sarcini/probleme juridice menționate</td>
+<td>informație sensibilă, de interpretat cu prudență</td>
+</tr>
+</tbody></table>
+<p>Atenție: unele câmpuri au valoare juridică sau administrativă și trebuie interpretate cu prudență. Tutorialul urmărește reprezentarea cartografică, nu analiza juridică.</p>
+<p>Atenție tehnică: câmpurile cu spații, diacritice sau semne speciale trebuie scrise între ghilimele duble în expresiile QGIS. Exemple:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Tip proprietate&quot; ILIKE &#39;%Public%&#39;
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Funcțiune actuală&quot;
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-3"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-13" data-source-section="13"><div class="step-heading"><span class="step-number">13</span><h3>Simbolizarea bazelor sportive după stare</h3></div><div class="tutorial-prose"><p>Pentru harta finală, câmpul central este:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Stare&quot;
+</code></pre></div>
+<ol>
+<li>Faceți clic dreapta pe layerul <code>02_Baze_Sportive_București_1991-2024</code>.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Schimbați tipul de simbolizare în <strong>Categorized</strong>.</li>
+<li>La <strong>Value</strong>, alegeți câmpul <code>Stare</code>.</li>
+<li>Apăsați <strong>Classify</strong>.</li>
+<li>Alegeți culori diferite pentru categoriile existente.</li>
+<li>Ajustați transparența poligoanelor la aproximativ 25-40%, pentru ca limitele și eventualele straturi de fundal să rămână lizibile.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Recomandare de culori:</p>
+<ul>
+<li><code>Funcțional</code>: verde;</li>
+<li><code>Funcțional parțial</code>: galben sau portocaliu deschis;</li>
+<li><code>Dezafectat</code>: portocaliu închis;</li>
+<li><code>Desființat</code>: roșu sau gri închis;</li>
+<li>valori neclare/NULL: gri deschis.</li>
+</ul>
+<p>Explicație: simbolizarea categorială este potrivită pentru date calitative. Nu arătăm o scară de valori, ci stări diferite.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T04/screenshots/T04_01_sports_status_categorie.png" data-caption="Legenda diferențiază bazele sportive după starea consemnată în date." data-alt="Panoul Layers cu stările bazelor sportive și harta poligoanelor din București." aria-label="Mărește captura: Legenda diferențiază bazele sportive după starea consemnată în date."><img src="../assets/tutorials/T04/screenshots/T04_01_sports_status_categorie.png" alt="Panoul Layers cu stările bazelor sportive și harta poligoanelor din București." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T04 · CAPTURĂ QGIS</span><p>Legenda diferențiază bazele sportive după starea consemnată în date.</p></figcaption></figure></article><article class="tutorial-step " id="section-14" data-source-section="14"><div class="step-heading"><span class="step-number">14</span><h3>Simbolizarea alternativă după tip proprietate</h3></div><div class="tutorial-prose"><p>O a doua citire posibilă este după:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Tip proprietate&quot;
+</code></pre></div>
+<ol>
+<li>Faceți clic dreapta pe layerul bazelor sportive.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Selectați <strong>Categorized</strong>.</li>
+<li>La <strong>Value</strong>, alegeți <code>Tip proprietate</code>.</li>
+<li>Apăsați <strong>Classify</strong>.</li>
+<li>Alegeți culori distincte, dar mai discrete decât la harta după stare.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Explicație: <code>Tip proprietate</code> poate deschide discuții civice importante, dar nu trebuie tratat ca o concluzie juridică finală. Valorile din tabel trebuie verificate în surse și documente dacă se urmărește o analiză juridică reală.</p>
+<p>Pentru harta finală a tutorialului, recomandarea este să folosiți simbolizarea după <code>Stare</code>, iar <code>Tip proprietate</code> să fie discutat ca variantă alternativă.</p>
+</div></article><article class="tutorial-step " id="section-15" data-source-section="15"><div class="step-heading"><span class="step-number">15</span><h3>Filtrarea bazelor dezafectate sau desființate</h3></div><div class="tutorial-prose"><p>Filtrele ne ajută să explorăm datele fără să le modificăm.</p>
+<h4>Baze funcționale</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Stare&quot; = &#39;Funcțional&#39;
+</code></pre></div>
+<p>Acest filtru afișează bazele sportive marcate ca funcționale.</p>
+<h4>Baze dezafectate</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Stare&quot; = &#39;Dezafectat&#39;
+</code></pre></div>
+<p>Acest filtru afișează bazele care există în teren, dar sunt marcate ca dezafectate.</p>
+<h4>Baze desființate</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Stare&quot; = &#39;Desființat&#39;
+</code></pre></div>
+<p>Acest filtru afișează bazele marcate ca desființate.</p>
+<h4>Proprietate publică</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Tip proprietate&quot; ILIKE &#39;%Public%&#39;
+</code></pre></div>
+<p><code>ILIKE</code> caută text fără să țină cont de litere mari/mici. <code>%Public%</code> înseamnă că textul poate conține și alte caractere înainte sau după cuvântul <code>Public</code>.</p>
+<h4>Proprietate privată</h4>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Tip proprietate&quot; ILIKE &#39;%Privat%&#39;
+</code></pre></div>
+<p>Acest filtru afișează valorile care conțin textul <code>Privat</code>.</p>
+<p>Pentru a aplica un filtru:</p>
+<ol>
+<li>Faceți clic dreapta pe layerul bazelor sportive.</li>
+<li>Alegeți <strong>Filter...</strong> sau <strong>Properties &gt; Source &gt; Query Builder</strong>.</li>
+<li>Introduceți expresia dorită.</li>
+<li>Apăsați <strong>OK</strong>.</li>
+</ol>
+<p>Filtrele sunt exerciții didactice. Pentru harta finală, decideți dacă păstrați toate bazele sportive sau doar o categorie. Dacă păstrați un filtru, titlul și legenda trebuie să spună clar ce subset este afișat.</p>
+</div></article><article class="tutorial-step " id="section-16" data-source-section="16"><div class="step-heading"><span class="step-number">16</span><h3>Calcularea ariei, opțional, fără modificarea datelor originale</h3></div><div class="tutorial-prose"><p>Calcularea ariei este opțională. Harta finală poate fi realizată foarte bine doar cu simbolizarea după <code>Stare</code>.</p>
+<p>Dacă doriți să comparați dimensiunea bazelor sportive, nu modificați datele originale. Folosiți una dintre variantele următoare:</p>
+<ul>
+<li>un <strong>câmp virtual</strong> în proiectul QGIS;</li>
+<li>un <strong>layer temporar/reproiectat</strong> în <code>EPSG:3844</code>;</li>
+<li>o expresie QGIS folosită doar pentru etichetare, analiză vizuală sau simbolizare.</li>
+</ul>
+<p>Expresia recomandată pentru aria în hectare este:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">round(area(transform($geometry, &#39;EPSG:4326&#39;, &#39;EPSG:3844&#39;)) / 10000, 2)
+</code></pre></div>
+<p>Explicație:</p>
+<ul>
+<li><code>$geometry</code> este geometria poligonului curent;</li>
+<li><code>transform(..., &#39;EPSG:4326&#39;, &#39;EPSG:3844&#39;)</code> transformă geometria într-un CRS proiectat potrivit pentru România;</li>
+<li><code>area(...)</code> calculează aria în metri pătrați;</li>
+<li><code>/ 10000</code> transformă metri pătrați în hectare;</li>
+<li><code>round(..., 2)</code> rotunjește rezultatul la două zecimale.</li>
+</ul>
+<p>Aria în hectare este utilă pentru comparație, dar nu este obligatorie pentru harta finală. De asemenea, aria calculată depinde de geometria existentă în date și nu spune singură nimic despre calitatea sau utilizarea efectivă a bazei sportive.</p>
+</div></article><article class="tutorial-step " id="section-17" data-source-section="17"><div class="step-heading"><span class="step-number">17</span><h3>Etichetarea selectivă</h3></div><div class="tutorial-prose"><p>Etichetele pot ajuta cititorul, dar prea multe etichete aglomerează harta.</p>
+<ol>
+<li>Faceți clic dreapta pe layerul bazelor sportive.</li>
+<li>Alegeți <strong>Properties &gt; Labels</strong>.</li>
+<li>Selectați <strong>Single Labels</strong>.</li>
+<li>La <strong>Value</strong>, alegeți:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Nume&quot;
+</code></pre></div>
+<ol start="5">
+<li>Folosiți font mic, de exemplu <code>7-8 pt</code>.</li>
+<li>Activați un buffer alb subțire.</li>
+<li>Etichetați doar câteva baze sportive reprezentative sau activați etichetele doar la scări mari.</li>
+</ol>
+<p>Recomandare: pentru harta finală, puteți eticheta manual câteva exemple relevante: o bază funcțională, una dezafectată și una desființată. Nu este necesar să fie etichetate toate poligoanele.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T04/screenshots/T04_02_sports_status_map.png" data-caption="Simbolizarea după Stare rămâne harta principală a exercițiului." data-alt="Harta bazelor sportive cu categorii de stare, vizibilă lângă fereastra de simbolizare QGIS." aria-label="Mărește captura: Simbolizarea după Stare rămâne harta principală a exercițiului."><img src="../assets/tutorials/T04/screenshots/T04_02_sports_status_map.png" alt="Harta bazelor sportive cu categorii de stare, vizibilă lângă fereastra de simbolizare QGIS." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T04 · CAPTURĂ QGIS</span><p>Simbolizarea după Stare rămâne harta principală a exercițiului.</p></figcaption></figure></article><div class="tutorial-phase" id="phase-4"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Layout și export</h2></div><article class="tutorial-step " id="section-18" data-source-section="18"><div class="step-heading"><span class="step-number">18</span><h3>Pregătirea layoutului</h3></div><div class="tutorial-prose"><ol>
+<li>Alegeți <strong>Project &gt; New Print Layout...</strong>.</li>
+<li>Dați layoutului numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive
+</code></pre></div>
+<ol start="3">
+<li>Apăsați <strong>OK</strong>.</li>
+<li>Setați pagina la <strong>A4 landscape</strong>. Dacă aveți nevoie de mai mult spațiu pentru legendă și note, folosiți <strong>A3 landscape</strong>.</li>
+<li>Folosiți <strong>Add Map</strong> și desenați cadrul hărții.</li>
+<li>Ajustați extinderea astfel încât Bucureștiul și bazele sportive să fie vizibile clar.</li>
+</ol>
+<h4>Elemente obligatorii în layout</h4>
+<p>Adăugați:</p>
+<ol>
+<li><strong>Titlu</strong></li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Baze sportive în Municipiul București: stare, proprietate și transformare urbană
+</code></pre></div>
+<ol start="2">
+<li><p><strong>Legendă</strong><br>Păstrați categoriile câmpului <code>Stare</code> și limita administrativă. Dacă folosiți o hartă alternativă după <code>Tip proprietate</code>, legenda trebuie să reflecte acest lucru.</p>
+</li>
+<li><p><strong>Scară grafică</strong><br>Adăugați o scară grafică discretă.</p>
+</li>
+<li><p><strong>Nord</strong><br>Adăugați un simbol de nord simplu.</p>
+</li>
+<li><p><strong>Sursa datelor</strong></p>
+</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sursa: Observatorul Urban Metropolitan București / ADIZMB, date prelucrate pentru cursul „Tehnici de vizualizare a datelor”.
+</code></pre></div>
+<ol start="6">
+<li><strong>Notă metodologică</strong></li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Harta reprezintă starea și proprietatea bazelor sportive conform datelor disponibile; nu reprezintă o analiză juridică sau urbanistică completă.
+</code></pre></div>
+<p>Explicație: nota metodologică este esențială. Ea păstrează harta în zona cartografică, civică și didactică, fără a o transforma într-un document juridic.</p>
+</div></article><article class="tutorial-step " id="section-19" data-source-section="19"><div class="step-heading"><span class="step-number">19</span><h3>Exportul hărții finale ca PNG</h3></div><div class="tutorial-prose"><ol>
+<li>În fereastra de layout, alegeți <strong>Layout &gt; Export as Image...</strong>.</li>
+<li>Alegeți folderul în care veți salva exporturile pentru acest tutorial.</li>
+<li>Salvați fișierul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive.png
+</code></pre></div>
+<ol start="4">
+<li>Dacă QGIS cere rezoluția, folosiți <code>300 dpi</code>.</li>
+<li>Apăsați <strong>Save</strong>.</li>
+</ol>
+<p>Fișierul final PNG trebuie să se numească:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive.png
+</code></pre></div>
+</div></article><article class="tutorial-step " id="section-20" data-source-section="20"><div class="step-heading"><span class="step-number">20</span><h3>Exportul hărții finale ca PDF</h3></div><div class="tutorial-prose"><ol>
+<li>În fereastra de layout, alegeți <strong>Layout &gt; Export as PDF...</strong>.</li>
+<li>Selectați același folder de export.</li>
+<li>Salvați fișierul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive.pdf
+</code></pre></div>
+<ol start="4">
+<li>Apăsați <strong>Save</strong>.</li>
+</ol>
+<p>Fișierul final PDF trebuie să se numească:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T04_harta_baze_sportive.pdf
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-5"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-21" data-source-section="21"><div class="step-heading"><span class="step-number">21</span><h3>Interpretarea hărții finale</h3></div><div class="tutorial-prose"><p>Harta finală poate susține observații descriptive:</p>
+<ul>
+<li>unde sunt localizate bazele sportive inventariate;</li>
+<li>ce baze apar ca funcționale, dezafectate sau desființate;</li>
+<li>dacă anumite stări par concentrate în anumite zone;</li>
+<li>cum se pot compara vizual starea și tipul de proprietate;</li>
+<li>unde merită puse întrebări suplimentare despre transformări urbane.</li>
+</ul>
+<p>Formulare recomandată pentru discuția cu grupa:</p>
+<p>„Harta arată distribuția și starea bazelor sportive conform datelor disponibile. Ea este un punct de plecare pentru întrebări despre transformări urbane, nu o concluzie juridică sau urbanistică finală.”</p>
+</div></article><article class="tutorial-step caution" id="section-22" data-source-section="22"><div class="step-heading"><span class="step-number">22</span><h3>Ce nu putem concluziona doar din această hartă</h3></div><div class="tutorial-prose"><p>Această hartă nu demonstrează:</p>
+<ul>
+<li>responsabilitatea juridică pentru starea unei baze sportive;</li>
+<li>legalitatea sau ilegalitatea unei transformări urbane;</li>
+<li>calitatea actuală a dotărilor sportive;</li>
+<li>accesibilitatea reală pentru populație;</li>
+<li>necesarul de investiții;</li>
+<li>prioritatea intervențiilor publice;</li>
+<li>situația cadastrală completă;</li>
+<li>istoricul complet al proprietății;</li>
+<li>gradul real de utilizare de către comunitate.</li>
+</ul>
+<p>Pentru asemenea concluzii ar fi necesare documente juridice, planuri urbanistice, date cadastrale detaliate, verificări de teren, interviuri, date despre populație și analize suplimentare.</p>
+</div></article><article class="tutorial-step caution" id="section-23" data-source-section="23"><div class="step-heading"><span class="step-number">23</span><h3>Erori frecvente</h3></div><div class="tutorial-prose"><p><strong>Poligoanele sunt prea opace</strong><br>Reduceți opacitatea sau transparența umplerii, astfel încât contururile și fundalul să rămână lizibile.</p>
+<p><strong>Legenda are prea multe categorii</strong><br>Păstrați doar categoriile relevante pentru <code>Stare</code> sau grupați valorile rare, dacă este necesar, în discuția didactică.</p>
+<p><strong>Filtrul nu funcționează</strong><br>Verificați ghilimelele duble pentru numele câmpului și ghilimelele simple pentru valoarea text:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Stare&quot; = &#39;Dezafectat&#39;
+</code></pre></div>
+<p><strong>Confuzie între <code>Dezafectat</code> și <code>Desființat</code></strong><br>Reamintiți cursanților că aceste valori vin din date și trebuie citite conform metodologiei sursei. Harta nu înlocuiește documentația.</p>
+<p><strong>Calculul ariei dă valori ciudate</strong><br>Verificați dacă ați folosit transformarea în <code>EPSG:3844</code>:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">round(area(transform($geometry, &#39;EPSG:4326&#39;, &#39;EPSG:3844&#39;)) / 10000, 2)
+</code></pre></div>
+<p><strong>Harta pare să formuleze acuzații juridice</strong><br>Reformulați titlul, legenda și nota metodologică. Păstrați discuția la nivel cartografic, civic și didactic.</p>
+</div></article><article class="tutorial-step " id="section-24" data-source-section="24"><div class="step-heading"><span class="step-number">24</span><h3>Exercițiu suplimentar</h3></div><div class="tutorial-prose"><p>Construiți o hartă alternativă în care:</p>
+<ol>
+<li>simbolizați bazele sportive după <code>Tip proprietate</code>;</li>
+<li>aplicați pe rând filtrele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Tip proprietate&quot; ILIKE &#39;%Public%&#39;
+</code></pre></div>
+<p>și:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Tip proprietate&quot; ILIKE &#39;%Privat%&#39;
+</code></pre></div>
+<ol start="3">
+<li>comparați harta după <code>Tip proprietate</code> cu harta după <code>Stare</code>.</li>
+</ol>
+<p>Întrebare de reflecție:</p>
+<p><strong>Care hartă este mai potrivită pentru o discuție publică introductivă: harta după stare sau harta după tipul de proprietate? De ce?</strong></p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T04/screenshots/T04_03_ownership_comparison.png" data-caption="Tipul proprietății oferă o altă clasificare a acelorași poligoane; harta nu stabilește cauza stării lor." data-alt="Fereastra de simbolizare după Tip proprietate și harta alternativă a bazelor sportive." aria-label="Mărește captura: Tipul proprietății oferă o altă clasificare a acelorași poligoane; harta nu stabilește cauza stării lor."><img src="../assets/tutorials/T04/screenshots/T04_03_ownership_comparison.png" alt="Fereastra de simbolizare după Tip proprietate și harta alternativă a bazelor sportive." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T04 · CAPTURĂ QGIS</span><p>Tipul proprietății oferă o altă clasificare a acelorași poligoane; harta nu stabilește cauza stării lor.</p></figcaption></figure></article></section><section class="tutorial-result" id="verifica-rezultatul"><span class="eyebrow">REZULTAT AȘTEPTAT</span><h2>Verifică rezultatul</h2><p>Documentul sursă cere exportul hărții în ambele formate. Verifică lizibilitatea titlului, legendei, scării, sursei și notei metodologice.</p><div class="file-badges"><code>T04_harta_baze_sportive.png</code><code>T04_harta_baze_sportive.pdf</code></div></section><section class="tutorial-links"><div><span class="eyebrow">CONCEPTE ASOCIATE</span><h2>Legături cu teoria</h2><div class="concept-grid"><a class="concept-link" href="../lesson.html?id=method-qualitative"><span>VEZI CONCEPTUL</span><strong>Fondul calitativ →</strong></a><a class="concept-link" href="../lesson.html?id=method-areas"><span>VEZI CONCEPTUL</span><strong>Metoda arealelor →</strong></a><a class="concept-link" href="../lesson.html?id=rectangular-coordinates"><span>VEZI CONCEPTUL</span><strong>Coordonate și CRS →</strong></a><a class="concept-link" href="../geospatial-data.html#vector"><span>MODELUL DE DATE</span><strong>Date vectoriale →</strong></a></div></div><div><span class="eyebrow">RESURSE QGIS</span><h2>Documentația 3.44</h2><div class="qgis-doc-grid"><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/basic_map/symbology.html" target="_blank" rel="noopener noreferrer"><strong>Simbolizarea straturilor vectoriale</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/classification.html" target="_blank" rel="noopener noreferrer"><strong>Clasificare nominală și cantitativă</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_analysis/reproject_transform.html" target="_blank" rel="noopener noreferrer"><strong>CRS, reproiectare și transformare</strong><span>Vezi și în QGIS Training Manual ↗</span></a></div></div></section><nav class="tutorial-prev-next" aria-label="Tutorial anterior și următor"><a href="t03.html">← T03 · Tutorial anterior</a><a href="t05.html">T05 · Tutorial următor →</a></nav><footer class="page-footer site-footer"><div><strong>Explorare geospațială · Ateliere QGIS</strong><p>Material procedural original al cursului; legăturile teoretice păstrează atribuirea pe paginile lor.</p></div><nav aria-label="Legături în subsol"><a href="index.html">Toate atelierele</a><a href="../resources.html">Resurse</a></nav></footer></main><aside class="site-context workshop-context"><span class="eyebrow">ATELIERE QGIS</span><h2>Învață în pași</h2><p class="small">Șase exerciții progresive. Fiecare hartă este însoțită de o limită de interpretare.</p><a class="outline-button full-button" href="../workflow.html">Recapitulează fluxul QGIS →</a></aside></div><button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button><dialog id="tutorial-dialog" class="tutorial-dialog" aria-labelledby="tutorial-dialog-title"><div class="dialog-header"><h2 id="tutorial-dialog-title">Captură QGIS</h2><div class="tutorial-dialog-actions"><button type="button" class="outline-button" data-zoom-tutorial-dialog aria-pressed="false">Mărește detaliile</button><button type="button" class="icon-button" data-close-tutorial-dialog aria-label="Închide imaginea mărită">×</button></div></div><div class="tutorial-dialog-viewport"><img id="tutorial-dialog-image" alt=""></div><p id="tutorial-dialog-caption"></p></dialog></body></html>
