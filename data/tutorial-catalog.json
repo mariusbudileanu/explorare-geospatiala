@@ -1,0 +1,282 @@
+[
+  {
+    "id": "T01",
+    "title": "Prima hartă tematică în QGIS: unitățile de învățământ din București",
+    "level": "începător",
+    "duration": "60–90 min",
+    "sequence": 1,
+    "summary": "Construiește o hartă descriptivă a unităților școlare din București, de la tabelul de atribute și categorii până la layout și export.",
+    "skills": [
+      "încărcare GeoPackage",
+      "inspectare tabel de atribute",
+      "verificare CRS",
+      "filtrare simplă",
+      "simbolizare categorială",
+      "layout",
+      "export PNG/PDF"
+    ],
+    "concepts": [
+      "punct versus poligon",
+      "atribute text, numerice și 0/1",
+      "NULL versus zero",
+      "clasificare CASE ordonată",
+      "hartă descriptivă"
+    ],
+    "dataset_ids": [
+      "schools_bucharest_2022_2023"
+    ],
+    "screenshots_planned": [
+      {
+        "id": "T01-01",
+        "filename": "T01_01_attribute_table.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T01-02",
+        "filename": "T01_02_categorized_schools.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T01-03",
+        "filename": "T01_03_first_map_layout.png",
+        "priority": "essential"
+      }
+    ],
+    "status": "source-reviewed"
+  },
+  {
+    "id": "T02",
+    "title": "Circumscripții școlare și presiune educațională în București",
+    "level": "începător spre intermediar",
+    "duration": "90–120 min",
+    "sequence": 2,
+    "summary": "Clasifică poligoane de circumscripții după un raport didactic elevi per sală de clasă și compară rezultatul cu numărul de schimburi.",
+    "skills": [
+      "simbolizare Graduated",
+      "alegere claselor și rampei",
+      "expresie pentru raport",
+      "suprapunere puncte peste poligoane",
+      "legendă tematică"
+    ],
+    "concepts": [
+      "coropletă",
+      "indicator derivat",
+      "protecție la împărțire cu zero",
+      "metodă de clasificare",
+      "limita interpretării presiunii"
+    ],
+    "dataset_ids": [
+      "school_catchments_bucharest_2022_2023"
+    ],
+    "screenshots_planned": [
+      {
+        "id": "T02-01",
+        "filename": "T02_01_derived_indicator_classes.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T02-02",
+        "filename": "T02_02_catchment_result.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T02-03",
+        "filename": "T02_03_shifts_comparison.png",
+        "priority": "optional"
+      }
+    ],
+    "status": "source-reviewed"
+  },
+  {
+    "id": "T03",
+    "title": "Infrastructura medicală București–Ilfov: primary, secondary și tertiary care",
+    "level": "ușor spre mediu",
+    "duration": "90–120 min",
+    "sequence": 3,
+    "summary": "Organizează trei layere punctuale de servicii medicale într-o ierarhie vizuală și explorează simboluri după paturi și filtre de dotări.",
+    "skills": [
+      "organizare layerelor",
+      "simboluri punctuale diferențiate",
+      "simboluri după atribut numeric",
+      "filtre binare",
+      "legendă multi-layer"
+    ],
+    "concepts": [
+      "ierarhie vizuală",
+      "date punctuale eterogene",
+      "simbol proporțional sau gradual",
+      "subset filtrat",
+      "localizare versus accesibilitate"
+    ],
+    "dataset_ids": [
+      "medical_primary_care",
+      "medical_secondary_care",
+      "medical_tertiary_care",
+      "medical_admin_boundary_if"
+    ],
+    "screenshots_planned": [
+      {
+        "id": "T03-01",
+        "filename": "T03_01_medical_layer_hierarchy.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T03-02",
+        "filename": "T03_02_hospital_bed_symbols.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T03-03",
+        "filename": "T03_03_filtered_services.png",
+        "priority": "optional"
+      }
+    ],
+    "status": "source-reviewed"
+  },
+  {
+    "id": "T04",
+    "title": "Baze sportive în Municipiul București: stare, proprietate și transformare urbană",
+    "level": "mediu",
+    "duration": "90–120 min",
+    "sequence": 4,
+    "summary": "Reprezintă calitativ starea bazelor sportive și compară alternativ tipul proprietății, cu o interpretare civică prudentă.",
+    "skills": [
+      "Categorized pe poligoane",
+      "filtre text ILIKE",
+      "calcul opțional de arie în hectare",
+      "etichetare selectivă",
+      "note metodologice"
+    ],
+    "concepts": [
+      "date calitative",
+      "stare versus proprietate",
+      "calcul în CRS proiectat",
+      "date juridico-administrative",
+      "limite de interpretare"
+    ],
+    "dataset_ids": [
+      "sports_sites_bucharest",
+      "sports_admin_boundary"
+    ],
+    "screenshots_planned": [
+      {
+        "id": "T04-01",
+        "filename": "T04_01_sports_status_categorie.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T04-02",
+        "filename": "T04_02_sports_status_map.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T04-03",
+        "filename": "T04_03_ownership_comparison.png",
+        "priority": "optional"
+      }
+    ],
+    "status": "source-reviewed"
+  },
+  {
+    "id": "T05",
+    "title": "Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală",
+    "level": "mediu",
+    "duration": "120 min",
+    "sequence": 5,
+    "summary": "Decupează un grid de populație la București și compară vizual celulele populate cu poziția școlilor și cabinetelor de medicină de familie.",
+    "skills": [
+      "gestionare grid vectorial mare",
+      "verificare CRS mixte",
+      "Processing Clip vectorial",
+      "filtrare celule populate",
+      "calcul pondere demografică",
+      "suprapunere servicii"
+    ],
+    "concepts": [
+      "grid de populație",
+      "EPSG:3844 versus EPSG:4326",
+      "număr versus procent",
+      "procesare vectorială",
+      "comparație vizuală versus accesibilitate"
+    ],
+    "dataset_ids": [
+      "census_2021_grid",
+      "schools_bucharest_2022_2023",
+      "medical_primary_care"
+    ],
+    "screenshots_planned": [
+      {
+        "id": "T05-01",
+        "filename": "T05_01_vector_clip_grid.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T05-02",
+        "filename": "T05_02_population_grid_classes.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T05-03",
+        "filename": "T05_03_population_services_overlay.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T05-04",
+        "filename": "T05_04_under15_share_map.png",
+        "priority": "optional"
+      }
+    ],
+    "status": "source-reviewed"
+  },
+  {
+    "id": "T06",
+    "title": "Relief, arii naturale protejate și pierdere forestieră",
+    "level": "mediu spre avansat",
+    "duration": "120–150 min",
+    "sequence": 6,
+    "summary": "Combină subseturi raster de DEM și pierdere forestieră pentru Suceava cu arii protejate și hidrografie într-o hartă de interpretare vizuală.",
+    "skills": [
+      "selecție județ Suceava",
+      "Clip Raster by Mask Layer",
+      "Singleband pseudocolor",
+      "hillshade",
+      "simbolizare raster tematic",
+      "suprapunere raster-vector"
+    ],
+    "concepts": [
+      "raster continuu versus tematic",
+      "subset regional",
+      "EPSG:3844 de verificat pe fișier",
+      "ani/perioade de pierdere forestieră",
+      "corelație vizuală versus cauzalitate"
+    ],
+    "dataset_ids": [
+      "copernicus_dem_30m",
+      "hansen_lossyear_2024",
+      "protected_areas_ro",
+      "relief_units_ro",
+      "geomorphometry_landforms_ro",
+      "counties_ro",
+      "rivers_ro",
+      "lakes_ro"
+    ],
+    "screenshots_planned": [
+      {
+        "id": "T06-01",
+        "filename": "T06_01_suceava_raster_mask.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T06-02",
+        "filename": "T06_02_suceava_dem_hillshade.png",
+        "priority": "essential"
+      },
+      {
+        "id": "T06-03",
+        "filename": "T06_03_suceava_forest_loss_overlay.png",
+        "priority": "essential"
+      }
+    ],
+    "status": "source-reviewed"
+  }
+]

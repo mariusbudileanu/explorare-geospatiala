@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Clasifică poligoane de circumscripții după un raport didactic elevi per sală de clasă și compară rezultatul cu numărul de schimburi."><title>T02 · Circumscripții școlare și presiune educațională în București · Explorare geospațială</title><link rel="icon" type="image/svg+xml" href="../assets/ui/favicon.svg"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/tutorials.css"><link rel="stylesheet" href="../css/design-system.css"><script src="../data/content-manifest.js" defer></script><script src="../js/site.js" defer></script><script src="../js/tutorials.js" defer></script></head><body data-page="tutorial" data-page-id="T02" data-root="../"><a class="skip-link" href="#main-content">Sari la conținut</a><header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="../index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="../resources.html">Resurse</a><a class="quiet-button about-link" href="../lesson.html?id=about">Despre proiect</a></header><div class="workspace site-workspace"><aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside><main id="main-content" class="workshop-main"><div class="lesson-breadcrumb"><a href="../index.html">Explorare geospațială</a> → <a href="index.html">Ateliere QGIS</a> → T02</div><section class="lesson-hero workshop-hero"><span class="eyebrow">TUTORIAL T02</span><h1>Circumscripții școlare și presiune educațională în București</h1><p class="lead">Clasifică poligoane de circumscripții după un raport didactic elevi per sală de clasă și compară rezultatul cu numărul de schimburi.</p><div class="tutorial-meta"><span>începător spre intermediar</span><span>90–120 min</span><span>Poligoane + puncte</span></div><nav class="tutorial-progress" aria-label="Secvența atelierelor"><a href="t01.html" ><span>T01</span><i aria-hidden="true">●</i></a><a href="t02.html" aria-current="page"><span>T02</span><i aria-hidden="true">●</i></a><a href="t03.html" ><span>T03</span><i aria-hidden="true">●</i></a><a href="t04.html" ><span>T04</span><i aria-hidden="true">●</i></a><a href="t05.html" ><span>T05</span><i aria-hidden="true">●</i></a><a href="t06.html" ><span>T06</span><i aria-hidden="true">●</i></a></nav></section><details class="tutorial-toc"><summary>Cuprinsul tutorialului</summary><nav aria-label="Secțiunile tutorialului"><a href="#section-1">Titlu</a><a href="#section-5">Date necesare</a><a href="#section-9">Încărcarea datelor</a><a href="#section-13">Simbolizarea simplă a circumscripțiilor</a><a href="#section-14">Simbolizarea după numărul total de elevi</a><a href="#section-15">Simbolizarea după numărul de schimburi</a><a href="#section-16">Calcularea indicatorului elevi per sală de clasă</a><a href="#section-17">Simbolizarea indicatorului elevi per sală de clasă</a><a href="#section-20">Pregătirea layoutului</a><a href="#section-23">Interpretarea hărții finale</a><a href="#section-24">Ce nu putem concluziona doar din această hartă</a><a href="#section-26">Exercițiu suplimentar</a></nav></details><section class="tutorial-overview"><div class="section-heading"><div><span class="eyebrow">CE VEI ÎNVĂȚA</span><h2>Competențe în acest atelier</h2></div></div><ul><li>simbolizare Graduated</li><li>alegere claselor și rampei</li><li>expresie pentru raport</li><li>suprapunere puncte peste poligoane</li><li>legendă tematică</li></ul></section><section class="tutorial-data" id="date-pentru-exercitiu"><div class="section-heading"><div><span class="eyebrow">DATE PENTRU EXERCIȚIU</span><h2>Fișierele de lucru</h2></div></div><div class="dataset-grid"><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>05_Circumscripții Școlare_București_2022-2023.gpkg</h3><p>Circumscripții școlare, puncte de școli și limita orașului pentru harta elevilor pe sală de clasă.</p><dl><div><dt>Layere</dt><dd>Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023<br>Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023<br>Limită Administrativă - Municipiul București</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T02 pentru toate cele trei layere.</dd></div><div><dt>Folosit în</dt><dd><a href="t02.html">T02</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article></div></section><section class="tutorial-source-flow" aria-label="Conținutul tutorialului"><div class="tutorial-phase" id="phase-1"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-1" data-source-section="1"><div class="step-heading"><span class="step-number">01</span><h3>Titlu</h3></div><div class="tutorial-prose"><p><strong>Circumscripții școlare și presiune educațională în Municipiul București, 2022–2023</strong></p>
+<p>În acest tutorial construim o hartă tematică pe poligoane, folosind circumscripțiile școlare din București. Tutorialul pornește de la un proiect QGIS nou și ajunge până la exportul hărții finale în format PNG și PDF.</p>
+<p>Acest exercițiu continuă Tutorialul 1. Dacă în Tutorialul 1 am lucrat mai ales cu puncte, acum lucrăm cu poligoane și cu un indicator simplificat: elevi per sală de clasă.</p>
+</div></article><article class="tutorial-step " id="section-2" data-source-section="2"><div class="step-heading"><span class="step-number">02</span><h3>Durată estimată</h3></div><div class="tutorial-prose"><p><strong>90–120 minute.</strong></p>
+<p>Durata poate crește dacă grupa are nevoie de mai mult timp pentru expresii QGIS, clasificare și interpretarea indicatorului.</p>
+</div></article><article class="tutorial-step " id="section-3" data-source-section="3"><div class="step-heading"><span class="step-number">03</span><h3>Nivel de dificultate</h3></div><div class="tutorial-prose"><p><strong>Începător spre intermediar.</strong></p>
+<p>Tutorialul este potrivit pentru cursanți care au parcurs deja Tutorialul 1 și știu să încarce un GeoPackage, să deschidă tabelul de atribute și să aplice o simbolizare simplă.</p>
+</div></article><article class="tutorial-step " id="section-4" data-source-section="4"><div class="step-heading"><span class="step-number">04</span><h3>Ce vom învăța</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursanții vor putea:</p>
+<ul>
+<li>să creeze și să salveze un proiect QGIS nou;</li>
+<li>să încarce mai multe layere din același GeoPackage;</li>
+<li>să lucreze cu poligoane de circumscripții școlare;</li>
+<li>să verifice CRS-ul layerelor;</li>
+<li>să inspecteze tabelul de atribute și să aleagă câmpuri relevante;</li>
+<li>să simbolizeze poligoane simplu, apoi după valori numerice;</li>
+<li>să compare simbolizarea după <code>Număr total elevi</code> și <code>Număr de schimburi</code>;</li>
+<li>să creeze un indicator didactic: elevi per sală de clasă;</li>
+<li>să simbolizeze indicatorul cu o rampă secvențială;</li>
+<li>să adauge punctele școlilor peste poligoane;</li>
+<li>să eticheteze selectiv câteva școli;</li>
+<li>să pregătească un layout și să exporte harta finală ca PNG și PDF;</li>
+<li>să formuleze corect limitele interpretării hărții.</li>
+</ul>
+</div></article><article class="tutorial-step " id="section-5" data-source-section="5"><div class="step-heading"><span class="step-number">05</span><h3>Date necesare</h3></div><div class="tutorial-prose"><p>Vom folosi următorul fișier GeoPackage:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">05_Circumscripții Școlare_București_2022-2023.gpkg
+</code></pre></div>
+<p>Din acest GeoPackage vom încărca trei layere:</p>
+<ol>
+<li><code>Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023</code></li>
+<li><code>Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023</code></li>
+<li><code>Limită Administrativă - Municipiul București</code></li>
+</ol>
+<p>Nu modificați datele originale, nu redenumiți layerele originale și nu ștergeți nimic. Toate stilurile, filtrele, expresiile și layouturile se păstrează în proiectul QGIS.</p>
+</div></article><article class="tutorial-step " id="section-6" data-source-section="6"><div class="step-heading"><span class="step-number">06</span><h3>Întrebarea de lucru</h3></div><div class="tutorial-prose"><p><strong>Unde apar circumscripții cu presiune mai mare asupra infrastructurii școlare?</strong></p>
+<p>În acest tutorial, folosim termenul „presiune” într-un sens didactic și exploratoriu. Nu facem o evaluare oficială a școlilor și nu demonstrăm calitatea educației sau echitatea școlară.</p>
+</div></article><article class="tutorial-step " id="section-7" data-source-section="7"><div class="step-heading"><span class="step-number">07</span><h3>Rezultatul final</h3></div><div class="tutorial-prose"><p>La final, cursantul va exporta două fișiere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii.png
+</code></pre></div>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii.pdf
+</code></pre></div>
+<p>Titlul hărții finale va fi:</p>
+<p><strong>Circumscripții școlare și presiune educațională în Municipiul București, 2022–2023</strong></p>
+<p>Proiectul QGIS se recomandă să fie salvat aici:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P02_circumscriptii_scolare.qgz
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-2"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-8" data-source-section="8"><div class="step-heading"><span class="step-number">08</span><h3>Pregătirea proiectului QGIS</h3></div><div class="tutorial-prose"><ol>
+<li>Deschideți QGIS.</li>
+<li>Alegeți <strong>Project &gt; New</strong> pentru a crea un proiect nou. Un proiect nou este util deoarece pornește fără stiluri, filtre sau layere rămase din exerciții anterioare.</li>
+<li>Salvați proiectul cu <strong>Project &gt; Save As...</strong>.</li>
+<li>Salvați proiectul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P02_circumscriptii_scolare.qgz
+</code></pre></div>
+<p>Explicație: proiectul QGIS salvează modul în care lucrăm cu datele: ordinea layerelor, stilurile, expresiile, layoutul și setările proiectului. Datele originale rămân în GeoPackage.</p>
+</div></article><article class="tutorial-step " id="section-9" data-source-section="9"><div class="step-heading"><span class="step-number">09</span><h3>Încărcarea datelor</h3></div><div class="tutorial-prose"><ol>
+<li>Alegeți <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>.</li>
+<li>La <strong>Source Type</strong>, alegeți <strong>File</strong>.</li>
+<li>La <strong>Vector Dataset(s)</strong>, selectați GeoPackage-ul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">05_Circumscripții Școlare_București_2022-2023.gpkg
+</code></pre></div>
+<ol start="4">
+<li>Apăsați <strong>Add</strong>.</li>
+<li>Când apare lista layerelor, selectați:</li>
+</ol>
+<ul>
+<li><code>Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023</code></li>
+<li><code>Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023</code></li>
+<li><code>Limită Administrativă - Municipiul București</code></li>
+</ul>
+<ol start="6">
+<li>Apăsați <strong>Add Layers</strong> sau <strong>OK</strong>.</li>
+</ol>
+<p>Explicație: GeoPackage-ul conține atât poligoanele circumscripțiilor, cât și punctele școlilor asociate. Pentru harta finală, poligoanele vor purta tema principală, iar punctele vor ajuta cititorul să localizeze unitățile școlare.</p>
+<p>După încărcare, ar trebui să vedeți poligoanele circumscripțiilor, punctele școlilor și limita administrativă a Bucureștiului.</p>
+</div></article><article class="tutorial-step " id="section-10" data-source-section="10"><div class="step-heading"><span class="step-number">10</span><h3>Verificarea CRS-ului</h3></div><div class="tutorial-prose"><p>CRS înseamnă <strong>Coordinate Reference System</strong>, adică sistemul de coordonate folosit pentru poziționarea datelor.</p>
+<ol>
+<li>Faceți clic dreapta pe layerul <code>Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023</code>.</li>
+<li>Alegeți <strong>Properties</strong>.</li>
+<li>Verificați secțiunea <strong>Information</strong> sau <strong>Source</strong>.</li>
+<li>Repetați verificarea pentru layerul punctelor și pentru limita administrativă.</li>
+</ol>
+<p>În acest set de date, layerele sunt în <code>EPSG:4326 - WGS 84</code>. Pentru acest tutorial, este suficient ca layerele să se suprapună corect. Nu vom calcula arii sau distanțe reale în metri.</p>
+<p>Dacă punctele, poligoanele și limita administrativă nu se suprapun, verificați CRS-ul proiectului din colțul dreapta-jos al ferestrei QGIS și folosiți <strong>Zoom to Layer</strong> pentru fiecare strat.</p>
+</div></article><article class="tutorial-step " id="section-11" data-source-section="11"><div class="step-heading"><span class="step-number">11</span><h3>Inspectarea tabelului de atribute</h3></div><div class="tutorial-prose"><ol>
+<li>În panoul <strong>Layers</strong>, faceți clic dreapta pe:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023
+</code></pre></div>
+<ol start="2">
+<li>Alegeți <strong>Open Attribute Table</strong>.</li>
+<li>Observați că fiecare rând reprezintă o circumscripție școlară.</li>
+<li>Observați câmpurile care descriu unitatea școlară asociată și resursele raportate.</li>
+</ol>
+<p>Explicație: poligonul ne arată aria circumscripției, iar tabelul ne oferă informații despre unitatea de învățământ asociată: elevi, săli de clasă, schimburi, dotări și personal.</p>
+</div></article><article class="tutorial-step " id="section-12" data-source-section="12"><div class="step-heading"><span class="step-number">12</span><h3>Alegerea câmpurilor importante</h3></div><div class="tutorial-prose"><p>Pentru acest tutorial, ne concentrăm pe câmpurile care ajută la înțelegerea temei: circumscripții, elevi și infrastructură școlară.</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Tip de informație</th>
+<th>Utilitate didactică</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Denumirea unității de învățământ</code></td>
+<td>text</td>
+<td>identifică școala asociată circumscripției</td>
+</tr>
+<tr>
+<td><code>Coduri SIIIR</code></td>
+<td>text/cod</td>
+<td>identificator administrativ; util pentru verificare, nu pentru simbolizare</td>
+</tr>
+<tr>
+<td><code>Sector</code></td>
+<td>numeric</td>
+<td>permite gruparea circumscripțiilor pe sectoare</td>
+</tr>
+<tr>
+<td><code>Număr total elevi</code></td>
+<td>numeric</td>
+<td>poate indica mărimea populației școlare raportate</td>
+</tr>
+<tr>
+<td><code>Număr de schimburi</code></td>
+<td>numeric</td>
+<td>arată dacă unitatea funcționează într-unul sau mai multe schimburi</td>
+</tr>
+<tr>
+<td><code>Număr săli de clasă</code></td>
+<td>numeric</td>
+<td>intră în calculul indicatorului elevi per sală</td>
+</tr>
+<tr>
+<td><code>Număr săli de sport</code></td>
+<td>numeric</td>
+<td>dotare școlară, utilă pentru discuții suplimentare</td>
+</tr>
+<tr>
+<td><code>Teren exterior</code></td>
+<td>text</td>
+<td>indică existența/descrierea unui teren exterior</td>
+</tr>
+<tr>
+<td><code>Număr cabinete medicale</code></td>
+<td>numeric</td>
+<td>dotare de sprijin pentru elevi</td>
+</tr>
+<tr>
+<td><code>Număr personal calificat</code></td>
+<td>numeric</td>
+<td>informație despre resursa umană raportată</td>
+</tr>
+</tbody></table>
+<h4>Câmpuri text, numerice și NULL</h4>
+<p><strong>Câmpurile text</strong> conțin denumiri, coduri sau descrieri. Exemple: <code>Denumirea unității de învățământ</code>, <code>Coduri SIIIR</code>, <code>Teren exterior</code>.</p>
+<p><strong>Câmpurile numerice</strong> conțin valori cu care putem face clasificări sau calcule. Exemple: <code>Număr total elevi</code>, <code>Număr de schimburi</code>, <code>Număr săli de clasă</code>, <code>Număr personal calificat</code>.</p>
+<p><strong>Valorile NULL</strong> înseamnă lipsă de informație. Ele nu sunt același lucru cu zero. De exemplu, <code>0</code> la <code>Număr săli de clasă</code> ar însemna valoare numerică zero, iar <code>NULL</code> înseamnă că valoarea nu este completată sau nu este disponibilă.</p>
+<p>Atenție: în expresiile QGIS, câmpurile cu spații, diacritice sau semne speciale trebuie scrise între ghilimele duble. De exemplu:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Număr total elevi&quot;
+</code></pre></div>
+<p>și:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Număr săli de clasă&quot;
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-3"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-13" data-source-section="13"><div class="step-heading"><span class="step-number">13</span><h3>Simbolizarea simplă a circumscripțiilor</h3></div><div class="tutorial-prose"><p>Începem cu o simbolizare simplă, pentru a vedea clar poligoanele.</p>
+<h4>Limită administrativă</h4>
+<ol>
+<li>Faceți clic dreapta pe <code>Limită Administrativă - Municipiul București</code>.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Setați umplerea la transparent.</li>
+<li>Alegeți un contur discret, de exemplu gri închis.</li>
+<li>Setați grosimea conturului la aproximativ <code>0.5 mm</code>.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<h4>Circumscripții școlare</h4>
+<ol>
+<li>Faceți clic dreapta pe layerul circumscripțiilor.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Alegeți <strong>Single Symbol</strong>.</li>
+<li>Setați o umplere semitransparentă, de exemplu albastru deschis cu transparență 40-60%.</li>
+<li>Setați conturul poligoanelor la gri deschis, subțire.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Explicație: în această etapă nu interpretăm încă valorile. Ne asigurăm doar că poligoanele se văd clar și că limita administrativă nu acoperă tema principală.</p>
+</div></article><article class="tutorial-step " id="section-14" data-source-section="14"><div class="step-heading"><span class="step-number">14</span><h3>Simbolizarea după numărul total de elevi</h3></div><div class="tutorial-prose"><p>Acum transformăm harta într-o hartă tematică.</p>
+<ol>
+<li>Faceți clic dreapta pe layerul circumscripțiilor.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Schimbați tipul de simbolizare în <strong>Graduated</strong>.</li>
+<li>La câmpul de clasificare, alegeți:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Număr total elevi&quot;
+</code></pre></div>
+<ol start="5">
+<li>Alegeți o rampă secvențială, de la deschis la închis.</li>
+<li>Folosiți 4 sau 5 clase.</li>
+<li>Pentru metoda de clasificare, puteți folosi <strong>Natural Breaks</strong> sau <strong>Quantile</strong>.</li>
+<li>Apăsați <strong>Classify</strong>, apoi <strong>Apply</strong>.</li>
+</ol>
+<p>Explicație: o rampă secvențială este potrivită pentru valori numerice. Culorile mai închise pot marca valori mai mari, dar legenda trebuie citită atent.</p>
+</div></article><article class="tutorial-step " id="section-15" data-source-section="15"><div class="step-heading"><span class="step-number">15</span><h3>Simbolizarea după numărul de schimburi</h3></div><div class="tutorial-prose"><p>Simbolizarea după <code>Număr de schimburi</code> răspunde la o întrebare mai apropiată de organizarea școlii.</p>
+<ol>
+<li>Rămâneți în <strong>Properties &gt; Symbology</strong> pentru layerul circumscripțiilor.</li>
+<li>Alegeți <strong>Categorized</strong> sau <strong>Graduated</strong>, în funcție de cum doriți să discutați datele.</li>
+<li>La valoare, selectați:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Număr de schimburi&quot;
+</code></pre></div>
+<ol start="4">
+<li>Apăsați <strong>Classify</strong>.</li>
+<li>Folosiți culori distincte pentru valorile 1, 2 și eventual alte valori existente.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Explicație: <code>Număr de schimburi</code> este numeric, dar are puține valori posibile. De aceea, simbolizarea categorială poate fi mai clară decât o rampă continuă.</p>
+</div></article><article class="tutorial-step " id="section-16" data-source-section="16"><div class="step-heading"><span class="step-number">16</span><h3>Calcularea indicatorului elevi per sală de clasă</h3></div><div class="tutorial-prose"><p>Pentru harta finală vom folosi un indicator simplificat:</p>
+<p><strong>elevi per sală de clasă = număr total elevi / număr săli de clasă</strong></p>
+<p>Acest indicator este util pentru o primă interpretare vizuală, dar trebuie prezentat cu prudență.</p>
+<p>Indicatorul:</p>
+<ul>
+<li>nu reprezintă capacitatea oficială;</li>
+<li>nu ține cont de niveluri de învățământ separate;</li>
+<li>nu ține cont de elevii care vin din afara circumscripției;</li>
+<li>nu ține cont de program, schimburi, mobilitate sau reguli administrative;</li>
+<li>este util doar pentru o primă interpretare vizuală.</li>
+</ul>
+<h4>Varianta recomandată: expresie de simbolizare</h4>
+<p>Putem calcula indicatorul direct în simbolizare, fără să modificăm datele originale.</p>
+<p>Expresia QGIS este:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">CASE
+WHEN &quot;Număr săli de clasă&quot; IS NULL OR &quot;Număr săli de clasă&quot; = 0 THEN NULL
+ELSE round(&quot;Număr total elevi&quot; * 1.0 / &quot;Număr săli de clasă&quot;, 1)
+END
+</code></pre></div>
+<p>Explicație pe înțelesul unui începător:</p>
+<ul>
+<li><code>CASE</code> pornește o expresie cu mai multe situații;</li>
+<li><code>WHEN ... THEN ...</code> înseamnă „dacă se întâmplă acest lucru, atunci folosește această valoare”;</li>
+<li><code>&quot;Număr săli de clasă&quot; IS NULL</code> verifică dacă nu există informație în câmp;</li>
+<li><code>&quot;Număr săli de clasă&quot; = 0</code> evită împărțirea la zero;</li>
+<li><code>THEN NULL</code> spune că nu calculăm indicatorul pentru acele cazuri;</li>
+<li><code>* 1.0</code> forțează calculul ca număr zecimal, nu ca împărțire între numere întregi;</li>
+<li><code>round(..., 1)</code> rotunjește rezultatul la o zecimală;</li>
+<li><code>END</code> închide expresia.</li>
+</ul>
+<h4>Varianta alternativă: câmp virtual</h4>
+<p>Dacă lectorul dorește ca indicatorul să apară vizibil în tabelul de atribute, se poate crea un <strong>câmp virtual</strong> în QGIS. Câmpul virtual se salvează în proiectul QGIS, nu în GeoPackage-ul original.</p>
+<p>Pentru prima rulare a tutorialului, recomandarea este să folosiți expresia în simbolizare. Este mai simplu și mai sigur pentru începători.</p>
+</div></article><article class="tutorial-step " id="section-17" data-source-section="17"><div class="step-heading"><span class="step-number">17</span><h3>Simbolizarea indicatorului elevi per sală de clasă</h3></div><div class="tutorial-prose"><ol>
+<li>Faceți clic dreapta pe layerul circumscripțiilor.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Alegeți <strong>Graduated</strong>.</li>
+<li>La câmpul <strong>Value</strong>, apăsați butonul de expresie.</li>
+<li>Introduceți expresia:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">CASE
+WHEN &quot;Număr săli de clasă&quot; IS NULL OR &quot;Număr săli de clasă&quot; = 0 THEN NULL
+ELSE round(&quot;Număr total elevi&quot; * 1.0 / &quot;Număr săli de clasă&quot;, 1)
+END
+</code></pre></div>
+<ol start="6">
+<li>Apăsați <strong>OK</strong>.</li>
+<li>Alegeți o rampă secvențială, de exemplu de la galben deschis la roșu închis.</li>
+<li>Folosiți 4 sau 5 clase.</li>
+<li>Apăsați <strong>Classify</strong>.</li>
+<li>Verificați legenda: clasele trebuie să fie ușor de citit.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Recomandare: evitați prea multe clase. Pentru începători, 4 clase sunt adesea suficiente.</p>
+<p>Explicație: culorile mai intense pot sugera valori mai ridicate ale indicatorului. Totuși, harta trebuie citită ca explorare preliminară, nu ca diagnostic oficial.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T02/screenshots/T02_01_derived_indicator_classes.png" data-caption="Indicatorul elevi per sală de clasă este clasificat prin simbolizare graduată." data-alt="Dialogul Graduated și harta circumscripțiilor colorate după raportul elevi per sală." aria-label="Mărește captura: Indicatorul elevi per sală de clasă este clasificat prin simbolizare graduată."><img src="../assets/tutorials/T02/screenshots/T02_01_derived_indicator_classes.png" alt="Dialogul Graduated și harta circumscripțiilor colorate după raportul elevi per sală." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T02 · CAPTURĂ QGIS</span><p>Indicatorul elevi per sală de clasă este clasificat prin simbolizare graduată.</p></figcaption></figure></article><article class="tutorial-step " id="section-18" data-source-section="18"><div class="step-heading"><span class="step-number">18</span><h3>Adăugarea punctelor școlilor peste poligoane</h3></div><div class="tutorial-prose"><p>Punctele școlilor ajută cititorul să vadă unde se află unitățile asociate circumscripțiilor.</p>
+<ol>
+<li>În panoul <strong>Layers</strong>, asigurați-vă că layerul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023
+</code></pre></div>
+<p>este deasupra layerului de circumscripții.</p>
+<ol start="2">
+<li>Faceți clic dreapta pe layerul punctelor.</li>
+<li>Alegeți <strong>Properties &gt; Symbology</strong>.</li>
+<li>Folosiți un simbol mic, dar vizibil, de exemplu cerc negru sau albastru închis.</li>
+<li>Setați dimensiunea la aproximativ <code>1.5-2 mm</code>.</li>
+<li>Dacă punctele se pierd pe fundal, adăugați contur alb subțire.</li>
+<li>Apăsați <strong>Apply</strong>.</li>
+</ol>
+<p>Explicație: punctele sunt un strat de orientare. Tema principală rămâne indicatorul din poligoane.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T02/screenshots/T02_02_catchment_result.png" data-caption="Punctele școlilor sunt vizibile deasupra poligoanelor clasificate." data-alt="Harta Bucureștiului cu circumscripții școlare colorate și școli marcate prin puncte." aria-label="Mărește captura: Punctele școlilor sunt vizibile deasupra poligoanelor clasificate."><img src="../assets/tutorials/T02/screenshots/T02_02_catchment_result.png" alt="Harta Bucureștiului cu circumscripții școlare colorate și școli marcate prin puncte." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T02 · CAPTURĂ QGIS</span><p>Punctele școlilor sunt vizibile deasupra poligoanelor clasificate.</p></figcaption></figure></article><article class="tutorial-step " id="section-19" data-source-section="19"><div class="step-heading"><span class="step-number">19</span><h3>Etichetarea selectivă</h3></div><div class="tutorial-prose"><p>Nu etichetăm toate școlile, deoarece harta ar deveni greu de citit.</p>
+<ol>
+<li>Faceți clic dreapta pe layerul punctelor.</li>
+<li>Alegeți <strong>Properties &gt; Labels</strong>.</li>
+<li>Selectați <strong>Single Labels</strong>.</li>
+<li>La <strong>Value</strong>, alegeți câmpul:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Denumirea unității de învățământ&quot;
+</code></pre></div>
+<ol start="5">
+<li>Setați fontul la <code>7-8 pt</code>.</li>
+<li>Activați un buffer alb subțire.</li>
+<li>Pentru o hartă finală clară, afișați etichete doar la o scară potrivită sau doar pentru câteva școli.</li>
+</ol>
+<p>Metode posibile pentru etichetare selectivă:</p>
+<ul>
+<li>etichetați doar școlile selectate manual;</li>
+<li>folosiți reguli de etichetare pentru câteva valori;</li>
+<li>păstrați etichetele dezactivate și folosiți doar legenda, dacă harta este prea aglomerată.</li>
+</ul>
+<p>Explicație: o hartă bună nu trebuie să afișeze toate numele. Ea trebuie să fie citibilă și să susțină întrebarea de lucru.</p>
+</div></article><div class="tutorial-phase" id="phase-4"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Layout și export</h2></div><article class="tutorial-step " id="section-20" data-source-section="20"><div class="step-heading"><span class="step-number">20</span><h3>Pregătirea layoutului</h3></div><div class="tutorial-prose"><ol>
+<li>Alegeți <strong>Project &gt; New Print Layout...</strong>.</li>
+<li>Dați layoutului numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii
+</code></pre></div>
+<ol start="3">
+<li>Apăsați <strong>OK</strong>.</li>
+<li>În fereastra de layout, setați pagina la <strong>A4 landscape</strong>. Dacă legenda este prea mare, folosiți <strong>A3 landscape</strong>.</li>
+<li>Folosiți <strong>Add Map</strong> și desenați cadrul hărții.</li>
+<li>Ajustați extinderea astfel încât Bucureștiul să fie vizibil complet.</li>
+</ol>
+<h4>Elemente obligatorii în layout</h4>
+<p>Adăugați următoarele elemente:</p>
+<ol>
+<li><strong>Titlu</strong></li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Circumscripții școlare și presiune educațională în Municipiul București, 2022–2023
+</code></pre></div>
+<ol start="2">
+<li><p><strong>Legendă</strong><br>Păstrați clasele indicatorului elevi per sală de clasă, punctele școlilor și limita administrativă. Eliminați intrările inutile.</p>
+</li>
+<li><p><strong>Scară grafică</strong><br>Adăugați o scară grafică discretă.</p>
+</li>
+<li><p><strong>Nord</strong><br>Adăugați un simbol de nord simplu.</p>
+</li>
+<li><p><strong>Sursa datelor</strong></p>
+</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sursa: Observatorul Urban Metropolitan București / ADIZMB, date prelucrate pentru cursul „Tehnici de vizualizare a datelor”.
+</code></pre></div>
+<ol start="6">
+<li><strong>Notă metodologică</strong></li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Indicatorul elevi per sală de clasă este calculat pentru scop didactic și nu reprezintă o evaluare oficială a capacității școlare.
+</code></pre></div>
+<p>Explicație: nota metodologică este obligatorie, deoarece indicatorul este simplificat. Ea previne interpretările prea puternice ale hărții.</p>
+</div></article><article class="tutorial-step " id="section-21" data-source-section="21"><div class="step-heading"><span class="step-number">21</span><h3>Exportul hărții finale ca PNG</h3></div><div class="tutorial-prose"><ol>
+<li>În fereastra de layout, alegeți <strong>Layout &gt; Export as Image...</strong>.</li>
+<li>Selectați folderul de export al tutorialului:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_circumscriptii_scolare_presiune
+</code></pre></div>
+<ol start="3">
+<li>Salvați fișierul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii.png
+</code></pre></div>
+<ol start="4">
+<li>Dacă QGIS cere rezoluția, folosiți <code>300 dpi</code>.</li>
+<li>Apăsați <strong>Save</strong>.</li>
+</ol>
+<p>Fișierul final PNG trebuie să fie:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii.png
+</code></pre></div>
+</div></article><article class="tutorial-step " id="section-22" data-source-section="22"><div class="step-heading"><span class="step-number">22</span><h3>Exportul hărții finale ca PDF</h3></div><div class="tutorial-prose"><ol>
+<li>În fereastra de layout, alegeți <strong>Layout &gt; Export as PDF...</strong>.</li>
+<li>Selectați același folder:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_circumscriptii_scolare_presiune
+</code></pre></div>
+<ol start="3">
+<li>Salvați fișierul cu numele:</li>
+</ol>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii.pdf
+</code></pre></div>
+<ol start="4">
+<li>Apăsați <strong>Save</strong>.</li>
+</ol>
+<p>Fișierul final PDF trebuie să fie:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T02_harta_presiune_circumscriptii.pdf
+</code></pre></div>
+</div></article><div class="tutorial-phase" id="phase-5"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-23" data-source-section="23"><div class="step-heading"><span class="step-number">23</span><h3>Interpretarea hărții finale</h3></div><div class="tutorial-prose"><p>Harta finală permite o interpretare descriptivă și preliminară:</p>
+<ul>
+<li>unele circumscripții pot avea valori mai ridicate ale indicatorului elevi per sală de clasă;</li>
+<li>valorile mai ridicate pot sugera zone unde merită puse întrebări suplimentare;</li>
+<li>punctele școlilor ajută la localizarea unităților asociate poligoanelor;</li>
+<li>diferențele dintre circumscripții pot fi discutate împreună cu <code>Număr total elevi</code> și <code>Număr de schimburi</code>.</li>
+</ul>
+<p>Formulare recomandată pentru discuția cu grupa:</p>
+<p>„Harta ne arată un indicator simplificat, calculat din datele disponibile. Ea ne ajută să observăm posibile diferențe între circumscripții, dar nu este o evaluare oficială a capacității școlare.”</p>
+</div></article><article class="tutorial-step caution" id="section-24" data-source-section="24"><div class="step-heading"><span class="step-number">24</span><h3>Ce nu putem concluziona doar din această hartă</h3></div><div class="tutorial-prose"><p>Această hartă nu demonstrează:</p>
+<ul>
+<li>calitatea educației;</li>
+<li>echitatea școlară;</li>
+<li>capacitatea oficială a unei școli;</li>
+<li>gradul real de aglomerare în fiecare clasă;</li>
+<li>traseele elevilor până la școală;</li>
+<li>câți elevi locuiesc efectiv în circumscripție;</li>
+<li>câți elevi vin din afara circumscripției;</li>
+<li>relația dintre populația școlară și rețeaua de transport;</li>
+<li>motivele pentru care o unitate funcționează într-un anumit număr de schimburi.</li>
+</ul>
+<p>Pentru concluzii mai puternice ar fi nevoie de date suplimentare: capacitate oficială, număr de clase pe nivel, populație pe vârste, domiciliul elevilor, rețea stradală, transport public și informații administrative actualizate.</p>
+</div></article><article class="tutorial-step caution" id="section-25" data-source-section="25"><div class="step-heading"><span class="step-number">25</span><h3>Erori frecvente</h3></div><div class="tutorial-prose"><p><strong>Poligoanele acoperă punctele școlilor</strong><br>Mutați layerul punctelor deasupra layerului de circumscripții în panoul <strong>Layers</strong>.</p>
+<p><strong>Harta este prea încărcată</strong><br>Reduceți transparența poligoanelor, micșorați punctele sau dezactivați etichetele.</p>
+<p><strong>Expresia indicatorului dă eroare</strong><br>Verificați ghilimelele duble din jurul câmpurilor:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Număr săli de clasă&quot;
+</code></pre></div>
+<p>și:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Număr total elevi&quot;
+</code></pre></div>
+<p><strong>Unele circumscripții nu primesc culoare</strong><br>Este posibil ca expresia să întoarcă <code>NULL</code>, de exemplu când <code>Număr săli de clasă</code> este <code>NULL</code> sau <code>0</code>. Acest comportament este intenționat, pentru a evita calcule greșite.</p>
+<p><strong>Legenda este prea complicată</strong><br>Folosiți 4 clase în loc de 5 sau 6. Redenumiți legenda cu un titlu clar, de exemplu <code>Elevi per sală de clasă</code>.</p>
+<p><strong>Culorile par să transmită o concluzie prea dură</strong><br>Folosiți o rampă mai moderată și explicați în titlu/legendă că indicatorul este didactic.</p>
+<p><strong>Se confundă circumscripția cu școala</strong><br>Reamintiți cursanților că poligonul este aria circumscripției, iar punctul este poziția unității școlare asociate.</p>
+</div></article><article class="tutorial-step " id="section-26" data-source-section="26"><div class="step-heading"><span class="step-number">26</span><h3>Exercițiu suplimentar</h3></div><div class="tutorial-prose"><p>Construiți o variantă alternativă a hărții în care circumscripțiile sunt simbolizate după <code>Număr de schimburi</code>, iar punctele școlilor sunt afișate deasupra.</p>
+<p>Pași recomandați:</p>
+<ol>
+<li>Duplicați layerul de circumscripții în proiect, fără să modificați GeoPackage-ul original.</li>
+<li>Simbolizați copia după <code>Număr de schimburi</code>.</li>
+<li>Comparați rezultatul cu harta indicatorului elevi per sală de clasă.</li>
+<li>Discutați ce variantă este mai ușor de explicat unui public non-specialist.</li>
+</ol>
+<p>Întrebare de reflecție:</p>
+<p><strong>Care hartă susține mai bine o discuție pedagogică: harta după numărul de schimburi sau harta după elevi per sală de clasă? De ce?</strong></p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T02/screenshots/T02_03_shifts_comparison.png" data-caption="Varianta după numărul de schimburi folosește categorii discrete, spre deosebire de indicatorul elevi per sală." data-alt="Dialogul Categorized pentru numărul de schimburi și harta alternativă a circumscripțiilor." aria-label="Mărește captura: Varianta după numărul de schimburi folosește categorii discrete, spre deosebire de indicatorul elevi per sală."><img src="../assets/tutorials/T02/screenshots/T02_03_shifts_comparison.png" alt="Dialogul Categorized pentru numărul de schimburi și harta alternativă a circumscripțiilor." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T02 · CAPTURĂ QGIS</span><p>Varianta după numărul de schimburi folosește categorii discrete, spre deosebire de indicatorul elevi per sală.</p></figcaption></figure></article></section><section class="tutorial-result" id="verifica-rezultatul"><span class="eyebrow">REZULTAT AȘTEPTAT</span><h2>Verifică rezultatul</h2><p>Documentul sursă cere exportul hărții în ambele formate. Verifică lizibilitatea titlului, legendei, scării, sursei și notei metodologice.</p><div class="file-badges"><code>T02_harta_presiune_circumscriptii.png</code><code>T02_harta_presiune_circumscriptii.pdf</code></div></section><section class="tutorial-links"><div><span class="eyebrow">CONCEPTE ASOCIATE</span><h2>Legături cu teoria</h2><div class="concept-grid"><a class="concept-link" href="../lesson.html?id=method-choropleth"><span>VEZI CONCEPTUL</span><strong>Cartograma și clasele valorice →</strong></a><a class="concept-link" href="../lesson.html?id=map-frame"><span>VEZI CONCEPTUL</span><strong>Cadrul hărții →</strong></a><a class="concept-link" href="../lesson.html?id=rectangular-coordinates"><span>VEZI CONCEPTUL</span><strong>Coordonate și CRS →</strong></a><a class="concept-link" href="../geospatial-data.html#vector"><span>MODELUL DE DATE</span><strong>Date vectoriale →</strong></a></div></div><div><span class="eyebrow">RESURSE QGIS</span><h2>Documentația 3.44</h2><div class="qgis-doc-grid"><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/classification.html" target="_blank" rel="noopener noreferrer"><strong>Clasificare nominală și cantitativă</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/basic_map/symbology.html" target="_blank" rel="noopener noreferrer"><strong>Simbolizarea straturilor vectoriale</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/map_composer/map_composer.html" target="_blank" rel="noopener noreferrer"><strong>Compoziție cartografică</strong><span>Vezi și în QGIS Training Manual ↗</span></a></div></div></section><nav class="tutorial-prev-next" aria-label="Tutorial anterior și următor"><a href="t01.html">← T01 · Tutorial anterior</a><a href="t03.html">T03 · Tutorial următor →</a></nav><footer class="page-footer site-footer"><div><strong>Explorare geospațială · Ateliere QGIS</strong><p>Material procedural original al cursului; legăturile teoretice păstrează atribuirea pe paginile lor.</p></div><nav aria-label="Legături în subsol"><a href="index.html">Toate atelierele</a><a href="../resources.html">Resurse</a></nav></footer></main><aside class="site-context workshop-context"><span class="eyebrow">ATELIERE QGIS</span><h2>Învață în pași</h2><p class="small">Șase exerciții progresive. Fiecare hartă este însoțită de o limită de interpretare.</p><a class="outline-button full-button" href="../workflow.html">Recapitulează fluxul QGIS →</a></aside></div><button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button><dialog id="tutorial-dialog" class="tutorial-dialog" aria-labelledby="tutorial-dialog-title"><div class="dialog-header"><h2 id="tutorial-dialog-title">Captură QGIS</h2><div class="tutorial-dialog-actions"><button type="button" class="outline-button" data-zoom-tutorial-dialog aria-pressed="false">Mărește detaliile</button><button type="button" class="icon-button" data-close-tutorial-dialog aria-label="Închide imaginea mărită">×</button></div></div><div class="tutorial-dialog-viewport"><img id="tutorial-dialog-image" alt=""></div><p id="tutorial-dialog-caption"></p></dialog></body></html>

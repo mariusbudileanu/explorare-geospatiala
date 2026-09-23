@@ -1,0 +1,143 @@
+/* Shared dimensions and interaction rules. Loaded after component styles. */
+:root {
+  --muted: #596b78;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --radius-small: 5px;
+  --radius-card: 8px;
+  --radius-dialog: 12px;
+  --page-gutter: 36px;
+  --content-wide: 1120px;
+  --content-text: 76ch;
+  --figure-max: 900px;
+  --sidebar-width: 248px;
+  --context-width: 264px;
+  --card-padding: 20px;
+  --section-gap: 40px;
+  --control-height: 44px;
+  --font-small: 13px;
+  --font-body: 15px;
+  --font-h1: clamp(30px, 3.4vw, 48px);
+  --font-h2: clamp(24px, 2.4vw, 30px);
+  --font-h3: 19px;
+  --shadow-card: 0 3px 16px #18344808;
+  --shadow-dialog: 0 15px 80px #0005;
+}
+main { width:100%; max-width:var(--content-wide); margin-inline:auto; }
+main.home-main,main.dynamic-lesson,main.geo-main,main.workshop-main,main#main-content { padding-inline:var(--page-gutter); }
+.home-feature { margin-inline:calc(-1 * var(--page-gutter)); padding-inline:var(--page-gutter); }
+main h1,.lesson-hero h1,.home-hero h1 { font-size:var(--font-h1); line-height:1.16; overflow-wrap:break-word; }
+main h2,.section-heading h2,.geo-section h2 { font-size:var(--font-h2); line-height:1.3; }
+.lesson-hero>p,.geo-section>p,.lesson-section>p,.home-hero>p { max-width:var(--content-text); }
+.lesson-section,.workshop-main .lesson-section,.geo-section { margin-block:var(--section-gap); }
+.lesson-hero,.workshop-hero { padding-bottom:var(--space-5); margin-bottom:var(--space-5); }
+.card,.concept-card,.layer-card,.workshop-card,.dataset-card,.tutorial-step,.operation-detail,
+.data-cards article,.format-grid article,.model-compare article,.data-grid-two article,
+.comparison-cards article,.analysis-types article,.workflow-detail,.resource-card {
+  border-radius:var(--radius-card); padding:var(--card-padding); min-width:0;
+}
+.workshop-grid,.dataset-grid,.comparison-cards,.analysis-types,.data-cards,.format-grid,
+.model-compare,.data-grid-two,.feature-cards,.resource-grid { gap:var(--space-4); }
+.workshop-card h2 { font-size:22px; }
+.data-cards h3,.format-grid h3,.analysis-types h3,.comparison-cards h3,.step-heading h3 { font-size:var(--font-h3); }
+.geo-section p,.operation-detail p,.tutorial-prose { font-size:var(--font-body); line-height:1.7; }
+.geo-note,.operation-category,.processing-panel figcaption,.dataset-card>p,.dataset-card dd,
+.resource-card p,.tutorial-figure figcaption p,.tutorial-dialog p { font-size:var(--font-small); line-height:1.6; }
+.source-tag,.tutorial-meta span,.tag-row span { white-space:normal; border-radius:var(--radius-small); line-height:1.5; }
+.geo-interactive,.height-diagram,.tutorial-overview,.tutorial-toc,.tutorial-result,.workflow-detail { border-radius:var(--radius-card); }
+.geo-callout,.tutorial-callout,.supplement,.historical-note,.lab-note { padding:var(--space-4); border-radius:var(--radius-small); }
+.geo-interactive { padding:var(--card-padding); gap:var(--space-4); }
+button:not(.tutorial-image-button):not(.image-button),.primary-button,.outline-button,
+.qgis-external,.concept-link,.qgis-doc-link,.geo-jump a,.geo-crs-links a,.geo-next a,
+.tutorial-prev-next a,.workshop-bridge a { min-height:var(--control-height); }
+button:not(.tutorial-image-button):not(.image-button):not([data-pixel]) { min-width:44px; }
+.primary-button,.outline-button,.geo-jump a,.geo-next a,.workshop-bridge a,.tutorial-prev-next a {
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
+  border-radius:var(--radius-small); white-space:normal; text-align:center; line-height:1.45;
+}
+.icon-button { min-width:var(--control-height); width:var(--control-height); height:var(--control-height); }
+input:not([type=checkbox]):not([type=range]),select { min-height:var(--control-height); border-radius:var(--radius-small); }
+input[type=range] { min-height:28px; }
+input[type=checkbox] { width:18px; height:18px; flex-shrink:0; }
+.raster-grid button { min-height:24px!important; min-width:24px; }
+.geo-control-row label,.geo-controls label,.lab label { min-height:var(--control-height); }
+.geo-buttons,.geo-control-row,.data-tabs,.tutorial-dialog-actions,.operation-links { gap:var(--space-2); }
+button:hover:not(:disabled),.outline-button:hover,.geo-jump a:hover,.geo-next a:hover,.concept-link:hover,.qgis-doc-link:hover { border-color:var(--blue); }
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible {
+  outline:3px solid var(--blue); outline-offset:3px;
+}
+button[aria-pressed=true] { font-weight:700; }
+.operation-picker button[aria-pressed=true] { box-shadow:inset 4px 0 var(--blue); }
+.feature-selected { outline:2px solid var(--ink); }
+.geo-table { min-width:0; }
+.geo-table th,.geo-table td { padding:var(--space-3); }
+.geo-table button { min-width:44px; }
+.tutorial-code { margin-block:var(--space-4); border-radius:var(--radius-small); }
+.tutorial-code pre { padding:var(--space-4); }
+.tutorial-code-head button { min-width:80px; }
+.tutorial-figure { max-width:var(--figure-max); margin:var(--space-5) auto; border-radius:var(--radius-card); }
+.tutorial-figure figcaption { padding:var(--space-4); }
+.tutorial-dialog { border-radius:var(--radius-dialog); box-shadow:var(--shadow-dialog); padding:var(--space-4); }
+.tutorial-dialog-viewport { max-height:calc(90vh - 160px); }
+.tutorial-dialog:not(.zoomed) .tutorial-dialog-viewport img { max-height:calc(90vh - 160px); }
+.tutorial-toc { padding:var(--space-4); }
+.tutorial-toc summary { min-height:32px; }
+.tutorial-toc nav a { padding-block:8px; }
+.lesson-jump,.lesson-progress { gap:var(--space-4); }
+.site-footer,.page-footer { gap:var(--space-4); margin-top:var(--space-7); padding-block:var(--space-5); }
+.site-footer nav,.page-footer nav { display:flex; gap:var(--space-3); flex-wrap:wrap; }
+.site-footer a,.page-footer a { display:inline-flex; align-items:center; min-height:36px; }
+.search-results { max-height:min(65vh,520px); overflow-y:auto; border-radius:var(--radius-card); padding:var(--space-2); }
+.search-results a { min-height:44px; overflow-wrap:break-word; }
+.resource-data-policy { margin:var(--space-5) 0; padding:var(--card-padding); background:var(--blue-soft); border-left:3px solid var(--teal); border-radius:var(--radius-small); }
+.resource-data-policy p { max-width:var(--content-text); }
+.data-source-note { display:block; margin-top:var(--space-4); padding:var(--space-3); background:var(--surface-alt); border-radius:var(--radius-small); font-size:13px; color:var(--muted); }
+.data-source-note a { display:inline-block; margin-top:6px; }
+.site-footer .license-summary { grid-column:1/-1; flex-basis:100%; width:100%; order:4; font-size:12px; white-space:normal; }
+body.dark .processing-svg .cell-label { fill:#162b38; }
+body.dark .processing-svg { background:var(--surface-alt); }
+.sidebar { overflow-anchor:none; }
+.home-actions {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-auto-rows:1fr; gap:var(--space-3);
+}
+.home-actions > a {
+  display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center;
+  gap:var(--space-3); width:100%; min-width:0; min-height:76px; margin:0;
+  padding:var(--space-4); border:1px solid var(--line); border-radius:var(--radius-small);
+  font-family:inherit; font-size:14px; font-weight:600; line-height:1.5;
+  text-align:left; white-space:normal; overflow-wrap:break-word;
+}
+.home-actions > .primary-button { border-color:var(--blue); }
+.home-actions > a > span { margin:0; }
+.home-actions > a > span:last-child { justify-self:end; }
+.geo-interactive svg .equator,.geo-interactive svg .meridian {
+  fill:none; stroke-width:2; vector-effect:non-scaling-stroke;
+}
+@media(min-width:901px) and (max-width:1200px) {
+  .home-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:600px) { .home-actions { grid-template-columns:minmax(0,1fr); } }
+@media(min-width:1201px) {
+  .workspace,.site-workspace { grid-template-columns:var(--sidebar-width) minmax(0,1fr) var(--context-width); }
+  .nav-collapsed .workspace,.nav-collapsed .site-workspace { grid-template-columns:minmax(0,1fr) var(--context-width); }
+}
+@media(max-width:1200px) { :root { --page-gutter:28px; } }
+@media(max-width:900px) { :root { --page-gutter:24px; } .workshop-main{grid-row:auto;} }
+@media(max-width:600px) {
+  :root { --page-gutter:18px; --card-padding:16px; --section-gap:32px; }
+  .geo-interactive { padding:var(--space-3); }
+  .site-footer,.page-footer { align-items:flex-start; }
+  .source-tag { max-width:100%; }
+  .analysis-chain { grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-2); }
+  .analysis-chain span+span::before { content:none; }
+  .tutorial-dialog .dialog-header { flex-wrap:wrap; }
+  .tutorial-dialog-actions { width:100%; justify-content:flex-end; }
+  .topbar .quiet-button { min-height:36px; }
+}
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition:none!important; animation:none!important; } }

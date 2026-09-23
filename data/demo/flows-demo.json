@@ -1,0 +1,11 @@
+{
+  "title":"Fluxuri Atlas — set fictiv",
+  "note":"Conexiunile și valorile sunt sintetice.",
+  "flows":[
+    {"from":[25,25],"to":[54,57],"value":42},
+    {"from":[66,27],"to":[54,57],"value":76},
+    {"from":[25,59],"to":[45,83],"value":31},
+    {"from":[54,57],"to":[82,66],"value":94},
+    {"from":[45,83],"to":[70,87],"value":58}
+  ]
+}

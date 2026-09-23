@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lecție din Explorare geospațială — de la concepte clasice la GIS (QGIS).">
+  <title>Lecție · Explorare geospațială</title>
+  <link rel="icon" type="image/svg+xml" href="assets/ui/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="css/design-system.css">
+  <script src="data/content-manifest.js" defer></script>
+  <script src="data/glossary.js" defer></script>
+  <script src="data/demo/demo-data.js" defer></script>
+  <script src="data/demo/method-datasets.js" defer></script>
+  <script src="js/projections.js" defer></script>
+  <script src="data/qgis-links.js" defer></script>
+  <script src="js/qgis-bridge.js" defer></script>
+  <script src="js/method-demos.js" defer></script>
+  <script src="data/crs-registry.js" defer></script>
+  <script src="js/vendor/proj4.js" defer></script>
+  <script src="js/crs-engine.js" defer></script>
+  <script src="js/crs-lesson.js" defer></script>
+  <script src="js/filter-info.js" defer></script>
+  <script src="js/site.js" defer></script>
+</head>
+<body data-page="lesson">
+<a class="skip-link" href="#lesson-root">Sari la lecție</a>
+<header class="topbar site-topbar">
+  <button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button>
+  <a class="brand" href="index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a>
+  <div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div>
+  <button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button>
+  <a class="quiet-button resources-link" href="resources.html">Resurse</a>
+  <a class="quiet-button about-link" href="lesson.html?id=about">Despre proiect</a>
+</header>
+<div class="workspace site-workspace">
+  <aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav><div class="sidebar-foot"><span class="status-dot"></span> Sursă verificată vizual<small>Vezi auditul în data/source-audit.json.</small></div></aside>
+  <main id="lesson-root" class="dynamic-lesson" tabindex="-1"></main>
+  <aside class="site-context lesson-context" aria-labelledby="context-title">
+    <div class="lab-heading"><div><span class="eyebrow">FILTRARE GLOBALĂ</span><h2 id="context-title">Straturi</h2></div><span aria-hidden="true">⚙</span></div>
+    <p class="small">Filtrele acționează asupra cardurilor lecției curente.</p>
+    <fieldset><legend>Tip conținut <button type="button" class="filter-info" aria-label="Despre filtrul Tip conținut" aria-expanded="false" aria-controls="filter-info-content" data-info="content">ⓘ</button></legend><label><input type="checkbox" data-filter="content-type" value="concept" checked> Concept</label><label><input type="checkbox" data-filter="content-type" value="figură" checked> Figură</label><label><input type="checkbox" data-filter="content-type" value="formulă" checked> Formulă</label><label><input type="checkbox" data-filter="content-type" value="exemplu" checked> Exemplu</label><label><input type="checkbox" data-filter="content-type" value="exercițiu" checked> Exercițiu</label><label><input type="checkbox" data-filter="content-type" value="context istoric" checked> Context istoric</label><label><input type="checkbox" data-filter="content-type" value="qgis" checked> GIS modern</label></fieldset>
+    <fieldset><legend>Nivel <button type="button" class="filter-info" aria-label="Despre filtrul Nivel" aria-expanded="false" aria-controls="filter-info-content" data-info="level">ⓘ</button></legend><label><input type="checkbox" data-filter="level" value="essential" checked> Esențial</label><label><input type="checkbox" data-filter="level" value="detailed" checked> Detaliat</label><label><input type="checkbox" data-filter="level" value="advanced" checked> Avansat</label></fieldset>
+    <fieldset><legend>Sursă <button type="button" class="filter-info" aria-label="Despre filtrul Sursă" aria-expanded="false" aria-controls="filter-info-content" data-info="source">ⓘ</button></legend><label><input type="checkbox" data-filter="source" value="textbook" checked> Manual 1974</label><label><input type="checkbox" data-filter="source" value="modern" checked> Explicație modernă</label><label><input type="checkbox" data-filter="source" value="gis" checked> GIS / QGIS</label></fieldset>
+    <fieldset><legend>Temă <button type="button" class="filter-info" aria-label="Despre filtrul Temă" aria-expanded="false" aria-controls="filter-info-content" data-info="theme">ⓘ</button></legend><div id="theme-filters"></div></fieldset>
+    <div id="filter-info-content" class="filter-popover" role="tooltip" hidden></div>
+    <button id="reset-filters" class="outline-button full-button">Resetează filtrele</button>
+    <div class="lab-note"><span class="source-tag qgis-tag">GIS actual</span><p>Corespondențele QGIS 3.44 și lecția CRS sunt materiale contemporane distincte de manualul din 1974.</p></div>
+  </aside>
+</div>
+<button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button>
+<dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-header"><div><span class="source-tag historical">Sursa din 1974</span><h2 id="source-title">Figura originală</h2></div><button class="icon-button" data-close-dialog aria-label="Închide sursa originală">×</button></div><div class="source-meta" id="source-meta"></div><img id="source-image" alt=""><p id="source-caption" class="small"></p><div class="dialog-nav"><button id="source-prev" class="outline-button">← Anterior</button><span id="source-position" class="small"></span><button id="source-next" class="outline-button">Următor →</button></div></dialog>
+</body>
+</html>

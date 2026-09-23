@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Construiește o hartă descriptivă a unităților școlare din București, de la tabelul de atribute și categorii până la layout și export."><title>T01 · Prima hartă tematică în QGIS: unitățile de învățământ din București · Explorare geospațială</title><link rel="icon" type="image/svg+xml" href="../assets/ui/favicon.svg"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/tutorials.css"><link rel="stylesheet" href="../css/design-system.css"><script src="../data/content-manifest.js" defer></script><script src="../js/site.js" defer></script><script src="../js/tutorials.js" defer></script></head><body data-page="tutorial" data-page-id="T01" data-root="../"><a class="skip-link" href="#main-content">Sari la conținut</a><header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="../index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><ellipse cx="20" cy="20" rx="17" ry="7"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="../resources.html">Resurse</a><a class="quiet-button about-link" href="../lesson.html?id=about">Despre proiect</a></header><div class="workspace site-workspace"><aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside><main id="main-content" class="workshop-main"><div class="lesson-breadcrumb"><a href="../index.html">Explorare geospațială</a> → <a href="index.html">Ateliere QGIS</a> → T01</div><section class="lesson-hero workshop-hero"><span class="eyebrow">TUTORIAL T01</span><h1>Prima hartă tematică în QGIS: unitățile de învățământ din București</h1><p class="lead">Construiește o hartă descriptivă a unităților școlare din București, de la tabelul de atribute și categorii până la layout și export.</p><div class="tutorial-meta"><span>începător</span><span>60–90 min</span><span>Date vectoriale</span></div><nav class="tutorial-progress" aria-label="Secvența atelierelor"><a href="t01.html" aria-current="page"><span>T01</span><i aria-hidden="true">●</i></a><a href="t02.html" ><span>T02</span><i aria-hidden="true">●</i></a><a href="t03.html" ><span>T03</span><i aria-hidden="true">●</i></a><a href="t04.html" ><span>T04</span><i aria-hidden="true">●</i></a><a href="t05.html" ><span>T05</span><i aria-hidden="true">●</i></a><a href="t06.html" ><span>T06</span><i aria-hidden="true">●</i></a></nav></section><details class="tutorial-toc"><summary>Cuprinsul tutorialului</summary><nav aria-label="Secțiunile tutorialului"><a href="#section-1">Scopul tutorialului</a><a href="#section-4">Date folosite</a><a href="#section-7">Încărcarea datelor</a><a href="#section-15">Simbolizarea pe categorii educaționale</a><a href="#section-18">Pregătirea layoutului</a><a href="#section-21">Interpretarea hărții finale</a><a href="#section-22">Ce nu putem concluziona doar din această hartă</a><a href="#section-24">Exercițiu suplimentar</a></nav></details><section class="tutorial-overview"><div class="section-heading"><div><span class="eyebrow">CE VEI ÎNVĂȚA</span><h2>Competențe în acest atelier</h2></div></div><ul><li>încărcare GeoPackage</li><li>inspectare tabel de atribute</li><li>verificare CRS</li><li>filtrare simplă</li><li>simbolizare categorială</li><li>layout</li><li>export PNG/PDF</li></ul></section><section class="tutorial-data" id="date-pentru-exercitiu"><div class="section-heading"><div><span class="eyebrow">DATE PENTRU EXERCIȚIU</span><h2>Fișierele de lucru</h2></div></div><div class="dataset-grid"><article class="dataset-card"><span class="source-tag qgis-tag">VECTOR · GeoPackage</span><h3>02_Unități Învățământ_Preuniv_București_2022-2023.gpkg</h3><p>Puncte de școli și limita Bucureștiului; limita este și masca pentru Clip în T05.</p><dl><div><dt>Layere</dt><dd>Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023<br>Limită Administrativă - Municipiul București</dd></div><div><dt>CRS în document</dt><dd>EPSG:4326, menționat în T05; T01 nu precizează codul.</dd></div><div><dt>Folosit în</dt><dd><a href="t01.html">T01</a> · <a href="t05.html">T05</a></dd></div></dl><div class="data-source-note">Fișierul de curs nu este găzduit de acest site. <a href="../resources.html#date-surse">Sursele și accesul la date →</a></div></article></div></section><section class="tutorial-source-flow" aria-label="Conținutul tutorialului"><div class="tutorial-phase" id="phase-1"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Scop, date și rezultat</h2></div><article class="tutorial-step " id="section-1" data-source-section="1"><div class="step-heading"><span class="step-number">01</span><h3>Scopul tutorialului</h3></div><div class="tutorial-prose"><p>În acest tutorial construim o primă hartă tematică în QGIS folosind date punctuale despre unitățile de învățământ preuniversitar din Municipiul București. Exercițiul este gândit ca o introducere practică: nu urmărim o analiză GIS avansată, ci învățăm cum se pornește corect un proiect, cum se încarcă datele, cum se citește tabelul de atribute și cum se transformă un strat de puncte într-o hartă clară.</p>
+<p>La final, cursanții vor obține o hartă exportată în două formate: PNG, util pentru prezentări și documente digitale, și PDF, util pentru tipărire sau arhivare. Harta finală va avea titlul:</p>
+<p><strong>Unități de învățământ preuniversitar în Municipiul București, 2022–2023</strong></p>
+<p>Este important ca această hartă să fie înțeleasă ca o hartă descriptivă. Ea arată unde sunt localizate unitățile de învățământ din setul de date, dar nu demonstrează singură dacă distribuția este echitabilă, dacă școlile sunt accesibile pietonal sau dacă există suficientă capacitate pentru populația școlară.</p>
+</div></article><article class="tutorial-step " id="section-2" data-source-section="2"><div class="step-heading"><span class="step-number">02</span><h3>Durată estimată și nivel de dificultate</h3></div><div class="tutorial-prose"><p>Durata estimată este de <strong>60–90 de minute</strong>, în funcție de ritmul grupei, de timpul alocat explicațiilor și de cât de mult se insistă asupra tabelului de atribute.</p>
+<p>Nivelul este <strong>începător</strong>. Tutorialul este potrivit pentru cursanți care deschid QGIS pentru prima dată sau care au lucrat foarte puțin cu date GIS. Pașii sunt explicați detaliat, iar conceptele noi sunt introduse pe măsură ce apar în lucru.</p>
+</div></article><article class="tutorial-step " id="section-3" data-source-section="3"><div class="step-heading"><span class="step-number">03</span><h3>Ce vom învăța</h3></div><div class="tutorial-prose"><p>În acest exercițiu, cursanții vor parcurge un flux complet de lucru în QGIS: de la proiect nou până la hartă exportată. Pe parcurs, vor învăța să încarce un fișier GeoPackage, să selecteze layerele necesare, să verifice sistemul de coordonate, să citească tabelul de atribute și să aleagă doar câmpurile utile pentru hartă.</p>
+<p>Un accent important va fi pus pe simbolizare. Vom începe cu o reprezentare simplă, în care toate unitățile de învățământ sunt afișate cu același simbol, apoi vom trece la o hartă categorială, în care punctele sunt diferențiate după nivelul educațional. Vom testa și o simbolizare alternativă după numărul total de elevi, pentru a înțelege diferența dintre o hartă pe categorii și o hartă bazată pe valori numerice.</p>
+<p>La final, vom pregăti harta pentru export în Layout Manager, adăugând titlu, legendă, scară grafică, nord, sursă și o notă metodologică scurtă.</p>
+</div></article><article class="tutorial-step " id="section-4" data-source-section="4"><div class="step-heading"><span class="step-number">04</span><h3>Date folosite</h3></div><div class="tutorial-prose"><p>Vom folosi fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">02_Unități Învățământ_Preuniv_București_2022-2023.gpkg
+</code></pre></div>
+<p>Din acest GeoPackage vom încărca două layere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023
+</code></pre></div>
+<p>și</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limită Administrativă - Municipiul București
+</code></pre></div>
+<p>Primul layer conține punctele care reprezintă unitățile de învățământ. Al doilea layer conține limita administrativă a Municipiului București și va fi folosit ca reper spațial.</p>
+<p>Nu vom modifica datele originale. Toate schimbările pe care le facem în tutorial — simbolizare, filtre, etichete sau layout — sunt salvate în proiectul QGIS, nu în fișierul GeoPackage.</p>
+</div></article><article class="tutorial-step " id="section-5" data-source-section="5"><div class="step-heading"><span class="step-number">05</span><h3>Rezultatul final</h3></div><div class="tutorial-prose"><p>La finalul tutorialului, cursantul va exporta două fișiere:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T01_harta_scoli_bucuresti.png
+</code></pre></div>
+<p>și</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T01_harta_scoli_bucuresti.pdf
+</code></pre></div>
+<p>Proiectul QGIS poate fi salvat cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P01_scoli_bucuresti.qgz
+</code></pre></div>
+<p>Fișierul PNG este util atunci când harta trebuie introdusă într-o prezentare, într-un document Word sau într-o pagină web. Fișierul PDF este preferabil atunci când harta trebuie tipărită sau trimisă într-un format care păstrează mai bine compoziția finală.</p>
+</div></article><div class="tutorial-phase" id="phase-2"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Pregătire și atribute</h2></div><article class="tutorial-step " id="section-6" data-source-section="6"><div class="step-heading"><span class="step-number">06</span><h3>Pregătirea proiectului QGIS</h3></div><div class="tutorial-prose"><p>Deschideți QGIS și creați un proiect nou din meniul <strong>Project &gt; New</strong>. Este bine ca proiectul să fie salvat încă de la început, folosind opțiunea <strong>Project &gt; Save As...</strong>. Salvați proiectul cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">P01_scoli_bucuresti.qgz
+</code></pre></div>
+<p>Salvarea proiectului de la început este o practică bună. În QGIS, proiectul nu conține neapărat datele propriu-zise, ci felul în care acestea sunt folosite: ce layere sunt încărcate, cum sunt simbolizate, ce filtre au fost aplicate, ce layouturi au fost create și ce setări de vizualizare au fost alese.</p>
+<p>Cu alte cuvinte, fișierul GeoPackage este sursa datelor, iar fișierul QGIS (<code>.qgz</code>) este spațiul de lucru în care construim harta.</p>
+</div></article><article class="tutorial-step " id="section-7" data-source-section="7"><div class="step-heading"><span class="step-number">07</span><h3>Încărcarea datelor</h3></div><div class="tutorial-prose"><p>Pentru a încărca datele, mergeți la <strong>Layer &gt; Add Layer &gt; Add Vector Layer...</strong>. La tipul sursei, alegeți <strong>File</strong>, apoi selectați fișierul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">02_Unități Învățământ_Preuniv_București_2022-2023.gpkg
+</code></pre></div>
+<p>După apăsarea butonului <strong>Add</strong>, QGIS poate afișa o listă cu layerele disponibile în GeoPackage. Selectați cele două layere necesare:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023
+</code></pre></div>
+<p>și</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Limită Administrativă - Municipiul București
+</code></pre></div>
+<p>După încărcare, în panoul <strong>Layers</strong> ar trebui să apară cele două straturi. Pe hartă vor fi vizibile punctele unităților de învățământ și limita administrativă a Bucureștiului.</p>
+<p>Un GeoPackage poate conține mai multe layere. De aceea, este important să nu presupunem că încărcarea fișierului înseamnă automat încărcarea tuturor datelor utile. În acest caz, avem nevoie de un layer punctual și de un layer poligonal de fundal.</p>
+</div></article><article class="tutorial-step " id="section-8" data-source-section="8"><div class="step-heading"><span class="step-number">08</span><h3>Verificarea CRS-ului</h3></div><div class="tutorial-prose"><p>CRS înseamnă <strong>Coordinate Reference System</strong>, adică sistemul de coordonate folosit pentru a poziționa corect datele pe hartă. Dacă două layere au sisteme de coordonate diferite, QGIS le poate afișa împreună prin reproiectare „dinamică”, dar este bine să verificăm dacă ele se suprapun corect.</p>
+<p>Pentru verificare, faceți clic dreapta pe layerul cu unitățile de învățământ și alegeți <strong>Properties</strong>. În secțiunea <strong>Information</strong> sau <strong>Source</strong>, în funcție de versiunea QGIS, verificați CRS-ul. Repetați operațiunea pentru layerul cu limita administrativă.</p>
+<p>În acest tutorial nu facem calcule de distanță sau arie, deci este suficient ca cele două layere să se afișeze corect împreună. Dacă punctele apar în afara limitei Bucureștiului sau într-o zonă complet greșită, înseamnă că trebuie verificat CRS-ul proiectului și al layerelor.</p>
+</div></article><article class="tutorial-step " id="section-9" data-source-section="9"><div class="step-heading"><span class="step-number">09</span><h3>Inspectarea tabelului de atribute</h3></div><div class="tutorial-prose"><p>Faceți clic dreapta pe layerul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023
+</code></pre></div>
+<p>și alegeți <strong>Open Attribute Table</strong>.</p>
+<p>Tabelul de atribute este una dintre cele mai importante componente ale unui layer GIS. Fiecare rând reprezintă un obiect de pe hartă, iar fiecare coloană reprezintă o informație despre acel obiect. În cazul nostru, fiecare rând reprezintă o unitate de învățământ, iar coloanele conțin informații precum denumirea unității, nivelurile de învățământ, sectorul, numărul total de elevi sau numărul de schimburi.</p>
+<p>Harta ne arată <strong>unde</strong> se află obiectele, iar tabelul ne ajută să înțelegem <strong>ce sunt</strong> aceste obiecte și <strong>cum pot fi diferențiate</strong> pe hartă.</p>
+</div></article><article class="tutorial-step " id="section-10" data-source-section="10"><div class="step-heading"><span class="step-number">10</span><h3>Câmpuri importante pentru acest tutorial</h3></div><div class="tutorial-prose"><p>Pentru prima hartă nu avem nevoie de toate câmpurile din tabel. Un principiu important în cartografie este selecția: alegem doar informațiile care servesc scopului hărții.</p>
+<p>În acest tutorial sunt utile următoarele câmpuri:</p>
+<table>
+<thead>
+<tr>
+<th>Câmp</th>
+<th>Ce reprezintă</th>
+<th>Cum îl folosim</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Denumirea unității de învățământ</code></td>
+<td>numele unității</td>
+<td>pentru etichete sau identificare</td>
+</tr>
+<tr>
+<td><code>Cod SIIIR</code></td>
+<td>cod administrativ al unității</td>
+<td>pentru identificare, nu pentru simbolizare</td>
+</tr>
+<tr>
+<td><code>Statut - Stare</code></td>
+<td>starea administrativă</td>
+<td>pentru înțelegerea datelor</td>
+</tr>
+<tr>
+<td><code>Tip unitate</code></td>
+<td>tipul obiectului din baza de date</td>
+<td>pentru verificare și filtrare</td>
+</tr>
+<tr>
+<td><code>Coduri</code></td>
+<td>rezumat al nivelurilor/tipurilor de învățământ</td>
+<td>pentru interpretare</td>
+</tr>
+<tr>
+<td><code>Nivel Antepreșcolar</code></td>
+<td>existența nivelului antepreșcolar</td>
+<td>pentru filtre și categorii</td>
+</tr>
+<tr>
+<td><code>Nivel Preșcolar</code></td>
+<td>existența nivelului preșcolar</td>
+<td>pentru filtre și categorii</td>
+</tr>
+<tr>
+<td><code>Nivel Primar</code></td>
+<td>existența nivelului primar</td>
+<td>pentru filtre și categorii</td>
+</tr>
+<tr>
+<td><code>Nivel Gimnazial</code></td>
+<td>existența nivelului gimnazial</td>
+<td>pentru filtre și categorii</td>
+</tr>
+<tr>
+<td><code>Nivel Liceal</code></td>
+<td>existența nivelului liceal</td>
+<td>pentru filtre și categorii</td>
+</tr>
+<tr>
+<td><code>Sector</code></td>
+<td>sectorul municipiului București</td>
+<td>pentru filtrare sau variantă alternativă</td>
+</tr>
+<tr>
+<td><code>Număr total elevi</code></td>
+<td>numărul total de elevi</td>
+<td>pentru simboluri graduale/proporționale</td>
+</tr>
+<tr>
+<td><code>Număr de schimburi</code></td>
+<td>organizarea programului școlar</td>
+<td>pentru interpretare ulterioară</td>
+</tr>
+</tbody></table>
+<p>Este util ca lectorul să insiste asupra diferenței dintre câmpuri. Unele sunt descriptive, altele sunt numerice, iar altele sunt de tip 0/1.</p>
+<p>Câmpurile text conțin denumiri sau descrieri. Exemplele cele mai clare sunt <code>Denumirea unității de învățământ</code>, <code>Statut - Stare</code> și <code>Tip unitate</code>.</p>
+<p>Câmpurile numerice conțin valori care pot fi ordonate, comparate sau folosite în clasificări. Exemplele principale sunt <code>Număr total elevi</code>, <code>Sector</code> și <code>Număr de schimburi</code>.</p>
+<p>Câmpurile binare 0/1 sunt câmpuri numerice speciale. În acest set de date, valoarea <code>1</code> indică prezența unui nivel de învățământ, iar valoarea <code>0</code> indică absența lui. De exemplu, dacă <code>Nivel Preșcolar</code> este egal cu <code>1</code>, atunci unitatea oferă nivel preșcolar.</p>
+<p>Valorile <code>NULL</code> trebuie interpretate cu atenție. <code>NULL</code> nu este același lucru cu <code>0</code>. Valoarea <code>0</code> poate însemna „nu”, în timp ce <code>NULL</code> înseamnă că informația lipsește sau nu a fost completată.</p>
+<p>În expresiile QGIS, câmpurile cu spații, diacritice sau semne speciale trebuie scrise între ghilimele duble. De exemplu:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Nivel Preșcolar&quot; = 1
+</code></pre></div>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T01/screenshots/T01_01_attribute_table.png" data-caption="Tabelul de atribute leagă fiecare unitate școlară de informațiile sale." data-alt="Tabelul de atribute al unităților școlare deschis peste harta Bucureștiului." aria-label="Mărește captura: Tabelul de atribute leagă fiecare unitate școlară de informațiile sale."><img src="../assets/tutorials/T01/screenshots/T01_01_attribute_table.png" alt="Tabelul de atribute al unităților școlare deschis peste harta Bucureștiului." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T01 · CAPTURĂ QGIS</span><p>Tabelul de atribute leagă fiecare unitate școlară de informațiile sale.</p></figcaption></figure></article><article class="tutorial-step " id="section-11" data-source-section="11"><div class="step-heading"><span class="step-number">11</span><h3>Prima simbolizare: toate unitățile de învățământ</h3></div><div class="tutorial-prose"><p>Începem cu o hartă simplă, în care toate unitățile sunt afișate cu același simbol. Această etapă are rolul de a verifica dacă datele sunt încărcate corect și dacă distribuția generală este vizibilă.</p>
+<p>Pentru layerul <code>Limită Administrativă - Municipiul București</code>, deschideți <strong>Properties &gt; Symbology</strong> și folosiți o umplere transparentă, cu un contur discret. Limita administrativă este un reper, nu tema principală a hărții. Ea trebuie să ajute cititorul să înțeleagă extinderea orașului, fără să domine vizual punctele.</p>
+<p>Pentru layerul unităților de învățământ, deschideți <strong>Properties &gt; Symbology</strong>, alegeți <strong>Single Symbol</strong> și folosiți un simbol simplu, de tip cerc. O dimensiune de aproximativ <code>2–2.5 mm</code> este potrivită pentru început.</p>
+<p>Această hartă simplă răspunde la întrebarea de bază: unde sunt punctele? După ce vedem distribuția generală, putem începe să diferențiem punctele după atribute.</p>
+</div></article><div class="tutorial-phase" id="phase-3"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Simbolizare și analiză</h2></div><article class="tutorial-step " id="section-12" data-source-section="12"><div class="step-heading"><span class="step-number">12</span><h3>Filtrarea unităților preșcolare</h3></div><div class="tutorial-prose"><p>Un filtru controlează ce obiecte sunt afișate pe hartă. El nu șterge obiectele din layer și nu modifică datele originale.</p>
+<p>Pentru a afișa doar unitățile care au nivel preșcolar, deschideți fereastra de filtrare a layerului și introduceți expresia:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Nivel Preșcolar&quot; = 1
+</code></pre></div>
+<p>Pe hartă vor rămâne vizibile doar unitățile pentru care acest câmp are valoarea <code>1</code>.</p>
+<p>Acest exemplu este util pentru a înțelege cum funcționează câmpurile binare. Totuși, trebuie explicat că o unitate afișată prin acest filtru nu este neapărat exclusiv preșcolară. Unele unități pot avea mai multe niveluri de învățământ.</p>
+<p>După ce observați rezultatul, ștergeți filtrul pentru a reveni la toate unitățile.</p>
+</div></article><article class="tutorial-step " id="section-13" data-source-section="13"><div class="step-heading"><span class="step-number">13</span><h3>Filtrarea unităților primare și gimnaziale</h3></div><div class="tutorial-prose"><p>Pentru a afișa unitățile care au nivel primar sau gimnazial, folosiți expresia:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Nivel Primar&quot; = 1 OR &quot;Nivel Gimnazial&quot; = 1
+</code></pre></div>
+<p>Operatorul <code>OR</code> înseamnă „sau”. QGIS va afișa unitățile pentru care cel puțin una dintre cele două condiții este adevărată.</p>
+<p>Acest pas arată că filtrele pot include mai multe condiții. În același timp, este un bun moment pentru a discuta diferența dintre <code>OR</code> și <code>AND</code>. Cu <code>OR</code>, este suficientă una dintre condiții. Cu <code>AND</code>, ambele condiții trebuie să fie adevărate.</p>
+<p>Pentru pașii următori, ștergeți filtrul, astfel încât toate unitățile de învățământ să fie vizibile din nou.</p>
+</div></article><article class="tutorial-step " id="section-14" data-source-section="14"><div class="step-heading"><span class="step-number">14</span><h3>Crearea unei categorii educaționale simplificate</h3></div><div class="tutorial-prose"><p>Pentru harta finală, vrem să diferențiem punctele după o categorie educațională ușor de înțeles. În loc să adăugăm un câmp nou în tabel, vom folosi o expresie direct în simbolizare. Această soluție este sigură pentru începători, deoarece nu modifică fișierul original.</p>
+<p>Expresia propusă este:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">CASE
+WHEN &quot;Nivel Antepreșcolar&quot; = 1 THEN &#39;Antepreșcolar&#39;
+WHEN &quot;Nivel Preșcolar&quot; = 1 THEN &#39;Preșcolar&#39;
+WHEN &quot;Nivel Primar&quot; = 1 AND &quot;Nivel Gimnazial&quot; = 1 THEN &#39;Primar și gimnazial&#39;
+WHEN &quot;Nivel Liceal&quot; = 1 THEN &#39;Liceal&#39;
+ELSE &#39;Alt tip&#39;
+END
+</code></pre></div>
+<p>Această expresie poate fi citită ca o serie de reguli. QGIS verifică fiecare condiție de sus în jos. Dacă prima condiție este adevărată, atribuie categoria respectivă. Dacă nu, trece la următoarea. Dacă niciuna dintre condițiile listate nu este adevărată, obiectul primește categoria <code>Alt tip</code>.</p>
+<p>Ordinea condițiilor este importantă. De exemplu, o unitate poate avea mai multe niveluri educaționale. Pentru această primă hartă, alegem o clasificare simplificată, nu o clasificare administrativă completă. Scopul este să învățăm simbolizarea, nu să rezolvăm toate particularitățile sistemului educațional.</p>
+</div></article><article class="tutorial-step " id="section-15" data-source-section="15"><div class="step-heading"><span class="step-number">15</span><h3>Simbolizarea pe categorii educaționale</h3></div><div class="tutorial-prose"><p>Deschideți <strong>Properties &gt; Symbology</strong> pentru layerul unităților de învățământ. În partea de sus, schimbați tipul de simbolizare din <strong>Single Symbol</strong> în <strong>Categorized</strong>.</p>
+<p>La <strong>Value</strong>, folosiți butonul de expresie și introduceți expresia <code>CASE</code> prezentată mai sus. După confirmare, apăsați <strong>Classify</strong> pentru ca QGIS să genereze categoriile.</p>
+<p>Alegeți culori diferite, dar evitați combinațiile prea stridente. Pentru o hartă de curs, culorile trebuie să fie clare, dar echilibrate. De exemplu, se pot folosi culori diferite pentru <code>Antepreșcolar</code>, <code>Preșcolar</code>, <code>Primar și gimnazial</code>, <code>Liceal</code> și <code>Alt tip</code>.</p>
+<p>Simbolizarea categorială este potrivită atunci când vrem să reprezentăm tipuri sau clase, nu valori numerice continue. În cazul nostru, fiecare culoare indică o categorie educațională simplificată.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T01/screenshots/T01_02_categorized_schools.png" data-caption="Categoriile educaționale sunt configurate în simbolizarea punctelor." data-alt="Fereastra de simbolizare categorială a școlilor și punctele colorate pe harta Bucureștiului." aria-label="Mărește captura: Categoriile educaționale sunt configurate în simbolizarea punctelor."><img src="../assets/tutorials/T01/screenshots/T01_02_categorized_schools.png" alt="Fereastra de simbolizare categorială a școlilor și punctele colorate pe harta Bucureștiului." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T01 · CAPTURĂ QGIS</span><p>Categoriile educaționale sunt configurate în simbolizarea punctelor.</p></figcaption></figure></article><article class="tutorial-step " id="section-16" data-source-section="16"><div class="step-heading"><span class="step-number">16</span><h3>Simbolizare alternativă după numărul total de elevi</h3></div><div class="tutorial-prose"><p>Putem construi și o variantă alternativă a hărții, în care simbolurile sunt legate de câmpul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Număr total elevi
+</code></pre></div>
+<p>Această variantă răspunde la o altă întrebare: nu doar unde se află unitățile și ce tip sunt, ci care unități au mai mulți elevi.</p>
+<p>În <strong>Properties &gt; Symbology</strong>, alegeți o simbolizare de tip <strong>Graduated</strong> sau o simbolizare cu dimensiune controlată de date, în funcție de versiunea QGIS. Selectați câmpul <code>Număr total elevi</code> și folosiți 4–5 clase. Nu este recomandat să folosiți prea multe clase, deoarece harta devine greu de citit.</p>
+<p>Această simbolizare trebuie interpretată prudent. Numărul total de elevi nu este același lucru cu presiunea educațională, cu accesibilitatea sau cu nivelul de calitate. El este doar o valoare atributară care ne permite o primă diferențiere vizuală.</p>
+<p>Pentru harta finală a acestui tutorial, recomandarea este să păstrați simbolizarea pe categorii educaționale, deoarece este mai potrivită pentru o primă hartă tematică.</p>
+</div></article><article class="tutorial-step " id="section-17" data-source-section="17"><div class="step-heading"><span class="step-number">17</span><h3>Etichetarea selectivă</h3></div><div class="tutorial-prose"><p>Etichetele pot ajuta la identificarea unor unități, dar pot și aglomera foarte mult harta. Bucureștiul are multe puncte, iar etichetarea tuturor denumirilor poate face harta aproape imposibil de citit.</p>
+<p>Pentru a testa etichetarea, deschideți <strong>Properties &gt; Labels</strong> pentru layerul unităților de învățământ și activați <strong>Single Labels</strong>. La câmpul de etichetare, selectați:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Denumirea unității de învățământ
+</code></pre></div>
+<p>Folosiți o dimensiune mică a fontului și activați un buffer alb subțire, pentru ca textul să fie vizibil peste hartă.</p>
+<p>Pentru harta finală, există trei soluții bune:</p>
+<ul>
+<li>etichetați doar câteva unități reprezentative;</li>
+<li>afișați etichetele doar la o scară mare, când utilizatorul face zoom;</li>
+<li>renunțați la etichete și păstrați denumirile doar pentru identificare interactivă în QGIS.</li>
+</ul>
+<p>O hartă bună nu trebuie să arate tot ce există în tabel. Ea trebuie să selecteze și să comunice clar o idee principală.</p>
+</div></article><div class="tutorial-phase" id="phase-4"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Layout și export</h2></div><article class="tutorial-step " id="section-18" data-source-section="18"><div class="step-heading"><span class="step-number">18</span><h3>Pregătirea layoutului</h3></div><div class="tutorial-prose"><p>Layout Manager este spațiul în care pregătim harta pentru export. Până acum am lucrat în fereastra principală QGIS, unde explorăm datele. În layout, construim produsul cartografic final.</p>
+<p>Alegeți <strong>Project &gt; New Print Layout...</strong> și dați layoutului numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T01_harta_scoli_bucuresti
+</code></pre></div>
+<p>În fereastra de layout, setați pagina la <strong>A4 landscape</strong>. Dacă doriți mai mult spațiu pentru legendă, puteți folosi <strong>A3 landscape</strong>. Folosiți instrumentul <strong>Add Map</strong> pentru a desena cadrul hărții pe pagină și ajustați extinderea astfel încât Bucureștiul să fie vizibil complet.</p>
+<p>Harta finală trebuie să includă următoarele elemente:</p>
+<p><strong>Titlu</strong></p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Unități de învățământ preuniversitar în Municipiul București, 2022–2023
+</code></pre></div>
+<p><strong>Legendă</strong></p>
+<p>Legenda trebuie să fie scurtă și utilă. Păstrați doar categoriile educaționale și limita administrativă. Eliminați intrările care nu ajută cititorul.</p>
+<p><strong>Scară grafică</strong></p>
+<p>Scara grafică ajută cititorul să înțeleagă dimensiunile spațiului reprezentat. Alegeți o scară simplă, ușor de citit.</p>
+<p><strong>Nord</strong></p>
+<p>Adăugați un simbol de nord discret. Acesta nu trebuie să domine compoziția.</p>
+<p><strong>Sursa datelor</strong></p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sursa: Observatorul Urban Metropolitan București / ADIZMB, date prelucrate pentru cursul „Tehnici de vizualizare a datelor”.
+</code></pre></div>
+<p><strong>Notă metodologică</strong></p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Harta arată distribuția spațială a unităților de învățământ, nu capacitatea reală de deservire sau accesibilitatea pietonală.
+</code></pre></div>
+<p>Sursa și nota metodologică sunt importante pentru că arată de unde provin datele și care este limita interpretării. O hartă responsabilă nu comunică doar rezultate, ci și condițiile în care acestea trebuie înțelese.</p>
+</div><figure class="tutorial-figure" data-content-type="tutorial" data-level="essential" data-theme="qgis" data-source="qgis"><button type="button" class="tutorial-image-button" data-enlarge="assets/tutorials/T01/screenshots/T01_03_first_map_layout.png" data-caption="Prima compoziție cartografică în fereastra de layout QGIS." data-alt="Fereastra Print Layout cu pagina unei hărți a școlilor din București." aria-label="Mărește captura: Prima compoziție cartografică în fereastra de layout QGIS."><img src="../assets/tutorials/T01/screenshots/T01_03_first_map_layout.png" alt="Fereastra Print Layout cu pagina unei hărți a școlilor din București." loading="lazy" decoding="async" width="2552" height="1082"></button><figcaption><span class="eyebrow">T01 · CAPTURĂ QGIS</span><p>Prima compoziție cartografică în fereastra de layout QGIS.</p></figcaption></figure></article><article class="tutorial-step " id="section-19" data-source-section="19"><div class="step-heading"><span class="step-number">19</span><h3>Exportul hărții finale ca PNG</h3></div><div class="tutorial-prose"><p>În fereastra de layout, alegeți <strong>Layout &gt; Export as Image...</strong>. Salvați fișierul cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T01_harta_scoli_bucuresti.png
+</code></pre></div>
+<p>Dacă QGIS cere rezoluția, folosiți <code>300 dpi</code>. Această valoare este potrivită pentru o hartă clară, care poate fi introdusă într-un document sau într-o prezentare.</p>
+<p>După export, verificați fișierul PNG. Deschideți-l și urmăriți dacă titlul, legenda, scara, nordul și sursa sunt lizibile.</p>
+</div></article><article class="tutorial-step " id="section-20" data-source-section="20"><div class="step-heading"><span class="step-number">20</span><h3>Exportul hărții finale ca PDF</h3></div><div class="tutorial-prose"><p>Din aceeași fereastră de layout, alegeți <strong>Layout &gt; Export as PDF...</strong>. Salvați fișierul cu numele:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">T01_harta_scoli_bucuresti.pdf
+</code></pre></div>
+<p>PDF-ul este util pentru distribuire și tipărire, mai ales atunci când vrem să păstrăm aspectul compoziției cartografice. După export, deschideți PDF-ul și verificați dacă harta se vede corect.</p>
+</div></article><div class="tutorial-phase" id="phase-5"><span class="eyebrow">FLUXUL EXERCIȚIULUI</span><h2>Interpretare și exercițiu</h2></div><article class="tutorial-step caution" id="section-21" data-source-section="21"><div class="step-heading"><span class="step-number">21</span><h3>Interpretarea hărții finale</h3></div><div class="tutorial-prose"><p>Harta finală permite observații descriptive. Putem discuta unde apar mai multe unități apropiate, cum sunt distribuite punctele în interiorul limitei Bucureștiului și cum se diferențiază vizual categoriile educaționale simplificate.</p>
+<p>O formulare potrivită pentru discuția la clasă ar fi:</p>
+<blockquote>
+<p>Harta ne ajută să observăm distribuția spațială a unităților de învățământ preuniversitar din București. Ea este un punct de plecare pentru întrebări, nu o concluzie finală despre accesul elevilor la educație.</p>
+</blockquote>
+<p>Este bine ca lectorul să încurajeze cursanții să pună întrebări pe baza hărții: unde apar concentrări, unde apar spații mai puțin acoperite vizual, ce alte date ar fi necesare pentru o analiză mai completă.</p>
+</div></article><article class="tutorial-step caution" id="section-22" data-source-section="22"><div class="step-heading"><span class="step-number">22</span><h3>Ce nu putem concluziona doar din această hartă</h3></div><div class="tutorial-prose"><p>Această hartă nu demonstrează accesibilitatea pietonală la școli, timpul real de deplasare al elevilor, capacitatea reală de deservire a fiecărei unități, calitatea actului educațional sau echitatea distribuției serviciilor educaționale.</p>
+<p>De asemenea, harta nu arată relația dintre domiciliul elevilor și școala frecventată. Pentru astfel de întrebări ar fi necesare date suplimentare: populație pe grupe de vârstă, rețea stradală, circumscripții școlare, capacitate școlară și eventual analize de accesibilitate.</p>
+<p>Această secțiune este importantă deoarece îi ajută pe cursanți să înțeleagă că o hartă poate fi convingătoare vizual, dar tot trebuie interpretată cu prudență.</p>
+</div></article><article class="tutorial-step caution" id="section-23" data-source-section="23"><div class="step-heading"><span class="step-number">23</span><h3>Erori frecvente și soluții</h3></div><div class="tutorial-prose"><p>Dacă layerul nu apare pe hartă, verificați dacă este bifat în panoul <strong>Layers</strong> și folosiți opțiunea <strong>Zoom to Layer</strong>.</p>
+<p>Dacă punctele apar, dar limita administrativă nu se vede, verificați simbolizarea limitei. Este posibil ca umplerea sau conturul să fie prea discret.</p>
+<p>Dacă filtrul nu funcționează, verificați dacă numele câmpului este scris exact și dacă este pus între ghilimele duble:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>EXPRESIE QGIS</span><button type="button" class="copy-code" aria-label="Copiază expresia QGIS">Copiază</button></div><pre><code class="language-qgis">&quot;Nivel Preșcolar&quot; = 1
+</code></pre></div>
+<p>Dacă QGIS afișează eroare la expresie, cele mai frecvente cauze sunt lipsa ghilimelelor duble, scrierea greșită a diacriticelor sau folosirea unui nume de câmp care nu există exact în tabel.</p>
+<p>Dacă harta este prea aglomerată, reduceți dimensiunea punctelor, dezactivați etichetele sau folosiți etichetare selectivă. Claritatea este mai importantă decât afișarea tuturor detaliilor.</p>
+<p>Dacă legenda este prea lungă, editați legenda în layout și păstrați doar elementele care ajută cititorul să înțeleagă harta.</p>
+</div></article><article class="tutorial-step " id="section-24" data-source-section="24"><div class="step-heading"><span class="step-number">24</span><h3>Exercițiu suplimentar</h3></div><div class="tutorial-prose"><p>Construiți o variantă a hărții în care unitățile sunt simbolizate după câmpul:</p>
+<div class="tutorial-code"><div class="tutorial-code-head"><span>FIȘIER / TEXT</span><button type="button" class="copy-code" aria-label="Copiază textul">Copiază</button></div><pre><code class="language-text">Sector
+</code></pre></div>
+<p>Pentru aceasta, duplicați layerul unităților de învățământ în proiect, fără să modificați GeoPackage-ul original. Aplicați simbolizare <strong>Categorized</strong> după câmpul <code>Sector</code>, alegeți culori distincte pentru sectoarele 1–6 și comparați rezultatul cu harta pe categorii educaționale.</p>
+<p>Întrebarea de reflecție este:</p>
+<p><strong>Care variantă este mai potrivită pentru o hartă introductivă: simbolizarea după sector sau simbolizarea după categorie educațională? De ce?</strong></p>
+<p>Această comparație îi ajută pe cursanți să înțeleagă că aceeași bază de date poate produce hărți diferite, în funcție de întrebarea la care vrem să răspundem.</p>
+</div></article></section><section class="tutorial-result" id="verifica-rezultatul"><span class="eyebrow">REZULTAT AȘTEPTAT</span><h2>Verifică rezultatul</h2><p>Documentul sursă cere exportul hărții în ambele formate. Verifică lizibilitatea titlului, legendei, scării, sursei și notei metodologice.</p><div class="file-badges"><code>T01_harta_scoli_bucuresti.png</code><code>T01_harta_scoli_bucuresti.pdf</code></div></section><section class="tutorial-links"><div><span class="eyebrow">CONCEPTE ASOCIATE</span><h2>Legături cu teoria</h2><div class="concept-grid"><a class="concept-link" href="../lesson.html?id=rectangular-coordinates"><span>VEZI CONCEPTUL</span><strong>Coordonate și CRS →</strong></a><a class="concept-link" href="../lesson.html?id=method-qualitative"><span>VEZI CONCEPTUL</span><strong>Fond calitativ →</strong></a><a class="concept-link" href="../lesson.html?id=map-exterior"><span>VEZI CONCEPTUL</span><strong>Elementele exterioare ale hărții →</strong></a><a class="concept-link" href="../geospatial-data.html#vector"><span>MODELUL DE DATE</span><strong>Date vectoriale →</strong></a></div></div><div><span class="eyebrow">RESURSE QGIS</span><h2>Documentația 3.44</h2><div class="qgis-doc-grid"><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/attribute_data.html" target="_blank" rel="noopener noreferrer"><strong>Date atribut</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/basic_map/symbology.html" target="_blank" rel="noopener noreferrer"><strong>Simbolizarea straturilor vectoriale</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/label_tool.html" target="_blank" rel="noopener noreferrer"><strong>Etichete pe hartă</strong><span>Vezi și în QGIS Training Manual ↗</span></a><a class="qgis-doc-link" href="https://docs.qgis.org/3.44/en/docs/training_manual/map_composer/map_composer.html" target="_blank" rel="noopener noreferrer"><strong>Compoziție cartografică</strong><span>Vezi și în QGIS Training Manual ↗</span></a></div></div></section><nav class="tutorial-prev-next" aria-label="Tutorial anterior și următor"><span></span><a href="t02.html">T02 · Tutorial următor →</a></nav><footer class="page-footer site-footer"><div><strong>Explorare geospațială · Ateliere QGIS</strong><p>Material procedural original al cursului; legăturile teoretice păstrează atribuirea pe paginile lor.</p></div><nav aria-label="Legături în subsol"><a href="index.html">Toate atelierele</a><a href="../resources.html">Resurse</a></nav></footer></main><aside class="site-context workshop-context"><span class="eyebrow">ATELIERE QGIS</span><h2>Învață în pași</h2><p class="small">Șase exerciții progresive. Fiecare hartă este însoțită de o limită de interpretare.</p><a class="outline-button full-button" href="../workflow.html">Recapitulează fluxul QGIS →</a></aside></div><button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button><dialog id="tutorial-dialog" class="tutorial-dialog" aria-labelledby="tutorial-dialog-title"><div class="dialog-header"><h2 id="tutorial-dialog-title">Captură QGIS</h2><div class="tutorial-dialog-actions"><button type="button" class="outline-button" data-zoom-tutorial-dialog aria-pressed="false">Mărește detaliile</button><button type="button" class="icon-button" data-close-tutorial-dialog aria-label="Închide imaginea mărită">×</button></div></div><div class="tutorial-dialog-viewport"><img id="tutorial-dialog-image" alt=""></div><p id="tutorial-dialog-caption"></p></dialog></body></html>

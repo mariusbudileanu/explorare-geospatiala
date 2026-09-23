@@ -1,0 +1,55 @@
+# Editorial sources stay local. Published copies of screenshots are in assets/.
+/content/
+*.docx
+*.DOCX
+~$*
+
+# Historical PDF retained locally; public pages link to Biblioteca Digitală.
+/nastase_cernea_cartografie-generala-manual-practic_1974.pdf
+
+# Course datasets are distributed separately. JSON teaching examples stay public.
+/local-data/
+/datasets/
+*.gpkg
+*.gpkg-wal
+*.gpkg-shm
+*.tif
+*.tiff
+*.vrt
+*.qgz
+*.qgs
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.qix
+*.gdb/
+*.mbtiles
+*.las
+*.laz
+*.zip
+*.7z
+
+# Local checks, previews, release staging and dependencies.
+/tmp/
+/release-staging/
+/releases/
+/publication-preview/
+/_release_assets/
+/release_assets/
+/tools/
+/PUBLICATION_TEXT.md
+/node_modules/
+/.codex/
+/.agents/
+*.log
+*.tmp
+*.bak
+*.swp
+__pycache__/
+.DS_Store
+Thumbs.db
+desktop.ini
+.env
+.env.*

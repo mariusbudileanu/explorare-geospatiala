@@ -1,0 +1,515 @@
+[
+  {
+    "id": "vector-clip",
+    "model": "vector",
+    "name_ro": "Clip",
+    "category": "suprapunere",
+    "summary_ro": "Păstrează porțiunile geometriei de intrare din interiorul poligonului mască; câmpurile de arie stocate nu se recalculează automat.",
+    "input": [
+      "grid vectorial",
+      "mască București"
+    ],
+    "output": "geometrii decupate",
+    "example_ro": "T05 decupează gridul de recensământ la limita Bucureștiului.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectoroverlay.html",
+    "tutorial_links": [
+      "tutorials/t05.html#section-14"
+    ],
+    "theory_links": [],
+    "diagram": "clip"
+  },
+  {
+    "id": "vector-buffer",
+    "model": "vector",
+    "name_ro": "Buffer",
+    "category": "proximitate",
+    "summary_ro": "Construiește o zonă la o distanță specificată în jurul geometriei; unitatea și CRS-ul trebuie alese adecvat.",
+    "input": [
+      "punct / linie / poligon",
+      "distanță"
+    ],
+    "output": "poligon de proximitate",
+    "example_ro": "Zonă geometrică de 500 m în jurul unei școli, fără afirmație automată despre accesibilitate.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "buffer"
+  },
+  {
+    "id": "vector-intersection",
+    "model": "vector",
+    "name_ro": "Intersection",
+    "category": "suprapunere",
+    "summary_ro": "Produce numai geometriile comune celor două straturi și include atribute din ambele intrări.",
+    "input": [
+      "poligoane A",
+      "poligoane B"
+    ],
+    "output": "intersecția A ∩ B",
+    "example_ro": "Părțile zonelor care se suprapun cu o limită tematică.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectoroverlay.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "intersection"
+  },
+  {
+    "id": "vector-union",
+    "model": "vector",
+    "name_ro": "Union",
+    "category": "suprapunere",
+    "summary_ro": "Împarte suprapunerile și păstrează acoperirea combinată a două straturi de poligoane, cu atributele disponibile.",
+    "input": [
+      "poligoane A",
+      "poligoane B"
+    ],
+    "output": "părți A, B și A ∩ B",
+    "example_ro": "Combinarea a două delimitări pentru comparație.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectoroverlay.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "union"
+  },
+  {
+    "id": "vector-dissolve",
+    "model": "vector",
+    "name_ro": "Dissolve",
+    "category": "agregare",
+    "summary_ro": "Unește geometriile după o valoare comună și elimină limitele interioare din același grup.",
+    "input": [
+      "poligoane",
+      "câmp categorie"
+    ],
+    "output": "geometrii grupate",
+    "example_ro": "Celule adiacente din aceeași clasă devin o zonă comună.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "dissolve"
+  },
+  {
+    "id": "vector-merge",
+    "model": "vector",
+    "name_ro": "Merge vector layers",
+    "category": "combinare",
+    "summary_ro": "Adună entitățile mai multor straturi compatibile într-un strat; nu dizolvă automat geometriile.",
+    "input": [
+      "strat 1",
+      "strat 2"
+    ],
+    "output": "un strat combinat",
+    "example_ro": "Reunirea unor inventare regionale cu aceeași geometrie.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeneral.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "merge"
+  },
+  {
+    "id": "vector-select-location",
+    "model": "vector",
+    "name_ro": "Select by location",
+    "category": "interogare",
+    "summary_ro": "Selectează entități care îndeplinesc o relație spațială aleasă; selecția nu modifică geometria.",
+    "input": [
+      "entități",
+      "strat de referință"
+    ],
+    "output": "subset selectat",
+    "example_ro": "Alege punctele aflate în interiorul unui poligon.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorselection.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "selection"
+  },
+  {
+    "id": "vector-spatial-join",
+    "model": "vector",
+    "name_ro": "Join attributes by location",
+    "category": "atribute",
+    "summary_ro": "Atașează atribute pe baza unei relații spațiale, nu a unei chei ID; rezultatul depinde de predicat și de regulile pentru potriviri multiple.",
+    "input": [
+      "școli",
+      "poligoane district"
+    ],
+    "output": "școli cu atributul districtului",
+    "example_ro": "Fiecare școală primește identificatorul districtului care o conține.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeneral.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "join"
+  },
+  {
+    "id": "vector-centroids",
+    "model": "vector",
+    "name_ro": "Centroids",
+    "category": "geometrie",
+    "summary_ro": "Calculează centrul geometric al fiecărei entități; punctul poate cădea în afara unui poligon concav.",
+    "input": [
+      "poligoane"
+    ],
+    "output": "puncte centroid",
+    "example_ro": "Un punct reprezentativ geometric pentru fiecare unitate.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "centroid"
+  },
+  {
+    "id": "vector-multipart",
+    "model": "vector",
+    "name_ro": "Multipart to singleparts",
+    "category": "geometrie",
+    "summary_ro": "Separă componentele unei geometrii multipart în entități individuale; atributele sunt copiate.",
+    "input": [
+      "entitate multipart"
+    ],
+    "output": "entități separate",
+    "example_ro": "Insulele unui poligon multipart devin piese individuale.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "multipart"
+  },
+  {
+    "id": "vector-hull",
+    "model": "vector",
+    "name_ro": "Convex hull",
+    "category": "geometrie",
+    "summary_ro": "Construiește cea mai mică înfășurătoare convexă a unei geometrii; pentru un singur contur al unui grup, punctele trebuie grupate într-o geometrie multipunct.",
+    "input": [
+      "geometrie multipunct"
+    ],
+    "output": "poligon convex",
+    "example_ro": "Contur schematic al distribuției unui grup de stații.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectorgeometry.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "hull"
+  },
+  {
+    "id": "vector-nearest",
+    "model": "vector",
+    "name_ro": "Distance to nearest hub",
+    "category": "proximitate",
+    "summary_ro": "Determină ținta cea mai apropiată și distanța până la ea, conform CRS-ului și setărilor de măsurare ale instrumentului; nu calculează timp de călătorie pe rețea.",
+    "input": [
+      "puncte origine",
+      "puncte țintă"
+    ],
+    "output": "distanță și țintă apropiată",
+    "example_ro": "Distanța în linie dreaptă până la cel mai apropiat spital.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectoranalysis.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "nearest"
+  },
+  {
+    "id": "vector-reproject",
+    "model": "vector",
+    "name_ro": "Reproject layer",
+    "category": "CRS",
+    "summary_ro": "Transformă coordonatele unui strat în CRS-ul țintă printr-o operație adecvată.",
+    "input": [
+      "strat + CRS sursă",
+      "CRS țintă"
+    ],
+    "output": "strat în CRS țintă",
+    "example_ro": "Pregătirea datelor pentru o analiză metrică locală.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/training_manual/vector_analysis/reproject_transform.html",
+    "tutorial_links": [
+      "tutorials/t05.html#section-12"
+    ],
+    "theory_links": [
+      "lesson.html?id=rectangular-coordinates"
+    ],
+    "diagram": "reproject"
+  },
+  {
+    "id": "vector-geometry",
+    "model": "vector",
+    "name_ro": "Calculate geometry",
+    "category": "măsurare",
+    "summary_ro": "Calculează arie sau lungime din geometrie; rezultatul depinde de CRS și de metoda de calcul.",
+    "input": [
+      "poligon / linie",
+      "unități și CRS"
+    ],
+    "output": "câmp arie / lungime",
+    "example_ro": "Aria unui poligon sportiv, dacă este solicitată în T04.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/attribute_table.html",
+    "tutorial_links": [
+      "tutorials/t04.html#section-14"
+    ],
+    "theory_links": [
+      "lesson.html?id=rectangular-coordinates"
+    ],
+    "diagram": "measure"
+  },
+  {
+    "id": "raster-mask",
+    "model": "raster",
+    "name_ro": "Clip Raster by Mask Layer",
+    "category": "decupare",
+    "summary_ro": "Decupează un raster folosind geometria unui strat mască; celulele din afara măștii devin NoData sau sunt excluse.",
+    "input": [
+      "DEM extins",
+      "mască Suceava"
+    ],
+    "output": "DEM subset Suceava",
+    "example_ro": "T06 pregătește un raster de relief pentru județul Suceava.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterextraction.html",
+    "tutorial_links": [
+      "tutorials/t06.html#section-16"
+    ],
+    "theory_links": [
+      "lesson.html?id=relief-models"
+    ],
+    "diagram": "raster-mask"
+  },
+  {
+    "id": "raster-extent",
+    "model": "raster",
+    "name_ro": "Clip raster by extent",
+    "category": "decupare",
+    "summary_ro": "Taie rasterul la un dreptunghi de coordonate; nu urmează o limită poligonală neregulată.",
+    "input": [
+      "raster extins",
+      "dreptunghi"
+    ],
+    "output": "raster dreptunghiular",
+    "example_ro": "Extrage o fereastră de lucru rectangulară.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterextraction.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-extent"
+  },
+  {
+    "id": "raster-warp",
+    "model": "raster",
+    "name_ro": "Warp / Reproject",
+    "category": "CRS",
+    "summary_ro": "Transformă poziția rasterului într-un alt CRS și resamplează valori în celulele noi.",
+    "input": [
+      "raster + CRS sursă",
+      "CRS țintă"
+    ],
+    "output": "raster reproiectat",
+    "example_ro": "Alinierea rasterelor pentru o analiză comună.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterprojections.html",
+    "tutorial_links": [],
+    "theory_links": [
+      "lesson.html?id=rectangular-coordinates"
+    ],
+    "diagram": "raster-warp"
+  },
+  {
+    "id": "raster-resample",
+    "model": "raster",
+    "name_ro": "Resample",
+    "category": "rezoluție",
+    "summary_ro": "Estimează valori într-o grilă nouă; metoda aleasă contează pentru date continue sau categorii.",
+    "input": [
+      "raster",
+      "mărime celulă nouă"
+    ],
+    "output": "raster pe grilă nouă",
+    "example_ro": "Alinierea rezoluției a două rastere compatibile.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterprojections.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-resample"
+  },
+  {
+    "id": "raster-mosaic",
+    "model": "raster",
+    "name_ro": "Merge / mosaic",
+    "category": "combinare",
+    "summary_ro": "Combină rastere adiacente; verifică CRS, rezoluția, NoData și ordinea la suprapuneri.",
+    "input": [
+      "raster A",
+      "raster B"
+    ],
+    "output": "raster comun",
+    "example_ro": "Combinarea a două dale DEM vecine.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rastermiscellaneous.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-mosaic"
+  },
+  {
+    "id": "raster-calculator",
+    "model": "raster",
+    "name_ro": "Raster Calculator",
+    "category": "calcul",
+    "summary_ro": "Aplică expresii aritmetice sau condiționale celulă cu celulă pe rastere aliniate spațial.",
+    "input": [
+      "Raster A",
+      "Raster B / expresie"
+    ],
+    "output": "raster calculat",
+    "example_ro": "A + B, numai după verificarea grilei, benzilor și NoData.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_raster/raster_analysis.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-calculator"
+  },
+  {
+    "id": "raster-reclass",
+    "model": "raster",
+    "name_ro": "Reclassify by table",
+    "category": "clasificare",
+    "summary_ro": "Transformă intervale de valori continue în coduri de clasă; se pierde detaliul din interiorul clasei.",
+    "input": [
+      "DEM continuu",
+      "praguri"
+    ],
+    "output": "raster de clase",
+    "example_ro": "În schemă: sub 200 m, 200–sub 300 m și cel puțin 300 m.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/rasteranalysis.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-reclass"
+  },
+  {
+    "id": "raster-hillshade",
+    "model": "raster",
+    "name_ro": "Hillshade",
+    "category": "teren",
+    "summary_ro": "Calculează intensitatea unei iluminări sintetice din geometria unui DEM; rezultatul nu reprezintă altitudinea.",
+    "input": [
+      "DEM",
+      "azimutul luminii"
+    ],
+    "output": "raster de umbrire",
+    "example_ro": "T06 vizualizează relieful Sucevei.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/rasterterrainanalysis.html",
+    "tutorial_links": [
+      "tutorials/t06.html#section-18"
+    ],
+    "theory_links": [
+      "lesson.html?id=relief-models"
+    ],
+    "diagram": "raster-hillshade"
+  },
+  {
+    "id": "raster-slope",
+    "model": "raster",
+    "name_ro": "Slope",
+    "category": "teren",
+    "summary_ro": "Estimează înclinarea locală a suprafeței DEM; unitatea rezultatului depinde de instrument și setări.",
+    "input": [
+      "DEM"
+    ],
+    "output": "raster de pantă",
+    "example_ro": "Unde terenul este mai abrupt?",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/rasterterrainanalysis.html",
+    "tutorial_links": [],
+    "theory_links": [
+      "lesson.html?id=relief-models"
+    ],
+    "diagram": "raster-slope"
+  },
+  {
+    "id": "raster-aspect",
+    "model": "raster",
+    "name_ro": "Aspect",
+    "category": "teren",
+    "summary_ro": "Estimează direcția de înclinare maximă a terenului, în raport cu nordul definit de instrument.",
+    "input": [
+      "DEM"
+    ],
+    "output": "raster de expoziție",
+    "example_ro": "Ce orientare au versanții?",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/rasterterrainanalysis.html",
+    "tutorial_links": [],
+    "theory_links": [
+      "lesson.html?id=relief-models"
+    ],
+    "diagram": "raster-aspect"
+  },
+  {
+    "id": "raster-contours",
+    "model": "raster",
+    "name_ro": "Contours",
+    "category": "teren",
+    "summary_ro": "Extrage linii pentru valori altimetrice egale din DEM la un interval ales.",
+    "input": [
+      "DEM",
+      "echidistanță"
+    ],
+    "output": "izolinii vectoriale",
+    "example_ro": "În această schemă, curbele de nivel sunt generate la fiecare 50 m.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterextraction.html",
+    "tutorial_links": [],
+    "theory_links": [
+      "lesson.html?id=method-isolines"
+    ],
+    "diagram": "raster-contours"
+  },
+  {
+    "id": "raster-zonal",
+    "model": "raster",
+    "name_ro": "Zonal statistics",
+    "category": "sinteză",
+    "summary_ro": "Rezumă valorile rasterului pentru fiecare zonă poligonală, de exemplu prin medie.",
+    "input": [
+      "DEM",
+      "poligoane administrative"
+    ],
+    "output": "poligoane cu medie altitudinală",
+    "example_ro": "Altitudinea medie pentru fiecare comună.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/rasteranalysis.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-zonal"
+  },
+  {
+    "id": "raster-rasterize",
+    "model": "raster",
+    "name_ro": "Rasterize (vector to raster)",
+    "category": "conversie",
+    "summary_ro": "Atribuie valori unor celule pe baza geometriei sau atributelor vectoriale; rezoluția afectează detaliul.",
+    "input": [
+      "poligoane",
+      "grilă țintă"
+    ],
+    "output": "raster",
+    "example_ro": "Codul clasei unui poligon este transferat în pixeli.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterconversion.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-rasterize"
+  },
+  {
+    "id": "raster-polygonize",
+    "model": "raster",
+    "name_ro": "Polygonize (raster to vector)",
+    "category": "conversie",
+    "summary_ro": "Construiește poligoane pentru regiuni de celule cu aceeași valoare; contururile urmează grila raster.",
+    "input": [
+      "raster tematic"
+    ],
+    "output": "poligoane vectoriale",
+    "example_ro": "Celulele unei clase devin areale vectoriale.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterconversion.html",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-polygonize"
+  },
+  {
+    "id": "raster-fill-nodata",
+    "model": "raster",
+    "name_ro": "Fill NoData",
+    "category": "valori lipsă",
+    "summary_ro": "Estimează valori pentru celule NoData din vecinătatea validă, în limita distanței de căutare; rezultatul este interpolare, nu observație nouă.",
+    "input": [
+      "raster cu goluri",
+      "distanță de căutare"
+    ],
+    "output": "raster cu goluri interpolate",
+    "example_ro": "Completarea unei găuri mici într-un DEM continuu; nu inventăm categorii pentru un raster tematic.",
+    "qgis_url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasteranalysis.html#fill-nodata",
+    "tutorial_links": [],
+    "theory_links": [],
+    "diagram": "raster-fill-nodata"
+  }
+]

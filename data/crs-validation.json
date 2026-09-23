@@ -1,0 +1,6347 @@
+{
+  "generated_with": "QGIS 3.40.11 bundled pyproj 3.7.0 / PROJ 9.6.2",
+  "coordinate_order": "always_xy; projected east,north and geographic longitude,latitude",
+  "reference_points_source": "https://www.geonames.org/RO/largest-cities-in-romania.html",
+  "reference_points_are": "representative locality points, not geodetic control stations",
+  "datum_operation": "EPSG:15995 Pulkovo 1942(58) to WGS 84 (19), 3 m declared accuracy",
+  "tests": [
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:4326",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        26.106,
+        44.432
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Null geographic offset from WGS 84 to WGS 84 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3844",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32634",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32635",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3334",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3335",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3857",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3035",
+      "input": [
+        26.106,
+        44.432
+      ],
+      "expected": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:4326",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        26.106000009305614,
+        44.43200000083988
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3844",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32634",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        906397.9874608328,
+        4932550.020185255
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32635",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        428846.3943422568,
+        4920244.580787089
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3334",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079525
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3335",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094068
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3857",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        2906106.627685096,
+        5532540.387909533
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3035",
+      "input": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "expected": [
+        5594709.112111269,
+        2506991.3183687897
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:4326",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        26.105999999999998,
+        44.432
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 34N + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3844",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        588175.0794176073,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32634",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32635",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        428846.39360060095,
+        4920244.580701889
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3334",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3335",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3857",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        2906106.6266491995,
+        5532540.387778605
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3035",
+      "input": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "expected": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:4326",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        26.106,
+        44.432
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 35N + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3844",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        588175.0794176075,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32634",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        906397.9867259765,
+        4932550.020045626
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32635",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3334",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3335",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3857",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3035",
+      "input": [
+        428846.3936006012,
+        4920244.580701889
+      ],
+      "expected": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:4326",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        26.106000009305607,
+        44.43200000083987
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3844",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        588175.079417607,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32634",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        906397.9874608323,
+        4932550.0201852545
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32635",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        428846.3943422563,
+        4920244.580787087
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3334",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3335",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094065
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3857",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        2906106.627685095,
+        5532540.3879095325
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3035",
+      "input": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "expected": [
+        5594709.112111268,
+        2506991.3183687897
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        26.10600000930561,
+        44.43200000083988
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        588175.0794176073,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        906397.9874608325,
+        4932550.020185255
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        428846.3943422566,
+        4920244.580787089
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        2906106.6276850956,
+        5532540.387909533
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "expected": [
+        5594709.112111268,
+        2506991.3183687897
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:4326",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        26.105999999999998,
+        44.432
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3844",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        588175.0794176073,
+        326405.96609709965
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32634",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        906397.9867259763,
+        4932550.020045626
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32635",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        428846.39360060095,
+        4920244.580701889
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3334",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        4906684.549880012,
+        4934650.873079524
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3335",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        5428936.265335017,
+        4922331.544094067
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3857",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3035",
+      "input": [
+        2906106.6266492,
+        5532540.387778605
+      ],
+      "expected": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        26.106,
+        44.43199999510125
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        588175.0794250659,
+        326405.96555280755
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        906397.9867600169,
+        4932550.019501448
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 34N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        428846.39359465695,
+        4920244.580157752
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 35N"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        4906684.549914067,
+        4934650.872535128
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        5428936.26532907,
+        4922331.543549713
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        2906106.6266492,
+        5532540.38701493
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "bucharest",
+      "reference_lonlat": [
+        26.106,
+        44.432
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "expected": [
+        5594709.1114073405,
+        2506991.3181182416
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:4326",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        23.6,
+        46.767
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Null geographic offset from WGS 84 to WGS 84 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3844",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32634",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32635",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3334",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3335",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3857",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3035",
+      "input": [
+        23.6,
+        46.767
+      ],
+      "expected": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:4326",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        23.60000001081753,
+        46.767000000915395
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3844",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32634",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        698520.0408972662,
+        5182554.9925248865
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32635",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        240400.73276950992,
+        5184887.22337653
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3334",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3335",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3857",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        2627139.9839254585,
+        5904125.123731453
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3035",
+      "input": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "expected": [
+        5354174.338491512,
+        2723268.626226575
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:4326",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        23.6,
+        46.767
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 34N + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3844",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32634",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32635",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3334",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3335",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3857",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3035",
+      "input": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "expected": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:4326",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        23.6,
+        46.766999999999996
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 35N + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3844",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        393205.04689850495,
+        586215.9804576377
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32634",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        698520.0400747057,
+        5182554.992395846
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32635",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3334",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107611
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3335",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.282325018
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3857",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        2627139.9827212566,
+        5904125.123582684
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3035",
+      "input": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "expected": [
+        5354174.337698227,
+        2723268.6259752368
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:4326",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        23.600000010817535,
+        46.767000000915395
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3844",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        393205.0468985055,
+        586215.9804576398
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32634",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        698520.0408972665,
+        5182554.9925248865
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32635",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        240400.73276951024,
+        5184887.22337653
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3334",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3335",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3857",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        2627139.983925459,
+        5904125.123731453
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3035",
+      "input": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "expected": [
+        5354174.338491512,
+        2723268.626226575
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        23.60000001081753,
+        46.767000000915395
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        698520.0408972662,
+        5182554.9925248865
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        240400.73276950992,
+        5184887.22337653
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        2627139.9839254585,
+        5904125.123731453
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "expected": [
+        5354174.338491512,
+        2723268.626226575
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:4326",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        23.6,
+        46.767
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3844",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        393205.04689850524,
+        586215.9804576398
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32634",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        698520.0400747056,
+        5182554.992395848
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32635",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        240400.73193921894,
+        5184887.22331057
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3334",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        4698723.419830976,
+        5184756.374107614
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3335",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        5240415.59833731,
+        5187080.28232502
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3857",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3035",
+      "input": [
+        2627139.9827212566,
+        5904125.123582686
+      ],
+      "expected": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        23.599999999999994,
+        46.76699999594718
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        393205.0468905352,
+        586215.980007233
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        698520.040089604,
+        5182554.991945519
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 34N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        240400.7319197266,
+        5184887.222860261
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 35N"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        4698723.41984588,
+        5184756.373657104
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        5240415.598317809,
+        5187080.28187453
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        2627139.9827212556,
+        5904125.122924028
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "cluj",
+      "reference_lonlat": [
+        23.6,
+        46.767
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "expected": [
+        5354174.337698227,
+        2723268.625975238
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:4326",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        27.6,
+        47.167
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Null geographic offset from WGS 84 to WGS 84 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3844",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32634",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32635",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3334",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3335",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3857",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3035",
+      "input": [
+        27.6,
+        47.167
+      ],
+      "expected": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:4326",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        27.600000008766305,
+        47.167000000379566
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3844",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32634",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        1000118.8882207149,
+        5244891.417362503
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32635",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        545472.9582500114,
+        5223897.094296778
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3334",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165527
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3335",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        5545609.860136697,
+        5226105.332696076
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3857",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        3072417.946870211,
+        5969375.451020531
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3035",
+      "input": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "expected": [
+        5642103.09828717,
+        2830684.6629561265
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:4326",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        27.6,
+        47.166999999999994
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 34N + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3844",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        697200.5740403767,
+        632978.7723080233
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32634",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32635",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3334",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3335",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3857",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        3072417.9458943508,
+        5969375.450958381
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3035",
+      "input": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "expected": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:4326",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        27.6,
+        47.16699999999999
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 35N + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3844",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        697200.5740403772,
+        632978.7723080233
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32634",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        1000118.8875602505,
+        5244891.417263997
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32635",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3334",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165522
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3335",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        5545609.860136698,
+        5226105.332696072
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3857",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        3072417.9458943508,
+        5969375.45095838
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3035",
+      "input": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "expected": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        27.600000008766308,
+        47.167000000379545
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        697200.5740403769,
+        632978.7723080233
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        1000118.8882207151,
+        5244891.417362501
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        545472.9582500117,
+        5223897.094296775
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        3072417.9468702115,
+        5969375.451020529
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "expected": [
+        5642103.098287173,
+        2830684.6629561195
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        27.600000008766305,
+        47.167000000379545
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        1000118.8882207151,
+        5244891.417362501
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        545472.9582500114,
+        5223897.094296775
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        3072417.946870211,
+        5969375.451020529
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "expected": [
+        5642103.098287173,
+        2830684.6629561195
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:4326",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        27.6,
+        47.167
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3844",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        697200.5740403767,
+        632978.7723080269
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32634",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        1000118.8875602505,
+        5244891.417263998
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32635",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        545472.9575859541,
+        5223897.094249493
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3334",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        5000443.324889997,
+        5247117.506165524
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3335",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        5545609.860136697,
+        5226105.332696074
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3857",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3035",
+      "input": [
+        3072417.9458943508,
+        5969375.450958382
+      ],
+      "expected": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        27.599999999999987,
+        47.16699999607882
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        697200.5740547448,
+        632978.7718722892
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        1000118.8875972051,
+        5244891.416828465
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 34N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        545472.9575892998,
+        5223897.093813737
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 35N"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        5000443.324926966,
+        5247117.505729815
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        5545609.860140043,
+        5226105.332260142
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        3072417.9458943494,
+        5969375.450316336
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "iasi",
+      "reference_lonlat": [
+        27.6,
+        47.167
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "expected": [
+        5642103.097653107,
+        2830684.662757893
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:4326",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        21.226,
+        45.754
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Null geographic offset from WGS 84 to WGS 84 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3844",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32634",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32635",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3334",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3335",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3857",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3035",
+      "input": [
+        21.226,
+        45.754
+      ],
+      "expected": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:4326",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        21.22600001201474,
+        45.754000001407746
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3844",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32634",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        517577.0925501485,
+        5066740.629127662
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32635",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        50948.59640648344,
+        5082951.682306306
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3334",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843276
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3335",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        5050887.547484652,
+        5085104.245235846
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3857",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        2362867.5129154995,
+        5741014.8042588895
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3035",
+      "input": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "expected": [
+        5191864.182621645,
+        2581532.4356270917
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:4326",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        21.226,
+        45.754
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 34N + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3844",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32634",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32635",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3334",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3335",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3857",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3035",
+      "input": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "expected": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:4326",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        21.226,
+        45.75399999999999
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 35N + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3844",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        206610.73432841955,
+        479637.46144369966
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32634",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32635",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3334",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3335",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        5050887.547484652,
+        5085104.245235844
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3857",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        2362867.511578025,
+        5741014.804034293
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3035",
+      "input": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "expected": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:4326",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        21.226000012014733,
+        45.75400000140772
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3844",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        206610.73432841926,
+        479637.46144369966
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32634",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        517577.092550148,
+        5066740.629127659
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32635",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        50948.59640648286,
+        5082951.682306304
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3334",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3335",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        5050887.547484651,
+        5085104.245235844
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3857",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        2362867.5129154986,
+        5741014.804258886
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3035",
+      "input": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "expected": [
+        5191864.182621646,
+        2581532.435627083
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        21.226000012014744,
+        45.75400000140774
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        206610.7343284199,
+        479637.4614437028
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        517577.0925501487,
+        5066740.629127661
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        50948.59640648373,
+        5082951.682306305
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        2362867.5129155,
+        5741014.8042588895
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "expected": [
+        5191864.182621645,
+        2581532.4356270917
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:4326",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        21.226,
+        45.754
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3844",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        206610.73432841967,
+        479637.4614437028
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32634",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        517577.0916161473,
+        5066740.628968617
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32635",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        50948.59546084207,
+        5082951.682217603
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3334",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        4517707.724722032,
+        5068895.726843273
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3335",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        5050887.547484652,
+        5085104.2452358445
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3857",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3035",
+      "input": [
+        2362867.511578025,
+        5741014.804034294
+      ],
+      "expected": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        21.225999999999996,
+        45.75399999559637
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        206610.73430527345,
+        479637.4609546627
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        517577.0916175292,
+        5066740.628479364
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 34N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        50948.59542540647,
+        5082951.681728418
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 35N"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        4517707.7247234145,
+        5068895.726353826
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        5050887.547449201,
+        5085104.244746466
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        2362867.511578024,
+        5741014.803331726
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "timisoara",
+      "reference_lonlat": [
+        21.226,
+        45.754
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "expected": [
+        5191864.181720191,
+        2581532.435331463
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:4326",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        28.634,
+        44.181
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Null geographic offset from WGS 84 to WGS 84 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3844",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32634",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:32635",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3334",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3335",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3857",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:3035",
+      "input": [
+        28.634,
+        44.181
+      ],
+      "expected": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:4326",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        28.634000008008435,
+        44.18100000056289
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3844",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32634",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        1110235.463429527,
+        4920394.714294042
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:32635",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        630606.1151033835,
+        4893274.538907237
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3334",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3335",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        5630776.641199636,
+        4895350.468210355
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3857",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        3187522.3002660903,
+        5493495.208804853
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3844",
+      "target_crs": "EPSG:3035",
+      "input": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "expected": [
+        5796725.2287247535,
+        2526377.6691072145
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:4326",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        28.633999999999997,
+        44.181
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 34N + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3844",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        790653.1453124443,
+        304440.99770261615
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32634",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:32635",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        630606.1144645043,
+        4893274.53883199
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3334",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        5110603.811919896,
+        4922490.536149924
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3335",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        5630776.641199635,
+        4895350.468210355
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3857",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        3187522.299374595,
+        5493495.208717476
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32634",
+      "target_crs": "EPSG:3035",
+      "input": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "expected": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 34N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:4326",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        28.634,
+        44.181000000000004
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of UTM zone 35N + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3844",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        790653.1453124443,
+        304440.99770261615
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32634",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        1110235.4627951072,
+        4920394.714171698
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:32635",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3334",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        5110603.811919896,
+        4922490.536149924
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3335",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        5630776.641199635,
+        4895350.468210355
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3857",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        3187522.2993745953,
+        5493495.2087174775
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:32635",
+      "target_crs": "EPSG:3035",
+      "input": [
+        630606.1144645045,
+        4893274.53883199
+      ],
+      "expected": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of UTM zone 35N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        28.634000008008435,
+        44.18100000056289
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        790653.1453124448,
+        304440.99770261615
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        1110235.463429527,
+        4920394.714294042
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        630606.1151033835,
+        4893274.538907237
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        3187522.3002660903,
+        5493495.208804853
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3334",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5110603.811919897,
+        4922490.536149924
+      ],
+      "expected": [
+        5796725.2287247535,
+        2526377.6691072145
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        28.634000008008435,
+        44.18100000056288
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        790653.145312445,
+        304440.99770261045
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        1110235.463429527,
+        4920394.714294041
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        630606.1151033835,
+        4893274.538907236
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        5110603.811919897,
+        4922490.536149922
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        3187522.3002660903,
+        5493495.208804851
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3335",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "expected": [
+        5796725.2287247535,
+        2526377.6691072145
+      ],
+      "tolerance": 5,
+      "operation": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:4326",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        28.633999999999997,
+        44.18099999999999
+      ],
+      "tolerance": 3e-05,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3844",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        790653.1453124448,
+        304440.99770261045
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32634",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        1110235.462795107,
+        4920394.714171698
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:32635",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        630606.1144645043,
+        4893274.538831989
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3334",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        5110603.811919897,
+        4922490.536149923
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3335",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        5630776.641199636,
+        4895350.4682103535
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3857",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3857",
+      "target_crs": "EPSG:3035",
+      "input": [
+        3187522.2993745953,
+        5493495.208717476
+      ],
+      "expected": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "tolerance": 0.2,
+      "operation": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:4326",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        28.633999999999997,
+        44.180999995002594
+      ],
+      "tolerance": 3e-05,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3844",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        790653.1453373986,
+        304440.9971476068
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32634",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        1110235.46284697,
+        4920394.713616502
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 34N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:32635",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        630606.1144755397,
+        4893274.538276914
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 35N"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3334",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        5110603.81197178,
+        4922490.535594505
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3335",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        5630776.641210675,
+        4895350.467655057
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3857",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        3187522.299374595,
+        5493495.207941747
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + Popular Visualisation Pseudo-Mercator"
+    },
+    {
+      "location": "constanta",
+      "reference_lonlat": [
+        28.634,
+        44.181
+      ],
+      "source_crs": "EPSG:3035",
+      "target_crs": "EPSG:3035",
+      "input": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "expected": [
+        5796725.228120219,
+        2526377.668887588
+      ],
+      "tolerance": 0.2,
+      "operation": "axis order change (2D) + axis order change (2D)"
+    }
+  ],
+  "operations": {
+    "4326->4326": {
+      "description": "axis order change (2D) + Null geographic offset from WGS 84 to WGS 84 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "4326->3844": {
+      "description": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "4326->32634": {
+      "description": "axis order change (2D) + UTM zone 34N",
+      "accuracy_m": 0.0
+    },
+    "4326->32635": {
+      "description": "axis order change (2D) + UTM zone 35N",
+      "accuracy_m": 0.0
+    },
+    "4326->3334": {
+      "description": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "4326->3335": {
+      "description": "axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "4326->3857": {
+      "description": "axis order change (2D) + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 0.0
+    },
+    "4326->3035": {
+      "description": "axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 1.0
+    },
+    "3844->4326": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "3844->3844": {
+      "description": "axis order change (2D) + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3844->32634": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N",
+      "accuracy_m": 3.0
+    },
+    "3844->32635": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N",
+      "accuracy_m": 3.0
+    },
+    "3844->3334": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3844->3335": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3844->3857": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 3.0
+    },
+    "3844->3035": {
+      "description": "axis order change (2D) + Inverse of Stereo 70 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 3
+    },
+    "32634->4326": {
+      "description": "Inverse of UTM zone 34N + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "32634->3844": {
+      "description": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "32634->32634": {
+      "description": "Inverse of UTM zone 34N + UTM zone 34N",
+      "accuracy_m": 0.0
+    },
+    "32634->32635": {
+      "description": "Inverse of UTM zone 34N + UTM zone 35N",
+      "accuracy_m": 0.0
+    },
+    "32634->3334": {
+      "description": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "32634->3335": {
+      "description": "Inverse of UTM zone 34N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "32634->3857": {
+      "description": "Inverse of UTM zone 34N + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 0.0
+    },
+    "32634->3035": {
+      "description": "Inverse of UTM zone 34N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 1.0
+    },
+    "32635->4326": {
+      "description": "Inverse of UTM zone 35N + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "32635->3844": {
+      "description": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "32635->32634": {
+      "description": "Inverse of UTM zone 35N + UTM zone 34N",
+      "accuracy_m": 0.0
+    },
+    "32635->32635": {
+      "description": "Inverse of UTM zone 35N + UTM zone 35N",
+      "accuracy_m": 0.0
+    },
+    "32635->3334": {
+      "description": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "32635->3335": {
+      "description": "Inverse of UTM zone 35N + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "32635->3857": {
+      "description": "Inverse of UTM zone 35N + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 0.0
+    },
+    "32635->3035": {
+      "description": "Inverse of UTM zone 35N + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 1.0
+    },
+    "3334->4326": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "3334->3844": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3334->32634": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N",
+      "accuracy_m": 3.0
+    },
+    "3334->32635": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N",
+      "accuracy_m": 3.0
+    },
+    "3334->3334": {
+      "description": "axis order change (2D) + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3334->3335": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3334->3857": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 3.0
+    },
+    "3334->3035": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 4 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 3
+    },
+    "3335->4326": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "3335->3844": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3335->32634": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 34N",
+      "accuracy_m": 3.0
+    },
+    "3335->32635": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + UTM zone 35N",
+      "accuracy_m": 3.0
+    },
+    "3335->3334": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3335->3335": {
+      "description": "axis order change (2D) + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3335->3857": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 3.0
+    },
+    "3335->3035": {
+      "description": "axis order change (2D) + Inverse of 6-degree Gauss-Kruger zone 5 + Pulkovo 1942(58) to WGS 84 (19) + axis order change (2D) + axis order change (2D) + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 3
+    },
+    "3857->4326": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + axis order change (2D)",
+      "accuracy_m": 0.0
+    },
+    "3857->3844": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "3857->32634": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 34N",
+      "accuracy_m": 0.0
+    },
+    "3857->32635": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + UTM zone 35N",
+      "accuracy_m": 0.0
+    },
+    "3857->3334": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "3857->3335": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 3.0
+    },
+    "3857->3857": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 0.0
+    },
+    "3857->3035": {
+      "description": "Inverse of Popular Visualisation Pseudo-Mercator + Inverse of ETRS89 to WGS 84 (1) + Europe Equal Area 2001 + axis order change (2D)",
+      "accuracy_m": 1.0
+    },
+    "3035->4326": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D)",
+      "accuracy_m": 1.0
+    },
+    "3035->3844": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + Stereo 70 + axis order change (2D)",
+      "accuracy_m": 3
+    },
+    "3035->32634": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 34N",
+      "accuracy_m": 1.0
+    },
+    "3035->32635": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + UTM zone 35N",
+      "accuracy_m": 1.0
+    },
+    "3035->3334": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 4 + axis order change (2D)",
+      "accuracy_m": 3
+    },
+    "3035->3335": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + axis order change (2D) + axis order change (2D) + Inverse of Pulkovo 1942(58) to WGS 84 (19) + 6-degree Gauss-Kruger zone 5 + axis order change (2D)",
+      "accuracy_m": 3
+    },
+    "3035->3857": {
+      "description": "axis order change (2D) + Inverse of Europe Equal Area 2001 + ETRS89 to WGS 84 (1) + Popular Visualisation Pseudo-Mercator",
+      "accuracy_m": 1.0
+    },
+    "3035->3035": {
+      "description": "axis order change (2D) + axis order change (2D)",
+      "accuracy_m": 0.0
+    }
+  }
+}
