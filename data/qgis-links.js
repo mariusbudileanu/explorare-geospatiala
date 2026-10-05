@@ -54,7 +54,8 @@ window.CARTO_QGIS_LINKS = {
       "url": "https://docs.qgis.org/3.44/en/docs/training_manual/vector_classification/label_tool.html",
       "verified": true,
       "used_in": [
-        "map-interior"
+        "map-interior",
+        "styling-labeling"
       ]
     },
     {
@@ -191,6 +192,19 @@ window.CARTO_QGIS_LINKS = {
       "source_type": "QGIS User Manual",
       "title": "12.1. The Vector Properties Dialog — Symbology",
       "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/vector_properties.html#symbology-properties",
+      "verified": true,
+      "verified_on": "2026-10-05",
+      "used_in": [
+        "styling-labeling"
+      ]
+    },
+    {
+      "id": "label-settings",
+      "concept": "Formatul textului, buffer, mask, plasare, callouts, prioritate, obstacole și afișarea etichetelor",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "10.3. Setting a label",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/style_library/label_settings.html",
       "verified": true,
       "verified_on": "2026-10-05",
       "used_in": [
