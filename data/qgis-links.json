@@ -27,7 +27,8 @@
       "used_in": [
         "method-signs",
         "method-areas",
-        "method-qualitative"
+        "method-qualitative",
+        "styling-labeling"
       ]
     },
     {
@@ -67,7 +68,8 @@
       "used_in": [
         "method-choropleth",
         "method-signs",
-        "method-qualitative"
+        "method-qualitative",
+        "styling-labeling"
       ]
     },
     {
@@ -166,7 +168,8 @@
       "url": "https://docs.qgis.org/3.44/en/docs/user_manual/style_library/symbol_selector.html",
       "verified": true,
       "used_in": [
-        "method-flows"
+        "method-flows",
+        "styling-labeling"
       ]
     },
     {
@@ -179,6 +182,19 @@
       "verified": true,
       "used_in": [
         "method-dots"
+      ]
+    },
+    {
+      "id": "vector-styling",
+      "concept": "Renderere vectoriale, proprietăți controlate de date și vizibilitate dependentă de scară",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "12.1. The Vector Properties Dialog — Symbology",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/vector_properties.html#symbology-properties",
+      "verified": true,
+      "verified_on": "2026-10-05",
+      "used_in": [
+        "styling-labeling"
       ]
     }
   ],

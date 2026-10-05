@@ -1,0 +1,38 @@
+/* Reuse site typography, colors, spacing and focus rules. */
+.lab-main{padding-block:var(--space-5)}
+.lab-main p{font-size:var(--font-body);line-height:1.7}
+.lab-main h4{margin:0 0 var(--space-2);font-size:16px}
+.lab-main .lab-nav,.lab-mode{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-block:var(--space-4)}
+.lab-nav a,.lab-mode a,.lab-mode span{padding:8px 12px;min-height:44px;border:1px solid var(--line);border-radius:var(--radius-small);display:inline-flex;align-items:center;background:var(--surface)}
+.lab-mode [aria-current]{border-color:var(--blue);background:var(--blue-soft);font-weight:700}.lab-mode span{color:var(--muted)}
+.lab-principles,.lab-sources,.lab-checkpoint,.lab-preview,.lab-hub-card{border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);background:var(--surface);margin-block:var(--space-5)}
+.lab-principles ul{padding-left:22px;columns:2;column-gap:var(--space-5)}
+.lab-source-compact{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--line);padding:8px 12px;border-radius:var(--radius-small);font-size:14px}
+.lab-sources-compact{padding:var(--space-4);margin-block:var(--space-4)}.lab-sources-compact nav{display:flex;gap:8px 16px;flex-wrap:wrap}.lab-sources-compact a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+.styling-section{margin-block:var(--section-gap);scroll-margin-top:165px}
+.styling-demo{border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);background:var(--surface);margin-block:var(--space-4);scroll-margin-top:165px;min-width:0}
+.styling-demo header>p{margin-top:var(--space-2);max-width:var(--content-text)}
+.lab-demo-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(210px,1fr);gap:var(--space-4);margin-block:var(--space-4);align-items:start}
+.lab-visual,.lab-controls{min-width:0}
+.lab-map svg,.lab-compare svg,.lab-preview svg{width:100%;height:auto;min-height:240px;display:block;border:1px solid var(--line);border-radius:var(--radius-small);background:var(--surface-alt)}
+.lab-compare{margin-top:var(--space-4)}.lab-compare h4{color:var(--muted)}
+.lab-legend{list-style:none;padding:0;margin:var(--space-3) 0;display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px}
+.lab-legend li{display:flex;align-items:center;gap:8px}.lab-swatch{width:18px;height:18px;border:1px solid var(--ink);display:inline-block;border-radius:3px;flex-shrink:0}
+.lab-control{margin-bottom:var(--space-3)}.lab-control label{display:flex;justify-content:space-between;gap:var(--space-2);font-size:14px;font-weight:600;line-height:1.45;min-height:28px;align-items:center;overflow-wrap:anywhere}
+.lab-control:has(input[type=checkbox]){display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:12px;align-items:center;min-height:44px}.lab-control input[type=range]{width:100%;min-height:44px}.lab-control input[type=color]{padding:4px;width:100%;height:44px}.lab-control output{font-variant-numeric:tabular-nums;color:var(--blue);white-space:nowrap}
+.lab-observe{border-top:1px solid var(--line);padding-top:var(--space-4)}.lab-dynamic{margin-top:var(--space-3);color:var(--ink)}
+.lab-actions{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-block:var(--space-4)}
+.lab-qgis{border-left:3px solid var(--teal);padding-left:var(--space-4)}.lab-qgis>a,.lab-qgis nav a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}.lab-qgis nav{display:flex;flex-wrap:wrap;gap:var(--space-3)}.lab-qgis .qgis-path{overflow-wrap:anywhere;font-size:14px}
+.lab-source-compact:focus-visible,.lab-main a:focus-visible,.lab-main button:focus-visible,.lab-main input:focus-visible,.lab-main select:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
+.lab-tree{border:1px solid var(--line);padding:12px;min-width:0;border-radius:var(--radius-small)}.lab-tree legend{font-weight:700;font-size:14px}.lab-tree-row{display:grid;grid-template-columns:minmax(0,1fr) 44px 44px;align-items:center;gap:6px;margin:6px 0}.lab-tree-row label{display:flex;gap:10px;align-items:center;font-size:13px;min-height:44px}.lab-tree-row button{background:var(--surface);border:1px solid var(--line)}
+.lab-data{width:100%;border-collapse:collapse;font-size:13px;margin-block:12px}.lab-data th,.lab-data td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}.lab-data caption{text-align:left;font-weight:600;margin-bottom:8px}.lab-table-scroll{overflow:auto;max-width:100%}
+.lab-sources li{margin-block:12px}.lab-sources li>a{display:inline-flex;align-items:center;min-height:44px}.lab-sources ul{padding-left:20px}
+.lab-advanced-grid,.lab-hub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}.lab-advanced-grid article{padding:var(--card-padding);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-card);min-width:0}.lab-advanced-grid svg{width:100%;height:95px;display:block;margin-block:12px;background:var(--surface-alt);border-radius:var(--radius-small)}.lab-hub-card{margin:0}.lab-hub-card>a{display:inline-flex;align-items:center;min-height:44px;margin-top:12px}
+.lab-checkpoint fieldset{border:0;border-top:1px solid var(--line);padding:18px 0;margin:12px 0;min-width:0}.lab-checkpoint legend{font-weight:600;font-size:15px;padding-top:16px}.lab-checkpoint label{display:flex;gap:12px;align-items:center;min-height:44px;padding:4px 0;font-size:14px}.lab-checkpoint input{flex-shrink:0}.lab-quiz-feedback{color:var(--ink);font-size:14px;margin-top:8px}.lab-quiz-feedback:empty{display:none}
+.lab-scene-text{fill:var(--ink);font:17px system-ui,sans-serif}.lab-reference{stroke:var(--muted);stroke-width:1;fill:none}.lab-context{fill:var(--surface);stroke:var(--line)}
+.lab-preview-controls{display:flex;gap:12px;margin:12px 0;flex-wrap:wrap}.lab-preview-controls label{display:flex;gap:8px;align-items:center;min-height:44px}
+.lab-checkpoint legend{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.lab-main input[type=radio],.lab-main input[type=checkbox]{width:18px;height:18px;min-height:18px;min-width:18px;padding:0;flex:0 0 18px;accent-color:var(--blue)}
+.lab-main .lab-data{min-width:0}
+@media(max-width:1150px){.lab-demo-layout{grid-template-columns:minmax(0,1fr)}.lab-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 var(--space-4)}.lab-extra{grid-column:1/-1}}
+@media(max-width:600px){.lab-controls,.lab-advanced-grid,.lab-hub-grid{grid-template-columns:minmax(0,1fr)}.lab-principles ul{columns:1}.styling-demo,.lab-sources,.lab-checkpoint,.lab-preview,.lab-principles{padding:var(--space-3)}.lab-map svg{min-height:230px}.lab-tree-row label{font-size:13px}.lab-main .lab-nav{gap:6px}.lab-nav a{padding:7px 10px;font-size:13px}}
