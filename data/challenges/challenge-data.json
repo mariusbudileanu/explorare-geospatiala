@@ -1,0 +1,385 @@
+{
+  "schema_version": 1,
+  "path_base": "repository_root",
+  "prepared_date": "2026-10-05",
+  "status": "phase_1_data_preparation",
+  "sector1": {
+    "boundary": {
+      "file": "data/challenges/sector1/sector1_boundary.geojson",
+      "feature_count": 1,
+      "size_bytes": 76952,
+      "geometry_types": [
+        "MultiPolygon"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "natcode",
+        "name",
+        "county",
+        "version"
+      ],
+      "sha256": "3daa9e0a729dcd28a057008afd97e65c4c160357c3aaf8b029f5ecef680a77dc",
+      "display_name": "Sectorul 1, București",
+      "source": {
+        "label": "ANCPI — conturul de decupare indicat de furnizorul subsetului",
+        "url": "needs_confirmation",
+        "verification": "owner_supplied_brief"
+      },
+      "attribution": "ANCPI (conform provenienței declarate pentru conturul Sectorului 1); termenii și versiunea oficială necesită confirmare.",
+      "license": "needs_confirmation",
+      "publication_ready": false,
+      "source_version_attribute": "2017-09-27"
+    },
+    "schools": {
+      "file": "data/challenges/sector1/4326_S1_Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023.geojson",
+      "feature_count": 164,
+      "size_bytes": 90488,
+      "geometry_types": [
+        "Point"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "Cod SIIIR",
+        "Denumirea unității de învățământ",
+        "Tip unitate",
+        "Nivel Primar",
+        "Nivel Gimnazial",
+        "Nivel Liceal",
+        "Regim Juridic - Tip de proprietate",
+        "Număr total elevi",
+        "Număr de schimburi",
+        "Număr săli de clasă",
+        "Număr laboratoare",
+        "Număr săli de sport",
+        "Număr cabinete medicale"
+      ],
+      "sha256": "c10bb613cdd6f1774c192976bd8e8fb4a5681017ae1fbbee01ea8bd81f0258d6",
+      "display_name": "Unități de învățământ — Sectorul 1",
+      "source_year": "2022–2023",
+      "sector_membership": "geometry_after_supplied_official_clip",
+      "null_semantics": "missing_information_not_zero",
+      "source": {
+        "label": "Observatorul Urban Metropolitan București / ADIZMB",
+        "verification": "local_methodology_document",
+        "url": "https://data.gov.ro/dataset/reteaua-scolara-2022-2023"
+      },
+      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind data.gov.ro, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "status": "confirmed_in_local_methodology"
+      },
+      "publication_ready": true,
+      "processing": [
+        "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+        "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+        "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+      ],
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Unitățile_de_Învățământ_Preuniversitar_din_Municipiul_București_2022-2023_data_dictionary_v2.csv"
+    },
+    "censusGrid": {
+      "file": "data/challenges/sector1/4326_S1_Recensamant2021_GridData — recensamant2021_griddata.geojson",
+      "feature_count": 99,
+      "size_bytes": 130789,
+      "geometry_types": [
+        "MultiPolygon"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "GRD_ID",
+        "Populatia_totala_T",
+        "Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15",
+        "Persoane_cu_varsta_cuprinsa_intre_15_si_65_de_ani_Y15_64",
+        "Persoane_cu_varsta_de_65_ani_si_peste_Y_GE65"
+      ],
+      "sha256": "bac557f4629df681bab66f9db51e038a37655c7fa7fd649c50138457af6356bb",
+      "display_name": "Grid de populație — Sectorul 1",
+      "source_year": "2021",
+      "sector_membership": "geometry_after_supplied_official_clip",
+      "null_semantics": "missing_information_not_zero",
+      "source": {
+        "label": "INS — indicatori de populație; Eurostat — identificatorul gridului (conform dicționarului furnizat)",
+        "verification": "supplied_data_dictionary",
+        "url": "needs_confirmation"
+      },
+      "attribution": "INS / Eurostat; licența exactă și adresa produsului necesită confirmare.",
+      "license": "needs_confirmation",
+      "publication_ready": false,
+      "processing": [
+        "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+        "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+        "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+      ],
+      "population_support_after_clip": "needs_confirmation",
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Recensamant2021_GridData_—_recensamant2021_griddata_data_dictionary_v2.csv"
+    },
+    "primaryCare": {
+      "file": "data/challenges/sector1/4326_S1_Cabinete Medicină de Familie (Primary Care).geojson",
+      "feature_count": 267,
+      "size_bytes": 50256,
+      "geometry_types": [
+        "Point"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "Contract Ecograf",
+        "Contract CNAS",
+        "Contract CASAOPSNAJ"
+      ],
+      "sha256": "9748ddadfeb5bb9315de236fbc3a1c840a6859e147defabaa7b172805a4bdbe7",
+      "display_name": "Medicină de familie — Sectorul 1",
+      "source_year": "2024",
+      "sector_membership": "geometry_after_supplied_official_clip",
+      "null_semantics": "missing_information_not_zero",
+      "source": {
+        "label": "Observatorul Urban Metropolitan București / ADIZMB",
+        "verification": "local_methodology_document",
+        "url": "needs_confirmation"
+      },
+      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "status": "confirmed_in_local_methodology"
+      },
+      "publication_ready": true,
+      "processing": [
+        "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+        "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+        "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+      ],
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Cabinete_Medicină_de_Familie_(Primary_Care)_data_dictionary_v2.csv"
+    },
+    "secondaryCare": {
+      "file": "data/challenges/sector1/4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care).geojson",
+      "feature_count": 200,
+      "size_bytes": 43597,
+      "geometry_types": [
+        "Point"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "Pediatrie",
+        "Cardiologie",
+        "Contract Ecograf",
+        "Contract CNAS",
+        "Contract CASAOPSNAJ"
+      ],
+      "sha256": "2c7056801d857a7c0ecb43b9dc217f75a93f25f4d9ded0e173dc8caf72972aa0",
+      "display_name": "Cabinete și ambulatorii de specialitate — Sectorul 1",
+      "source_year": "2023",
+      "sector_membership": "geometry_after_supplied_official_clip",
+      "null_semantics": "missing_information_not_zero",
+      "source": {
+        "label": "Observatorul Urban Metropolitan București / ADIZMB",
+        "verification": "local_methodology_document",
+        "url": "needs_confirmation"
+      },
+      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "status": "confirmed_in_local_methodology"
+      },
+      "publication_ready": true,
+      "processing": [
+        "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+        "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+        "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+      ],
+      "label_policy": "Identificator fid; numele firmelor care pot identifica persoane nu sunt publicate.",
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Cabinete_și_Ambulatorii_de_Specialitate_(Secondary_Care)_data_dictionary_v2.csv"
+    },
+    "hospitals": {
+      "file": "data/challenges/sector1/4326_S1_Spitale București-Ilfov (Tertiary Care).geojson",
+      "feature_count": 50,
+      "size_bytes": 26147,
+      "geometry_types": [
+        "Point"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "Nume spital",
+        "Tip",
+        "Spitalizare continua (paturi)",
+        "Spitalizare de zi (paturi)",
+        "Pediatrie (paturi)",
+        "Cardiologie (paturi)",
+        "CPU - Compartiment Primiri Urgențe",
+        "UPU - Unitate Primiri Urgențe",
+        "Laborator Analize",
+        "Radiologie",
+        "RMN - Rezonanță Magnetică Nucleară",
+        "CT - Computer Tomograf"
+      ],
+      "sha256": "97ca54c1b855c4058fa3f1b0baf2ac84cbdecd1bd21c84b6fc1cd563c8632d8d",
+      "display_name": "Spitale — Sectorul 1",
+      "source_year": "2024",
+      "sector_membership": "geometry_after_supplied_official_clip",
+      "null_semantics": "missing_information_not_zero",
+      "source": {
+        "label": "Observatorul Urban Metropolitan București / ADIZMB",
+        "verification": "local_methodology_document",
+        "url": "needs_confirmation"
+      },
+      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "status": "confirmed_in_local_methodology"
+      },
+      "publication_ready": true,
+      "processing": [
+        "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+        "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+        "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+      ],
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Spitale_București-Ilfov_(Tertiary_Care)_data_dictionary_v2.csv"
+    }
+  },
+  "risca": {
+    "boundary": {
+      "file": "data/challenges/risca/risca_boundary.geojson",
+      "feature_count": 1,
+      "size_bytes": 61134,
+      "geometry_types": [
+        "MultiPolygon"
+      ],
+      "crs": "EPSG:4326",
+      "coordinate_order": [
+        "longitude",
+        "latitude"
+      ],
+      "fields": [
+        "fid",
+        "natcode",
+        "name",
+        "county",
+        "version"
+      ],
+      "sha256": "744262433c9ae48ded003e50d723d51f9ece9595ab613eb28b9fbf88934381ee",
+      "display_name": "Rîșca, județul Suceava",
+      "source": {
+        "label": "needs_confirmation",
+        "url": "needs_confirmation",
+        "verification": "needs_confirmation"
+      },
+      "attribution": "needs_confirmation",
+      "license": "needs_confirmation",
+      "publication_ready": false,
+      "source_version_attribute": "2017-09-27"
+    },
+    "dem": {
+      "file": "data/challenges/risca/risca_dem_sv.tif",
+      "display_name": "Model digital al elevației — Rîșca",
+      "data_type": "raster",
+      "crs": "EPSG:3844",
+      "source": {
+        "label": "Copernicus WorldDEM-30 (GLO-30)",
+        "url": "needs_confirmation",
+        "verification": "supplied_dataset_source"
+      },
+      "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+      "license": "needs_confirmation",
+      "size_bytes": 3594697,
+      "sha256": "7dce9d2d3f5c42e32750a0965254d8476b4dbd451fec40bb34d42b1edc0b267b",
+      "technical_metadata_key": "dem",
+      "publication_ready": false,
+      "source_name": "Copernicus WorldDEM-30 (GLO-30)",
+      "legal_notice": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+    },
+    "forestLoss": {
+      "file": "data/challenges/risca/risca_forest_loss_sv.tif",
+      "display_name": "Pierdere forestieră — Rîșca",
+      "data_type": "raster",
+      "crs": "EPSG:3844",
+      "source": {
+        "label": "Hansen et al. (2013) · Global Nature Watch",
+        "platform": "Global Nature Watch",
+        "url": "https://globalnaturewatch.org/map/www.globalnaturewatch.org",
+        "verification": "supplied_dataset_source"
+      },
+      "attribution": "Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Acces prin Global Nature Watch: https://globalnaturewatch.org/map/www.globalnaturewatch.org",
+      "license": "needs_confirmation",
+      "size_bytes": 881725,
+      "sha256": "74e06c3f289366d9cfc840a4160387531fe062e49eb9eccaf5bbc3064869117e",
+      "technical_metadata_key": "forestLoss",
+      "publication_ready": false,
+      "source_name": "Hansen et al. (2013)",
+      "citation": "Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.”",
+      "access_date": "needs_confirmation",
+      "semantic_nodata": 0,
+      "value_to_year": {
+        "1": 2001,
+        "2": 2002,
+        "3": 2003,
+        "4": 2004,
+        "5": 2005,
+        "6": 2006,
+        "7": 2007,
+        "8": 2008,
+        "9": 2009,
+        "10": 2010,
+        "11": 2011,
+        "12": 2012,
+        "13": 2013,
+        "14": 2014,
+        "15": 2015,
+        "16": 2016,
+        "17": 2017,
+        "18": 2018,
+        "19": 2019,
+        "20": 2020,
+        "21": 2021,
+        "22": 2022,
+        "23": 2023,
+        "24": 2024
+      }
+    },
+    "rasterMetadata": {
+      "file": "data/challenges/risca/raster_metadata.json",
+      "display_name": "Metadate raster — Rîșca",
+      "data_type": "metadata",
+      "crs": "not_applicable"
+    }
+  },
+  "methodological_cautions": [
+    "Apartenența la Sectorul 1 este stabilită de geometria deja decupată; valorile administrative istorice nu au fost folosite pentru eliminări.",
+    "NULL nu este zero.",
+    "Se folosește familia INS centrată pe Populatia_totala_T; TOT_P_2021 nu este amestecat cu ea.",
+    "Contract Ecograf este un statut contractual, nu dovada proprietății unui echipament.",
+    "Numărul de paturi este o capacitate, nu un indicator boolean.",
+    "TIFF-urile nu au tag NoData declarat; valoarea 0 este NoData în subsetul forest-loss. Rasterele au grile diferite; analiza aplică masca UAT și alinierea.",
+    "Licențele marcate needs_confirmation trebuie clarificate înaintea publicării acelor date."
+  ]
+}

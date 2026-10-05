@@ -11,6 +11,16 @@
 - **Geodezie și proiecții contemporane:** [PROJ · Mercator](https://proj.org/en/stable/operations/projections/merc.html), [PROJ · Equal Earth](https://proj.org/en/stable/operations/projections/eqearth.html), [NOAA · vertical datums](https://www.ngs.noaa.gov/datums/vertical/), [ANCPI · Marea Neagră 1975](https://www.ancpi.ro/ocpi/cs/wp-content/legi/modif%20ord%20600-2023.pdf) și [registrul ONU A/RES/80/307](https://public.e-delegate.un.org/reports/ga80_resolutions.html). Detaliile publice sunt în [`data/geodetic-sources.json`](data/geodetic-sources.json).
 - **Formate și operații GIS:** [OGC GeoPackage](https://docs.ogc.org/is/12-128r17/12-128r17.html), [GDAL](https://gdal.org/en/stable/) și [QGIS Processing 3.44](https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/index.html). Fișele și URL-urile per operație sunt în [`data/geospatial-formats.json`](data/geospatial-formats.json) și [`data/processing-operations.json`](data/processing-operations.json); schemele didactice sunt originale.
 
+## Rastere pentru Provocări GIS
+
+- **DEM Rîșca — Copernicus WorldDEM-30 (GLO-30):**
+
+  produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved
+
+  Versiunea exactă și identificatorul licenței nu sunt documentate. Notificarea de mai sus este păstrată integral pentru subsetul adaptat.
+
+- **Pierdere forestieră Rîșca:** Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Platforma de acces: [Global Nature Watch](https://globalnaturewatch.org/map/www.globalnaturewatch.org). Data accesării nu este stabilită; versiunea exactă și licența subsetului necesită confirmare. Codurile 1–24 reprezintă anii 2001–2024; **0 = NoData** și nu contribuie la totalurile anuale sau la suprafețele de pierdere.
+
 ## Licențe software
 
 - Codul original al website-ului: [`LICENSE`](LICENSE) (MIT, Marius Budileanu, 2026).
