@@ -88,5 +88,6 @@
     document.querySelector('#styling-checkpoint h2').id='checkpoint-title';
     document.querySelector('#lab-source-root').innerHTML=L.sources(['arrow-symbols','symbology','classification','vector-styling']);document.querySelector('#lab-preview').addEventListener('change',preview);document.querySelector('#preview-reset').addEventListener('click',()=>{document.querySelector('#preview-good').checked=true;preview();});preview();
   }
+  root.CARTO_STYLING_RENDER={marker,linePath};
   start();
 })(window);
