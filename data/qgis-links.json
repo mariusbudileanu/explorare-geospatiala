@@ -381,6 +381,19 @@
       "used_in": [
         "topology"
       ]
+    },
+    {
+      "id": "formats-support",
+      "concept": "Formate vectoriale, raster și compatibilitate prin driverele disponibile",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "11.4. Exploring Data Formats and Fields",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/managing_data_source/supported_data.html",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "formats-interoperability"
+      ]
     }
   ],
   "bridges": [
