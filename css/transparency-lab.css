@@ -1,0 +1,11 @@
+/* Fixed scene colors preserve the opacity experiment across UI themes. */
+.transparency-demo .lab-map svg,.transparency-demo .lab-compare svg{background:#eef2f0}
+.opacity-annotations text{font:20px system-ui,sans-serif;fill:#233f50}.opacity-annotations text:last-child{font-size:17px}
+.opacity-concept text{font:25px system-ui,sans-serif;fill:#233f50}.opacity-note,.opacity-concept .opacity-note{font:16px system-ui,sans-serif;fill:#233f50}
+.opacity-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;padding:0;margin:16px 0}.opacity-flow li{border:1px solid var(--line);padding:8px 12px;border-radius:var(--radius-small);font-size:14px;background:var(--surface-alt);overflow-wrap:anywhere;max-width:100%}.opacity-flow li+li::before{content:'→ ';font-weight:700}
+.opacity-comparison{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}.opacity-comparison>section{min-width:0}.opacity-comparison p{font-size:14px;line-height:1.6}.opacity-comparison svg{min-height:0}.opacity-compare-two .opacity-comparison{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opacity-presets{border:0;padding:0;margin:8px 0;display:flex;gap:8px;flex-wrap:wrap;min-width:0}.opacity-presets legend{font-size:14px;font-weight:600;margin-bottom:8px}.opacity-presets button[aria-pressed=true]{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.opacity-mobile-compare-note{display:none}.opacity-boundary-note{padding:var(--space-3);border-left:3px solid var(--teal);background:var(--surface-alt)}
+@media(min-width:1151px){#T2 .lab-compare,#T6 .lab-compare{margin-top:var(--space-4)}}
+@media(max-width:1100px){.opacity-comparison{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#T2 .opacity-comparison{display:none}.opacity-mobile-compare-note{display:block}.opacity-compare-two .opacity-comparison{grid-template-columns:minmax(0,1fr)}.opacity-flow{gap:6px}.opacity-flow li{padding:8px;font-size:13px}}

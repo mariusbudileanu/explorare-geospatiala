@@ -210,6 +210,58 @@
       "used_in": [
         "styling-labeling"
       ]
+    },
+    {
+      "id": "vector-layer-rendering",
+      "concept": "Layer rendering, Opacity și Control feature rendering order",
+      "title": "12.1.3.2. Layer rendering",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/vector_properties.html#layer-rendering",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
+    },
+    {
+      "id": "symbol-opacity",
+      "concept": "Opacity la nivelul simbolului; afectează componentele simbolului",
+      "title": "10.2.2.1. The symbol",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/style_library/symbol_selector.html#the-symbol",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
+    },
+    {
+      "id": "color-opacity",
+      "concept": "Fill color: Opacity în Select Color; alpha slider în meniul culorii",
+      "title": "8.8.1. Color Selector",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/introduction/general_tools.html#color-selector",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
+    },
+    {
+      "id": "group-rendering",
+      "concept": "Render Layers as a Group, Opacity și ordinea straturilor",
+      "title": "8.2.1.3. Control layers rendering through grouping",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/introduction/general_tools.html#control-layers-rendering-through-grouping",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
     }
   ],
   "bridges": [

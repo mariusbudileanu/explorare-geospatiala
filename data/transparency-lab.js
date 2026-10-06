@@ -1,0 +1,36 @@
+(function(root){
+  'use strict';
+  const range=(value=50)=>({key:'opacity',label:'Opacitate (opacity)',type:'range',min:0,max:100,step:1,value,unit:'%'});
+  const order={key:'order',label:'Ordinea obiectelor · deasupra',type:'select',value:'A',options:[['A','A deasupra lui B'],['B','B deasupra lui A']]};
+  const mode={key:'mode',label:'Nivelul opacității',type:'select',value:'layer',options:[['layer','Strat · Layer opacity'],['symbol','Obiect / simbol · Symbol opacity'],['fill','Culoarea umplerii · Fill color alpha']]};
+  const layerPath='Layer Properties → Symbology → Layer rendering → Opacity';
+  const symbolPath='Layer Properties → Symbology → Symbol Selector → Opacity (nivelul simbolului)';
+  const fillPath='Symbol Selector → Simple fill → Fill color → Select Color → Opacity';
+  const groupPath='Layer Styling panel → selectează grupul → Symbology → Render Layers as a Group → Opacity';
+  const item=(id,title,concept,controls,observation,where,source,extra={})=>({id,kind:'transparency',title,concept,controls,defaults:Object.fromEntries(controls.map(c=>[c.key,c.value])),observation,where,source,links:[],...extra});
+  root.CARTO_TRANSPARENCY={
+    background:'#eef2f0',fill:'#c56b43',outline:'#233f50',second:'#4277ab',
+    layer:{id:'demonstration-zones',name:'Zone demonstrative',features:[{id:'A',x:70,y:75,width:230,height:140},{id:'B',x:205,y:125,width:215,height:125}]},
+    modeNames:{layer:'Layer opacity',symbol:'Feature / symbol opacity',fill:'Fill color alpha'},
+    paths:{layer:layerPath,symbol:symbolPath,fill:fillPath,group:groupPath},
+    demos:[
+      item('T0','Ce este opacitatea?','Un poligon peste un fundal schematic. Opacitatea controlează cât din conținutul de dedesubt devine vizibil.',[{...range(100),step:25}], '100% este opac; 0% este invizibil. Valorile intermediare permit lectura simultană a temei și fundalului.',layerPath,'vector-layer-rendering'),
+      item('T1','Opacity ≠ blend mode','Opacitate: cât se vede. Blend mode: cum se combină pixelii. Distincție conceptuală; modurile de combinare vor fi explorate în etapa următoare.',[{key:'concept',label:'Conceptul explicat',type:'select',value:'opacity',options:[['opacity','Opacity · CÂT se vede'],['blending','Blend mode · CUM se combină']]}], 'Schimbarea opacității nu schimbă modul de combinare. În această etapă folosim numai compoziția normală.',layerPath,'vector-layer-rendering'),
+      item('T2','Același strat, trei niveluri de opacitate','Strat (layer): „Zone demonstrative”. Obiecte (features): A și B. Aceeași geometrie, aceeași culoare, același simbol cu umplere și contur.',[mode,range(),order], 'Privește zona A ∩ B și conturul din interiorul ei. Contează ce devine transparent și când se aplică opacitatea.',layerPath,'vector-layer-rendering',{compare:true,level:'APLICARE'}),
+      item('T3','Simbolul întreg sau numai umplerea?','Un singur obiect cu umplere, contur gros și marker central. Componenta transparentă schimbă ce rămâne vizibil.',[{...mode,value:'symbol',options:mode.options.slice(1)},range()], 'Symbol opacity afectează componentele simbolului. Alpha în Fill color afectează numai umplerea; conturul și markerul rămân opace.',symbolPath,'symbol-opacity'),
+      item('T4','Ordinea straturilor','Două straturi distincte: Tema și Contextul. Au aceeași opacitate; inversăm numai ordinea lor.',[{...order,label:'Stratul deasupra',options:[['A','Tema deasupra Contextului'],['B','Contextul deasupra Temei']]},range()], 'Stratul desenat ultimul este deasupra. Ordinea poate schimba culoarea și elementele vizibile în suprapunere.', 'Layers panel → ordonează straturile; Layer Order panel → Control rendering order','group-rendering',{level:'APLICARE',links:[['styling-labeling.html#S14','Ordinea simbolurilor în Stilizare']]}),
+      item('T5','Opacitate și context','O suprafață tematică peste drumuri, puncte și limite sintetice. Câtă transparență permite citirea ambelor?', [range()], 'La 100%, tema ascunde contextul din interior. La valori mici, tema pierde dominanța. O valoare intermediară poate ajuta; nu există un procent universal corect.',layerPath,'vector-layer-rendering',{compare:true,level:'APLICARE',links:[['styling-labeling.html#lab-preview','Ierarhie vizuală'],['tutorials/t04.html','Aplică pe poligoane în T04']]}),
+      item('T6','Copii transparenți sau grup transparent?','Grup demonstrativ cu două straturi copil: Layer A și Layer B. Aceeași ordine și aceeași valoare; nivelul compoziției diferă.',[{key:'mode',label:'Unde aplici opacitatea?',type:'select',value:'children',options:[['children','Fiecare strat copil'],['group','Grupul randat ca întreg']]},range()], 'Render Layers as a Group afectează randarea, nu doar organizarea. Copiii sunt compuși întâi; opacitatea se aplică apoi rezultatului comun.',groupPath,'group-rendering',{compare:true,level:'APLICARE',links:[['tutorials/t05.html','Tema și contextul în T05']]}),
+      item('T7','Legenda și fundalul','Simbolul original și același simbol semi-transparent peste două fundaluri controlate. Culoarea percepută depinde de context.',[range()], 'O culoare semi-transparentă nu are o singură aparență independentă de fundal. Swatch-ul original nu descrie singur culoarea rezultată pe hartă.',layerPath,'vector-layer-rendering')
+    ],
+    quiz:[
+      ['Ce modifică opacity?',['Geometria obiectelor','Randarea, fără a schimba geometria sau atributele','Valorile datelor'],1,'Opacitatea este o proprietate a randării, nu o operație asupra datelor.'],
+      ['Două poligoane din același strat trebuie să contribuie separat, semi-transparent, în zona comună. Unde aplici opacitatea?',['Numai rezultatului stratului','Grupului compus','La simbolul fiecărui obiect'],2,'Opacitatea la nivelul simbolului permite acumularea contribuțiilor individuale. Layer opacity se aplică după compunerea stratului.'],
+      ['Vrei umplere transparentă, dar contur complet opac. Ce ajustezi?',['Opacity la nivelul întregului simbol','Opacity în Fill color, păstrând culoarea conturului opacă','Opacity la nivelul stratului'],1,'Alpha aparține culorii unei componente. Nu reduce automat opacitatea celorlalte componente.'],
+      ['La 50%, de ce poate fi A ∩ B diferită între layer opacity și symbol opacity?',['Ordinea aplicării opacității față de compunere diferă','Datele au fost unite geometric','S-a schimbat CRS-ul'],0,'Compunerea obiectelor transparente diferă de transparența aplicată rezultatului deja compus. Nu se execută Dissolve, Union sau altă analiză.'],
+      ['De ce contează layer order?',['Stratul de sus modifică ce se vede din straturile de jos','Schimbă atributele straturilor','Aplică un calcul statistic'],0,'Ordinea afectează compoziția vizuală, chiar dacă datele și opacitățile rămân aceleași.'],
+      ['Copii la 50% și grup la 50%, cu copii opaci înainte de compunere, sunt…',['întotdeauna identice','procese diferite, cu rezultate diferite în suprapunere','două operații de reproiectare'],1,'La group opacity, părțile copilului inferior acoperite înainte de transparență rămân acoperite.'],
+      ['Ce activează Render Layers as a Group?',['Doar un folder în cuprins','Compunerea copiilor într-un rezultat comun înainte de opacitatea grupului','Ștergerea straturilor copil'],1,'Este o opțiune de randare din Layer Styling panel pentru un grup selectat, în Symbology.']
+    ]
+  };
+})(window);
