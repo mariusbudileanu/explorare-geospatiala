@@ -1,0 +1,13 @@
+/* Reusable SVG shape and error markers. Geometry is always supplied by fixtures/checks. */
+(function(root){
+  'use strict';
+  const {esc}=root.CARTO_LAB,path=ring=>ring.map((p,i)=>(i?'L':'M')+p.join(' ')).join(' ');
+  function shape(feature,id){const attrs=`class="topology-shape layer-${feature.layer.toLowerCase()}" data-feature-id="${esc(feature.id)}" data-type="${feature.type}"`,g=feature.coordinates;return feature.type==='Point'?`<circle ${attrs} cx="${g[0]}" cy="${g[1]}" r="9"/>`:`<path ${attrs} d="${path(g)}${feature.type==='Polygon'?'Z':''}" ${feature.layer==='B'&&feature.type==='Polygon'?`fill="url(#${id}-layer-b)"`:''}/>`;}
+  function errorMarker(error,id){const [x,y]=error.location,attrs=`data-error-type="${esc(error.type)}" class="topology-error"`;return ['overlap','gap'].includes(error.type)?`<path ${attrs} d="${path(error.location)}Z" fill="url(#${id}-error-pattern)"/>`:`<g ${attrs} transform="translate(${x} ${y})"><circle r="14"/><path d="M-6 -6L6 6M-6 6L6 -6"/></g>`;}
+  function frame(id,title,description,features,errors=[],{labels=true,terminals=[]}={}){
+    const featureLabels=labels?features.map((f,i)=>{const g=f.coordinates,x=f.type==='Point'?g[0]+14:g[0][0]+(i&&JSON.stringify(g)===JSON.stringify(features[0].coordinates)?40:10),y=f.type==='Point'?g[1]-14:f.type==='Polygon'?Math.max(...g.map(p=>p[1]))-12:g[0][1]-12;return `<text x="${x}" y="${y}" data-layer-label="${f.layer}">${f.layer}</text>`;}).join(''):'';
+    return `<svg viewBox="0 0 480 320" role="img" aria-labelledby="${id}-svg-title ${id}-svg-desc" data-topology-scene><title id="${id}-svg-title">${esc(title)}</title><desc id="${id}-svg-desc">${esc(description)}. Geometrii sintetice, coordonate fixe. Layer A: contur continuu; Layer B: contur întrerupt și pattern.</desc><defs><pattern id="${id}-layer-b" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M-2 2L2 -2M0 10L10 0M8 12L12 8" stroke="#766099" stroke-width="1.2"/></pattern><pattern id="${id}-error-pattern" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 0L8 8M0 8L8 0" stroke="#a83320" stroke-width="1.2"/></pattern></defs><rect width="480" height="320" fill="#f5f8fa"/>${features.map(f=>shape(f,id)).join('')}${terminals.map(([x,y])=>`<rect class="topology-terminal" x="${x-5}" y="${y-5}" width="10" height="10"/>`).join('')}${errors.map(e=>errorMarker(e,id)).join('')}<g class="topology-feature-labels">${featureLabels}</g></svg>`;
+  }
+  const legend=()=>'<span class="topology-key key-a" aria-hidden="true"></span> Layer A · contur continuu <span class="topology-key key-b" aria-hidden="true"></span> Layer B · contur întrerupt / pattern';
+  root.CARTO_TOPOLOGY_SCENE={shape,errorMarker,frame,legend};
+})(window);

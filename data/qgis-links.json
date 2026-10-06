@@ -342,6 +342,45 @@
       "used_in": [
         "raster-styling"
       ]
+    },
+    {
+      "id": "topology-checker",
+      "title": "25.2.5. Topology Checker Plugin",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/plugins/core_plugins/plugins_topology_checker.html",
+      "concept": "Relații și reguli configurate după model; include verificări de geometrie invalidă.",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "topology"
+      ]
+    },
+    {
+      "id": "geometry-checker",
+      "title": "25.2.2. Geometry Checker Plugin",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/plugins/core_plugins/plugins_geometry_checker.html",
+      "concept": "Calitatea geometriei, verificare și reparare; include și verificări topologice.",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "topology"
+      ]
+    },
+    {
+      "id": "topological-editing",
+      "title": "12.3.3. Topological editing",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/editing_geometry_attributes.html#topological-editing",
+      "concept": "Menținerea limitelor comune în timpul editării; documentație pregătită pentru continuarea modulului.",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "topology"
+      ]
     }
   ],
   "bridges": [
