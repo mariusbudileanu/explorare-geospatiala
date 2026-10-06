@@ -42,3 +42,24 @@
 #T7 [data-show-error][aria-pressed=true]{outline:3px solid var(--blue);outline-offset:2px}
 #T8 .topology-answer-grid,#T8B .topology-answer-grid{grid-template-columns:minmax(0,1fr)}
 @media(max-width:768px){#T7 .lab-demo-layout{grid-template-columns:minmax(0,1fr)}#T7 .lab-demo-layout>*{grid-column:1;grid-row:auto}#T7 .lab-visual{grid-row:5}#T7 .topology-config-host{grid-row:1}#T7 .topology-current{grid-row:2}#T7 .topology-validate{grid-row:3}#T7 .topology-results{grid-row:4}}
+.topology-task{padding:12px;border-left:3px solid var(--teal);background:var(--surface-alt);border-radius:var(--radius-small)}
+.topology-candidates>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-block:12px}
+.topology-candidates button{min-height:44px;white-space:normal;overflow-wrap:anywhere}
+.topology-candidates button[aria-pressed=true]{border-color:var(--blue);background:var(--blue-soft)}
+.topology-candidate-hit{fill:transparent;stroke:none;pointer-events:all;cursor:pointer}
+.topology-diagnostic-overlay{fill:#1e3546;font-size:16px;font-weight:600;stroke:#f5f8fa;stroke-width:3;paint-order:stroke}
+.topology-diagnostic-overlay .topology-node{fill:#1e3546;stroke:#f5f8fa;stroke-width:2;pointer-events:none}
+.topology-selection{fill:none;stroke:#24587b;stroke-width:4;pointer-events:none}
+.topology-hint-region{fill:#abd1e4;fill-opacity:.12;stroke:#24587b;stroke-width:2;stroke-dasharray:6 4;pointer-events:none}
+.topology-progress{display:grid;gap:8px;padding:12px;background:var(--surface-alt);border:1px solid var(--line);border-radius:var(--radius-small)}
+.topology-progress progress{width:100%;accent-color:var(--teal)}
+.topology-repair-list{list-style:none;padding:0;margin-block:12px;display:grid;gap:4px}
+.topology-repair-list li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;padding:8px;border:1px solid var(--line);border-radius:var(--radius-small);font-size:13px}
+.topology-repair-list li>.small{grid-column:1 / -1;grid-row:2;font-size:12px}.topology-repair-list strong{font-size:12px}
+.topology-repair-list li[data-selected=true]{border-color:var(--blue);background:var(--blue-soft)}
+.topology-selected{display:grid;gap:12px;padding:12px;border:1px solid var(--line);border-radius:var(--radius-small);background:var(--surface-alt)}
+.topology-selected p,.topology-selected h4{margin:0}.topology-selected button{justify-self:start;white-space:normal;min-height:44px}
+.topology-scene-label{font-weight:600}.topology-checkpoint-scene{margin:12px 0}.topology-checkpoint-scene svg{display:block;width:100%;max-width:480px;aspect-ratio:3/2;background:#f5f8fa;border:1px solid var(--line);border-radius:var(--radius-small)}
+.topology-checkpoint-nav{display:grid;gap:8px;margin-block:12px}.topology-checkpoint-nav select{width:100%;min-height:44px}
+.topology-checkpoint [hidden],.topology-selected [hidden]{display:none!important}
+.topology-checkpoint fieldset label{min-height:44px}.topology-checkpoint>button{margin:4px;min-height:44px}
