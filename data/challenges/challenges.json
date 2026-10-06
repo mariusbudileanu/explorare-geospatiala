@@ -1,0 +1,632 @@
+{
+  "schema_version": 1,
+  "school_ids": [
+    190,
+    191,
+    192,
+    193,
+    194,
+    195,
+    196,
+    197
+  ],
+  "school_selection_note": "Set fix: opt înregistrări cu nivel primar, număr valid de elevi și coduri SIIIR distincte, alese inițial în ordinea crescătoare fid și păstrate explicit prin ID.",
+  "radius_km": 1,
+  "buffer_steps": 128,
+  "fields": {
+    "id": "fid",
+    "schoolCode": "Cod SIIIR",
+    "schoolName": "Denumirea unității de învățământ",
+    "pupils": "Număr total elevi",
+    "population": "Populatia_totala_T",
+    "under15": "Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15",
+    "pediatrics": "Pediatrie",
+    "pediatricBeds": "Pediatrie (paturi)",
+    "hospitalName": "Nume spital"
+  },
+  "medical_criteria": {
+    "secondaryCare": [
+      {
+        "field": "Cardiologie",
+        "label": "Cardiologie · serviciu prezent",
+        "capacity": false
+      },
+      {
+        "field": "Contract Ecograf",
+        "label": "Contract de ecografie · contract documentat",
+        "capacity": false
+      },
+      {
+        "field": "Contract CNAS",
+        "label": "Contract CNAS · contract documentat",
+        "capacity": false
+      },
+      {
+        "field": "Contract CASAOPSNAJ",
+        "label": "Contract OPSNAJ · contract documentat",
+        "capacity": false
+      }
+    ],
+    "hospitals": [
+      {
+        "field": "CT - Computer Tomograf",
+        "label": "CT · serviciu prezent",
+        "capacity": false
+      },
+      {
+        "field": "UPU - Unitate Primiri Urgențe",
+        "label": "UPU · serviciu prezent",
+        "capacity": false
+      },
+      {
+        "field": "Cardiologie (paturi)",
+        "label": "Cardiologie · capacitate > 0 paturi",
+        "capacity": true
+      }
+    ]
+  },
+  "challenges": [
+    {
+      "id": "V1",
+      "title": "Opt școli: câți elevi?",
+      "level": "Introductiv",
+      "question": "Câți elevi sunt înscriși în total în cele opt școli evidențiate?",
+      "datasets": [
+        "boundary",
+        "schools"
+      ],
+      "data_note": "Unități școlare, 2022–2023. Cele opt ID-uri sunt fixe și au coduri SIIIR distincte. Inspectează punctele sau tabelul înainte de calcul.",
+      "method_question": "Ce operație răspunde întrebării?",
+      "correct_method": "sum",
+      "methods": [
+        {
+          "id": "sum",
+          "label": "Selecție + SUM al numărului de elevi"
+        },
+        {
+          "id": "count",
+          "label": "Numărarea școlilor"
+        },
+        {
+          "id": "average",
+          "label": "Media elevilor pe școală"
+        }
+      ],
+      "feedback": "Numărarea oferă opt unități, iar media descrie o școală tipică. Pentru total, adună numărul de elevi al celor opt înregistrări.",
+      "method_note": "Selecție prin fid → verificarea valorilor → agregare SUM. NULL nu devine zero.",
+      "links": [
+        {
+          "label": "Atribute vectoriale",
+          "href": "geospatial-data.html#vector"
+        },
+        {
+          "label": "Operații cu vectori",
+          "href": "geospatial-data.html#vector-lab"
+        },
+        {
+          "label": "T01 · Școli pe hartă",
+          "href": "tutorials/t01.html"
+        }
+      ],
+      "index_title": "Opt școli"
+    },
+    {
+      "id": "V2",
+      "title": "Persoane sub 15 ani în zona școlilor",
+      "level": "Intermediar",
+      "question": "Câte persoane cu vârsta sub 15 ani sunt estimate la maximum 1 km de cele opt școli?",
+      "datasets": [
+        "boundary",
+        "schools",
+        "censusGrid"
+      ],
+      "data_note": "Aceleași opt școli și gridul de populație 2021. Celulele sunt deja decupate la Sectorul 1; interpretarea populației după decupare rămâne condiționată.",
+      "method_question": "Cum construiești zona și eviți dublarea populației?",
+      "correct_method": "buffer-union",
+      "methods": [
+        {
+          "id": "buffer-union",
+          "label": "Buffer → reunire → intersecție → ponderare"
+        },
+        {
+          "id": "centroid",
+          "label": "Centroid pentru fiecare școală"
+        },
+        {
+          "id": "separate",
+          "label": "Adunarea separată a populației fiecărui buffer"
+        }
+      ],
+      "feedback": "Centroidul nu creează o zonă de 1 km. Adunarea bufferelor separate dublează populația din suprapuneri; întâi reunește zonele.",
+      "method_note": "Opt buffere de 1 km → union/dissolve → intersecție cu gridul → valoare × aria intersectată / aria poligonului furnizat → SUM.",
+      "links": [
+        {
+          "label": "Buffer și intersecție",
+          "href": "geospatial-data.html?operation=vector-buffer#vector-lab"
+        },
+        {
+          "label": "Limitele analizei",
+          "href": "analysis.html#limite"
+        },
+        {
+          "label": "T05 · Grid de populație",
+          "href": "tutorials/t05.html"
+        }
+      ],
+      "index_title": "Persoane sub 15 ani la 1 km"
+    },
+    {
+      "id": "V3",
+      "title": "Elevi înscriși vs. populație din proximitate",
+      "level": "Intermediar",
+      "question": "Cum se compară elevii înscriși în cele opt școli cu populația sub 15 ani estimată în zona de 1 km?",
+      "datasets": [
+        "boundary",
+        "schools",
+        "censusGrid"
+      ],
+      "data_note": "Rezultatele V1 și V2 sunt reutilizate. Tabelul școlar și populația rezidentă descriu ani și populații diferite.",
+      "method_question": "Ce comparație este justificată de aceste date?",
+      "correct_method": "ratio",
+      "methods": [
+        {
+          "id": "ratio",
+          "label": "Raport numeric, cu limitele populațiilor explicate"
+        },
+        {
+          "id": "enrolment",
+          "label": "Rată oficială de cuprindere școlară"
+        },
+        {
+          "id": "causal",
+          "label": "Dovadă că proximitatea determină înscrierea"
+        }
+      ],
+      "feedback": "Elevii pot locui în afara zonei și pot avea alte vârste. Raportul nu stabilește o rată de cuprindere sau o relație cauzală.",
+      "method_note": "SUM elevi (V1) / populația sub 15 ani estimată (V2). Dacă numitorul este nul sau necunoscut, raportul nu este definit.",
+      "links": [
+        {
+          "label": "Interpretarea analizei",
+          "href": "analysis.html#limite"
+        },
+        {
+          "label": "Date și atribute",
+          "href": "geospatial-data.html#vector"
+        },
+        {
+          "label": "T05 · Populație",
+          "href": "tutorials/t05.html"
+        }
+      ],
+      "index_title": "Elevi vs. populație sub 15 ani"
+    },
+    {
+      "id": "V4",
+      "title": "Proximitatea față de medicina de familie",
+      "level": "Intermediar",
+      "question": "Ce populație este estimată la mai mult de 1 km de un cabinet de medicină de familie?",
+      "datasets": [
+        "boundary",
+        "primaryCare",
+        "censusGrid"
+      ],
+      "data_note": "267 de puncte de medicină de familie (2024) și gridul de populație (2021). Procentele folosesc numai populația cu valori cunoscute.",
+      "method_question": "Ce metodă măsoară proximitatea spațială de 1 km?",
+      "correct_method": "coverage",
+      "methods": [
+        {
+          "id": "coverage",
+          "label": "Buffere reunite + ponderare în interior/exterior"
+        },
+        {
+          "id": "routes",
+          "label": "Timp de deplasare pe drumuri, fără o rețea"
+        },
+        {
+          "id": "count",
+          "label": "Numărarea cabinetelor din Sectorul 1"
+        }
+      ],
+      "feedback": "Numărul cabinetelor nu descrie repartiția populației. Timpul de deplasare cere rețele și alte date; aici calculăm proximitate în linie dreaptă.",
+      "method_note": "Buffere de 1 km → reunire → limitare la Sectorul 1 → grid → ponderare la suprafață în interior și în exterior.",
+      "links": [
+        {
+          "label": "Operații vectoriale",
+          "href": "geospatial-data.html?operation=vector-buffer#vector-lab"
+        },
+        {
+          "label": "Limite de interpretare",
+          "href": "analysis.html#limite"
+        },
+        {
+          "label": "T03 · Servicii medicale",
+          "href": "tutorials/t03.html"
+        }
+      ],
+      "index_title": "Medicina de familie"
+    },
+    {
+      "id": "V5",
+      "title": "Unde există servicii pediatrice?",
+      "level": "Avansat",
+      "question": "Care este cel mai apropiat serviciu pediatric documentat de școala aleasă?",
+      "datasets": [
+        "boundary",
+        "schools",
+        "secondaryCare",
+        "hospitals"
+      ],
+      "data_note": "Cabinete/ambulatorii de specialitate (2023): Pediatrie = 1. Spitale (2024): Pediatrie (paturi) > 0. NULL înseamnă informație necunoscută.",
+      "method_question": "Cum găsești serviciul potrivit?",
+      "correct_method": "filter-nearest",
+      "methods": [
+        {
+          "id": "filter-nearest",
+          "label": "Filtrează serviciile → caută cel mai apropiat"
+        },
+        {
+          "id": "all-nearest",
+          "label": "Alege cea mai apropiată unitate, fără filtru"
+        },
+        {
+          "id": "beds",
+          "label": "Alege numai spitalul cu cele mai multe paturi"
+        }
+      ],
+      "feedback": "O unitate apropiată poate să nu ofere pediatrie. Numărul de paturi nu stabilește apropierea; filtrează serviciile înainte de calculul distanței.",
+      "method_note": "Pediatrie = 1 sau capacitate pediatrică > 0 → reunirea serviciilor eligibile → distanță geodezică de la școala aleasă → minim.",
+      "links": [
+        {
+          "label": "Nearest · distanță după filtrare",
+          "href": "geospatial-data.html?operation=vector-nearest#vector-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T03 · Servicii medicale",
+          "href": "tutorials/t03.html"
+        }
+      ],
+      "index_title": "Servicii pediatrice"
+    },
+    {
+      "id": "V6",
+      "title": "Cel mai apropiat serviciu multicriterial",
+      "level": "Avansat",
+      "question": "Care unitate îndeplinește criteriile alese și se află cel mai aproape de școala de plecare?",
+      "datasets": [
+        "boundary",
+        "schools",
+        "secondaryCare",
+        "hospitals"
+      ],
+      "data_note": "Alege o sursă și criterii susținute de tabel: prezență de serviciu, contract documentat sau capacitate > 0. Tipurile nu sunt echivalente.",
+      "method_question": "În ce ordine trebuie rezolvată întrebarea?",
+      "correct_method": "boolean-nearest",
+      "methods": [
+        {
+          "id": "boolean-nearest",
+          "label": "Filtru AND/OR → unități eligibile → distanță minimă"
+        },
+        {
+          "id": "nearest-first",
+          "label": "Unitatea cea mai apropiată → ignoră criteriile"
+        },
+        {
+          "id": "null-zero",
+          "label": "Înlocuiește NULL cu zero → numără unitățile"
+        }
+      ],
+      "feedback": "Filtrează înainte să cauți cea mai apropiată unitate. NULL păstrează informația necunoscută; nu justifică absența serviciului.",
+      "method_note": "AND cere toate criteriile; OR cere cel puțin unul. Informația necunoscută este tratată explicit. Distanța este calculată doar pentru unitățile documentat eligibile.",
+      "links": [
+        {
+          "label": "Nearest · distanță după filtrare",
+          "href": "geospatial-data.html?operation=vector-nearest#vector-lab"
+        },
+        {
+          "label": "Analiza și limitele ei",
+          "href": "analysis.html#limite"
+        },
+        {
+          "label": "T03 · Servicii medicale",
+          "href": "tutorials/t03.html"
+        }
+      ],
+      "index_title": "Filtru medical multicriterial"
+    },
+    {
+      "id": "R1",
+      "title": "Calculează panta din DEM",
+      "level": "Introductiv",
+      "question": "Ce pantă are relieful din Rîșca, în grade sau procente?",
+      "area": "risca",
+      "kind": "raster",
+      "datasets": [
+        "boundary",
+        "dem",
+        "rasterMetadata"
+      ],
+      "data_note": "Subseturi raster reale și conturul UAT Rîșca. Proprietățile tehnice sunt verificate; sursa, versiunea, termenii și alte metadate neconfirmate rămân de clarificat ulterior.",
+      "method_question": "Ce pași răspund întrebării geografice?",
+      "correct_method": "raster-r1",
+      "methods": [
+        {
+          "id": "raster-r1",
+          "label": "Horn 3×3 → pantă → grade / procente"
+        },
+        {
+          "id": "rectangle",
+          "label": "Aria dreptunghiului raster, fără mască UAT"
+        },
+        {
+          "id": "display",
+          "label": "Măsurare pe harta Web Mercator, ignorând grila sursă"
+        }
+      ],
+      "feedback": "Panta derivă din variația altitudinii între vecini, nu din altitudinea singură.",
+      "method_note": "DEM în metri → gradient metric Horn → atan(gradient). Grade = radiani × 180 / π; procente = tan(radiani) × 100.",
+      "links": [
+        {
+          "label": "Slope · panta din DEM",
+          "href": "geospatial-data.html?operation=raster-slope#raster-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T06 · Relief și pierdere forestieră",
+          "href": "tutorials/t06.html"
+        }
+      ],
+      "index_title": "Pantă"
+    },
+    {
+      "id": "R2",
+      "title": "Suprafața cu pantă peste prag",
+      "level": "Intermediar",
+      "question": "Ce suprafață din Rîșca are panta mai mare decât pragul ales?",
+      "area": "risca",
+      "kind": "raster",
+      "datasets": [
+        "boundary",
+        "dem",
+        "rasterMetadata"
+      ],
+      "data_note": "Subseturi raster reale și conturul UAT Rîșca. Proprietățile tehnice sunt verificate; sursa, versiunea, termenii și alte metadate neconfirmate rămân de clarificat ulterior.",
+      "method_question": "Ce pași răspund întrebării geografice?",
+      "correct_method": "raster-r2",
+      "methods": [
+        {
+          "id": "raster-r2",
+          "label": "Pantă → prag strict > → pixeli → hectare"
+        },
+        {
+          "id": "rectangle",
+          "label": "Aria dreptunghiului raster, fără mască UAT"
+        },
+        {
+          "id": "display",
+          "label": "Măsurare pe harta Web Mercator, ignorând grila sursă"
+        }
+      ],
+      "feedback": "Compară panta cu pragul ales și numără pixelii din masca UAT. Dreptunghiul rasterului nu este UAT.",
+      "method_note": "Număr pixeli selectați × aria pixelului afin / 10 000. Procentul folosește aria UAT cu pantă validă; marginile incomplete sunt excluse explicit.",
+      "links": [
+        {
+          "label": "Slope · panta din DEM",
+          "href": "geospatial-data.html?operation=raster-slope#raster-lab"
+        },
+        {
+          "label": "Raster Calculator · combinarea măștilor",
+          "href": "geospatial-data.html?operation=raster-calculator#raster-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T06 · Relief și pierdere forestieră",
+          "href": "tutorials/t06.html"
+        }
+      ],
+      "index_title": "Prag de pantă"
+    },
+    {
+      "id": "R3",
+      "title": "Pierderea forestieră într-un an",
+      "level": "Introductiv",
+      "question": "Ce suprafață din Rîșca este codificată ca pierdere forestieră în anul ales?",
+      "area": "risca",
+      "kind": "raster",
+      "datasets": [
+        "boundary",
+        "forestLoss",
+        "rasterMetadata"
+      ],
+      "data_note": "Subseturi raster reale și conturul UAT Rîșca. Proprietățile tehnice sunt verificate; sursa, versiunea, termenii și alte metadate neconfirmate rămân de clarificat ulterior.",
+      "method_question": "Ce pași răspund întrebării geografice?",
+      "correct_method": "raster-r3",
+      "methods": [
+        {
+          "id": "raster-r3",
+          "label": "Corespondență cod–an → selecție → suprafață"
+        },
+        {
+          "id": "rectangle",
+          "label": "Aria dreptunghiului raster, fără mască UAT"
+        },
+        {
+          "id": "display",
+          "label": "Măsurare pe harta Web Mercator, ignorând grila sursă"
+        }
+      ],
+      "feedback": "Codul trebuie interpretat folosind corespondența confirmată din metadate. Fundalul nu este un an.",
+      "method_note": "An disponibil → cod verificat → mască UAT → număr de pixeli × aria pixelului forestier.",
+      "links": [
+        {
+          "label": "Raster Calculator · selecții de pixeli",
+          "href": "geospatial-data.html?operation=raster-calculator#raster-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T06 · Relief și pierdere forestieră",
+          "href": "tutorials/t06.html"
+        }
+      ],
+      "index_title": "Forest loss într-un an"
+    },
+    {
+      "id": "R4",
+      "title": "Combină mai mulți ani",
+      "level": "Intermediar",
+      "question": "Ce suprafață este codificată în Rîșca pentru anii selectați, de exemplu 2013 + 2014?",
+      "area": "risca",
+      "kind": "raster",
+      "datasets": [
+        "boundary",
+        "forestLoss",
+        "rasterMetadata"
+      ],
+      "data_note": "Subseturi raster reale și conturul UAT Rîșca. Proprietățile tehnice sunt verificate; sursa, versiunea, termenii și alte metadate neconfirmate rămân de clarificat ulterior.",
+      "method_question": "Ce pași răspund întrebării geografice?",
+      "correct_method": "raster-r4",
+      "methods": [
+        {
+          "id": "raster-r4",
+          "label": "Selecție de ani → reuniunea pixelilor → suprafață"
+        },
+        {
+          "id": "rectangle",
+          "label": "Aria dreptunghiului raster, fără mască UAT"
+        },
+        {
+          "id": "display",
+          "label": "Măsurare pe harta Web Mercator, ignorând grila sursă"
+        }
+      ],
+      "feedback": "Un pixel are un singur cod de an. Selectează reuniunea anilor și evită numărarea repetată.",
+      "method_note": "OR între anii selectați → pixeli unici → hectare pe an și total.",
+      "links": [
+        {
+          "label": "Raster Calculator · selecții de pixeli",
+          "href": "geospatial-data.html?operation=raster-calculator#raster-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T06 · Relief și pierdere forestieră",
+          "href": "tutorials/t06.html"
+        }
+      ],
+      "index_title": "Mai mulți ani"
+    },
+    {
+      "id": "R5",
+      "title": "Pierderea forestieră într-un interval",
+      "level": "Intermediar",
+      "question": "Cum variază pierderea forestieră din Rîșca între cei doi ani aleși?",
+      "area": "risca",
+      "kind": "raster",
+      "datasets": [
+        "boundary",
+        "forestLoss",
+        "rasterMetadata"
+      ],
+      "data_note": "Subseturi raster reale și conturul UAT Rîșca. Proprietățile tehnice sunt verificate; sursa, versiunea, termenii și alte metadate neconfirmate rămân de clarificat ulterior.",
+      "method_question": "Ce pași răspund întrebării geografice?",
+      "correct_method": "raster-r5",
+      "methods": [
+        {
+          "id": "raster-r5",
+          "label": "Interval inclusiv → serie anuală → total"
+        },
+        {
+          "id": "rectangle",
+          "label": "Aria dreptunghiului raster, fără mască UAT"
+        },
+        {
+          "id": "display",
+          "label": "Măsurare pe harta Web Mercator, ignorând grila sursă"
+        }
+      ],
+      "feedback": "Intervalul include ambii ani. Graficul trebuie să folosească suprafețele calculate din raster.",
+      "method_note": "De la anul ≤ an codificat ≤ până la anul → suprafață cumulată și serie anuală.",
+      "links": [
+        {
+          "label": "Raster Calculator · selecții de pixeli",
+          "href": "geospatial-data.html?operation=raster-calculator#raster-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T06 · Relief și pierdere forestieră",
+          "href": "tutorials/t06.html"
+        }
+      ],
+      "index_title": "Interval"
+    },
+    {
+      "id": "R6",
+      "title": "Pierderea forestieră pe pante mari",
+      "level": "Avansat",
+      "question": "Câtă pierdere forestieră din perioada selectată s-a produs în Rîșca pe pante mai mari decât pragul ales?",
+      "area": "risca",
+      "kind": "raster",
+      "datasets": [
+        "boundary",
+        "dem",
+        "forestLoss",
+        "rasterMetadata"
+      ],
+      "data_note": "Subseturi raster reale și conturul UAT Rîșca. Proprietățile tehnice sunt verificate; sursa, versiunea, termenii și alte metadate neconfirmate rămân de clarificat ulterior.",
+      "method_question": "Ce pași răspund întrebării geografice?",
+      "correct_method": "raster-r6",
+      "methods": [
+        {
+          "id": "raster-r6",
+          "label": "Pantă → aliniere → interval de ani AND prag → suprafață"
+        },
+        {
+          "id": "rectangle",
+          "label": "Aria dreptunghiului raster, fără mască UAT"
+        },
+        {
+          "id": "display",
+          "label": "Măsurare pe harta Web Mercator, ignorând grila sursă"
+        }
+      ],
+      "feedback": "Grilele sunt diferite. Aliniază justificat panta continuă înainte de intersecție; nu combina indicii brut și nu interpola codurile de an.",
+      "method_note": "Horn pe grila DEM → panta interpolată biliniar la centrele grilei forestiere → intersecție cu perioada și pragul. Pixelii cu pantă necunoscută sunt raportați separat.",
+      "links": [
+        {
+          "label": "Slope · panta din DEM",
+          "href": "geospatial-data.html?operation=raster-slope#raster-lab"
+        },
+        {
+          "label": "Raster Calculator · combinarea măștilor",
+          "href": "geospatial-data.html?operation=raster-calculator#raster-lab"
+        },
+        {
+          "label": "Coordonate și CRS",
+          "href": "lesson.html?id=rectangular-coordinates"
+        },
+        {
+          "label": "T06 · Relief și pierdere forestieră",
+          "href": "tutorials/t06.html"
+        }
+      ],
+      "index_title": "Forest loss pe pante mari"
+    }
+  ]
+}

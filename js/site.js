@@ -112,7 +112,8 @@
     sidebar.addEventListener('scroll', save, {passive:true});
     groups.forEach(group => group.addEventListener('toggle', save));
     addEventListener('pagehide', save);
-    addEventListener('pageshow', () => requestAnimationFrame(restore));
+    // Restore at pageshow: an animation frame can be deferred in background tabs.
+    addEventListener('pageshow', restore);
     return {save, restore};
   }
 
@@ -120,7 +121,7 @@
     renderNav();
     const sidebarPosition = initSidebarPosition();
     const narrow = matchMedia('(max-width:900px)');
-    const setNav = collapsed => { sidebarPosition.save(); document.body.classList.toggle('nav-collapsed', collapsed); $('#nav-toggle')?.setAttribute('aria-expanded', String(!collapsed)); if (!collapsed) requestAnimationFrame(sidebarPosition.restore); };
+    const setNav = collapsed => { sidebarPosition.save(); document.body.classList.toggle('nav-collapsed', collapsed); $('#nav-toggle')?.setAttribute('aria-expanded', String(!collapsed)); if (!collapsed) sidebarPosition.restore(); };
     setNav(narrow.matches); narrow.addEventListener('change', event => setNav(event.matches));
     $('#nav-toggle')?.addEventListener('click', () => setNav(!document.body.classList.contains('nav-collapsed')));
     $('#chapter-nav')?.addEventListener('click', event => { if (event.target.closest('a') && narrow.matches) setNav(true); });
@@ -152,7 +153,7 @@
       ['02','Harta și elementele ei','Definiție, clasificare și anatomia interactivă a unei hărți.','map-definition','6 lecții'],
       ['03','Proiecții și CRS','De la Pământ la hartă: modele, deformări și familii istorice de proiecții.','earth-to-map','12 secțiuni'],
       ['04','Metode de reprezentare','Aceleași date fictive, nouă logici cartografice și corespondențe GIS.','method-diagrams','10 secțiuni'],
-      ['05','Date geospațiale','Vector, raster, formate și laboratoare de prelucrare.','geospatial-data','28 operații'],
+      ['05','Date geospațiale','Vector, raster, formate și laboratoare de prelucrare.','geospatial-data','29 operații'],
       ['06','Analiza datelor geospațiale','De la întrebare și selecție la operație, rezultat și interpretare.','analysis','Sinteză'],
       ['07','Ateliere QGIS','Șase exerciții practice, de la prima hartă la raster și vector.','tutorials','6 tutoriale']
     ];
@@ -483,6 +484,7 @@
       {category:'Proiecții',title:'ONU · A/RES/80/307, 4 septembrie 2026',description:'Registrul oficial al rezoluțiilor Adunării Generale.',url:'https://public.e-delegate.un.org/reports/ga80_resolutions.html'}
     ];
     const localItems=[
+      {category:'Ateliere și date',title:'Provocări GIS',description:'12 analize vectoriale și raster: școli, populație, servicii medicale, pante și pierdere forestieră în Rîșca.',url:'challenges.html',local:true},
       {category:'Ateliere și date',title:'Ateliere QGIS',description:'T01–T06: traseu practic progresiv și fișe de date pentru exerciții.',url:'tutorials/index.html',local:true},
       {category:'Ateliere și date',title:'Analiza datelor geospațiale',description:'Întrebare, selecție, operație și limitele interpretării.',url:'analysis.html',local:true},
       {category:'Ateliere și date',title:'Fluxul de lucru în QGIS',description:'De la fișierul sursă la produsul cartografic.',url:'workflow.html',local:true},
@@ -497,8 +499,25 @@
     ];
     const items=[...localItems,...historical,...qgisItems,...crsItems,...projections];
     const card=item=>`<article class="resource-card" data-category="${esc(item.category)}"><span>${esc(item.category.toUpperCase())}</span><h3>${esc(item.title)}</h3><p>${esc(item.description)}</p><a href="${esc(item.url)}" ${item.local?'':'target="_blank" rel="noopener noreferrer"'} aria-label="Deschide ${esc(item.title)}${item.local?'':'; se deschide într-o filă nouă'}">Deschide resursa ${item.local?'→':'↗'}</a></article>`;
-    $('#resources-root').innerHTML=`<div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> → Resurse</div><section class="lesson-hero"><span class="eyebrow">SURSE VERIFICATE</span><h1>Resurse</h1><p class="lead">Manualul istoric, geodezie, date vector/raster și documentația QGIS.</p></section><section id="date-surse" class="resource-data-policy"><h2>Sursele și accesul la date</h2><p>Fișierele GIS pentru exerciții nu sunt incluse în repository și nu sunt găzduite de acest site. Linkurile către sursele de date vor fi consolidate aici, după verificarea provenienței și a condițiilor de utilizare. Pentru fișierele de curs, folosește materialele furnizate de cadrul didactic.</p><ul><li><a href="tutorials/t01.html#date-pentru-exercitiu">T01</a> și <a href="tutorials/t02.html#date-pentru-exercitiu">T02</a>: școli și circumscripții școlare.</li><li><a href="tutorials/t03.html#date-pentru-exercitiu">T03</a>: servicii medicale; <a href="tutorials/t04.html#date-pentru-exercitiu">T04</a>: baze sportive.</li><li><a href="tutorials/t05.html#date-pentru-exercitiu">T05</a>: grid vectorial de populație și servicii publice.</li><li><a href="tutorials/t06.html#date-pentru-exercitiu">T06</a>: DEM, pierdere forestieră și straturi de context pentru Suceava.</li></ul><p class="small">Exemplele interactive mici din site sunt sintetice; nu înlocuiesc seturile de date pentru tutoriale.</p></section><div class="resource-filters" role="group" aria-label="Filtrează resursele">${['Toate','Ateliere și date','Manual','QGIS','CRS','Geodezie / CRS','Proiecții','Date vector','Date raster','Processing QGIS','Reprezentare'].map((label,index)=>`<button type="button" data-resource-filter="${label}" aria-pressed="${index===0}">${label}</button>`).join('')}</div><div class="resource-grid">${items.map(card).join('')}</div>${siteFooter()}`;
+    $('#resources-root').innerHTML=`<div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> → Resurse</div><section class="lesson-hero"><span class="eyebrow">SURSE VERIFICATE</span><h1>Resurse</h1><p class="lead">Manualul istoric, geodezie, date vector/raster și documentația QGIS.</p></section><section id="date-surse" class="resource-data-policy"><h2>Sursele și accesul la date</h2><p>Seturile complete pentru ateliere nu sunt găzduite de acest site. Provocările GIS folosesc subseturi educaționale mici; cardurile de mai jos indică proveniența și licențele confirmate, iar informațiile nesusținute rămân de clarificat. Pentru fișierele de curs, folosește materialele furnizate de cadrul didactic.</p><ul><li><a href="tutorials/t01.html#date-pentru-exercitiu">T01</a> și <a href="tutorials/t02.html#date-pentru-exercitiu">T02</a>: școli și circumscripții școlare.</li><li><a href="tutorials/t03.html#date-pentru-exercitiu">T03</a>: servicii medicale; <a href="tutorials/t04.html#date-pentru-exercitiu">T04</a>: baze sportive.</li><li><a href="tutorials/t05.html#date-pentru-exercitiu">T05</a>: grid vectorial de populație și servicii publice.</li><li><a href="tutorials/t06.html#date-pentru-exercitiu">T06</a>: DEM, pierdere forestieră și straturi de context pentru Suceava.</li></ul><p class="small">Demonstrațiile teoretice folosesc date sintetice. Provocările GIS folosesc subseturile reale documentate separat; niciunele nu înlocuiesc seturile originale.</p></section><div class="resource-filters" role="group" aria-label="Filtrează resursele">${['Toate','Ateliere și date','Provocări GIS','Manual','QGIS','CRS','Geodezie / CRS','Proiecții','Date vector','Date raster','Processing QGIS','Reprezentare'].map((label,index)=>`<button type="button" data-resource-filter="${label}" aria-pressed="${index===0}">${label}</button>`).join('')}</div><div class="resource-grid">${items.map(card).join('')}</div>${siteFooter()}`;
     $$('[data-resource-filter]').forEach(button=>button.addEventListener('click',()=>{const filter=button.dataset.resourceFilter;$$('[data-resource-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));$$('.resource-card').forEach(c=>c.hidden=filter!=='Toate'&&c.dataset.category!==filter);}));
+    import('./challenges/challenge-state.js').then(({createDataStore})=>createDataStore().manifest()).then(registry=>{
+      const entries=[...Object.entries(registry.sector1),...Object.entries(registry.risca).filter(([id])=>id!=='rasterMetadata')];
+      const roles={boundary:'Contur UAT',schools:'Puncte școlare',censusGrid:'Grid vectorial de populație',primaryCare:'Medicină de familie',secondaryCare:'Cabinete și ambulatorii',hospitals:'Spitale',dem:'Model digital al elevației',forestLoss:'An de pierdere forestieră'};
+      const activeFilter=$('[data-resource-filter][aria-pressed=true]')?.dataset.resourceFilter;
+      for(const [id,entry] of entries){
+        const article=document.createElement('article');article.className='resource-card';article.dataset.category='Provocări GIS';
+        const license=typeof entry.license==='object'?entry.license.id.replace('CC-BY-','CC BY '):'Licență de confirmat';
+        const label=entry.source?.label==='needs_confirmation'?'Sursă exactă de confirmat':entry.source?.label;
+        const sourceURL=entry.source?.url;
+        const vintage=entry.source_year?`An: ${entry.source_year}`:entry.source_version_attribute?`Atribut versiune: ${entry.source_version_attribute}`:'Versiune de confirmat';
+        article.innerHTML=`<span>PROVOCĂRI GIS</span><h3>${esc(entry.display_name)}</h3><p>${esc(label)}.</p><div class="resource-source-meta"><span class="meta-chip">Rol: ${esc(roles[id])}</span><span class="meta-chip">${esc(vintage)}</span><span class="meta-chip">${esc(entry.crs)}</span><span class="meta-chip">${esc(license)}</span></div>${entry.source_version_attribute?'<p class="small">Atributul din subset nu confirmă versiunea produsului oficial.</p>':''}${sourceURL?.startsWith('https://')?`<a href="${esc(sourceURL)}" target="_blank" rel="noopener noreferrer">Sursa oficială ↗<span class="sr-only"> · ${esc(entry.display_name)}; se deschide într-o filă nouă</span></a>`:'<p class="small">Adresa produsului original necesită confirmare.</p>'}`;
+        article.hidden=activeFilter!=='Toate'&&activeFilter!=='Provocări GIS';$('.resource-grid').append(article);
+      }
+    }).catch(()=>{
+      const note=document.createElement('p');note.textContent='Registrul surselor pentru Provocări GIS nu a putut fi încărcat.';$('.resource-grid').append(note);
+    });
+
   }
 
   initShell();

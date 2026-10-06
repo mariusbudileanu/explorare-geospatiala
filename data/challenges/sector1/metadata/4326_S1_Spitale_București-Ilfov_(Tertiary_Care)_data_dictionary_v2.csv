@@ -1,0 +1,14 @@
+field_name;what_it_represents;field_type;example;have_null;have_empty;null_count;empty_count;distinct_count;sample_values;min_value;max_value;layer_name;geometry_type;crs;feature_count
+fid;Identificator stabil al înregistrării din subsetul furnizat.;Integer;3;n;n;0;0;50;;3;146;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Nume spital;Nume spital. Semnificația urmează metodologia sursei.;String;Spitalul Clinic „Sf. Maria”;n;n;0;0;49;;;;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Tip;Tip. Semnificația urmează metodologia sursei.;String;Spital public;n;n;0;0;2;Spital privat | Spital public;;;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Spitalizare continua (paturi);"Număr de paturi pentru categoria indicată. 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;295;y;n;34;0;16;;61;1255;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Spitalizare de zi (paturi);"Număr de paturi pentru categoria indicată. 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;8;y;n;33;0;13;;0;40;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Pediatrie (paturi);"Număr de paturi pentru categoria indicată. 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;0;y;n;34;0;4;0 | 25 | 44 | 70;0;70;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Cardiologie (paturi);"Număr de paturi pentru categoria indicată. 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;14;y;n;34;0;6;0 | 14 | 25 | 46 | 54 | 90;0;90;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+CPU - Compartiment Primiri Urgențe;"1 = serviciul există; 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;1;y;n;33;0;2;0 | 1;0;1;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+UPU - Unitate Primiri Urgențe;"1 = serviciul există; 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;0;y;n;34;0;2;0 | 1;0;1;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Laborator Analize;"1 = serviciul există; 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;1;y;n;32;0;2;0 | 1;0;1;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+Radiologie;"1 = serviciul există; 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;1;y;n;32;0;2;0 | 1;0;1;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+RMN - Rezonanță Magnetică Nucleară;"1 = serviciul există; 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;0;y;n;33;0;2;0 | 1;0;1;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50
+CT - Computer Tomograf;"1 = serviciul există; 0 = serviciul absent; NULL = informație publică indisponibilă.";Integer;0;y;n;32;0;2;0 | 1;0;1;4326_S1_Spitale București-Ilfov (Tertiary Care);Point;EPSG:4326;50

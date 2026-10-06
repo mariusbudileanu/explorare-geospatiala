@@ -19,9 +19,11 @@ window.CARTO_CONTENT = {
     { id: 'methods', number: 4, label: '4. METODE DE REPREZENTARE', lessons: ['method-diagrams','method-choropleth','method-cartodiagram','method-signs','method-areas','method-qualitative','method-flows','method-isolines','method-dots','relief-models'] },
     { id: 'geospatial-data', label: '5. DATE GEOSPAȚIALE', lessons: ['geospatial-data'] },
     { id: 'analysis', label: '6. ANALIZA DATELOR GEOSPAȚIALE', lessons: ['analysis'] },
-    { id: 'practice', label: '7. ATELIERE QGIS · PRACTICĂ', lessons: ['tutorials','T01','T02','T03','T04','T05','T06','workflow'] }
+    { id: 'practice', label: '7. ATELIERE QGIS · PRACTICĂ', lessons: ['tutorials','T01','T02','T03','T04','T05','T06','workflow'] },
+    { id: 'challenges', label: 'PROVOCĂRI GIS · PRACTICĂ', lessons: ['challenges'] }
   ],
   lessons: [
+    { id:'challenges', source_section:'', title:'Provocări GIS', short_title:'Provocări GIS', part:'Practică GIS', href:'challenges.html', source_pages:[], figures:[], content_types:['exercițiu'], interactive_components:['challenge-framework'], qgis_correspondence:true, modern_sources_status:'source-reviewed', status:'implemented', theme:'qgis', keywords:['școli','populație','servicii medicale','buffer','intersecție','proximitate','Rîșca','pantă','DEM','pierdere forestieră','raster','medicină de familie','forest loss'] },
     { id:'home', source_section:'', title:'Privire de ansamblu', short_title:'Acasă', part:'Introducere', href:'index.html', source_pages:[], figures:[], content_types:['concept'], interactive_components:['progress-overview'], qgis_correspondence:false, modern_sources_status:'pending', status:'implemented', theme:'overview', keywords:['cartografie','manual','1974','istoric','digital'] },
     { id:'about', source_section:'', title:'Despre proiect', short_title:'Despre proiect', part:'Introducere', href:'lesson.html?id=about', source_pages:[], figures:[], content_types:['context istoric'], interactive_components:[], qgis_correspondence:false, modern_sources_status:'pending', status:'implemented', theme:'overview', keywords:['metodologie','sursă','reconstrucție'] },
     { id:'resources', source_section:'', title:'Resurse', short_title:'Resurse', part:'Introducere', href:'resources.html', source_pages:[], figures:[], content_types:['concept'], interactive_components:[], qgis_correspondence:false, modern_sources_status:'verified', status:'implemented', theme:'overview', keywords:['manual','qgis','epsg','crs','proiecții','reprezentare'] },

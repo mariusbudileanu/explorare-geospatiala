@@ -1,0 +1,7 @@
+field_name;what_it_represents;field_type;example;have_null;have_empty;null_count;empty_count;distinct_count;sample_values;min_value;max_value;layer_name;geometry_type;crs;feature_count
+fid;Identificator stabil al înregistrării din subsetul furnizat.;Integer;7;n;n;0;0;200;;7;1013;4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care);Point;EPSG:4326;200
+Pediatrie;"1 = specialitatea/serviciul există; 0 = nu există.";Integer;0;n;n;0;0;2;0 | 1;0;1;4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care);Point;EPSG:4326;200
+Cardiologie;"1 = specialitatea/serviciul există; 0 = nu există.";Integer;0;n;n;0;0;2;0 | 1;0;1;4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care);Point;EPSG:4326;200
+Contract Ecograf;"Statutul contractului de ecografie dintre cabinet/unitate și CNAS: 1 = contract documentat; 0 = fără contract documentat. Nu dovedește proprietatea echipamentului.";Integer;1;n;n;0;0;2;0 | 1;0;1;4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care);Point;EPSG:4326;200
+Contract CNAS;"1 = contract cu CASMB sau CJASIF documentat; 0 = fără contract documentat.";Integer;1;n;n;0;0;2;0 | 1;0;1;4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care);Point;EPSG:4326;200
+Contract CASAOPSNAJ;"1 = contract cu OPSNAJ documentat; 0 = fără contract documentat.";Integer;0;n;n;0;0;2;0 | 1;0;1;4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care);Point;EPSG:4326;200

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="12 provocări GIS cu date reale: școli, populație, servicii medicale, pante și pierdere forestieră în Rîșca. Alege metoda, calculează și interpretează rezultatul.">
+  <title>Provocări GIS · Explorare geospațială</title>
+  <link rel="icon" href="assets/ui/favicon.svg">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/site.css"><link rel="stylesheet" href="js/vendor/leaflet/leaflet.css"><link rel="stylesheet" href="css/challenges.css"><link rel="stylesheet" href="css/design-system.css">
+  <script src="data/content-manifest.js" defer></script><script src="js/site.js" defer></script><script src="js/vendor/leaflet/leaflet.js" defer></script>
+  <script src="js/vendor/proj4.js" defer></script><script src="data/crs-registry.js" defer></script><script src="js/crs-engine.js" defer></script>
+  <script type="module" src="js/challenges/challenges-app.js"></script>
+</head>
+<body data-page="challenges" data-page-id="challenges">
+<a class="skip-link" href="#main-content">Sari la conținut</a>
+<header class="topbar site-topbar"><button class="icon-button" id="nav-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="Restrânge cuprinsul">☰</button><a class="brand" href="index.html" aria-label="Explorare geospațială, pagina principală"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/><path d="M3 20h34M20 3v34"/></svg><span>Explorare geospațială<small>De la concepte clasice la GIS (QGIS)</small></span></a><div class="global-search"><label class="sr-only" for="search">Caută în site</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Caută lecții și noțiuni..." autocomplete="off" aria-controls="search-results"><div id="search-results" class="search-results" hidden></div></div><button id="theme-toggle" class="quiet-button" aria-pressed="false"><span aria-hidden="true">◐</span> <span id="theme-label">Mod întunecat</span></button><a class="quiet-button resources-link" href="resources.html">Resurse</a><a class="quiet-button about-link" href="lesson.html?id=about">Despre proiect</a></header>
+<div class="workspace site-workspace challenge-workspace-shell">
+<aside id="sidebar" class="sidebar" aria-label="Cuprinsul proiectului"><div class="sidebar-heading"><span class="eyebrow">CUPRINS INTERACTIV</span></div><nav id="chapter-nav"></nav></aside>
+<main id="main-content" class="workshop-main challenges-main">
+  <div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> → Provocări GIS</div>
+  <section class="lesson-hero">
+    <span class="eyebrow">PRACTICĂ · Sectorul 1, București și Rîșca, Suceava</span>
+    <h1>Provocări GIS</h1>
+    <p class="lead">Rezolvă probleme geospațiale direct pe hartă, fără să scrii cod.</p>
+    <p>Alege o provocare, inspectează datele, alege metoda și rulează analiza. Compară harta de intrare cu rezultatul, apoi explică ce arată numerele și unde se oprește interpretarea.</p>
+    <div class="challenge-flow" aria-label="Pașii provocării"><span>Întrebare</span><b aria-hidden="true">→</b><span>Date</span><b aria-hidden="true">→</b><span>Metodă</span><b aria-hidden="true">→</b><span>Rezultat</span><b aria-hidden="true">→</b><span>Interpretare</span></div>
+  </section>
+  <section aria-labelledby="choose-challenge">
+    <div class="challenge-section-heading"><h2 id="choose-challenge">Alege o provocare</h2><button type="button" class="outline-button" id="reset-challenge-progress">Șterge progresul local</button></div>
+    <p class="small">Toate provocările sunt disponibile. Progresul se păstrează numai în acest browser.</p>
+    <div id="challenge-catalog" class="challenge-catalog" role="group" aria-label="Provocări vectoriale V1–V6 și raster R1–R6"></div>
+  </section>
+  <section id="challenge-workspace" aria-busy="true" aria-labelledby="challenge-title">
+    <div class="challenge-intro"><span id="challenge-id" class="eyebrow"></span><h2 id="challenge-title" tabindex="-1">Se pregătește provocarea…</h2><p id="challenge-question" class="lead"></p></div>
+    <p id="challenge-status" role="status" aria-live="polite" aria-atomic="true">Se încarcă registrul provocărilor…</p>
+    <div class="challenge-layout">
+      <div class="challenge-panel">
+        <section><h3>Date</h3><p id="challenge-data-note"></p><ul id="challenge-data-list"></ul><p class="small"><span id="challenge-coordinate-note">Vectori WGS 84 (EPSG:4326).</span> <a href="data/challenges/README.md">Surse, atribuiri și precauții →</a></p></section>
+        <section><h3>Metodă</h3><label id="challenge-method-question" for="challenge-methods">Alege metoda</label><select id="challenge-methods"></select><p id="challenge-feedback" class="challenge-feedback" aria-live="polite"></p><p id="challenge-method-note" class="small"></p></section>
+        <section><h3>Controale</h3><div id="challenge-controls"></div></section>
+        <div class="challenge-actions"><button type="button" class="primary-button" id="challenge-run" disabled>Rulează analiza</button><button type="button" class="outline-button" id="challenge-reset" disabled>Resetează provocarea</button></div>
+      </div>
+      <section class="challenge-map-panel" aria-labelledby="map-heading">
+        <div class="challenge-section-heading"><h3 id="map-heading">Rezultat pe hartă</h3><button type="button" class="outline-button" id="challenge-fit">Încadrează Sectorul 1</button></div>
+        <div class="challenge-map-modes" role="group" aria-label="Starea hărții">
+          <button type="button" data-map-mode="INPUT" aria-pressed="true">Intrare · INPUT</button><button type="button" data-map-mode="RESULT" aria-pressed="false" disabled>Rezultat · RESULT</button><button type="button" data-map-mode="COMPARE" aria-pressed="false" disabled>Compară · COMPARE</button>
+        </div>
+        <div id="challenge-compare-controls" hidden><label><input type="checkbox" id="show-input" checked> Arată intrarea</label><label><input type="checkbox" id="show-result" checked> Arată rezultatul</label></div>
+        <div id="challenge-map" role="region" aria-label="Hartă interactivă a Sectorului 1; săgeți pentru deplasare, plus și minus pentru zoom"></div>
+        <p class="small challenge-map-help">Hartă din datele locale, fără un fundal extern. Deplasează și mărește harta; apasă pe entități pentru a inspecta atributele. Punctele sunt accesibile și prin tastatură.</p>
+        <div id="raster-tools" hidden><label for="raster-opacity">Opacitate raster · <output id="raster-opacity-value" for="raster-opacity">85%</output></label><input id="raster-opacity" type="range" min="0" max="100" value="85"><button type="button" class="outline-button" id="raster-inspect-centre">Inspectează pixelul din centrul hărții</button><p id="raster-pixel-info" class="raster-pixel-info" role="status" aria-live="polite">Deplasează cursorul sau apasă pe hartă pentru a inspecta pixelul.</p></div>
+        <h4>Legendă</h4><ul id="challenge-legend" class="challenge-legend"></ul>
+      </section>
+    </div>
+    <section id="challenge-results" class="challenge-results" aria-labelledby="result-heading" hidden>
+      <span id="challenge-result-type" class="source-tag modern"></span><h3 id="result-heading">Rezultat numeric</h3>
+      <div id="challenge-metrics" class="challenge-metrics"></div><div id="challenge-comparison" class="challenge-comparison" hidden></div>
+      <div id="raster-annual-chart" hidden></div>
+      <div id="challenge-warnings" class="challenge-warning" hidden></div><div id="challenge-table"></div>
+      <h3>Interpretare</h3><div id="challenge-interpretation"></div>
+    </section>
+    <section class="challenge-related"><h3>Continuă cu teoria și QGIS</h3><div id="challenge-links"></div></section>
+  </section>
+  <footer class="page-footer site-footer"><div><strong>Explorare geospațială · Provocări GIS</strong><p>Date școlare și medicale: Observatorul Urban Metropolitan București / ADIZMB, CC BY 4.0. Alte surse și termeni sunt consemnați în documentația datelor.</p></div><nav aria-label="Legături în subsol"><a href="analysis.html">Analiză</a><a href="tutorials/index.html">Ateliere QGIS</a><a href="resources.html">Resurse</a></nav></footer>
+</main></div>
+<button id="back-top" class="back-top" aria-label="Înapoi sus" hidden>↑ <span>Sus</span></button>
+<noscript><p class="noscript">Provocările GIS necesită JavaScript pentru hartă și calcul. Teoria și atelierele QGIS rămân disponibile.</p></noscript>
+</body></html>

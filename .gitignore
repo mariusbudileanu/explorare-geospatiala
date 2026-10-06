@@ -53,3 +53,17 @@ Thumbs.db
 desktop.ini
 .env
 .env.*
+
+# Prepared educational challenge subsets only; full source data remain excluded.
+!/data/challenges/sector1/*.geojson
+!/data/challenges/sector1/metadata/*.csv
+!/data/challenges/risca/*.geojson
+!/data/challenges/risca/risca_dem_sv.tif
+!/data/challenges/risca/risca_forest_loss_sv.tif
+!/data/challenges/risca/raster_metadata.json
+!/data/challenges/challenge-data.json
+!/data/challenges/README.md
+/data/challenges/**/*.pdf
+
+# GDAL statistics/histogram cache; the browser reads the TIFF directly.
+/data/challenges/**/*.aux.xml

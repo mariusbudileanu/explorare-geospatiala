@@ -22,7 +22,7 @@ A. Năstase și D. Cernea, *Cartografie generală – manual practic*, Universit
 
 ## Ateliere QGIS și date
 
-Atelierele T01–T06 formează o serie practică progresivă, de la alcătuirea unei hărți la lucrul cu date vectoriale și raster. Seturile de date pentru exerciții nu sunt incluse în repository. Acolo unde sunt disponibile și verificate, site-ul indică sursele originale; se aplică termenii furnizorilor respectivi.
+Atelierele T01–T06 formează o serie practică progresivă, de la alcătuirea unei hărți la lucrul cu date vectoriale și raster. Seturile complete de date pentru ateliere nu sunt incluse în repository. Subseturile mici pregătite pentru Provocări GIS sunt descrise în [documentația datelor](data/challenges/README.md), împreună cu sursele, licențele confirmate și informațiile încă de clarificat. Acolo unde sunt disponibile și verificate, site-ul indică sursele originale; se aplică termenii furnizorilor respectivi.
 
 ## Licențiere
 
