@@ -262,6 +262,58 @@ window.CARTO_QGIS_LINKS = {
       "used_in": [
         "transparency-blending"
       ]
+    },
+    {
+      "id": "blending-modes",
+      "title": "8.8.9. Blending Modes",
+      "concept": "Normal, familii de blending și măștile copiilor unui grup",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/introduction/general_tools.html#blending-modes",
+      "source_type": "QGIS User Manual",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
+    },
+    {
+      "id": "raster-transparency",
+      "title": "13.1.3.2. Raster Layer rendering",
+      "concept": "Blending modes pentru rastere și Global opacity; referință pentru T06",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_raster/raster_properties.html#layer-rendering",
+      "source_type": "QGIS User Manual",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
+    },
+    {
+      "id": "draw-effects",
+      "title": "12.1.3.3. Draw effects",
+      "concept": "Source, Blur, Drop Shadow, Transform și ordinea efectelor",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_vector/vector_properties.html#draw-effects",
+      "source_type": "QGIS User Manual",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
+    },
+    {
+      "id": "qgis-composition-reference",
+      "title": "QgsPainting::getCompositionMode — QGIS 3.44",
+      "concept": "Verificarea numelui Subtract: QGIS îl mapează la operația Exclusion",
+      "url": "https://api.qgis.org/api/3.44/qgspainting_8cpp_source.html",
+      "source_type": "QGIS API Documentation",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "transparency-blending"
+      ]
     }
   ],
   "bridges": [

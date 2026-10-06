@@ -12,8 +12,8 @@
 .lab-source-compact{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--line);padding:8px 12px;border-radius:var(--radius-small);font-size:14px}
 .lab-sources-compact{padding:var(--space-4);margin-block:var(--space-4)}.lab-sources-compact nav{display:flex;gap:8px 16px;flex-wrap:wrap}.lab-sources-compact a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
 .styling-section{margin-block:var(--section-gap);scroll-margin-top:165px}
-:is(.styling-demo,.labeling-demo,.repair-demo,.transparency-demo){border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);background:var(--surface);margin-block:var(--space-4);scroll-margin-top:165px;min-width:0}
-:is(.styling-demo,.labeling-demo,.repair-demo,.transparency-demo) header>p{margin-top:var(--space-2);max-width:var(--content-text)}
+:is(.styling-demo,.labeling-demo,.repair-demo,.transparency-demo,.blending-demo){border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);background:var(--surface);margin-block:var(--space-4);scroll-margin-top:165px;min-width:0}
+:is(.styling-demo,.labeling-demo,.repair-demo,.transparency-demo,.blending-demo) header>p{margin-top:var(--space-2);max-width:var(--content-text)}
 .lab-demo-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(210px,1fr);gap:var(--space-4);margin-block:var(--space-4);align-items:start}
 .lab-visual,.lab-controls{min-width:0}
 .lab-map svg,.lab-compare svg,.lab-preview svg{width:100%;height:auto;min-height:240px;display:block;border:1px solid var(--line);border-radius:var(--radius-small);background:var(--surface-alt)}
@@ -37,7 +37,7 @@
 .lab-main input[type=radio],.lab-main input[type=checkbox]{width:18px;height:18px;min-height:18px;min-width:18px;padding:0;flex:0 0 18px;accent-color:var(--blue)}
 .lab-main .lab-data{min-width:0}
 @media(max-width:1150px){.lab-demo-layout{grid-template-columns:minmax(0,1fr)}.lab-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 var(--space-4)}.lab-extra{grid-column:1/-1}}
-@media(max-width:600px){.lab-controls,.lab-advanced-grid,.lab-hub-grid,.lab-qgis-grid{grid-template-columns:minmax(0,1fr)}.lab-principles ul{columns:1}:is(.styling-demo,.labeling-demo,.repair-demo,.transparency-demo),.lab-sources,.lab-checkpoint,.lab-preview,.lab-principles{padding:var(--space-3)}.lab-map svg{min-height:230px}.lab-tree-row label{font-size:13px}.lab-main .lab-nav{gap:6px}.lab-nav a{padding:7px 10px;font-size:13px}}
+@media(max-width:600px){.lab-controls,.lab-advanced-grid,.lab-hub-grid,.lab-qgis-grid{grid-template-columns:minmax(0,1fr)}.lab-principles ul{columns:1}:is(.styling-demo,.labeling-demo,.repair-demo,.transparency-demo,.blending-demo),.lab-sources,.lab-checkpoint,.lab-preview,.lab-principles{padding:var(--space-3)}.lab-map svg{min-height:230px}.lab-tree-row label{font-size:13px}.lab-main .lab-nav{gap:6px}.lab-nav a{padding:7px 10px;font-size:13px}}
 
 /* Integrated final exercise: the same map, controls, actions and source cards. */
 .repair-demo .lab-demo-layout{grid-template-columns:minmax(0,1.4fr) minmax(290px,1fr)}
