@@ -58,6 +58,10 @@
   function hashPanel(){const id=decodeURIComponent(location.hash.slice(1)),target=document.getElementById(id);if(id==='etichetare'||target?.closest('#labeling-panel'))switchPanel(true);else if(id==='stilizare'||target?.closest('#styling-panel'))switchPanel(false);if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));}
   function start(){const container=document.getElementById('labeling-root');if(!container)return;
     container.innerHTML=sectionNames.map(([id,title])=>`<section id="${id}" class="styling-section"><h2>${title}</h2>${D.demos.filter(d=>d.section===id).map(L.shell).join('')}</section>`).join('');
+    const classic=document.getElementById('labeling-classic'),source=root.CARTO_CONTENT.source;
+    document.getElementById('label-intro').after(classic);
+    classic.querySelector('[data-classic-reference]').textContent=`${source.authors}, ${source.title}, ${source.year}.`;
+    classic.querySelector('[data-classic-source-link]').innerHTML=`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="Vezi manualul în Biblioteca Digitală; se deschide într-o filă nouă">Vezi manualul în Biblioteca Digitală ↗</a>`;
     D.demos.forEach(d=>controllers.set(d.id,L.mountDemo(d,document.getElementById(d.id),{draw,onChange:(s,key)=>{if(d.id==='L15'&&key==='property')s.binding=d.controls.find(c=>c.key==='binding').optionsBy[s.property][0][0];},alternate:s=>{if(d.id==='L0')s.mode=s.mode==='all'?'controlled':'all';if(d.id==='L10')s.mode=s.mode==='all'?'avoid':'all';if(d.id==='L2')s.buffer=s.buffer===0?1:0;if(d.id==='L5')s.mask=!s.mask;return s;}})));
     L.checkpoint(document.getElementById('labeling-checkpoint'),D.quiz,{title:'Checkpoint · Etichetare',id:'label-checkpoint-title',namespace:'label-quiz'});
     document.getElementById('label-source-compact').innerHTML=L.compactSources(['label-settings','labels'],{target:'qgis-label-sources',subject:'etichetare'});document.getElementById('label-source-root').innerHTML=L.sources(['label-settings','labels'],{id:'qgis-label-sources',title:'Aplică etichetarea în QGIS'});
