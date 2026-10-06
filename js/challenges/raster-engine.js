@@ -23,18 +23,21 @@
     for(let i=0;i<mask.length;i++)if(!Number.isFinite(grid.values[i])||(grid.nodata!==null&&grid.values[i]===grid.nodata))mask[i]=0;
     return mask;
   }
-  function horn(grid){
+  function horn(grid,includeGradients=false){
     const {width:w,height:h,affine:g,values:z,mask}=grid,slope=new Float64Array(w*h);slope.fill(NaN);
     const det=g[1]*g[5]-g[2]*g[4];let valid=0,min=Infinity,max=-Infinity;
+    const east=includeGradients?new Float64Array(w*h):null,north=includeGradients?new Float64Array(w*h):null;
+    if(includeGradients){east.fill(NaN);north.fill(NaN);}
     for(let r=1;r<h-1;r++)for(let c=1;c<w-1;c++){
       const i=r*w+c,ids=[i-w-1,i-w,i-w+1,i-1,i,i+1,i+w-1,i+w,i+w+1];
       if(!ids.every(j=>mask[j]))continue;
       const du=(z[ids[2]]+2*z[ids[5]]+z[ids[8]]-z[ids[0]]-2*z[ids[3]]-z[ids[6]])/8;
       const dv=(z[ids[6]]+2*z[ids[7]]+z[ids[8]]-z[ids[0]]-2*z[ids[1]]-z[ids[2]])/8;
       const gx=(g[5]*du-g[4]*dv)/det,gy=(-g[2]*du+g[1]*dv)/det;
+      if(includeGradients){east[i]=gx;north[i]=gy;}
       slope[i]=Math.atan(Math.hypot(gx,gy));valid++;min=Math.min(min,slope[i]);max=Math.max(max,slope[i]);
     }
-    return {values:slope,valid,min,max};
+    return includeGradients?{values:slope,valid,min,max,east,north}:{values:slope,valid,min,max};
   }
   // Interpolate a continuous slope surface, never categorical year codes.
   // Require all four source centres: unsupported boundary cells stay unknown.
@@ -161,7 +164,24 @@
       }
       return image;
     }
-    return {summary,analyze,inspect,render,samples:ids=>ids.map(i=>({index:i,elevation:dem.values[i],degrees:degrees(slope.values[i]),percent:percent(slope.values[i])}))};
+    // Native sampling can expose a complete decoded grid to another local renderer.
+    // The worker structured-clones this result; analysis arrays remain untouched.
+    const sampleCache=new Map();
+    function samples(request){
+      if(Array.isArray(request))return request.map(i=>({index:i,elevation:dem.values[i],degrees:degrees(slope.values[i]),percent:percent(slope.values[i])}));
+      if(!request?.all||!['dem','forestLoss'].includes(request.grid))throw Error('Cerere de eșantionare raster invalidă.');
+      const key=JSON.stringify(request);if(sampleCache.has(key))return sampleCache.get(key);
+      const grid=request.grid==='dem'?dem:forest;
+      const output={grid:{width:grid.width,height:grid.height,affine:grid.affine,nodata:grid.nodata,values:grid.values,mask:grid.mask,min:grid.min,max:grid.max,valid:grid.valid}};
+      if(request.statistics){
+        const sorted=grid.values.filter((value,i)=>grid.mask[i]).sort(),quantiles={};
+        for(const p of [1,2,5,95,98,99])quantiles[p]=sorted[Math.max(0,Math.ceil(sorted.length*p/100)-1)];
+        output.statistics={count:sorted.length,min:sorted[0],max:sorted[sorted.length-1],quantiles,method:'exact_nearest_rank_valid_uat_centres'};
+      }
+      if(request.derivatives){const gradients=horn(grid,true);output.derivatives={east:gradients.east,north:gradients.north,valid:gradients.valid};}
+      sampleCache.set(key,output);return output;
+    }
+    return {summary,analyze,inspect,render,samples};
   }
   root.GISRaster={create,world,cell,boundaryMask,horn,bilinear,area};
 })(typeof self!=='undefined'?self:globalThis);

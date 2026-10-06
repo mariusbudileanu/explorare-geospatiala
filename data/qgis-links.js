@@ -120,7 +120,8 @@ window.CARTO_QGIS_LINKS = {
       "url": "https://docs.qgis.org/3.44/en/docs/training_manual/rasters/changing_symbology.html",
       "verified": true,
       "used_in": [
-        "relief-models"
+        "relief-models",
+        "raster-styling"
       ]
     },
     {
@@ -273,7 +274,8 @@ window.CARTO_QGIS_LINKS = {
       "verified": true,
       "verified_on": "2026-10-06",
       "used_in": [
-        "transparency-blending"
+        "transparency-blending",
+        "raster-styling"
       ]
     },
     {
@@ -313,6 +315,32 @@ window.CARTO_QGIS_LINKS = {
       "verified_on": "2026-10-06",
       "used_in": [
         "transparency-blending"
+      ]
+    },
+    {
+      "id": "raster-rendering",
+      "concept": "Singleband gray, Contrast enhancement, Min / Max Value Settings, Cumulative count cut, Singleband pseudocolor, Paletted/Unique values și Hillshade",
+      "title": "13.1.3. Symbology Properties",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/working_with_raster/raster_properties.html#symbology-properties",
+      "source_type": "QGIS User Manual",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "raster-styling"
+      ]
+    },
+    {
+      "id": "raster-hillshade",
+      "concept": "Hillshade din DTM: azimuth față de nord, vertical angle și iluminare 0–255",
+      "title": "24.1.20.4. Hillshade",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/rasterterrainanalysis.html#hillshade",
+      "source_type": "QGIS User Manual",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-06",
+      "used_in": [
+        "raster-styling"
       ]
     }
   ],

@@ -1,0 +1,26 @@
+.raster-demo{border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);background:var(--surface);margin-block:var(--space-4);scroll-margin-top:165px;min-width:0}
+.raster-demo header>p{margin-top:var(--space-2);max-width:var(--content-text)}
+.raster-view{position:relative;background:#eef2f0;border:1px solid var(--line);border-radius:var(--radius-small);overflow:hidden}
+.raster-canvas{display:block;width:100%;height:auto;background:#eef2f0;cursor:crosshair}
+.raster-orientation{position:absolute;right:12px;top:8px;color:#233f50;font-weight:700;font-size:13px;pointer-events:none}
+.raster-canvas:focus-visible{outline:3px solid var(--blue);outline-offset:-4px}
+.raster-demo .lab-legend{display:block;margin-block:var(--space-3);padding:0;list-style:none}
+.raster-demo .lab-legend>li{display:block}
+.raster-legend-gradient{height:20px;border:1px solid var(--line);border-radius:var(--radius-small);margin-block:6px;max-width:440px}
+.raster-legend-endpoints{display:flex;justify-content:space-between;max-width:440px;gap:16px}
+.raster-years-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-height:220px;overflow:auto;padding:4px;list-style:none}
+.raster-years-legend li{display:flex;align-items:center;gap:6px;font-size:13px}
+.raster-demo .lab-status{margin-block:var(--space-3)}
+.raster-range-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px var(--space-4);margin-block:var(--space-3)}
+.raster-range-info div{border:1px solid var(--line);padding:10px;border-radius:var(--radius-small)}
+.raster-range-info dt{font-size:13px;color:var(--muted)}.raster-range-info dd{margin:4px 0 0;font-weight:700}
+.raster-pixel-info{padding:10px 12px;background:var(--surface-alt);border-radius:var(--radius-small);min-height:44px;overflow-wrap:anywhere}
+.raster-demo .lab-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);margin-block:var(--space-3)}
+.raster-demo .lab-compare[hidden]{display:none}.raster-demo .lab-compare h4{margin-bottom:8px}
+.raster-demo .lab-extra .raster-type-quiz fieldset{margin-block:var(--space-3)}
+.raster-type-quiz label{display:flex;gap:8px;align-items:center;min-height:44px}
+.raster-data-note{padding:var(--space-4);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface);margin-block:var(--space-4)}
+@media(max-width:768px){.raster-demo .lab-compare{grid-template-columns:minmax(0,1fr)}.raster-years-legend{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.raster-demo{padding:var(--space-3)}.raster-range-info{grid-template-columns:minmax(0,1fr)}.raster-years-legend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.raster-years-legend:focus-visible{outline:3px solid var(--blue);outline-offset:2px}

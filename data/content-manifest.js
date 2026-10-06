@@ -104,12 +104,13 @@ for (const group of window.CARTO_CONTENT.groups) {
 // Local GIS laboratories reuse the central navigation and search registry.
 (function(content){
   const records=[
+    {id:'raster-styling',title:'Raster Styling',href:'raster-styling.html',keywords:['Rîșca','raster continuu','raster tematic','DEM','Forest Loss','Singleband gray','Stretch to MinMax','Min / max','Cumulative count cut','Singleband pseudocolor','Color ramp','Hillshade','Multiply','Overlay','opacity']},
     {id:'gis-lab',title:'Laborator GIS',href:'gis-lab.html',keywords:['laborator','practică','Provocări GIS','stilizare']},
     {id:'styling-labeling',title:'Stilizare & etichetare',href:'styling-labeling.html',keywords:['stilizare','symbology','symbol layers','marker','casing','renderer','categorized','graduated','rule-based','data-defined','scară','QGIS','etichetare','labeling','placement','callout','buffer','mask','prioritate','obstacles','densitate','repară harta','ierarhie vizuală','teoria clasică','scrierea hărților','amplasarea denumirilor','Capitolul VII','hidronim']},
     {id:'transparency-blending',title:'Transparență & blending',href:'transparency-blending.html',keywords:['transparență','opacitate','opacity','composition','alpha','fill color','symbol opacity','layer opacity','group opacity','Render Layers as a Group','ordinea straturilor','blending','Multiply','Screen','Overlay','Soft light','Hard light','Dodge','Burn','Addition','Difference','Subtract','Mask Below','Masked By Below','hillshade','Repară compoziția']}
   ];
-  records.forEach(item=>content.lessons.push({...item,short_title:item.title,source_section:'',part:'Laborator GIS',source_pages:[],figures:[],content_types:['exercițiu'],interactive_components:item.id==='styling-labeling'?['styling-lab','labeling-lab','repair-map']:item.id==='transparency-blending'?['transparency-lab','blending-lab']:[],qgis_correspondence:true,modern_sources_status:'source-reviewed',status:'implemented',theme:'qgis'}));
+  records.forEach(item=>content.lessons.push({...item,short_title:item.title,source_section:'',part:'Laborator GIS',source_pages:[],figures:[],content_types:['exercițiu'],interactive_components:item.id==='raster-styling'?['raster-styling-lab']:item.id==='styling-labeling'?['styling-lab','labeling-lab','repair-map']:item.id==='transparency-blending'?['transparency-lab','blending-lab']:[],qgis_correspondence:true,modern_sources_status:'source-reviewed',status:'implemented',theme:'qgis'}));
   const practical=content.groups.find(group=>group.id==='challenges');
-  if(practical){practical.id='gis-lab';practical.label='LABORATOR GIS';practical.lessons=['gis-lab','styling-labeling','transparency-blending',...practical.lessons];}
-  else content.groups.push({id:'gis-lab',label:'LABORATOR GIS',lessons:['gis-lab','styling-labeling','transparency-blending']});
+  if(practical){practical.id='gis-lab';practical.label='LABORATOR GIS';practical.lessons=['gis-lab','styling-labeling','transparency-blending','raster-styling',...practical.lessons];}
+  else content.groups.push({id:'gis-lab',label:'LABORATOR GIS',lessons:['gis-lab','styling-labeling','transparency-blending','raster-styling']});
 })(window.CARTO_CONTENT);
