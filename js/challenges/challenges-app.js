@@ -1,12 +1,13 @@
-import {createDataStore,progress} from './challenge-state.js';
+import {createDataStore,progress,describeRasterLoad} from './challenge-state.js';
 import {createChallengeMap} from './challenge-map.js';
 import {renderCatalog,renderChallenge,renderCriteria,readParams,renderLegend,renderResult} from './challenge-ui.js';
-import {createRasterService} from './raster-service.js';
+import {createRasterService,rasterSources} from './raster-service.js';
 import {rasterParams,syncRasterControls,renderPixel} from './raster-ui.js';
 const $=id=>document.getElementById(id),store=createDataStore();
 const rasters=createRasterService(store);
 let config,active,data,map,worker,version=0,sequence=0,busy=false,hasResult=false,pending=new Map();
 const status=text=>{$('challenge-status').textContent=text;};
+store.subscribe(state=>{if(active?.kind==='raster'&&rasterSources(active.id).includes(state.source))status(describeRasterLoad(state));});
 function stopWorker(){const previous=worker;worker=null;if(previous){previous.onmessage=null;previous.onerror=null;previous.terminate();}for(const job of pending.values())job.reject(new Error('cancelled'));pending.clear();busy=false;}
 function analyze(id,params){
   if(!worker){
@@ -25,10 +26,10 @@ function clearResult(){hasResult=false;$('challenge-results').hidden=true;docume
 async function select(id,{focus=false}={}) {
   const challenge=config.challenges.find(c=>c.id===id)||config.challenges[0],current=++version;
   if(busy)stopWorker();active=challenge;hasResult=false;
-  $('challenge-run').disabled=true;$('challenge-reset').disabled=true;$('challenge-workspace').setAttribute('aria-busy','true');status('Se încarcă datele…');
+  $('challenge-run').disabled=true;$('challenge-reset').disabled=true;$('challenge-workspace').setAttribute('aria-busy','true');status('Se încarcă datele…');$('challenge-retry').hidden=true;
   renderCatalog(config,progress.read(),active.id);
   try{
-    const datasets=active.kind==='raster'?await rasters.prepare():await store.loadMany(active.datasets);if(current!==version)return;data=datasets;
+    const datasets=active.kind==='raster'?await rasters.prepare(rasterSources(active.id)):await store.loadMany(active.datasets);if(current!==version)return;data=datasets;
     renderChallenge(active,config,data);renderLegend(active.kind==='raster'?map.setRasterInput(data,['R1','R2'].includes(active.id)?'dem':'forestLoss'):map.setInput(data));clearResult();
     $('challenge-fit').textContent=active.kind==='raster'?'Încadrează Rîșca':'Încadrează Sectorul 1';
     $('challenge-map').setAttribute('aria-label',`Hartă interactivă ${active.kind==='raster'?'Rîșca':'Sectorul 1'}; săgeți pentru deplasare, plus și minus pentru zoom`);
@@ -40,7 +41,7 @@ async function select(id,{focus=false}={}) {
     $('challenge-workspace').setAttribute('aria-busy','false');
     if(location.hash!==`#${active.id}`)history.replaceState(null,'',`#${active.id}`);
     if(focus)$('challenge-title').focus({preventScroll:true});
-  }catch(error){if(current!==version)return;status(`Încărcare nereușită: ${error.message} Reîncarcă pagina pentru a încerca din nou.`);$('challenge-workspace').setAttribute('aria-busy','false');}
+  }catch(error){if(current!==version)return;status(`Încărcare nereușită: ${error.message}`);$('challenge-retry').hidden=false;$('challenge-workspace').setAttribute('aria-busy','false');}
 }
 function invalidate(){if(busy){version++;stopWorker();$('challenge-run').disabled=false;$('challenge-reset').disabled=false;$('challenge-workspace').setAttribute('aria-busy','false');}clearResult();status('Parametrii s-au schimbat. Rulează din nou analiza.');}
 async function run(){
@@ -63,6 +64,7 @@ async function init(){
     $('raster-opacity').addEventListener('input',()=>{map.setOpacity(Number($('raster-opacity').value)/100);$('raster-opacity-value').textContent=$('raster-opacity').value+'%';});
     $('raster-inspect-centre').addEventListener('click',()=>map.inspectCentre());
     $('challenge-catalog').addEventListener('click',event=>{const button=event.target.closest('[data-challenge]');if(button)select(button.dataset.challenge,{focus:true});});
+    $('challenge-retry').addEventListener('click',()=>select(active.id));
     $('challenge-run').addEventListener('click',run);$('challenge-reset').addEventListener('click',()=>select(active.id));
     $('reset-challenge-progress').addEventListener('click',()=>{progress.reset();renderCatalog(config,[],active.id);status('Progresul local a fost șters. Toate provocările rămân disponibile.');});
     $('challenge-methods').addEventListener('change',()=>{$('challenge-feedback').textContent=$('challenge-methods').value===active.correct_method?'Metoda este potrivită. Poți rula analiza.':$('challenge-methods').value?active.feedback:'';});

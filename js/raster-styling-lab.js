@@ -1,9 +1,10 @@
-import {createDataStore} from './challenges/challenge-state.js';
+import {createDataStore,describeRasterLoad} from './challenges/challenge-state.js';
 import {createRasterService} from './challenges/raster-service.js';
 
 const D=window.CARTO_RASTER_STYLING,L=window.CARTO_LAB,{esc}=L,controllers=new Map(),store=createDataStore(),service=createRasterService(store);
 const fmt=(value,digits=2)=>new Intl.NumberFormat('ro-RO',{maximumFractionDigits:digits}).format(value);
-let engine;
+let engine,metadata;const loads=new Map(),loadStates=new Map(),failures=new Set();
+const sourceFor=d=>d.id==='R6'?'forestLoss':'dem';
 const sources=['raster-rendering','raster-symbology','raster-hillshade','blending-modes'];
 function canvas(id,label){return `<div class="raster-view"><canvas id="${id}-canvas" class="raster-canvas" role="img" tabindex="0" aria-label="${esc(label)}" aria-describedby="${id}-instructions ${id}-pixel">${esc(label)}</canvas><span class="raster-orientation" aria-hidden="true">N ↑</span></div><p class="small" id="${id}-instructions">Click sau touch pentru valoarea sursă. Cu rasterul focalizat, folosește săgețile pentru pixelii vecini.</p><p id="${id}-pixel" class="raster-pixel-info" role="status" aria-live="polite">Inspectează un pixel; stilul nu schimbă valoarea sursă.</p>`;}
 function renderer(s){return s.type==='color'?'Singleband pseudocolor':s.type==='hillshade'?'Hillshade':s.type==='composite'?'Singleband pseudocolor + Hillshade':s.type==='thematic'?'Paletted/Unique values':'Singleband gray';}
@@ -15,6 +16,7 @@ function legend(s){
 function ranges(s){const values=engine.limits(s),display=s.enhancement==='none'?{min:0,max:255}:values;return `<dl class="raster-range-info">${[['Raster min · UAT valid',engine.statistics.min],['Raster max · UAT valid',engine.statistics.max],['Display min',display.min],['Display max',display.max]].map(([label,value])=>`<div><dt>${label}</dt><dd>${fmt(value)} m</dd></div>`).join('')}</dl>`;}
 function draw(d,state,id){
   const s=engine.spec(d.id,state),forest=s.source==='forestLoss',grid=forest?engine.forest:engine.dem;let dynamic='';
+  if(!grid)return {svg:'<p role="status">'+esc(loadStates.get(s.source||'dem')||'Se pregătește rasterul…')+'</p>',status:'Rasterul selectat este în curs de încărcare.',dynamic:''};
   if(d.id==='R0')dynamic=forest?'<p><strong>Pixel → cod → an.</strong> Codurile și corespondența lor sunt cele folosite în Provocări GIS. Numărul este un identificator tematic, nu o altitudine.</p>':'<p><strong>Pixel → altitudine în metri.</strong> DEM-ul eșantionează o mărime continuă, chiar dacă valorile sunt stocate pe o grilă.</p>';
   if(['R1','R2','R3'].includes(d.id))dynamic=ranges(s)+`<p>${s.enhancement==='none'?'No enhancement nu extinde intervalul pe 0–255. Valorile peste 255 apar albe (sau negre cu gradient invers); de aceea relieful poate deveni uniform.':esc(engine.limits(s).label)+' stabilește limitele de display.'}</p>`;
   if(['R2','R3'].includes(d.id))dynamic+='<p>Limitele cumulative provin din toți pixelii DEM valizi din Rîșca, nu numai dintr-un eșantion vizual. Valorile din afara intervalului sunt saturate la capetele rampei; rămân în date.</p>';
@@ -39,20 +41,44 @@ function paint(node,s){const rendered=engine.render(s);node.width=rendered.width
   node.addEventListener('click',point);let timer;node.addEventListener('pointermove',e=>{if(e.pointerType==='touch')return;clearTimeout(timer);timer=setTimeout(()=>point(e),80);});
   node.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;e.preventDefault();col=Math.max(0,Math.min(grid.width-1,col+(e.key==='ArrowLeft'?-1:e.key==='ArrowRight'?1:0)));row=Math.max(0,Math.min(grid.height-1,row+(e.key==='ArrowUp'?-1:e.key==='ArrowDown'?1:0)));show();});
 }
-function afterRender(state,result,card){const d=D.demos.find(d=>d.id===card.id),s=engine.spec(d.id,state);paint(card.querySelector('.lab-map canvas'),s);card.querySelector('.lab-legend').innerHTML='<li>'+legend(s)+'</li>';
+function afterRender(state,result,card){const d=D.demos.find(d=>d.id===card.id),s=engine.spec(d.id,state);if(!(s.source==='forestLoss'?engine.forest:engine.dem))return;paint(card.querySelector('.lab-map canvas'),s);card.querySelector('.lab-legend').innerHTML='<li>'+legend(s)+'</li>';
   const compare=card.querySelector('.lab-compare');if(state.compare){const items=comparisons(d,state);compare.innerHTML=items.map(([label,s],i)=>`<section><h4>${esc(label)}</h4>${canvas(d.id+'-compare-'+i,d.title+'. '+label)}</section>`).join('');items.forEach(([,s],i)=>paint(compare.querySelector('#'+d.id+'-compare-'+i+'-canvas'),s));}
 }
 function attribution(metadata){const dem=metadata.rasters.dem,forest=metadata.rasters.forestLoss;return `<h2>Aceleași surse, aceleași rastere</h2><p>${esc(dem.source_name)} · altitudine în metri. ${esc(dem.attribution)}</p><p>${esc(forest.citation)} ${forest.source_url?`<a href="${esc(forest.source_url)}" target="_blank" rel="noopener noreferrer">${esc(forest.source_platform)} · sursa documentată ↗</a>`:''}</p><p class="small">Versiunea exactă și termenii de licență ai subseturilor, data accesării Forest Loss și datum-ul vertical DEM rămân de clarificat. Resursele terțe păstrează termenii lor; stilizarea nu schimbă atribuirea.</p>`;}
-async function start(){const status=document.getElementById('raster-load-status'),retry=document.getElementById('raster-retry');retry.hidden=true;status.textContent='Se pregătesc cele două rastere existente și intervalele lor reale…';try{
-  const prepared=await service.prepare(),[dem,forest]=await Promise.all([service.samples({grid:'dem',all:true,statistics:true,derivatives:true}),service.samples({grid:'forestLoss',all:true})]);
-  engine=window.CARTO_RASTER_STYLE_ENGINE.create(dem,forest,prepared.metadata,prepared.summary);window.CARTO_RASTER_STYLE=engine;window.CARTO_RASTER_STYLE_SERVICE=service;
-  const host=document.getElementById('raster-styling-root');host.innerHTML=D.demos.map(L.shell).join('');
-  for(const d of D.demos){const card=document.getElementById(d.id);card.classList.add('raster-demo');const layout=card.querySelector('.lab-demo-layout');layout.after(card.querySelector('.lab-legend'),card.querySelector('.lab-status'),card.querySelector('.lab-compare'));controllers.set(d.id,L.mountDemo(d,card,{draw,afterRender,onReset:()=>card.querySelector('[data-reset-raster-type]')?.click()}));}
-  const micro=document.createElement('div');micro.className='raster-type-quiz';document.querySelector('#R0 .lab-extra').append(micro);L.checkpoint(micro,D.typeQuiz,{title:'Continuous or thematic?',id:'raster-type-title',namespace:'raster-type'});
-  L.checkpoint(document.getElementById('raster-styling-checkpoint'),D.quiz,{title:'Checkpoint · Raster Styling',id:'raster-styling-checkpoint-title',namespace:'raster-styling-quiz'});
-  document.getElementById('raster-source-root').innerHTML=L.sources(sources,{id:'raster-qgis-sources',title:'Raster Styling · QGIS · Surse oficiale'});document.getElementById('raster-source-compact').innerHTML=L.compactSources(sources,{target:'raster-qgis-sources',subject:'Raster Styling'});
-  document.getElementById('raster-data-attribution').innerHTML=attribution(prepared.metadata);status.textContent=`DEM: ${fmt(engine.statistics.min)}–${fmt(engine.statistics.max)} m în ${fmt(engine.statistics.count,0)} pixeli valizi din Rîșca. Forest Loss: ${engine.years.length} ani documentați. Stilul păstrează valorile sursă.`;window.CARTO_RASTER_STYLE_CONTROLLERS=controllers;
-  const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
-}catch(error){status.textContent='Rasterele nu au putut fi pregătite. '+error.message;retry.hidden=false;}}
+
+function mount(d){
+  if(controllers.has(d.id)){if(d.id==='R0')controllers.get(d.id).render();return;}
+  const card=document.getElementById(d.id);card.setAttribute('aria-busy','false');card.querySelectorAll('.lab-controls input,.lab-controls select,[data-reset],[data-compare]').forEach(node=>node.disabled=false);controllers.set(d.id,L.mountDemo(d,card,{draw,afterRender,onReset:()=>card.querySelector('[data-reset-raster-type]')?.click()}));
+  if(location.hash==='#'+d.id)requestAnimationFrame(()=>card.scrollIntoView({block:'start',behavior:'instant'}));
+  if(d.id==='R0'){const micro=document.createElement('div');micro.className='raster-type-quiz';card.querySelector('.lab-extra').append(micro);L.checkpoint(micro,D.typeQuiz,{title:'Continuous or thematic?',id:'raster-type-title',namespace:'raster-type'});}
+}
+function updateStatus(){
+  const ready=[engine?.dem?'DEM pregătit':null,engine?.forest?'Forest Loss pregătit':null].filter(Boolean);const pending=[...loadStates.entries()].filter(([source])=>!(source==='dem'?engine?.dem:engine?.forest)).map(([,text])=>text);
+  document.getElementById('raster-load-status').textContent=[...ready,...pending].join('. ');
+  document.getElementById('raster-retry').hidden=!failures.size;
+  if(engine?.dem&&engine?.forest){document.getElementById('raster-load-status').textContent=`DEM: ${fmt(engine.statistics.min)}–${fmt(engine.statistics.max)} m în ${fmt(engine.statistics.count,0)} pixeli valizi din Rîșca. Forest Loss: ${engine.years.length} ani documentați. Stilul păstrează valorile sursă.`;window.CARTO_RASTER_STYLE_CONTROLLERS=controllers;}
+}
+store.subscribe(state=>{
+  const text=describeRasterLoad(state);loadStates.set(state.source,text);updateStatus();
+  for(const d of D.demos){const source=d.id==='R0'?(controllers.get('R0')?.getState().source||'dem'):sourceFor(d);if(source!==state.source||(source==='dem'?engine?.dem:engine?.forest))continue;const card=document.getElementById(d.id);if(!card)continue;card.querySelector('.lab-status').textContent=text;const progress=card.querySelector('progress');if(progress){if(state.total)progress.value=Math.min(100,state.loaded/state.total*100);else progress.removeAttribute('value');}}
+});
+async function loadSource(source){
+  if(loads.has(source))return loads.get(source);
+  const job=(async()=>{failures.delete(source);updateStatus();try{
+    const prepared=await service.prepare([source]);metadata=prepared.metadata;
+    const sample=await service.samples({grid:source,all:true,...(source==='dem'?{statistics:true,derivatives:true}:{})});
+    if(!engine){engine=window.CARTO_RASTER_STYLE_ENGINE.create(null,null,metadata,{annual:[]});window.CARTO_RASTER_STYLE=engine;window.CARTO_RASTER_STYLE_SERVICE=service;}
+    engine.setSource(source,sample,prepared.summary);
+    for(const d of D.demos)if(d.id==='R0'||sourceFor(d)===source)mount(d);
+    document.getElementById('raster-data-attribution').innerHTML=attribution(metadata);updateStatus();
+  }catch(error){failures.add(source);loadStates.set(source,'Încărcare nereușită: '+error.message);updateStatus();for(const d of D.demos)if(!controllers.has(d.id)&&sourceFor(d)===source){const card=document.getElementById(d.id);card.querySelector('.lab-status').textContent=error.message;card.querySelector('.lab-map').innerHTML='<p>Rasterul nu este disponibil.</p><button type="button" class="outline-button" data-raster-retry="'+source+'">Reîncearcă încărcarea</button>';}}})();
+  loads.set(source,job);await job;if(failures.has(source))loads.delete(source);
+}
+function start(){for(const source of ['dem','forestLoss'])if(!(source==='dem'?engine?.dem:engine?.forest))loadSource(source);}
+const host=document.getElementById('raster-styling-root');host.innerHTML=D.demos.map(L.shell).join('');
+for(const d of D.demos){const card=document.getElementById(d.id);card.classList.add('raster-demo');card.setAttribute('aria-busy','true');card.querySelectorAll('.lab-controls input,.lab-controls select,[data-reset],[data-compare]').forEach(node=>node.disabled=true);const layout=card.querySelector('.lab-demo-layout');layout.after(card.querySelector('.lab-legend'),card.querySelector('.lab-status'),card.querySelector('.lab-compare'));card.querySelector('.lab-map').innerHTML='<div role="status"><p>Se pregătește rasterul…</p><progress max="100" aria-label="Progres descărcare '+(d.id==='R6'?'Forest Loss':'DEM')+'"></progress></div>';}
+L.checkpoint(document.getElementById('raster-styling-checkpoint'),D.quiz,{title:'Checkpoint · Raster Styling',id:'raster-styling-checkpoint-title',namespace:'raster-styling-quiz'});
+document.getElementById('raster-source-root').innerHTML=L.sources(sources,{id:'raster-qgis-sources',title:'Raster Styling · QGIS · Surse oficiale'});document.getElementById('raster-source-compact').innerHTML=L.compactSources(sources,{target:'raster-qgis-sources',subject:'Raster Styling'});
+host.addEventListener('click',event=>{const button=event.target.closest('[data-raster-retry]');if(button)loadSource(button.dataset.rasterRetry);});
 document.getElementById('raster-retry').addEventListener('click',start);
 window.CARTO_RASTER_STYLE_RENDER={draw,legend,comparisons};start();

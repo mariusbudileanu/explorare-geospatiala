@@ -59,23 +59,23 @@
     const semanticNoData=metadata.rasters.forestLoss.semantic_nodata;
     if(semanticNoData?.status!=='verified_dataset_definition'||semanticNoData.value!==0)throw Error('Semantica NoData a rasterului forestier trebuie verificată în metadate.');
     let forestNoData=0;
-    for(const grid of [dem,forest]){grid.mask=boundaryMask(grid,polygons);if(grid===forest)for(let i=0;i<grid.mask.length;i++)if(grid.mask[i]&&grid.values[i]===semanticNoData.value){grid.mask[i]=0;forestNoData++;}grid.area=area(grid.affine);grid.valid=grid.mask.reduce((a,b)=>a+b,0);grid.min=Infinity;grid.max=-Infinity;for(let i=0;i<grid.values.length;i++)if(grid.mask[i]){grid.min=Math.min(grid.min,grid.values[i]);grid.max=Math.max(grid.max,grid.values[i]);}}
-    const slope=horn(dem),aligned=new Float64Array(forest.values.length);aligned.fill(NaN);
+    for(const grid of [dem,forest].filter(Boolean)){grid.mask=boundaryMask(grid,polygons);if(grid===forest)for(let i=0;i<grid.mask.length;i++)if(grid.mask[i]&&grid.values[i]===semanticNoData.value){grid.mask[i]=0;forestNoData++;}grid.area=area(grid.affine);grid.valid=grid.mask.reduce((a,b)=>a+b,0);grid.min=Infinity;grid.max=-Infinity;for(let i=0;i<grid.values.length;i++)if(grid.mask[i]){grid.min=Math.min(grid.min,grid.values[i]);grid.max=Math.max(grid.max,grid.values[i]);}}
+    const slope=dem?horn(dem):{values:[],valid:null},aligned=new Float64Array(forest?.values.length||0);aligned.fill(NaN);
     const mapping=metadata.rasters.forestLoss.value_to_year;
     if(mapping.status!=='verified_dataset_definition')throw Error('Codificarea anilor nu este confirmată în metadate.');
     const annual=new Map(),years=Array.from(new Set(Object.values(mapping.mapping))).sort((a,b)=>a-b);
     years.forEach(year=>annual.set(year,{year,count:0}));
     let unmapped=0;
-    for(let i=0;i<forest.values.length;i++)if(forest.mask[i]){
+    for(let i=0;i<(forest?.values.length||0);i++)if(forest.mask[i]){
       const year=mapping.mapping[forest.values[i]];
-      if(year!==undefined){annual.get(year).count++;const xy=world(forest.affine,i%forest.width+.5,Math.floor(i/forest.width)+.5);aligned[i]=bilinear(dem,slope.values,...xy);}
+      if(year!==undefined){annual.get(year).count++;const xy=world(forest.affine,i%forest.width+.5,Math.floor(i/forest.width)+.5);if(dem)aligned[i]=bilinear(dem,slope.values,...xy);}
       else unmapped++;
     }
     if(unmapped)throw Error('Există valori forestiere fără corespondență verificată cu un an.');
-    annual.forEach(row=>row.ha=row.count*forest.area/10000);
-    const sameGrid=dem.width===forest.width&&dem.height===forest.height&&dem.affine.every((v,i)=>Math.abs(v-forest.affine[i])<1e-8);
+    annual.forEach(row=>row.ha=row.count*(forest?.area||0)/10000);
+    const sameGrid=!!dem&&!!forest&&dem.width===forest.width&&dem.height===forest.height&&dem.affine.every((v,i)=>Math.abs(v-forest.affine[i])<1e-8);
     let current=null,lookup=null;
-    const summary={years,annual:[...annual.values()],dem:{width:dem.width,height:dem.height,affine:dem.affine,pixelArea:dem.area,valid:dem.valid,min:dem.min,max:dem.max,slopeValid:slope.valid},forest:{width:forest.width,height:forest.height,affine:forest.affine,pixelArea:forest.area,valid:forest.valid,nodataInsideBoundary:forestNoData},alignment:{sameGrid,method:'bilinear_slope_at_forest_centres_strict_4_valid'},prepare_ms:performance.now()-start};
+    const summary={years,annual:[...annual.values()],dem:dem?{width:dem.width,height:dem.height,affine:dem.affine,pixelArea:dem.area,valid:dem.valid,min:dem.min,max:dem.max,slopeValid:slope.valid}:null,forest:forest?{width:forest.width,height:forest.height,affine:forest.affine,pixelArea:forest.area,valid:forest.valid,nodataInsideBoundary:forestNoData}:null,alignment:{sameGrid,method:'bilinear_slope_at_forest_centres_strict_4_valid'},prepare_ms:performance.now()-start};
     const education=[
       'DEM-ul conține altitudini în metri; panta este o mărime derivată din vecinătatea 3×3 prin metoda Horn. Marginile și vecinătățile incomplete nu primesc o pantă inventată.',
       'Gradele exprimă unghiul. Procentele sunt 100 × tan(unghiul); o pantă de 45° înseamnă 100%, nu 45%.',
@@ -83,6 +83,7 @@
       'Suprafața = numărul de pixeli × |a·e − b·d| / 10 000. Se păstrează pixelii cu centrul în conturul Rîșca și valori valide; aceasta este o măsurare pe grila sursă, nu aria exactă a conturului vectorial.'
     ];
     function analyze(id,params={}){
+      if((['R1','R2','R6'].includes(id)&&!dem)||(!['R1','R2'].includes(id)&&!forest))throw Error('Sursa raster necesară nu este pregătită.');
       const t=performance.now(),unit=params.unit==='percent'?'percent':'degrees';
       const threshold=Number(params.threshold??15);
       if(!Number.isFinite(threshold)||threshold<0||(unit==='degrees'&&threshold>=90))throw Error('Pragul trebuie să fie finit, pozitiv sau zero, și sub 90° pentru grade.');
@@ -126,11 +127,11 @@
         }
       }
       if(['R1','R2','R6'].includes(id))warnings.push(`${dem.valid-slope.valid} pixeli DEM din UAT au o vecinătate 3×3 incompletă. Panta lor rămâne necunoscută. Datum-ul vertical al DEM-ului este de confirmat.`);
-      const output={kind:'RASTER',type_label:'MĂSURAT PE GRILA RASTER · EPSG:3844',metrics,warnings,interpretation,series:['R1','R2'].includes(id)?null:series,table:series.length&&!['R1','R2'].includes(id)?{caption:'Suprafețe anuale calculate din pixelii sursă',columns:id==='R6'?['An','Pixeli pierdere','Pierdere (ha)','Peste prag (ha)']:['An','Pixeli','Suprafață (ha)'],rows:series.map(row=>id==='R6'?[row.year,row.count,number(row.ha),number(row.steepHa)]:[row.year,row.count,number(row.ha)])}:null,raster:{id,unit,threshold,selectedYears,legend},validation:{selectedCount:count,selectedHa:ha,totalCount:total,knownCount:known,unknownCount:unknown,slopeValid:slope.valid,demValid:dem.valid},compute_ms:performance.now()-t};
+      const output={kind:'RASTER',type_label:'MĂSURAT PE GRILA RASTER · EPSG:3844',metrics,warnings,interpretation,series:['R1','R2'].includes(id)?null:series,table:series.length&&!['R1','R2'].includes(id)?{caption:'Suprafețe anuale calculate din pixelii sursă',columns:id==='R6'?['An','Pixeli pierdere','Pierdere (ha)','Peste prag (ha)']:['An','Pixeli','Suprafață (ha)'],rows:series.map(row=>id==='R6'?[row.year,row.count,number(row.ha),number(row.steepHa)]:[row.year,row.count,number(row.ha)])}:null,raster:{id,unit,threshold,selectedYears,legend},validation:{selectedCount:count,selectedHa:ha,totalCount:total,knownCount:known,unknownCount:unknown,slopeValid:slope.valid,demValid:dem?.valid??null},compute_ms:performance.now()-t};
       current={...output.raster,mask,grid,limit};return output;
     }
     function inspect(x,y){
-      const locate=grid=>{const [c,r]=cell(grid.affine,x,y),col=Math.floor(c),row=Math.floor(r);return col>=0&&row>=0&&col<grid.width&&row<grid.height?row*grid.width+col:-1;};
+      const locate=grid=>{if(!grid)return -1;const [c,r]=cell(grid.affine,x,y),col=Math.floor(c),row=Math.floor(r);return col>=0&&row>=0&&col<grid.width&&row<grid.height?row*grid.width+col:-1;};
       const di=locate(dem),fi=locate(forest),dvalid=di>=0&&dem.mask[di],fvalid=fi>=0&&forest.mask[fi];
       return {x,y,elevation:dvalid?dem.values[di]:null,slopeDegrees:dvalid&&Number.isFinite(slope.values[di])?degrees(slope.values[di]):null,slopePercent:dvalid&&Number.isFinite(slope.values[di])?percent(slope.values[di]):null,forestCode:fvalid?forest.values[fi]:null,year:fvalid?mapping.mapping[forest.values[fi]]??null:null,alignedSlopeDegrees:fvalid&&Number.isFinite(aligned[fi])?degrees(aligned[fi]):null,alignedSlopePercent:fvalid&&Number.isFinite(aligned[fi])?percent(aligned[fi]):null,demPixel:di,forestPixel:fi};
     }

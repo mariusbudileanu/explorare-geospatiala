@@ -5,7 +5,7 @@
   "tool": "GDAL (QGIS 3.40.11 runtime)",
   "rasters": {
     "dem": {
-      "size_bytes": 3594697,
+      "size_bytes": 812716,
       "crs": "Pulkovo 1942(58) / Stereo70",
       "epsg": 3844,
       "coordinate_units": "metre",
@@ -29,23 +29,22 @@
       "pixel_height": 23.559141012279515,
       "pixel_area": 555.0331252364715,
       "band_count": 1,
-      "tiled": false,
-      "compression": "NONE",
+      "tiled": true,
+      "compression": "DEFLATE",
       "image_structure": {
-        "INTERLEAVE": "BAND"
+        "COMPRESSION": "DEFLATE",
+        "INTERLEAVE": "BAND",
+        "PREDICTOR": "3"
       },
       "cog": {
-        "status": "not_cog",
+        "status": "valid_cog",
         "validator": "GDAL validate_cloud_optimized_geotiff",
-        "warnings": [],
-        "errors": [
-          "The offset of the first block of overview of index 2 should be after the one of the overview of index 3",
-          "The offset of the first block of overview of index 1 should be after the one of the overview of index 2",
-          "The offset of the first block of overview of index 0 should be after the one of the overview of index 1",
-          "The offset of the first block of the main resolution image should be after the one of the overview of index 3"
-        ]
+        "warnings": [
+          "The file is greater than 512xH or Wx512, it is recommended to include internal overviews"
+        ],
+        "errors": []
       },
-      "sha256": "7dce9d2d3f5c42e32750a0965254d8476b4dbd451fec40bb34d42b1edc0b267b",
+      "sha256": "36fbe2dd7c2dc06a0cf6d8224b6ceeb67cc12ee424d5427c66753701f42df1d5",
       "filename": "risca_dem_sv.tif",
       "display_name": "Model digital al elevației — Rîșca",
       "affine_transform_order": [
@@ -60,35 +59,10 @@
       "data_type": "Float32",
       "nodata": null,
       "block_size": [
-        957,
-        2
+        256,
+        256
       ],
-      "overviews": [
-        {
-          "width": 479,
-          "height": 315,
-          "factor_x": 1.9979123173277662,
-          "factor_y": 2
-        },
-        {
-          "width": 240,
-          "height": 158,
-          "factor_x": 3.9875,
-          "factor_y": 3.9873417721518987
-        },
-        {
-          "width": 120,
-          "height": 79,
-          "factor_x": 7.975,
-          "factor_y": 7.974683544303797
-        },
-        {
-          "width": 60,
-          "height": 40,
-          "factor_x": 15.95,
-          "factor_y": 15.75
-        }
-      ],
+      "overviews": [],
       "value_min": 0,
       "value_max": 1215.3497314453125,
       "valid_pixels_by_file_mask": 602910,
@@ -140,7 +114,7 @@
       "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
     },
     "forestLoss": {
-      "size_bytes": 881725,
+      "size_bytes": 25659,
       "crs": "Pulkovo 1942(58) / Stereo70",
       "epsg": 3844,
       "coordinate_units": "metre",
@@ -164,23 +138,22 @@
       "pixel_height": 24.06035283542177,
       "pixel_area": 578.9005785649892,
       "band_count": 1,
-      "tiled": false,
-      "compression": "NONE",
+      "tiled": true,
+      "compression": "DEFLATE",
       "image_structure": {
-        "INTERLEAVE": "BAND"
+        "COMPRESSION": "DEFLATE",
+        "INTERLEAVE": "BAND",
+        "PREDICTOR": "2"
       },
       "cog": {
-        "status": "not_cog",
+        "status": "valid_cog",
         "validator": "GDAL validate_cloud_optimized_geotiff",
-        "warnings": [],
-        "errors": [
-          "The offset of the first block of overview of index 2 should be after the one of the overview of index 3",
-          "The offset of the first block of overview of index 1 should be after the one of the overview of index 2",
-          "The offset of the first block of overview of index 0 should be after the one of the overview of index 1",
-          "The offset of the first block of the main resolution image should be after the one of the overview of index 3"
-        ]
+        "warnings": [
+          "The file is greater than 512xH or Wx512, it is recommended to include internal overviews"
+        ],
+        "errors": []
       },
-      "sha256": "74e06c3f289366d9cfc840a4160387531fe062e49eb9eccaf5bbc3064869117e",
+      "sha256": "e888c5a6418dd81cd773f436ed5f260f164ef6c4713d952a77ccc0c11ccc001b",
       "filename": "risca_forest_loss_sv.tif",
       "display_name": "Pierdere forestieră — Rîșca",
       "affine_transform_order": [
@@ -195,35 +168,10 @@
       "data_type": "Byte",
       "nodata": null,
       "block_size": [
-        937,
-        8
+        256,
+        256
       ],
-      "overviews": [
-        {
-          "width": 469,
-          "height": 309,
-          "factor_x": 1.9978678038379531,
-          "factor_y": 1.9967637540453074
-        },
-        {
-          "width": 235,
-          "height": 155,
-          "factor_x": 3.9872340425531916,
-          "factor_y": 3.9806451612903224
-        },
-        {
-          "width": 118,
-          "height": 78,
-          "factor_x": 7.940677966101695,
-          "factor_y": 7.910256410256411
-        },
-        {
-          "width": 59,
-          "height": 39,
-          "factor_x": 15.88135593220339,
-          "factor_y": 15.820512820512821
-        }
-      ],
+      "overviews": [],
       "value_min": 0,
       "value_max": 24,
       "valid_pixels_by_file_mask": 578129,

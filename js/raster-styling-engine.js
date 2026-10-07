@@ -9,9 +9,10 @@
     return 255*Math.max(0,(-gx*Math.cos(alt)*Math.sin(az)-gy*Math.cos(alt)*Math.cos(az)+Math.sin(alt))/Math.hypot(gx,gy,1));
   }
   function create(demData,forestData,metadata,summary){
-    const dem=demData.grid,forest=forestData.grid,statistics=demData.statistics,derivatives=demData.derivatives,D=root.CARTO_RASTER_STYLING,B=root.CARTO_BLEND_ENGINE;
-    const mapping=metadata.rasters.forestLoss.value_to_year.mapping,years=summary.annual.filter(row=>row.count>0).map(row=>row.year),cache=new Map(),views=new Map();
-    function limits(s={}){const p=Number(s.cut||2);return s.limits==='cut'?{min:statistics.quantiles[p],max:statistics.quantiles[100-p],label:'Cumulative count cut · '+p+'–'+(100-p)+'%'}:{min:statistics.min,max:statistics.max,label:'Min / max'};}
+    let dem=demData?.grid,forest=forestData?.grid,statistics=demData?.statistics,derivatives=demData?.derivatives;const D=root.CARTO_RASTER_STYLING,B=root.CARTO_BLEND_ENGINE;
+    const mapping=metadata.rasters.forestLoss.value_to_year.mapping,cache=new Map(),views=new Map();let years=summary.annual.filter(row=>row.count>0).map(row=>row.year);
+    function setSource(source,data,nextSummary){if(source==='dem'){dem=data.grid;statistics=data.statistics;derivatives=data.derivatives;}else {forest=data.grid;years=nextSummary.annual.filter(row=>row.count>0).map(row=>row.year);}cache.clear();views.delete(source);}
+    function limits(s={}){if(!statistics)return {min:forest?.min,max:forest?.max,label:'Min / max'};const p=Number(s.cut||2);return s.limits==='cut'?{min:statistics.quantiles[p],max:statistics.quantiles[100-p],label:'Cumulative count cut · '+p+'–'+(100-p)+'%'}:{min:statistics.min,max:statistics.max,label:'Min / max'};}
     function spec(id,s){return id==='R0'?{type:s.source==='dem'?'color':'thematic',source:s.source,ramp:'terrain',palette:'warm',limits:'minmax',opacity:100}:id==='R1'?{...s,type:'gray'}:id==='R2'?{...s,type:'gray',enhancement:'stretch',gradient:'normal'}:id==='R3'?{...s,type:'color'}:id==='R4'?{...s,type:'hillshade'}:id==='R5'?{...s,type:'composite',limits:'minmax',azimuth:315,altitude:45}:{...s,type:'thematic',source:'forestLoss'};}
     function view(source){
       if(views.has(source))return views.get(source);const grid=source==='forestLoss'?forest:dem,width=B.width,height=Math.round(width*grid.height*Math.hypot(grid.affine[2],grid.affine[5])/(grid.width*Math.hypot(grid.affine[1],grid.affine[4]))),indices=new Int32Array(width*height),background=new Uint8ClampedArray(width*height*4),normals=grid===dem?new Float64Array(width*height*3):null;
@@ -49,7 +50,7 @@
       const grid=s.source==='forestLoss'?forest:dem,c=Math.max(0,Math.min(grid.width-1,col)),r=Math.max(0,Math.min(grid.height-1,row)),index=r*grid.width+c,xy=root.GISRaster.world(grid.affine,c+.5,r+.5),value=grid.mask[index]?grid.values[index]:null;
       return {index,col:c,row:r,xy,value,year:value===null?null:mapping[value]??null,hillshade:grid===dem&&value!==null?illumination(derivatives.east[index],derivatives.north[index],s.azimuth??315,s.altitude??45):null};
     }
-    return {dem,forest,statistics,derivatives,years,mapping,limits,spec,view,palette,base,render,sample,cacheSize:()=>cache.size,blendCompose:B.compose};
+    return {setSource,get dem(){return dem;},get forest(){return forest;},get statistics(){return statistics;},get derivatives(){return derivatives;},get years(){return years;},mapping,limits,spec,view,palette,base,render,sample,cacheSize:()=>cache.size,blendCompose:B.compose};
   }
   root.CARTO_RASTER_STYLE_ENGINE={create,interpolate,illumination};
 })(window);

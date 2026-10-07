@@ -23,13 +23,17 @@
   function weighted(grid, zone, field, boundary, includeOutside=false) {
     let inside = 0, outside = 0, total = 0, intersected = 0, partial = 0;
     const missing = [], pieces = [], uncovered = [];
+    // Reject disjoint components by exact coordinate bounds; retain all rings/holes.
+    const parts=zone?(zone.geometry.type==='MultiPolygon'?zone.geometry.coordinates:[zone.geometry.coordinates]).map(coordinates=>{const feature=turf.polygon(coordinates);return {feature,bbox:turf.bbox(feature)};}):[];
+    const candidate=cell=>{const box=turf.bbox(cell),features=parts.filter(p=>!(p.bbox[2]<box[0]||p.bbox[0]>box[2]||p.bbox[3]<box[1]||p.bbox[1]>box[3])).map(p=>p.feature);return features.length===parts.length?zone:features.length?turf.multiPolygon(features.map(f=>f.geometry.coordinates)):null;};
     for (const cell of grid.features) {
       const fullArea = turf.area(cell);
       if (!(fullArea > 0)) throw Error('O celulă are suprafața nulă.');
       // Prepared polygons already define Sector 1 membership. Re-clipping would
       // change the denominator through floating-point slivers and inserted vertices.
       const footprint = cell;
-      const overlap = intersect(footprint, zone);
+      const localZone=candidate(footprint);
+      const overlap = intersect(footprint, localZone);
       const area = overlap ? turf.area(overlap) : 0;
       const fraction = Math.min(1, Math.max(0, area / fullArea));
       const represented = 1;
@@ -47,7 +51,7 @@
         outside += value * Math.max(0, represented - fraction);
         total += value * represented;
       }
-      const remainder = includeOutside ? (zone ? turf.difference(fc([footprint,zone])) : footprint) : null;
+      const remainder = includeOutside ? (localZone ? turf.difference(fc([footprint,localZone])) : footprint) : null;
       if (remainder && turf.area(remainder)>0.01) {
         remainder.properties={fid:cell.properties.fid,value:number(value)?value:null};uncovered.push(remainder);
       }
