@@ -24,26 +24,24 @@ Rasterele rămân în **EPSG:3844 — Pulkovo 1942(58) / Stereo70**. [raster_met
 
 | Fișier | Dimensiuni | Tip | Pixel în CRS-ul rasterului | Octeți |
 |---|---|---|---|---:|
-| `risca_dem_sv.tif` | 957 × 630 | Float32 | 23.559141 × 23.559141 m | 3,594,697 |
-| `risca_forest_loss_sv.tif` | 937 × 617 | Byte | 24.060353 × 24.060353 m | 881,725 |
+| `risca_dem_sv.tif` | 957 × 630 | Float32 | 23.559141 × 23.559141 m | 812,716 |
+| `risca_forest_loss_sv.tif` | 937 × 617 | Byte | 24.060353 × 24.060353 m | 25,659 |
 
-Ambele fișiere sunt GeoTIFF-uri necomprimate, organizate în benzi de rânduri, cu patru niveluri de overviews. Nu sunt tiled GeoTIFF și nu trec validarea COG. La dimensiunile lor, descărcarea completă poate fi utilizată.
+Ambele fișiere sunt GeoTIFF-uri tiled (blocuri 256 × 256), comprimate DEFLATE, fără overviews, validate COG. Optimizarea web păstrează exact pixelii, grila și NoData. Cititorul poate descărca integral aceste subseturi mici; nu depinde de range requests.
 
 DEM-ul exprimă elevația în metri; datum-ul vertical necesită confirmare. În rasterul forest-loss, codurile 1–24 corespund anilor 2001–2024, iar 0 = NoData. Valoarea 0 este exclusă din selectorii de ani, totaluri, suprafețe și grafice.
 
 ## Surse, atribuiri și licențe
 
-- **Școli (2022–2023):** Observatorul Urban Metropolitan București / ADIZMB, pe baza datelor Ministerului Educației, SIIIR și ISMB. [Rețeaua școlară 2022–2023, data.gov.ro](https://data.gov.ro/dataset/reteaua-scolara-2022-2023). Licență **CC BY 4.0**, confirmată în metodologia furnizată.
-- **Medicină de familie (2024), cabinete/ambulatorii de specialitate (2023) și spitale (2024):** Observatorul Urban Metropolitan București / ADIZMB, pe baza surselor CASMB, CJASIF, OPSNAJ și, pentru spitale, DSP și informațiilor unităților sanitare. Licență **CC BY 4.0**, confirmată în metodologiile furnizate.
-- **Grid:** indicatorii de populație INS și identificatorul Eurostat sunt documentați în dicționarul furnizat. Licența exactă, produsul și sursa oficială necesită confirmare.
-- **Contur Sector 1:** furnizorul subsetului indică ANCPI drept sursa conturului utilizat la decupare. Versiunea oficială, adresa produsului și licența necesită confirmare.
-- **Contur Rîșca:** sursa exactă, versiunea și licența necesită confirmare.
-- **DEM Rîșca:** Copernicus WorldDEM-30 (GLO-30). Notificarea pentru subsetul adaptat: “produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”. Versiunea exactă și identificatorul licenței nu sunt documentate.
-- **Forest-loss Rîșca:** Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Acces prin [Global Nature Watch](https://globalnaturewatch.org/map/www.globalnaturewatch.org). Data accesării nu este stabilită; versiunea exactă și licența subsetului necesită confirmare.
+[Registrul public al produselor](../data-registry.json) și [pagina Resurse](../../resources.html#registrul-datelor) descriu șapte familii de surse și disting pachetele educaționale de cele nouă subseturi tehnice servite de aplicație. Niciun dataset complet T01–T06 nu este distribuit.
 
-Atribuire pentru datele medicale: „Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.” Pentru școli, se adaugă faptul că sursa unor date este data.gov.ro și adresa rețelei școlare de mai sus. Subseturile au fost decupate și atributele publice au fost reduse.
+Școlile și datele medicale provin din Observatorul Urban Metropolitan București / ADIZMB, sub CC BY 4.0; textele de atribuire solicitate sunt păstrate integral în registru și în [ATTRIBUTION.md](../../ATTRIBUTION.md). Anii subseturilor medicale rămân 2024 pentru medicina de familie și spitale, respectiv 2023 pentru cabinete și ambulatorii.
 
-CC BY 4.0 se aplică datelor școlare și medicale documentate, nu tuturor fișierelor acestui director. Licențele MIT și CC BY-NC 4.0 ale proiectului nu relicențiază datele terțe. Pentru fișierele a căror licență nu este încă documentată, drepturile de redistribuire trebuie clarificate înaintea publicării.
+Limitele administrative sunt distribuite prin geo-spatial.org; proveniența ANCPI a conturului Sectorului 1 este documentată separat. Gridul Recensământ 2021 reunește indicatori INS și identificatorul Eurostat, prin geo-spatial.org. Licența și textul exact de atribuire pentru aceste produse rămân de verificat. Atributul de versiune al conturului nu identifică automat ediția catalogului actual.
+
+DEM-ul derivă din Copernicus DEM GLO-30, cu licența specifică produsului și notificarea: „produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved”. Forest Loss derivă din Hansen et al. (2013), GLAD / University of Maryland; CC BY 4.0 este documentată în metadatele furnizate. Edițiile exacte și rețetele originale de reproiectare ale rasterelor rămân de confirmat.
+
+Datele terțe își păstrează propriile licențe. MIT pentru cod și CC BY 4.0 pentru conținutul original al platformei nu revendică proprietatea asupra dataseturilor externe.
 
 ## Precauții metodologice
 

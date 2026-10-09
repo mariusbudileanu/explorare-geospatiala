@@ -82,7 +82,11 @@
         "status": "verified_dataset_definition",
         "vertical_datum": "needs_confirmation"
       },
-      "license": "needs_confirmation",
+      "license": {
+        "id": "Copernicus-DEM",
+        "url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+        "status": "documented_in_owner_metadata"
+      },
       "background_value": {
         "candidate": 0,
         "status": "needs_confirmation",
@@ -111,7 +115,8 @@
       "boundary_mask_requirement": "Aplicați conturul UAT: valoarea 0 este prezentă în afara UAT, fără a fi declarată NoData.",
       "source_name": "Copernicus WorldDEM-30 (GLO-30)",
       "legal_notice": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
-      "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+      "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+      "registry_id": "copernicus-dem"
     },
     "forestLoss": {
       "size_bytes": 25659,
@@ -185,7 +190,11 @@
         "status": "verified_dataset_definition",
         "zero_value_meaning": "NoData"
       },
-      "license": "needs_confirmation",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "status": "documented_in_owner_metadata"
+      },
       "local_preprocessing": {
         "subset_area": "Rîșca",
         "stored_crs": "EPSG:3844",
@@ -300,14 +309,15 @@
       "source_platform": "Global Nature Watch",
       "source_url": "https://globalnaturewatch.org/map/www.globalnaturewatch.org",
       "access_date": "needs_confirmation",
-      "attribution": "Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Acces prin Global Nature Watch: https://globalnaturewatch.org/map/www.globalnaturewatch.org",
+      "attribution": "Hansen, M. C., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science, 342, 850–853. https://doi.org/10.1126/science.1244693",
       "semantic_nodata": {
         "value": 0,
         "meaning": "NoData",
         "status": "verified_dataset_definition",
         "embedded_nodata": null,
         "note": "Valoarea 0 este NoData pentru subsetul didactic; fișierul TIFF nu are un tag NoData declarat."
-      }
+      },
+      "registry_id": "hansen-loss"
     }
   },
   "alignment": {

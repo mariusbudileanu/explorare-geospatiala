@@ -1,0 +1,23 @@
+{
+  "cff-version": "1.2.0",
+  "message": "Pentru citarea platformei, utilizați aceste metadate.",
+  "type": "software",
+  "title": "Explorare geospațială",
+  "abstract": "Resursă educațională în limba română: de la concepte clasice la GIS (QGIS), pentru studenți de licență și master. Codul propriu este MIT; conținutul educațional original este CC BY 4.0. Resursele terțe își păstrează licențele.",
+  "authors": [
+    {
+      "family-names": "Budileanu",
+      "given-names": "Marius",
+      "affiliation": "Universitatea din București, Facultatea de Geografie"
+    }
+  ],
+  "repository-code": "https://github.com/mariusbudileanu/explorare-geospatiala",
+  "url": "https://mariusbudileanu.github.io/explorare-geospatiala/",
+  "license": "MIT",
+  "keywords": [
+    "cartografie",
+    "educație",
+    "GIS",
+    "QGIS"
+  ]
+}

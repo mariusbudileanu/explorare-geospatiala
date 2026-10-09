@@ -49,3 +49,18 @@ body.dark{--surface-alt:#223441;--qgis:#93bd8d}.site-topbar .about-link{color:va
 /* Source metadata uses the same chips and spacing as the educational cards. */
 .resource-source-meta{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-block:var(--space-3)}
 .resource-source-meta .meta-chip{font-size:12px;max-width:100%;overflow-wrap:anywhere;white-space:normal}
+
+/* Academic references and static recovery share the existing card tokens. */
+.runtime-notice { margin: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); }
+.dataset-record { min-width: 0; }
+.dataset-record dl { margin: 0; }
+.dataset-record dt { font-weight: 700; margin-top: .8rem; }
+.dataset-record dd { margin: .2rem 0 0; overflow-wrap: anywhere; }
+.source-thumb { padding: 1rem; }
+.historical-reference { display: block; padding: 1.5rem; line-height: 1.6; }
+.search-results small { white-space: normal; line-height: 1.45; }
+
+@media (min-width:901px) {
+  body[data-page-id="about"] .site-workspace, body[data-recovery="true"] .site-workspace { grid-template-columns:255px minmax(0,1fr); }
+  body[data-page-id="about"].nav-collapsed .site-workspace, body[data-recovery="true"].nav-collapsed .site-workspace { grid-template-columns:minmax(0,1fr); }
+}

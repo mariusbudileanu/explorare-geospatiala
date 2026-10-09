@@ -7,7 +7,7 @@
 - Sursă: [pachetul Proj4js](https://www.npmjs.com/package/proj4).
 - Tip: licență permisivă de tip MIT, cu notificarea originală păstrată.
 
-Licența MIT din [`LICENSE`](LICENSE) acoperă numai codul original al website-ului. [`CONTENT_LICENSE.md`](CONTENT_LICENSE.md) aplică CC BY-NC 4.0 numai conținutului educațional original. Niciuna nu schimbă termenii componentelor sau materialelor terțe.
+Licența MIT din [`LICENSE`](LICENSE) acoperă numai codul original al website-ului. [`CONTENT_LICENSE.md`](CONTENT_LICENSE.md) aplică CC BY 4.0 numai conținutului educațional original. Niciuna nu schimbă termenii componentelor sau materialelor terțe.
 
 ## Biblioteci pentru Provocări GIS
 
@@ -23,4 +23,4 @@ Fișierele runtime sunt păstrate local; harta și analizele nu necesită un CDN
 
 Manualul istoric, documentația QGIS, referințele EPSG și sursele de date sunt atribuite în [`ATTRIBUTION.md`](ATTRIBUTION.md). Linkurile și includerea unei figuri ori capturi nu transferă drepturile asupra materialului terț. Termenii sursei respective continuă să se aplice; seturile GIS complete pentru curs nu sunt incluse în repository.
 
-Subseturile școlare și medicale pentru Provocări GIS păstrează **CC BY 4.0**, confirmată în metodologiile surselor, și atribuirea Observatorului Urban Metropolitan București / ADIZMB. Celelalte subseturi au starea licenței consemnată în [documentația datelor](data/challenges/README.md); o licență neconfirmată nu este înlocuită de MIT sau CC BY-NC 4.0.
+Subseturile școlare și medicale pentru Provocări GIS păstrează **CC BY 4.0**, confirmată în metodologiile surselor, și atribuirea Observatorului Urban Metropolitan București / ADIZMB. Celelalte subseturi au starea licenței consemnată în [documentația datelor](data/challenges/README.md); o licență neconfirmată nu este înlocuită de MIT sau CC BY 4.0.

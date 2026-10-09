@@ -57,32 +57,7 @@
   try { setTheme(localStorage.getItem('cartografie-theme') === 'dark'); } catch { setTheme(false); }
   $('#theme-toggle').addEventListener('click', () => { const dark = !document.body.classList.contains('dark'); setTheme(dark); try { localStorage.setItem('cartografie-theme', dark ? 'dark' : 'light'); } catch { /* Browser storage may be unavailable. */ } });
 
-  const localSearch = [
-    {title:'Longitudine · λ',href:'#longitudine',tags:'est vest meridian'},
-    {title:'Latitudine · φ',href:'#latitudine',tags:'nord sud ecuator'},
-    {title:'Colatitudine · ψ',href:'#colatitudine',tags:'complement formula'},
-    {title:'Meridiane origine istorice',href:'#meridiane',tags:'greenwich paris ferro roma tirana tabel'},
-    {title:'Convertor de coordonate',href:'#convertor',tags:'grade minute secunde decimal dms'},
-    {title:'Verifică dacă ai înțeles',href:'#exercitiu',tags:'test exercitiu'}
-  ];
-  const searchIndex = [
-    ...localSearch,
-    ...manifest.lessons.map(lesson => ({title:`${lesson.editorial_number ? `${lesson.editorial_number} · ` : ''}${lesson.title}`,href:lesson.href,tags:[lesson.part,lesson.source_section,...lesson.keywords,...lesson.figures.map(figure => figure.caption)].join(' ')}))
-  ];
-  $('#search').addEventListener('input', event => {
-    const query = normalize(event.target.value.trim());
-    const results = $('#search-results');
-    results.hidden = !query;
-    const matches = searchIndex.filter(item => normalize(`${item.title} ${item.tags}`).includes(query)).slice(0, 10);
-    results.innerHTML = matches.length ? matches.map(item => `<a href="${item.href}">${item.title}</a>`).join('') : '<p>Niciun rezultat în MVP-ul istoric.</p>';
-  });
-  $('#search').addEventListener('keydown', event => {
-    if (event.key === 'Escape') $('#search-results').hidden = true;
-    if (event.key === 'ArrowDown') { event.preventDefault(); $('#search-results a')?.focus(); }
-    if (event.key === 'Enter') { event.preventDefault(); $('#search-results a')?.click(); }
-  });
-  $('#search-results').addEventListener('click', event => { if (event.target.closest('a')) $('#search-results').hidden = true; });
-  document.addEventListener('click', event => { if (!event.target.closest('.global-search')) $('#search-results').hidden = true; });
+  window.CARTO_SEARCH?.init(manifest);
 
   // All supplementary content shares a generic layer model, independent of this lesson.
   const layers = { modern: true, textbook: false, history: false, formulas: false, examples: false, details: false };
@@ -158,7 +133,7 @@
     $('#comparison-globe').innerHTML = markup;
     [$('#globe'), $('#comparison-globe')].forEach(svg => svg.setAttribute('viewBox', phoneDiagram.matches ? '145 15 410 440' : '0 0 700 470'));
     $('#mobile-globe-labels').innerHTML = visual.labels ? [['equator', 'Ecuator', ''], ['origin', 'Meridian Greenwich', 'dashed'], ['meridian', 'Meridianul punctului', 'blue'], ['parallel', 'Paralela punctului', 'teal']].filter(([key]) => visual[key]).map(([, label, color]) => `<span><i class="line ${color}"></i>${label}</span>`).join('') : '';
-    $('#historical-overlay').hidden = !visual.overlay;
+
     const signed = $('#longitude-convention').value === 'signed';
     const useDms = $('#coordinate-format').value === 'dms';
     $('#lat-primary').textContent = useDms ? dms(latitude, 'latitude') : decimal(latitude, 'latitude');
@@ -299,10 +274,8 @@
     const pageButton = event.target.closest('[data-source-page]'), imageButton = event.target.closest('[data-source-image]');
     if (pageButton || imageButton) {
       const page = pageButton?.dataset.sourcePage, type = imageButton?.dataset.sourceImage;
-      $('#source-image').src = page ? `assets/original/pagina-${page}.jpg` : `assets/original/${type === 'table' ? 'tabel-meridiane' : 'fig10-coordonate'}.png`;
-      $('#source-image').alt = page ? `Pagina tipărită ${page} a manualului din 1974` : type === 'table' ? 'Tabelul original cu ambele fragmente de pe paginile 20–21' : 'Figura 10 originală';
       $('#source-title').textContent = page ? `Manualul original · pagina ${page}` : type === 'table' ? 'Tabel cu diferite meridiane origine' : 'Fig. 10. Coordonatele geografice';
-      $('#source-caption').textContent = page ? `Pagina tipărită ${page} · pagina ${Number(page) + 2} din PDF. Scanul este sursa de referință.` : type === 'table' ? 'Decupaj din scanul original. Cele două fragmente ale tabelului sunt reunite fără modificarea valorilor.' : 'Decupaj din pagina tipărită 20 (pagina 22 din PDF), fără modificarea figurii.';
+      $('#source-caption').textContent = `Năstase, A. & Cernea, D. (1974). Cartografie generală – manual practic. Universitatea din București. § 2.1, ${page ? 'p. '+page+' (PDF '+(Number(page)+2)+')' : type === 'table' ? 'pp. 20–21 (PDF 22–23), tabelul meridianelor origine' : 'p. 20 (PDF 22), Fig. 10'}. Scanul se consultă în Biblioteca Digitală; nu este redistribuit aici.`;
       $$('#source-pages button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.sourcePage === page)));
       openDialog($('#source-dialog'));
     }

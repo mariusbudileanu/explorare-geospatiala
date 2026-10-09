@@ -67,3 +67,10 @@ desktop.ini
 
 # GDAL statistics/histogram cache; the browser reads the TIFF directly.
 /data/challenges/**/*.aux.xml
+
+# Source spreadsheets and the reproducible public-content generator
+*.xlsx
+*.xls
+!/tools/
+/tools/*
+!/tools/build-public-content.mjs

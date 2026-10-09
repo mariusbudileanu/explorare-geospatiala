@@ -87,8 +87,8 @@ const sourceRoles = {boundary: 'Contur UAT', schools: 'Puncte școlare',
   dem: 'Model digital al elevației', forestLoss: 'An de pierdere forestieră'};
 // Pin the documented links by dataset ID so accidental loss from the registry fails too.
 const documentedSourceLinks = {
-  'sector1/schools': 'https://data.gov.ro/dataset/reteaua-scolara-2022-2023',
-  'risca/forestLoss': 'https://globalnaturewatch.org/map/www.globalnaturewatch.org'
+  'sector1/schools': 'https://www.adizmb.ro/observatory/unitati-invatamant-preuniversitar-si-circumscriptii-scolare-bucuresti-anul-scolar-2022-2023/',
+  'risca/forestLoss': 'https://glad.earthengine.app/view/global-forest-change'
 };
 function checkSourceCards(cards, registry) {
   assert.deepEqual(Object.keys(registry.sector1).sort(),

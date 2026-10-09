@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "title": "Registrul public al datelor",
+  "reviewed": "2026-10-09",
+  "policy": {
+    "workshop_packages_distributed": false,
+    "interactive_subsets": "Subseturi tehnice necesare aplicației, distincte de dataseturile complete și de pachetele educaționale.",
+    "third_party": "Fiecare produs își păstrează licența. MIT și CC BY 4.0 ale platformei nu relicențiază datele."
+  },
+  "datasets": [
+    {
+      "id": "adizmb-schools",
+      "name": "Unități învățământ preuniversitar și circumscripții școlare București (anul școlar 2022-2023)",
+      "provider": "ADIZMB",
+      "official_source": "https://www.adizmb.ro/observatory/unitati-invatamant-preuniversitar-si-circumscriptii-scolare-bucuresti-anul-scolar-2022-2023/",
+      "access_url": "https://www.adizmb.ro/observatory/unitati-invatamant-preuniversitar-si-circumscriptii-scolare-bucuresti-anul-scolar-2022-2023/?descarca=shp&file=https%3A%2F%2Fwww.adizmb.ro%2Fwp-content%2Fuploads%2F2024%2F05%2FDate-Deschise-Scoli-si-Circ-Buc-2022-2023_rev1.zip",
+      "accessed": "2026-09-20",
+      "edition": "1",
+      "spatial_coverage": "București",
+      "temporal_coverage": "2022-2023",
+      "original_format": "GPKG",
+      "original_crs": "4326",
+      "resolution_or_scale": null,
+      "license_name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_status": "confirmed",
+      "attribution_required": true,
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind data.gov.ro, date deschise sub Licența Creative Commons Attribution 4.0. (https://data.gov.ro/organization/men)",
+      "modifications": "Crop sector 1",
+      "platform_use": "Provocări - V1, V3\nTutorial 01, 05",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Unități de învățământ — Sectorul 1",
+          "file": "data/challenges/sector1/4326_S1_Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023.geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 90488,
+          "operations": [
+            "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+            "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+            "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+          ]
+        }
+      ],
+      "notes": [
+        "Date generale; pot fi incomplete sau neactualizate. Nu fundamentează singure decizii individuale.",
+        "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent."
+      ]
+    },
+    {
+      "id": "adizmb-medical",
+      "name": "Infrastructură de sănătate mun. București și jud. Ilfov",
+      "provider": "ADIZMB",
+      "official_source": "https://www.adizmb.ro/observatory/infrastructura-de-sanatate-mun-bucuresti-si-jud-ilfov/",
+      "access_url": "https://www.adizmb.ro/observatory/infrastructura-de-sanatate-mun-bucuresti-si-jud-ilfov/?descarca=shp&file=https%3A%2F%2Fwww.adizmb.ro%2Fwp-content%2Fuploads%2F2024%2F12%2FDate-Deschise_Unitati-Medicale_Buc-If_2023-2024.zip",
+      "accessed": "2026-09-20",
+      "edition": "1",
+      "spatial_coverage": "București",
+      "temporal_coverage": "2024",
+      "original_format": "GPKG",
+      "original_crs": "4326",
+      "resolution_or_scale": null,
+      "license_name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_status": "confirmed",
+      "attribution_required": true,
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind Casa de Asigurări de Sănătate a Municipiului București (CSAMB), Casa Județeană de Asigurări de Sănătate Ilfov (CJAS Ilfov), Casa Asigurărilor de Sănătate a Apărării, Ordinii Publice, Siguranței Naționale și Autorității Judecătorești (Casa OPSNAJ), cât și Direcția de Sănătate Publică (DSP)",
+      "modifications": "Crop sector 1",
+      "platform_use": "Provocări - V4, Tutorial T03, T05",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Medicină de familie — Sectorul 1",
+          "file": "data/challenges/sector1/4326_S1_Cabinete Medicină de Familie (Primary Care).geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 50256,
+          "operations": [
+            "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+            "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+            "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+          ]
+        },
+        {
+          "name": "Cabinete și ambulatorii de specialitate — Sectorul 1",
+          "file": "data/challenges/sector1/4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care).geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 43597,
+          "operations": [
+            "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+            "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+            "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+          ]
+        },
+        {
+          "name": "Spitale — Sectorul 1",
+          "file": "data/challenges/sector1/4326_S1_Spitale București-Ilfov (Tertiary Care).geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 26147,
+          "operations": [
+            "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+            "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+            "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+          ]
+        }
+      ],
+      "notes": [
+        "Date generale; pot fi incomplete sau neactualizate. Nu fundamentează singure decizii individuale.",
+        "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent."
+      ]
+    },
+    {
+      "id": "adizmb-sports",
+      "name": "Rețeaua de baze sportive din mun. București",
+      "provider": "ADIZMB",
+      "official_source": "https://www.adizmb.ro/observatory/reteaua-de-baze-sportive-din-mun-bucuresti/",
+      "access_url": "https://www.adizmb.ro/observatory/reteaua-de-baze-sportive-din-mun-bucuresti/?descarca=shp&file=https%3A%2F%2Fwww.adizmb.ro%2Fwp-content%2Fuploads%2F2024%2F12%2FDate-Deschise-Baze-sportive-Buc-1991-2024.zip",
+      "accessed": "2026-09-20",
+      "edition": "1",
+      "spatial_coverage": "București",
+      "temporal_coverage": "1991-2024",
+      "original_format": "GPKG",
+      "original_crs": "4326",
+      "resolution_or_scale": null,
+      "license_name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_status": "confirmed",
+      "attribution_required": true,
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind data.gov.ro, date deschise sub Licența Creative Commons Attribution 4.0. (https://data.gov.ro/organization/men)",
+      "modifications": "N/A",
+      "platform_use": "Tutorial - T04",
+      "educational_download_package": false,
+      "interactive_subsets": [],
+      "notes": [
+        "Date generale; pot fi incomplete sau neactualizate. Nu fundamentează singure decizii individuale.",
+        "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent."
+      ]
+    },
+    {
+      "id": "administrative-boundaries",
+      "name": "Limite administrative - UAT, România (poligon)",
+      "provider": "geo-spatial.org (distribuitor); ANCPI (limite administrative, conform provenienței documentate)",
+      "official_source": "https://geo-spatial.org/descarcare/date/administrative-boundaries/",
+      "access_url": "https://geo-spatial.org/descarcare/date/administrative-boundaries",
+      "accessed": "2026-09-20",
+      "edition": "1",
+      "spatial_coverage": "România",
+      "temporal_coverage": null,
+      "original_format": "GPKG",
+      "original_crs": "3844",
+      "resolution_or_scale": null,
+      "license_name": "Licența produsului exact necesită confirmare",
+      "license_url": "https://geo-spatial.org/acces-liber/date-deschise",
+      "license_status": "needs_confirmation",
+      "attribution_required": true,
+      "attribution": null,
+      "modifications": "Decupare pentru Sectorul 1 și Rîșca; export GeoJSON în EPSG:4326. Atributul 2017-09-27 al conturului Sectorului 1 nu confirmă ediția produsului actual.",
+      "platform_use": "Provocări - V1,V2, V3, V4, V5, V6\nTutorial - T01, T02, T03, T04, T05, T06",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Sectorul 1, București",
+          "file": "data/challenges/sector1/sector1_boundary.geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 76952,
+          "operations": []
+        },
+        {
+          "name": "Rîșca, județul Suceava",
+          "file": "data/challenges/risca/risca_boundary.geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 61134,
+          "operations": []
+        }
+      ],
+      "notes": [
+        "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.",
+        "Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei."
+      ]
+    },
+    {
+      "id": "census2021",
+      "name": "RECENSĂMÂNTUL POPULAȚIEI ȘI LOCUINȚELOR 2021",
+      "provider": "INS (indicatori); Eurostat (grid); geo-spatial.org (distribuitor)",
+      "official_source": "https://services.geo-spatial.org/maps/#/viewer/568",
+      "access_url": "https://services.geo-spatial.org/data/statistica/Recensamant2021_GridData.gpkg",
+      "accessed": "2026-09-20",
+      "edition": "1",
+      "spatial_coverage": "România",
+      "temporal_coverage": "2021",
+      "original_format": "GPKG",
+      "original_crs": "3844",
+      "resolution_or_scale": "Grid nominal 1 km²",
+      "license_name": "Licența produsului exact necesită confirmare",
+      "license_url": "https://geo-spatial.org/acces-liber/date-deschise",
+      "license_status": "needs_confirmation",
+      "attribution_required": true,
+      "attribution": null,
+      "modifications": "Decupare Sectorul 1; selectarea atributelor; export GeoJSON în EPSG:4326. Suportul populației după decupare necesită confirmare.",
+      "platform_use": "V2, V3, V4; T05",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Grid de populație — Sectorul 1",
+          "file": "data/challenges/sector1/4326_S1_Recensamant2021_GridData — recensamant2021_griddata.geojson",
+          "format": "GeoJSON",
+          "crs": "EPSG:4326",
+          "bytes": 130789,
+          "operations": [
+            "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
+            "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
+            "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
+          ]
+        }
+      ],
+      "notes": [
+        "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.",
+        "Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei."
+      ],
+      "documentation_url": "https://doi.org/10.55779/ng52348"
+    },
+    {
+      "id": "hansen-loss",
+      "name": "Tree cover loss",
+      "provider": "University of Maryland / GLAD, Hansen et al.; platformă de acces indicată: Global Nature Watch",
+      "official_source": "https://glad.earthengine.app/view/global-forest-change",
+      "access_url": "https://glad.earthengine.app/view/global-forest-change",
+      "accessed": "2026-09-20",
+      "edition": null,
+      "spatial_coverage": "Global",
+      "temporal_coverage": "2001–2024 în subsetul interactiv",
+      "original_format": "Geotiff",
+      "original_crs": "4326",
+      "resolution_or_scale": "30 m",
+      "license_name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_status": "documented_in_metadata",
+      "attribution_required": true,
+      "attribution": "Hansen, M. C., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science, 342, 850–853. https://doi.org/10.1126/science.1244693",
+      "modifications": "Decupare Suceava/Rîșca; reproiectare EPSG:3844 (metoda originală de resampling neconfirmată); optimizare GeoTIFF fără modificarea pixelilor.",
+      "platform_use": "Provocări - R3, R4, R5, R6\nTutorial - T06",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Pierdere forestieră — Rîșca",
+          "file": "data/challenges/risca/risca_forest_loss_sv.tif",
+          "format": "GeoTIFF",
+          "crs": "EPSG:3844",
+          "bytes": 25659,
+          "operations": []
+        }
+      ],
+      "notes": [
+        "Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 este NoData, nu absență observată a pierderii."
+      ]
+    },
+    {
+      "id": "copernicus-dem",
+      "name": "Copernicus DEM",
+      "provider": "Copernicus / ESA / Uniunea Europeană; DLR și Airbus; acces Copernicus Data Space Ecosystem",
+      "official_source": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+      "access_url": "https://browser.dataspace.copernicus.eu/",
+      "accessed": "2026-09-20",
+      "edition": null,
+      "spatial_coverage": "Global",
+      "temporal_coverage": null,
+      "original_format": "Geotiff",
+      "original_crs": "4326",
+      "resolution_or_scale": "30 m",
+      "license_name": "Copernicus DEM GLO-30 / GLO-90 — licență gratuită specifică produsului",
+      "license_url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+      "license_status": "documented_in_metadata",
+      "attribution_required": true,
+      "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+      "modifications": "Decupare Suceava/Rîșca; reproiectare EPSG:3844 (metoda originală de resampling neconfirmată); optimizare GeoTIFF fără modificarea pixelilor.",
+      "platform_use": "R1, R2, R6; T06; Raster Styling",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Model digital al elevației — Rîșca",
+          "file": "data/challenges/risca/risca_dem_sv.tif",
+          "format": "GeoTIFF",
+          "crs": "EPSG:3844",
+          "bytes": 812716,
+          "operations": []
+        }
+      ],
+      "notes": [
+        "Ediția exactă, datum-ul vertical și rețeta originală de reproiectare rămân de confirmat. Rezoluția nominală GLO-30 diferă de pasul efectiv al subsetului EPSG:3844."
+      ],
+      "license_document_url": "https://dataspace.copernicus.eu/sites/default/files/media/files/2025-06/copernicus_contributing_mission_data_access_v2_cop_dem_licenses.pdf",
+      "documentation_url": "https://doi.org/10.5270/ESA-c5d3d65"
+    }
+  ]
+}

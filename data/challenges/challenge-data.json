@@ -26,14 +26,15 @@
       "sha256": "3daa9e0a729dcd28a057008afd97e65c4c160357c3aaf8b029f5ecef680a77dc",
       "display_name": "Sectorul 1, București",
       "source": {
-        "label": "ANCPI — conturul de decupare indicat de furnizorul subsetului",
-        "url": "needs_confirmation",
-        "verification": "owner_supplied_brief"
+        "label": "geo-spatial.org (distribuitor); ANCPI (limite administrative, conform provenienței documentate)",
+        "url": "https://geo-spatial.org/descarcare/date/administrative-boundaries/",
+        "verification": "owner_metadata_and_official_resource"
       },
       "attribution": "ANCPI (conform provenienței declarate pentru conturul Sectorului 1); termenii și versiunea oficială necesită confirmare.",
       "license": "needs_confirmation",
       "publication_ready": false,
-      "source_version_attribute": "2017-09-27"
+      "source_version_attribute": "2017-09-27",
+      "registry_id": "administrative-boundaries"
     },
     "schools": {
       "file": "data/challenges/sector1/4326_S1_Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023.geojson",
@@ -69,11 +70,11 @@
       "sector_membership": "geometry_after_supplied_official_clip",
       "null_semantics": "missing_information_not_zero",
       "source": {
-        "label": "Observatorul Urban Metropolitan București / ADIZMB",
-        "verification": "local_methodology_document",
-        "url": "https://data.gov.ro/dataset/reteaua-scolara-2022-2023"
+        "label": "ADIZMB",
+        "verification": "owner_metadata_and_official_resource",
+        "url": "https://www.adizmb.ro/observatory/unitati-invatamant-preuniversitar-si-circumscriptii-scolare-bucuresti-anul-scolar-2022-2023/"
       },
-      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind data.gov.ro, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind data.gov.ro, date deschise sub Licența Creative Commons Attribution 4.0. (https://data.gov.ro/organization/men)",
       "license": {
         "id": "CC-BY-4.0",
         "url": "https://creativecommons.org/licenses/by/4.0/",
@@ -85,7 +86,8 @@
         "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
         "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
       ],
-      "dictionary": "data/challenges/sector1/metadata/4326_S1_Unitățile_de_Învățământ_Preuniversitar_din_Municipiul_București_2022-2023_data_dictionary_v2.csv"
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Unitățile_de_Învățământ_Preuniversitar_din_Municipiul_București_2022-2023_data_dictionary_v2.csv",
+      "registry_id": "adizmb-schools"
     },
     "censusGrid": {
       "file": "data/challenges/sector1/4326_S1_Recensamant2021_GridData — recensamant2021_griddata.geojson",
@@ -113,9 +115,9 @@
       "sector_membership": "geometry_after_supplied_official_clip",
       "null_semantics": "missing_information_not_zero",
       "source": {
-        "label": "INS — indicatori de populație; Eurostat — identificatorul gridului (conform dicționarului furnizat)",
-        "verification": "supplied_data_dictionary",
-        "url": "needs_confirmation"
+        "label": "INS (indicatori); Eurostat (grid); geo-spatial.org (distribuitor)",
+        "verification": "owner_metadata_and_official_resource",
+        "url": "https://services.geo-spatial.org/maps/#/viewer/568"
       },
       "attribution": "INS / Eurostat; licența exactă și adresa produsului necesită confirmare.",
       "license": "needs_confirmation",
@@ -126,7 +128,8 @@
         "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
       ],
       "population_support_after_clip": "needs_confirmation",
-      "dictionary": "data/challenges/sector1/metadata/4326_S1_Recensamant2021_GridData_—_recensamant2021_griddata_data_dictionary_v2.csv"
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Recensamant2021_GridData_—_recensamant2021_griddata_data_dictionary_v2.csv",
+      "registry_id": "census2021"
     },
     "primaryCare": {
       "file": "data/challenges/sector1/4326_S1_Cabinete Medicină de Familie (Primary Care).geojson",
@@ -152,11 +155,11 @@
       "sector_membership": "geometry_after_supplied_official_clip",
       "null_semantics": "missing_information_not_zero",
       "source": {
-        "label": "Observatorul Urban Metropolitan București / ADIZMB",
-        "verification": "local_methodology_document",
-        "url": "needs_confirmation"
+        "label": "ADIZMB",
+        "verification": "owner_metadata_and_official_resource",
+        "url": "https://www.adizmb.ro/observatory/infrastructura-de-sanatate-mun-bucuresti-si-jud-ilfov/"
       },
-      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind Casa de Asigurări de Sănătate a Municipiului București (CSAMB), Casa Județeană de Asigurări de Sănătate Ilfov (CJAS Ilfov), Casa Asigurărilor de Sănătate a Apărării, Ordinii Publice, Siguranței Naționale și Autorității Judecătorești (Casa OPSNAJ), cât și Direcția de Sănătate Publică (DSP)",
       "license": {
         "id": "CC-BY-4.0",
         "url": "https://creativecommons.org/licenses/by/4.0/",
@@ -168,7 +171,8 @@
         "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
         "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
       ],
-      "dictionary": "data/challenges/sector1/metadata/4326_S1_Cabinete_Medicină_de_Familie_(Primary_Care)_data_dictionary_v2.csv"
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Cabinete_Medicină_de_Familie_(Primary_Care)_data_dictionary_v2.csv",
+      "registry_id": "adizmb-medical"
     },
     "secondaryCare": {
       "file": "data/challenges/sector1/4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care).geojson",
@@ -196,11 +200,11 @@
       "sector_membership": "geometry_after_supplied_official_clip",
       "null_semantics": "missing_information_not_zero",
       "source": {
-        "label": "Observatorul Urban Metropolitan București / ADIZMB",
-        "verification": "local_methodology_document",
-        "url": "needs_confirmation"
+        "label": "ADIZMB",
+        "verification": "owner_metadata_and_official_resource",
+        "url": "https://www.adizmb.ro/observatory/infrastructura-de-sanatate-mun-bucuresti-si-jud-ilfov/"
       },
-      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind Casa de Asigurări de Sănătate a Municipiului București (CSAMB), Casa Județeană de Asigurări de Sănătate Ilfov (CJAS Ilfov), Casa Asigurărilor de Sănătate a Apărării, Ordinii Publice, Siguranței Naționale și Autorității Judecătorești (Casa OPSNAJ), cât și Direcția de Sănătate Publică (DSP)",
       "license": {
         "id": "CC-BY-4.0",
         "url": "https://creativecommons.org/licenses/by/4.0/",
@@ -213,7 +217,8 @@
         "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
       ],
       "label_policy": "Identificator fid; numele firmelor care pot identifica persoane nu sunt publicate.",
-      "dictionary": "data/challenges/sector1/metadata/4326_S1_Cabinete_și_Ambulatorii_de_Specialitate_(Secondary_Care)_data_dictionary_v2.csv"
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Cabinete_și_Ambulatorii_de_Specialitate_(Secondary_Care)_data_dictionary_v2.csv",
+      "registry_id": "adizmb-medical"
     },
     "hospitals": {
       "file": "data/challenges/sector1/4326_S1_Spitale București-Ilfov (Tertiary Care).geojson",
@@ -248,11 +253,11 @@
       "sector_membership": "geometry_after_supplied_official_clip",
       "null_semantics": "missing_information_not_zero",
       "source": {
-        "label": "Observatorul Urban Metropolitan București / ADIZMB",
-        "verification": "local_methodology_document",
-        "url": "needs_confirmation"
+        "label": "ADIZMB",
+        "verification": "owner_metadata_and_official_resource",
+        "url": "https://www.adizmb.ro/observatory/infrastructura-de-sanatate-mun-bucuresti-si-jud-ilfov/"
       },
-      "attribution": "Conține date publice prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, date deschise sub Licența Creative Commons Attribution 4.0.",
+      "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind Casa de Asigurări de Sănătate a Municipiului București (CSAMB), Casa Județeană de Asigurări de Sănătate Ilfov (CJAS Ilfov), Casa Asigurărilor de Sănătate a Apărării, Ordinii Publice, Siguranței Naționale și Autorității Judecătorești (Casa OPSNAJ), cât și Direcția de Sănătate Publică (DSP)",
       "license": {
         "id": "CC-BY-4.0",
         "url": "https://creativecommons.org/licenses/by/4.0/",
@@ -264,7 +269,8 @@
         "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
         "Eliminarea membrului CRS învechit din GeoJSON; coordonatele originale lon/lat au fost păstrate."
       ],
-      "dictionary": "data/challenges/sector1/metadata/4326_S1_Spitale_București-Ilfov_(Tertiary_Care)_data_dictionary_v2.csv"
+      "dictionary": "data/challenges/sector1/metadata/4326_S1_Spitale_București-Ilfov_(Tertiary_Care)_data_dictionary_v2.csv",
+      "registry_id": "adizmb-medical"
     }
   },
   "risca": {
@@ -290,14 +296,15 @@
       "sha256": "744262433c9ae48ded003e50d723d51f9ece9595ab613eb28b9fbf88934381ee",
       "display_name": "Rîșca, județul Suceava",
       "source": {
-        "label": "needs_confirmation",
-        "url": "needs_confirmation",
-        "verification": "needs_confirmation"
+        "label": "geo-spatial.org (distribuitor); ANCPI (limite administrative, conform provenienței documentate)",
+        "url": "https://geo-spatial.org/descarcare/date/administrative-boundaries/",
+        "verification": "owner_metadata_and_official_resource"
       },
       "attribution": "needs_confirmation",
       "license": "needs_confirmation",
       "publication_ready": false,
-      "source_version_attribute": "2017-09-27"
+      "source_version_attribute": "2017-09-27",
+      "registry_id": "administrative-boundaries"
     },
     "dem": {
       "file": "data/challenges/risca/risca_dem_sv.tif",
@@ -305,18 +312,23 @@
       "data_type": "raster",
       "crs": "EPSG:3844",
       "source": {
-        "label": "Copernicus WorldDEM-30 (GLO-30)",
-        "url": "needs_confirmation",
-        "verification": "supplied_dataset_source"
+        "label": "Copernicus / ESA / Uniunea Europeană; DLR și Airbus; acces Copernicus Data Space Ecosystem",
+        "url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+        "verification": "owner_metadata_and_official_resource"
       },
       "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
-      "license": "needs_confirmation",
+      "license": {
+        "id": "Copernicus-DEM",
+        "url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+        "status": "documented_in_owner_metadata"
+      },
       "size_bytes": 812716,
       "sha256": "36fbe2dd7c2dc06a0cf6d8224b6ceeb67cc12ee424d5427c66753701f42df1d5",
       "technical_metadata_key": "dem",
       "publication_ready": false,
       "source_name": "Copernicus WorldDEM-30 (GLO-30)",
-      "legal_notice": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved"
+      "legal_notice": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+      "registry_id": "copernicus-dem"
     },
     "forestLoss": {
       "file": "data/challenges/risca/risca_forest_loss_sv.tif",
@@ -324,13 +336,17 @@
       "data_type": "raster",
       "crs": "EPSG:3844",
       "source": {
-        "label": "Hansen et al. (2013) · Global Nature Watch",
+        "label": "University of Maryland / GLAD, Hansen et al.; platformă de acces indicată: Global Nature Watch",
         "platform": "Global Nature Watch",
-        "url": "https://globalnaturewatch.org/map/www.globalnaturewatch.org",
-        "verification": "supplied_dataset_source"
+        "url": "https://glad.earthengine.app/view/global-forest-change",
+        "verification": "owner_metadata_and_official_resource"
       },
-      "attribution": "Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Acces prin Global Nature Watch: https://globalnaturewatch.org/map/www.globalnaturewatch.org",
-      "license": "needs_confirmation",
+      "attribution": "Hansen, M. C., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science, 342, 850–853. https://doi.org/10.1126/science.1244693",
+      "license": {
+        "id": "CC-BY-4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "status": "documented_in_owner_metadata"
+      },
       "size_bytes": 25659,
       "sha256": "e888c5a6418dd81cd773f436ed5f260f164ef6c4713d952a77ccc0c11ccc001b",
       "technical_metadata_key": "forestLoss",
@@ -364,7 +380,8 @@
         "22": 2022,
         "23": 2023,
         "24": 2024
-      }
+      },
+      "registry_id": "hansen-loss"
     },
     "rasterMetadata": {
       "file": "data/challenges/risca/raster_metadata.json",
