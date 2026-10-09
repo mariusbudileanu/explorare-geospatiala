@@ -4,6 +4,31 @@ const {root,manifest,playwright,browserOptions}=require('./expectations.cjs');
 const base=process.env.QA_BASE_URL||'http://127.0.0.1:4183/explorare-geospatiala/';
 let checks=0;const ok=(value,message)=>{checks++;assert.ok(value,message);};
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
+// Check the actual hit targets, including the side nearest the drawer. Element
+// presence and page overflow alone cannot detect a fixed sidebar covering text.
+async function checkFallbackAccess(page, route, width, mode) {
+ await page.setViewportSize({width,height:960});
+ await page.goto(base+route);
+ const targets=[page.locator('h1'),page.locator('main p').first()];
+ const recovery=page.locator(mode==='no-js'?'nav[aria-label="Navigare fără JavaScript"] a':'.resources-link, .about-link');
+ targets.push(...await recovery.all());
+ for(const target of targets){
+  await target.scrollIntoViewIfNeeded();
+  const hit=await target.evaluate(element=>{
+   const rect=element.getClientRects()[0],y=rect.top+rect.height/2;
+   return [rect.left+Math.min(10,rect.width/2),rect.left+rect.width/2].map(x=>{
+    const top=document.elementFromPoint(x,y);
+    return {visible:x>=0&&x<innerWidth&&y>=0&&y<innerHeight,coveredBySidebar:!!top?.closest('#sidebar'),targetReceivesHit:!!top&&element.contains(top)};
+   });
+  });
+  ok(hit.every(p=>p.visible&&!p.coveredBySidebar&&p.targetReceivesHit),'Unobstructed fallback content/recovery '+mode+'/'+width+'/'+route);
+ }
+ for(const link of await recovery.all()){
+  await link.focus();
+  ok(await link.evaluate(e=>e===document.activeElement),'Keyboard recovery '+mode+'/'+width+'/'+route);
+ }
+ ok(await page.evaluate(()=>{const before=scrollY;scrollTo(0,document.documentElement.scrollHeight);const after=scrollY;scrollTo(0,0);return after>0&&before>=0;}),'Fallback page can scroll '+mode+'/'+width+'/'+route);
+}
 const cff=JSON.parse(read('CITATION.cff')); // JSON is a strict subset of YAML 1.2, the CFF serialization format.
 assert.equal(cff['cff-version'],'1.2.0');assert.equal(cff.type,'software');assert.equal(cff.title,'Explorare geospațială');checks+=3;
 assert.deepEqual(cff.authors,[{'family-names':'Budileanu','given-names':'Marius',affiliation:'Universitatea din București, Facultatea de Geografie'}]);checks++;
@@ -55,9 +80,28 @@ ok(read('CONTENT_LICENSE.md').includes('Creative Commons Attribution 4.0 Interna
    ok(Math.abs(await page.evaluate(()=>scrollY)-before.y)<=2,'Space zoom does not scroll '+id);
    ok(await zoom.evaluate(e=>e===document.activeElement&&getComputedStyle(e).outlineStyle!=='none'),'Zoom retains visible keyboard focus '+id);
   }
-  const nojs=await browser.newContext({javaScriptEnabled:false});const staticPage=await nojs.newPage();
-  for(const route of ['index.html','about.html','resources.html','lesson.html?id=sphere','gis-lab.html','challenges.html','raster-styling.html','topology.html','formats-interoperability.html','tutorials/t01.html']){await staticPage.goto(base+route);ok(await staticPage.locator('h1').count()===1,'No-JS heading '+route);ok(await staticPage.locator('nav[aria-label="Navigare fără JavaScript"]').count()===1,'No-JS recovery');ok((await staticPage.locator('body').innerText()).includes('JavaScript'),'No-JS explanation');if(route==='resources.html')assert.deepEqual(await staticPage.locator('.dataset-record').evaluateAll(es=>es.map(e=>e.id)),registry.datasets.map(d=>'data-'+d.id),'Exact static registry record set');if(route==='about.html')ok((await staticPage.locator('main').innerText()).includes('asistență AI'),'Static academic content');}await nojs.close();
-  const failed=await browser.newContext();await failed.route('**/*.js',r=>r.abort());const fallback=await failed.newPage();for(const route of ['about.html','resources.html','lesson.html?id=sphere']){await fallback.goto(base+route);ok((await fallback.locator('main').innerText()).length>150,'Failed-JS readable content '+route);}await failed.close();
+  const nojs=await browser.newContext({javaScriptEnabled:false,reducedMotion:'reduce'});const staticPage=await nojs.newPage();
+  for(const route of ['index.html','about.html','resources.html','lesson.html?id=sphere','gis-lab.html','challenges.html','raster-styling.html','topology.html','formats-interoperability.html','tutorials/t01.html']){await staticPage.goto(base+route);ok(await staticPage.locator('h1').count()===1,'No-JS heading '+route);ok(await staticPage.locator('nav[aria-label="Navigare fără JavaScript"]').count()===1,'No-JS recovery');ok((await staticPage.locator('body').innerText()).includes('JavaScript'),'No-JS explanation');if(route==='resources.html')assert.deepEqual(await staticPage.locator('.dataset-record').evaluateAll(es=>es.map(e=>e.id)),registry.datasets.map(d=>'data-'+d.id),'Exact static registry record set');if(route==='about.html')ok((await staticPage.locator('main').innerText()).includes('asistență AI'),'Static academic content');}
+  for(const width of [390,768])for(const route of ['index.html','about.html','resources.html','lesson.html?id=sphere','tutorials/t01.html','tutorials/t05.html','tutorials/t06.html'])await checkFallbackAccess(staticPage,route,width,'no-js');
+  await nojs.close();
+  const failed=await browser.newContext({reducedMotion:'reduce'});await failed.route('**/*.js',r=>r.abort());const fallback=await failed.newPage();for(const route of ['about.html','resources.html','lesson.html?id=sphere']){await fallback.goto(base+route);ok((await fallback.locator('main').innerText()).length>150,'Failed-JS readable content '+route);}
+  for(const width of [390,768])for(const route of ['index.html','about.html','resources.html','lesson.html?id=sphere','tutorials/t01.html','tutorials/t05.html','tutorials/t06.html'])await checkFallbackAccess(fallback,route,width,'failed-js');
+  await failed.close();
+  const enhanced=await browser.newContext({reducedMotion:'reduce'});const interactive=await enhanced.newPage();
+  for(const width of [390,768,1024,1440])for(const dark of [false,true]){
+   await interactive.addInitScript(d=>localStorage.setItem('cartografie-theme',d?'dark':'light'),dark);
+   await checkFallbackAccess(interactive,'index.html',width,'js');
+   ok(await interactive.locator('body').evaluate(e=>e.classList.contains('nav-enhanced')),'Drawer enhanced after initialization');
+   const toggle=interactive.locator('#nav-toggle'),sidebar=interactive.locator('#sidebar');
+   assert.equal(await sidebar.isVisible(),width>900,'Initial sidebar state');checks++;
+   await toggle.focus();await toggle.press('Space');
+   assert.equal(await sidebar.isVisible(),width<=900,'Keyboard toggles sidebar');checks++;
+   assert.equal(await toggle.getAttribute('aria-expanded'),String(width<=900),'Drawer announces its actual state');checks++;
+   ok(await toggle.evaluate(e=>e===document.activeElement&&getComputedStyle(e).outlineStyle!=='none'),'Drawer toggle retains visible keyboard focus');
+   await toggle.press('Enter');assert.equal(await sidebar.isVisible(),width>900,'Keyboard restores sidebar state');checks++;
+   if(width<=900)ok(await interactive.locator('h1').evaluate(e=>{const r=e.getBoundingClientRect();return !document.elementFromPoint(r.left+10,r.top+10)?.closest('#sidebar');}),'Closed JS drawer leaves heading accessible');
+  }
+  await enhanced.close();
   ok(!errors.length,'No browser errors: '+errors.join('; '));
   fs.mkdirSync(path.join(root,'tmp/qa/operation1'),{recursive:true});fs.writeFileSync(path.join(root,'tmp/qa/operation1/academic-resilience.json'),JSON.stringify({status:'PASS',checks,search:measurements,errors},null,2));console.log(JSON.stringify({status:'PASS',checks,errors}));
  }finally{await browser.close();}

@@ -60,6 +60,11 @@ body.dark{--surface-alt:#223441;--qgis:#93bd8d}.site-topbar .about-link{color:va
 .historical-reference { display: block; padding: 1.5rem; line-height: 1.6; }
 .search-results small { white-space: normal; line-height: 1.45; }
 
+/* A mobile drawer is safe only after its interactive controls are initialized. */
+@media (max-width:900px) {
+  body:not(.nav-enhanced) .sidebar { display:none; }
+}
+
 @media (min-width:901px) {
   body[data-page-id="about"] .site-workspace, body[data-recovery="true"] .site-workspace { grid-template-columns:255px minmax(0,1fr); }
   body[data-page-id="about"].nav-collapsed .site-workspace, body[data-recovery="true"].nav-collapsed .site-workspace { grid-template-columns:minmax(0,1fr); }

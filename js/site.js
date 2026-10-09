@@ -125,6 +125,7 @@
     setNav(narrow.matches); narrow.addEventListener('change', event => setNav(event.matches));
     $('#nav-toggle')?.addEventListener('click', () => setNav(!document.body.classList.contains('nav-collapsed')));
     $('#chapter-nav')?.addEventListener('click', event => { if (event.target.closest('a') && narrow.matches) setNav(true); });
+    document.body.classList.add('nav-enhanced');
     const setTheme = dark => { document.body.classList.toggle('dark', dark); $('#theme-toggle')?.setAttribute('aria-pressed', String(dark)); if ($('#theme-label')) $('#theme-label').textContent = dark ? 'Mod luminos' : 'Mod întunecat'; };
     try { setTheme(localStorage.getItem('cartografie-theme') === 'dark'); } catch { setTheme(false); }
     $('#theme-toggle')?.addEventListener('click', () => { const dark = !document.body.classList.contains('dark'); setTheme(dark); try { localStorage.setItem('cartografie-theme', dark ? 'dark' : 'light'); } catch {} });
@@ -505,7 +506,7 @@
       {category:'Date vector',title:'Date geospațiale · vector și formate',description:'Entități, atribute și GeoPackage, GeoJSON, Shapefile.',url:'geospatial-data.html#vector',local:true},
       {category:'Date raster',title:'Date geospațiale · raster',description:'Pixeli, rezoluție, DEM și GeoTIFF.',url:'geospatial-data.html#raster',local:true},
       {category:'Processing QGIS',title:'Laboratoare de prelucrare',description:'14 operații vectoriale și 15 raster, cu surse oficiale.',url:'geospatial-data.html#vector-lab',local:true},
-      {category:'Geodezie / CRS',title:'ANCPI · altitudini normale Marea Neagră 1975',description:'Referință românească pentru înălțimi normale.',url:'https://www.ancpi.ro/ocpi/cs/wp-content/legi/modif%20ord%20600-2023.pdf'},
+      {category:'Geodezie / CRS',title:'ANCPI · altitudini normale Marea Neagră 1975',description:'Referință românească pentru înălțimi normale.',url:'https://www.ocpiilfov.ro/ocpi_ilfov/Regulament600_Valabil01082023.pdf'},
       {category:'Date vector',title:'GDAL · GeoPackage vector',description:'Format și funcții de container.',url:'https://gdal.org/en/stable/drivers/vector/gpkg.html'},
       {category:'Date raster',title:'GDAL · Cloud Optimized GeoTIFF',description:'Organizare raster pentru citire parțială.',url:'https://gdal.org/en/stable/drivers/raster/cog.html'},
       {category:'Processing QGIS',title:'QGIS 3.44 · Vector overlay',description:'Clip, Intersection și Union.',url:'https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/qgis/vectoroverlay.html'}

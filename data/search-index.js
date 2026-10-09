@@ -48,7 +48,7 @@ window.CARTO_SEARCH_INDEX = [
     "href": "index.html",
     "description": "De la concepte clasice la GIS (QGIS)",
     "paragraphs": [
-      "Un spațiu academic în care definițiile și figurile istorice rămân vizibile, iar geometria, proiecțiile și metodele de reprezentare pot fi cercetate prin modele interactive.",
+      "Un spațiu academic în care definițiile și referințele istorice rămân integrate, iar geometria, proiecțiile și metodele de reprezentare pot fi cercetate prin modele interactive.",
       "Șapte trasee de învățare",
       "Fundamente geospațiale",
       "De la coordonate geografice și rectangulare la sferă, cilindru, con și elipsă.",
@@ -392,7 +392,7 @@ window.CARTO_SEARCH_INDEX = [
       "Dar de unde măsurăm altitudinea?",
       "Înălțimea elipsoidală h este raportată la elipsoidul unui CRS geografic 3D. O înălțime fizică, legată de gravitație, se raportează la o suprafață verticală de referință și la un zero definit; poate fi, de exemplu, o înălțime normală H. Geoidul sau cvasi-geoidul poate participa la legătura dintre cele două, dar formula exactă depinde de sistemul și modelul folosit.",
       "Aranjamentul este conceptual, nu o diagramă la scară sau o ecuație de conversie.",
-      "Documentele ANCPI folosesc expresia „sistemul de altitudini normale Marea Neagră 1975” pentru H și disting separat coordonatele elipsoidale (B, L, h) în ETRS89. Ordinul ANCPI publicat în Monitorul Oficial, 17 iulie 2023 ↗. Stereo 70 și Gauss–Krüger descriu coordonate orizontale proiectate; nu definesc zero-ul altitudinilor.",
+      "Documentele ANCPI folosesc expresia „sistemul de altitudini normale Marea Neagră 1975” pentru H și disting separat coordonatele elipsoidale (B, L, h) în ETRS89. Regulamentul aprobat prin Ordinul ANCPI nr. 600/2023 · consolidare 1 august 2023, art. 247 alin. (5) lit. c), p. 86 ↗. Stereo 70 și Gauss–Krüger descriu coordonate orizontale proiectate; nu definesc zero-ul altitudinilor.",
       "Putem desfășura Pământul fără deformare?",
       "O suprafață curbată în două direcții nu poate fi transpusă integral pe un plan fără întindere, comprimare ori tăieturi. Coaja unei portocale oferă o analogie: o putem tăia și desface, dar nu o putem așeza perfect plat, continuu și fără tensiune.",
       "Experimentează analogia",
