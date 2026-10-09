@@ -28,7 +28,7 @@ window.CARTO_DATA_REGISTRY = {
       "attribution_required": true,
       "attribution": "Conține date prelucrate în cadrul Observatorului Urban Metropolitan București, ADIZMB, sursa unor date fiind data.gov.ro, date deschise sub Licența Creative Commons Attribution 4.0. (https://data.gov.ro/organization/men)",
       "modifications": "Crop sector 1",
-      "platform_use": "Provocări - V1, V3\nTutorial 01, 05",
+      "platform_use": "Provocări V1, V3; ateliere T01, T02, T05",
       "educational_download_package": false,
       "interactive_subsets": [
         {
@@ -182,7 +182,8 @@ window.CARTO_DATA_REGISTRY = {
       "notes": [
         "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.",
         "Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei."
-      ]
+      ],
+      "workshop_access_note": "Catalog: poligoane UAT / București (limită reunită) pentru T01–T05; poligoane județe pentru T06. Alege GeoPackage în EPSG:3844. Ediția produsului descărcat se consemnează separat de copiile istorice."
     },
     {
       "id": "census2021",
@@ -237,7 +238,7 @@ window.CARTO_DATA_REGISTRY = {
       "temporal_coverage": "2001–2024 în subsetul interactiv",
       "original_format": "Geotiff",
       "original_crs": "4326",
-      "resolution_or_scale": "30 m",
+      "resolution_or_scale": "30 m nominal; granula originală v1.12 50N_020E are pas unghiular de 0,00025°",
       "license_name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
       "license_url": "https://creativecommons.org/licenses/by/4.0/",
       "license_status": "documented_in_metadata",
@@ -257,8 +258,41 @@ window.CARTO_DATA_REGISTRY = {
         }
       ],
       "notes": [
-        "Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 este NoData, nu absență observată a pierderii."
-      ]
+        "Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 este NoData, nu absență observată a pierderii.",
+        "În granula originală Hansen v1.12/50N_020E verificată la 09.10.2026, TIFF-ul nu are tag NoData; zero indică fără pierdere detectată. Datamask distinge acoperirea validă. Acest fapt nu redefinește NoData al subsetului Rîșca."
+      ],
+      "download_documentation_url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2024-v1.12/download.html",
+      "display_credit": "Source: Hansen/UMD/Google/USGS/NASA",
+      "workshop_editions": {
+        "T06": "GFC-2024-v1.12, identificat în numele fișierului folosit de tutorial; identitatea exactă a copiei prelucrate nu este verificată."
+      },
+      "original_semantics": {
+        "lossyear_zero": "no_loss",
+        "year_formula": "2000 + code",
+        "workshop_codes": [
+          1,
+          24
+        ],
+        "datamask": {
+          "0": "NoData",
+          "1": "land",
+          "2": "water"
+        }
+      },
+      "workshop_raster_properties": {
+        "T06": {
+          "edition": "GFC-2024-v1.12 / lossyear / 50N_020E",
+          "crs": "EPSG:4326",
+          "pixel_size_degrees": [
+            0.00025,
+            0.00025
+          ],
+          "data_type": "UInt8",
+          "nodata_tag": null,
+          "verified_on": "2026-10-09",
+          "verification": "Antet GeoTIFF citit prin HTTP Range; fără descărcarea/salvarea rasterului complet."
+        }
+      }
     },
     {
       "id": "copernicus-dem",
@@ -295,7 +329,117 @@ window.CARTO_DATA_REGISTRY = {
         "Ediția exactă, datum-ul vertical și rețeta originală de reproiectare rămân de confirmat. Rezoluția nominală GLO-30 diferă de pasul efectiv al subsetului EPSG:3844."
       ],
       "license_document_url": "https://dataspace.copernicus.eu/sites/default/files/media/files/2025-06/copernicus_contributing_mission_data_access_v2_cop_dem_licenses.pdf",
-      "documentation_url": "https://doi.org/10.5270/ESA-c5d3d65"
+      "documentation_url": "https://doi.org/10.5270/ESA-c5d3d65",
+      "access_requirements": "Cont gratuit CDSE, înregistrare pentru Copernicus Contributing Missions (CCM) și acceptarea termenilor produsului. Alege GLO-30 DGED; o vizualizare sau un export implicit GLO-90 nu este produsul cerut.",
+      "access_documentation_url": "https://documentation.dataspace.copernicus.eu/Data/Others/CCM.html"
+    },
+    {
+      "id": "protected-areas-context",
+      "name": "Arii naturale protejate — sursă oficială de context T06",
+      "provider": "Ministerul Mediului, Apelor și Pădurilor",
+      "official_source": "https://inspire.mmap.ro/geoportal/rest/metadata/item/16c341ac71364a988f46bdcee12a99c2/html",
+      "access_url": "https://inspire.mmap.ro/server/rest/directories/arcgisforinspire/INSPIRE/PS_download_MapServer/Main_ATOM_ps.xml",
+      "accessed": "2026-10-09",
+      "edition": "Revizia 2024-04-15 a metadatelor publice; ediția copiei tutorialului este necunoscută",
+      "spatial_coverage": "România",
+      "temporal_coverage": null,
+      "original_format": "Serviciu ATOM; verifică formatul pachetului oferit",
+      "original_crs": "EPSG:3035 în metadatele publice; copia istorică a tutorialului nu este verificată",
+      "resolution_or_scale": null,
+      "license_name": "Metadatele oficiale indică fără condiții de acces și utilizare",
+      "license_url": "https://inspire.mmap.ro/geoportal/rest/metadata/item/16c341ac71364a988f46bdcee12a99c2/html",
+      "license_status": "documented_in_metadata",
+      "attribution_required": null,
+      "attribution": null,
+      "modifications": "Niciun fișier distribuit. Importul/conversia/decuparea sunt realizate local de student.",
+      "platform_use": "T06 — context sau extensie; nu condiționează comparația Forest Loss peste hillshade.",
+      "educational_download_package": false,
+      "interactive_subsets": [],
+      "notes": [
+        "Sursa propusă pentru lucru public nu confirmă automat proveniența copiei istorice din capturi.",
+        "La verificarea din 09.10.2026, serviciul oficial a raportat certificat TLS expirat. Nu ocoli verificarea certificatului; comparația raster se poate realiza fără acest context."
+      ],
+      "access_requirements": "Portal/ATOM oficial; la verificarea din 09.10.2026 certificatul TLS era expirat. Nu ocoli avertismentul de securitate. Acest context este opțional; rezultatul raster de bază poate fi finalizat fără el."
+    },
+    {
+      "id": "hydrography-context",
+      "name": "Râuri și lacuri — context opțional T06",
+      "provider": "Proveniența fișierelor istorice necesită confirmare",
+      "official_source": null,
+      "access_url": null,
+      "accessed": null,
+      "edition": null,
+      "spatial_coverage": "România",
+      "temporal_coverage": null,
+      "original_format": "GeoPackage în tutorial; formatul sursei originale neconfirmat",
+      "original_crs": "CRS original neconfirmat; verifică fișierul",
+      "resolution_or_scale": null,
+      "license_name": "Licență neconfirmată",
+      "license_url": null,
+      "license_status": "needs_confirmation",
+      "attribution_required": null,
+      "attribution": null,
+      "modifications": "Niciun fișier distribuit. Importul/conversia/decuparea sunt realizate local de student.",
+      "platform_use": "T06 — context sau extensie; nu condiționează comparația Forest Loss peste hillshade.",
+      "educational_download_package": false,
+      "interactive_subsets": [],
+      "notes": [
+        "Sursa propusă pentru lucru public nu confirmă automat proveniența copiei istorice din capturi.",
+        "Fără sursă verificată, acest strat este opțional și nu este o condiție de finalizare."
+      ]
+    },
+    {
+      "id": "relief-context",
+      "name": "Unități de relief — extensie opțională T06",
+      "provider": "Bogdan Candrea, Petronela Candrea, Mihai Daniel Niță; distribuție geo-spatial.org",
+      "official_source": "https://www.geo-spatial.org/vechi/download/romania-seturi-vectoriale",
+      "access_url": "https://www.geo-spatial.org/vechi/download/romania-seturi-vectoriale",
+      "accessed": "2026-10-09",
+      "edition": "Catalog publicat 21.03.2008; identitatea copiei istorice neconfirmată",
+      "spatial_coverage": "România",
+      "temporal_coverage": null,
+      "original_format": "Shapefile oferit de catalog; GeoPackage este produsul de lucru",
+      "original_crs": "Stereo70 sau WGS84 în catalog; verifică EPSG-ul pachetului ales",
+      "resolution_or_scale": null,
+      "license_name": "Licența acestui produs exact necesită verificare",
+      "license_url": "https://www.geo-spatial.org/vechi/download/romania-seturi-vectoriale",
+      "license_status": "needs_confirmation",
+      "attribution_required": null,
+      "attribution": null,
+      "modifications": "Niciun fișier distribuit. Importul/conversia/decuparea sunt realizate local de student.",
+      "platform_use": "T06 — context sau extensie; nu condiționează comparația Forest Loss peste hillshade.",
+      "educational_download_package": false,
+      "interactive_subsets": [],
+      "notes": [
+        "Sursa propusă pentru lucru public nu confirmă automat proveniența copiei istorice din capturi."
+      ]
+    },
+    {
+      "id": "landforms-context",
+      "name": "Landforms geomorfometrice — extensie opțională T06",
+      "provider": "Proveniența fișierului istoric necesită confirmare",
+      "official_source": null,
+      "access_url": null,
+      "accessed": null,
+      "edition": null,
+      "spatial_coverage": "România",
+      "temporal_coverage": null,
+      "original_format": "GeoPackage în tutorial; format original neconfirmat",
+      "original_crs": "CRS original neconfirmat; verifică fișierul",
+      "resolution_or_scale": null,
+      "license_name": "Licență neconfirmată",
+      "license_url": null,
+      "license_status": "needs_confirmation",
+      "attribution_required": null,
+      "attribution": null,
+      "modifications": "Niciun fișier distribuit. Importul/conversia/decuparea sunt realizate local de student.",
+      "platform_use": "T06 — context sau extensie; nu condiționează comparația Forest Loss peste hillshade.",
+      "educational_download_package": false,
+      "interactive_subsets": [],
+      "notes": [
+        "Sursa propusă pentru lucru public nu confirmă automat proveniența copiei istorice din capturi.",
+        "Fără sursă verificată, acest strat este opțional și nu este o condiție de finalizare."
+      ]
     }
   ]
 };

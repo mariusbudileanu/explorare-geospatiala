@@ -394,6 +394,19 @@ window.CARTO_QGIS_LINKS = {
       "used_in": [
         "formats-interoperability"
       ]
+    },
+    {
+      "id": "raster-clip-mask",
+      "concept": "Decuparea și reproiectarea rasterelor prin mască",
+      "title": "24.2.3.2. Clip raster by mask layer",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/gdal/rasterextraction.html#clip-raster-by-mask-layer",
+      "source_type": "QGIS User Manual",
+      "qgis_version": "3.44",
+      "verified": true,
+      "verified_on": "2026-10-09",
+      "used_in": [
+        "tutorial-t06"
+      ]
     }
   ],
   "bridges": [

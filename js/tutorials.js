@@ -14,6 +14,7 @@
     node.replaceWith(span);
   });
   $$('.tutorial-prose table').forEach(table=>{
+    if(table.closest('.tutorial-table-scroll'))return;
     const wrapper=document.createElement('div');
     wrapper.className='tutorial-table-scroll';
     table.parentNode.insertBefore(wrapper,table);
@@ -74,6 +75,21 @@
     const narrow=matchMedia('(max-width:600px)');
     toc.open=!narrow.matches;
     narrow.addEventListener('change',event=>{toc.open=!event.matches;});
+  }
+
+  const clipShare=$('#clip-share');
+  if(clipShare){
+    const update=()=>{
+      const percent=Number(clipShare.value);
+      $('#clip-area').textContent=percent+'%';
+      $('#clip-attribute').textContent='100';
+      $('#clip-estimate').textContent=String(100*percent/100);
+      $('#clip-retained').setAttribute('width',String(300*percent/100));
+    };
+    clipShare.disabled=false;$('#clip-reset').disabled=false;
+    clipShare.addEventListener('input',update);
+    $('#clip-reset').addEventListener('click',()=>{clipShare.value='30';update();});
+    update();
   }
 
   const workflow={

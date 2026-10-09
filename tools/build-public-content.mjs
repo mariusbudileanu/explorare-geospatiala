@@ -3,6 +3,7 @@
  * Requires Playwright and a Chromium executable (QA_BROWSER_PATH); no runtime dependency.
  */
 import fs from 'node:fs';
+import {buildWorkshops} from './workshop-content.mjs';
 import path from 'node:path';
 import http from 'node:http';
 import vm from 'node:vm';
@@ -12,6 +13,7 @@ const require=createRequire(import.meta.url);
 const {chromium}=require(process.env.CODEX_NODE_MODULES ? path.join(process.env.CODEX_NODE_MODULES,'playwright') : 'playwright');
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const check=process.argv.includes('--check');
+buildWorkshops(root,{check});
 const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'data/content-manifest.js'),'utf8'),context);
 const manifest=context.window.CARTO_CONTENT;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

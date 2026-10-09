@@ -12,3 +12,17 @@
 @media(max-width:900px){.workshop-context{grid-column:1}.workshop-grid,.tutorial-links,.comparison-cards,.analysis-types,.data-project-comparison{grid-template-columns:1fr}.analysis-chain{grid-template-columns:repeat(4,minmax(0,1fr))}.workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.workshop-main{padding-left:18px;padding-right:18px}.workshop-path,.dataset-grid{grid-template-columns:1fr}.tutorial-overview ul{columns:1}.tutorial-step{padding:16px 14px}.step-heading h3{font-size:17px}.tutorial-toc nav{grid-template-columns:1fr}.tutorial-figure{margin-left:-8px;margin-right:-8px}.tutorial-image-button img{max-height:none}.tutorial-prev-next{grid-template-columns:1fr}.tutorial-prev-next a:last-child{text-align:left}.analysis-chain{grid-template-columns:repeat(2,minmax(0,1fr))}.analysis-chain span+span::before{display:none}.workflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workshop-hero h1{font-size:30px}.tutorial-dialog{padding:10px}.tutorial-dialog img{max-height:calc(90vh - 110px)}}
 .tutorial-dialog-actions{display:flex;gap:8px;align-items:center}.tutorial-dialog-actions .outline-button{margin:0;font-size:12px;padding:5px 9px}.tutorial-dialog-viewport{max-height:calc(90vh - 135px);overflow:auto}.tutorial-dialog-viewport img{max-height:calc(90vh - 135px)}.tutorial-dialog.zoomed .tutorial-dialog-viewport img{max-width:none;max-height:none;width:max(1200px,100%)}
+
+/* Source-backed reproducibility additions; retain the existing workshop tokens. */
+.workshop-requirements,.workshop-preparation{margin:24px 0;padding:20px;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+.workshop-requirements p,.workshop-preparation li,.workshop-checkpoints li{font-size:14px;line-height:1.7}
+.workshop-preparation ol,.workshop-checkpoints{padding-left:24px}.workshop-preparation li,.workshop-checkpoints li{margin:12px 0}
+.dataset-card,.dataset-card code,.dataset-card dd,.workshop-requirements code{overflow-wrap:anywhere;min-width:0}
+.clip-population-demo{margin:16px 0;padding:18px;border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:6px;background:var(--surface)}
+.clip-demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.clip-demo-grid>*{min-width:0}
+.clip-demo-grid svg{display:block;width:100%;max-width:360px;color:var(--ink)}.clip-original{fill:var(--surface-alt,var(--bg));stroke:var(--ink)}.clip-demo-grid svg text{fill:var(--ink);font-size:13px}
+.clip-demo-grid label{display:block;font-weight:700}.clip-demo-grid input{width:100%;min-height:44px;accent-color:var(--teal)}.clip-demo-grid output{font-weight:700;color:var(--ink)}
+.clip-demo-grid input:focus-visible,.clip-demo-grid button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+@media(max-width:700px){.clip-demo-grid{grid-template-columns:1fr}.workshop-preparation,.workshop-requirements,.clip-population-demo{padding:14px}}
+
+.tutorial-table-scroll:focus-visible{outline:3px solid var(--blue);outline-offset:2px}

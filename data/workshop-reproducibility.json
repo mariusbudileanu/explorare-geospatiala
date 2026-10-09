@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "qgis_target": "3.44 LTR",
+  "interface_language": "English",
+  "distribution": "Surse originale; fără pachete de date ori proiecte distribuite.",
+  "workshops": {
+    "T01": {
+      "objectives": [
+        "Încarci punctele școlilor și limita Bucureștiului din sursa oficială.",
+        "Alegi și verifici o expresie CASE pentru simbolizarea pe categorii.",
+        "Aplici filtre temporare fără să modifici datele originale.",
+        "Creezi și verifici layoutul exportat PNG/PDF."
+      ],
+      "working_crs": "EPSG:4326 pentru afișare; fără calcule metrice. Limita alternativă EPSG:3844 se poate afișa prin reproiectare dinamică.",
+      "prepare": [
+        "Deschide pagina ADIZMB pentru anul școlar 2022–2023. Alege descărcarea datelor deschise și dezarhivează în data_raw; păstrează și documentația/termenii.",
+        "În Browser sau Add Vector Layer, inspectează GeoPackage-urile din arhivă. Alege stratul punctual al unităților preuniversitare și stratul limitei Bucureștiului, nu poligoanele circumscripțiilor. Denumirile istorice de mai jos te ajută să le recunoști.",
+        "Dacă portalul livrează Shapefile, păstrează toate componentele împreună și exportă o copie cu Export → Save Features As… în GeoPackage în data_processed, fără reproiecție inutilă. Verifică numele reale ale câmpurilor, inclusiv eventualele aliasuri, înainte să copiezi expresiile.",
+        "Dacă arhiva școlilor nu include limita, folosește catalogul de limite administrative: alege poligoane UAT / București cu limita reunită, verifică denumirea și exportă doar Bucureștiul. Nu folosi un singur sector drept limită a municipiului."
+      ],
+      "checks": [
+        "În Layer Properties → Information, punctele sunt EPSG:4326 și au câmpurile Nivel Preșcolar, Nivel Primar, Nivel Gimnazial și Număr total elevi sau echivalente documentate; limita este poligonală și acoperă municipiul.",
+        "Filtrul Nivel Preșcolar = 1 ascunde numai obiectele care nu satisfac expresia; ștergerea filtrului restabilește afișarea completă.",
+        "Categorized folosește expresia CASE în ordinea §14, iar legenda și exporturile PNG/PDF reflectă categoriile, sursa și nota metodologică."
+      ],
+      "reference": "Captura T01_03 arată layoutul; punctele sunt diferențiate pe categorii educaționale, cu limita orașului în fundal. Numărul de puncte și distribuția pot varia cu ediția.",
+      "limit": "Localizarea școlilor nu măsoară accesibilitatea pietonală, capacitatea sau echitatea. CASE simplifică unitățile care au mai multe niveluri educaționale.",
+      "next": "T02",
+      "dataset_ids": [
+        "schools_bucharest_2022_2023"
+      ],
+      "supplementary_registry_ids": [
+        "administrative-boundaries"
+      ],
+      "optional_dataset_ids": []
+    },
+    "T02": {
+      "objectives": [
+        "Încarci și verifici circumscripțiile, școlile asociate și limita orașului.",
+        "Calculezi elevi per sală cu protecție pentru zero și NULL.",
+        "Compari clasificarea indicatorului cu numărul de schimburi.",
+        "Verifici legenda și limitele unei hărți exploratorii."
+      ],
+      "working_crs": "EPSG:4326 pentru cele trei straturi din ediția descrisă; fără reproiecție pentru calculul raportului atributar.",
+      "prepare": [
+        "Descarcă arhiva școli și circumscripții ADIZMB 2022–2023, apoi dezarhivează în data_raw. T01 și T02 folosesc aceeași familie de surse, dar straturi diferite.",
+        "În GeoPackage alege poligoanele Delimitarea Circumscripțiilor…, punctele Unitățile Școlare cu Circumscripții… și limita Bucureștiului. Nu înlocui poligoanele cu puncte și nu presupune că două straturi cu același nume au geometrie identică.",
+        "Verifică Număr total elevi, Număr săli de clasă și Număr de schimburi în tabel. Dacă o ediție schimbă schema, adaptează numele din expresie numai după verificarea descrierii câmpurilor. Nu completa valorile NULL cu zero.",
+        "Dacă lipsește limita de context, obține poligonul Bucureștiului din catalogul administrativ; reproiectarea dinamică este suficientă pentru afișare. Folosește copia GeoPackage numai dacă formatul livrat cere conversie."
+      ],
+      "checks": [
+        "Poligoanele circumscripțiilor, punctele asociate și limita municipiului sunt încărcate și suprapuse; CRS-ul fiecăruia este consemnat.",
+        "Previzualizarea expresiei din §16 produce NULL pentru Număr săli de clasă zero/NULL și un raport zecimal pentru cazurile valide.",
+        "Graduated clasifică raportul, nu numărul brut de elevi; punctele școlilor rămân deasupra, iar legenda numește indicatorul Elevi per sală de clasă."
+      ],
+      "reference": "T02_02 arată punctele peste circumscripțiile clasificate; T02_03 oferă varianta după schimburi. Pragurile claselor depind de ediție și de metoda aleasă.",
+      "limit": "Elevi per sală este un indicator didactic, nu capacitate oficială, aglomerare efectivă ori evaluare a calității școlilor.",
+      "next": "T03",
+      "dataset_ids": [
+        "school_catchments_bucharest_2022_2023"
+      ],
+      "supplementary_registry_ids": [
+        "administrative-boundaries"
+      ],
+      "optional_dataset_ids": []
+    },
+    "T03": {
+      "objectives": [
+        "Încarci cele trei straturi medicale din aceeași sursă documentată.",
+        "Construiești o ierarhie vizuală primary / secondary / tertiary care.",
+        "Verifici filtrele pentru ecograf, CT și RMN pe câmpurile potrivite.",
+        "Compari simbolurile fixe cu cele bazate pe numărul de paturi."
+      ],
+      "working_crs": "EPSG:4326 documentat pentru sursa ADIZMB; verifică fiecare strat. Contextul administrativ poate fi EPSG:3844; proiect EPSG:4326, afișare dinamică.",
+      "prepare": [
+        "Din pagina ADIZMB Infrastructură de sănătate mun. București și jud. Ilfov, descarcă datele deschise 2023–2024 și dezarhivează. Registrul intern consemnează anul 2024; nu îl confunda cu un recensământ al serviciilor din anul curent.",
+        "Încarcă separat punctele Cabinete Medicină de Familie (Primary Care), Cabinete și Ambulatorii de Specialitate (Secondary Care) și Spitale București-Ilfov (Tertiary Care). Nu face merge între cele trei scheme.",
+        "Verifică Contract Ecograf pe secondary care, CT - Computer Tomograf și RMN - Rezonanță Magnetică Nucleară pe spitale, respectiv Spitalizare continua (paturi) pentru varianta opțională.",
+        "Din catalogul administrativ alege poligonul județului Ilfov și/sau Bucureștiului pentru context; exportă selecția în data_processed/limita_bucuresti_ilfov.gpkg. Poți redenumi stratul în proiect Limita_IF pentru corespondența cu pașii. Schema medicală nu depinde de câmpurile limitei."
+      ],
+      "checks": [
+        "Toate cele trei straturi sunt punctuale și au câmpurile folosite la filtre; verifică valorile 0/1 și NULL separat.",
+        "După testul Contract Ecograf = 1, revenirea fără filtru restaurează harta generală; orice filtru păstrat este numit în titlu/legendă.",
+        "Spitalele sunt deasupra celorlalte puncte, cu simbol distinct; legenda explică paturile numai dacă dimensiunea simbolului folosește acel atribut."
+      ],
+      "reference": "T03_01 arată ierarhia straturilor, iar T03_02 simbolurile pentru paturi. T03_03 este o selecție filtrată, nu totalitatea serviciilor.",
+      "limit": "Punctele și dotările declarate nu demonstrează programul disponibil, accesibilitatea, calitatea sau capacitatea efectivă.",
+      "next": "T04",
+      "dataset_ids": [
+        "medical_primary_care",
+        "medical_secondary_care",
+        "medical_tertiary_care",
+        "medical_admin_boundary_if"
+      ],
+      "supplementary_registry_ids": [],
+      "optional_dataset_ids": []
+    },
+    "T04": {
+      "objectives": [
+        "Încarci poligoanele bazelor sportive și verifici Stare / Tip proprietate.",
+        "Simbolizezi nominal starea și compari o variantă după proprietate.",
+        "Aplici filtre text și verifici aria metrică numai în varianta opțională.",
+        "Formulezi o notă cartografică fără concluzii juridice nejustificate."
+      ],
+      "working_crs": "Baze sportive EPSG:4326; proiect EPSG:4326 pentru afișare. Numai calculul opțional de arie transformă geometria în EPSG:3844.",
+      "prepare": [
+        "Descarcă arhiva Rețeaua de baze sportive din mun. București de la ADIZMB și dezarhivează. Produsul documentat acoperă 1991–2024. Numele istoric al fișierului folosit în pagină conține 1990–2024, dar stratul conține 1991–2024; nu trata diferența drept o ediție nouă.",
+        "Alege stratul poligonal al bazelor sportive și verifică Nume, Stare, Tip proprietate și Funcțiune actuală. Nu interpreta textul juridico-administrativ ca situație cadastrală verificată.",
+        "Pentru context, folosește limita Bucureștiului și opțional Ilfovul din catalogul administrativ. Dacă sursa livrată este EPSG:3844, las-o în acest CRS și folosește afișarea dinamică.",
+        "Păstrează originalele. Dacă faci calculul opțional din §16, confirmă că geometria bazelor este efectiv EPSG:4326 înainte de expresia transform; dacă este alt CRS, folosește codul real sau exportă o copie EPSG:3844 și calculează area($geometry)/10000."
+      ],
+      "checks": [
+        "Stratul principal este poligonal; categoriile Stare corespund valorilor reale din tabel, cu NULL tratat distinct.",
+        "Filtrul ILIKE selectează după textul câmpului Tip proprietate; revenirea la toate obiectele nu șterge sursa.",
+        "În varianta opțională, aria în hectare provine din geometrie proiectată în metri; harta principală rămâne după Stare, cu nota metodologică."
+      ],
+      "reference": "T04_02 este harta principală după Stare; T04_03 compară proprietatea. Categoriile și numărul poligoanelor pot varia în revizii.",
+      "limit": "Harta nu stabilește legalitatea, răspunderea juridică, situația cadastrală completă ori cauza transformării.",
+      "next": "T05",
+      "dataset_ids": [
+        "sports_sites_bucharest",
+        "sports_admin_boundary"
+      ],
+      "supplementary_registry_ids": [],
+      "optional_dataset_ids": []
+    },
+    "T05": {
+      "objectives": [
+        "Încarci gridul 2021 și verifici CRS-urile mixte ale serviciilor.",
+        "Creezi un Clip fără să confunzi schimbarea geometriei cu redistribuirea populației.",
+        "Compari numărul persoanelor sub 15 ani cu ponderea lor.",
+        "Verifici o suprapunere vizuală și explici limitele totalurilor după Clip."
+      ],
+      "working_crs": "Grid original EPSG:3844; școli/medicină EPSG:4326. Proiect și geometria de procesare EPSG:3844; afișarea dinamică nu schimbă fișierele.",
+      "prepare": [
+        "Din viewerul geo-spatial pentru Recensământ 2021 sau linkul furnizorului, descarcă Recensamant2021_GridData.gpkg; păstrează în data_raw. Fișierul național este mare: evită etichetele și nu activa toate clasele simultan.",
+        "Alege recensamant2021_griddata și verifică GRD_ID, Populatia_totala_T și Persoane_cu_varsta_mai_mica_de_15_ani_Y_LT15. Datele sunt pentru 2021, nu populația curentă.",
+        "Obține școlile 2022–2023 și primary care 2023–2024 de la paginile ADIZMB folosite în T01/T03. Alege limita municipiului din arhivă sau catalogul administrativ. Datele au momente de referință diferite.",
+        "Pentru un Clip explicit, exportă numai limita Bucureștiului în data_processed/limita_bucuresti_3844.gpkg cu Export → Save Features As… → EPSG:3844 dacă nu este deja în acest CRS. Folosește această copie la Overlay layer în §14; punctele se pot afișa dinamic fără export."
+      ],
+      "checks": [
+        "Gridul este poligonal EPSG:3844 și are GRD_ID plus câmpurile demografice; masca este municipiul București în EPSG:3844, nu un sector.",
+        "grid_recensamant_bucuresti.gpkg se creează separat. Pentru o celulă de frontieră cu același GRD_ID, geometria se schimbă, dar valorile atributelor rămân cele ale celulei originale.",
+        "Expresia procentului întoarce NULL la total zero/NULL; este raportul atributelor celulei originale, nu o nouă măsurătoare a fragmentului.",
+        "Școlile și cabinetele sunt deasupra gridului; legenda și nota precizează comparația vizuală și absența realocării populației."
+      ],
+      "reference": "T05_03 arată suprapunerea serviciilor peste grid; T05_04 este ponderea sub 15 ani. Pe celulele decupate, culorile folosesc atributele originale.",
+      "limit": "Clip nu redistribuie atributul. SUM(population), respectiv suma Populatia_totala_T după Clip, nu reprezintă automat populația corectă din interiorul limitei. Atributele sunt folosite pentru reprezentare, nu pentru un total administrativ exact; proximitatea vizuală nu este accesibilitate.",
+      "next": "T06",
+      "dataset_ids": [
+        "census_2021_grid",
+        "schools_bucharest_2022_2023",
+        "medical_primary_care"
+      ],
+      "supplementary_registry_ids": [
+        "administrative-boundaries"
+      ],
+      "optional_dataset_ids": []
+    },
+    "T06": {
+      "objectives": [
+        "Obții DEM GLO-30 și loss-year din sursele originale și consemnezi ediția.",
+        "Pregătești o mască Suceava și rastere metrice fără să alterezi codurile anilor.",
+        "Creezi un hillshade și simbolizezi discret Forest Loss peste el.",
+        "Verifici NoData, anii și limitele unei suprapuneri vizuale."
+      ],
+      "working_crs": "Originalele Copernicus/Hansen sunt EPSG:4326; proiectul și rasterele de lucru pentru hillshade sunt EPSG:3844. Verifică efectiv CRS-ul, nu doar sufixul fișierului.",
+      "prepare": [
+        "Copernicus: deschide pagina produsului și Browser. Folosește un cont CDSE cu înregistrare CCM, acceptă termenii și selectează COP-DEM_GLO-30-DGED. Descarcă produsul de elevație GeoTIFF și metadatele pentru toate dalele care intersectează Suceava; nu o imagine RGB de preview. Înregistrează release-ul și tileVersion. Seria exactă folosită în captura istorică este necunoscută.",
+        "Hansen: din pagina de descărcare v1.12/2024 aleasă pentru acest atelier, selectează granula 50N_020E și banda lossyear. Aceasta acoperă zona Suceava. Descarcă și datamask dacă verifici acoperirea validă. Păstrează numele originale; nu utiliza rasterul mic Rîșca al aplicației drept substitut.",
+        "Din catalogul administrativ alege poligoane județe. Verifică în tabel câmpul denumirii (name în copia istorică), selectează numai Suceava și exportă cu Save Selected Features As… în data_processed/judet_suceava.gpkg, EPSG:3844. Dacă numele câmpului diferă, folosește câmpul descris de catalog, nu crea valori arbitrare.",
+        "Dacă DEM-ul cuprinde mai multe dale, folosește Build Virtual Raster pe fișierele locale, cu aceleași bandă/CRS și rezoluție compatibilă; nu aplica Separate bands. Păstrează VRT-ul și dalele în folderul de lucru.",
+        "La §16 vei procesa originalele încărcate la §9–10. În Clip Raster by Mask Layer (GDAL), masca este judet_suceava.gpkg. Alege Target CRS EPSG:3844, Match the extent of the clipped raster to the extent of the mask layer (Crop to cutline), Set output file resolution: X/Y 30 m aleasă pentru copia de lucru și output Float32 pentru DEM. În Advanced parameters → Additional command-line parameters introdu -r bilinear pentru elevația continuă; exportă dem_suceava.tif. Rezoluția de lucru nu dovedește că pixelul original are 30 × 30 m la latitudinea Sucevei.",
+        "Repetă pe lossyear cu același CRS și mască; în Advanced parameters → Additional command-line parameters introdu -r near (Nearest neighbour), tip Byte și NoData exterior 255 (în afara codurilor valide 0–24), output forest_loss_suceava.tif. Nu seta zero ca NoData al sursei: zero este fără pierdere detectată în original. Pentru datamask folosește tot -r near; nu interpola clasele.",
+        "În Properties → Information verifică dimensiunile, pixel size, tipul de bandă și NoData ale surselor și outputurilor. Pentru DEM folosește un NoData exterior distinct, de exemplu -9999, fără să schimbi manual tagul sursei; zero poate fi o elevație validă. Acest flux este nou documentat și nu certifică parametrii copiilor istorice din capturi."
+      ],
+      "checks": [
+        "DEM-ul descărcat este banda de elevație GLO-30, cu unități de înălțime metrice documentate și CRS verificat; masca conține numai Suceava. Copernicus este un DSM și poate include vegetație/construcții.",
+        "Rasterele de lucru sunt EPSG:3844; DEM-ul are valori continue și Forest Loss coduri întregi 0–24 plus NoData exterior distinct. Verifică prin Identify câteva valori; apariția codurilor fracționare indică resampling greșit.",
+        "Hillshade (QGIS) folosește dem_suceava.tif, azimut 315°, unghi vertical 45°, Z factor 1 când unitățile XY/Z sunt metri, output hillshade_suceava.tif. Nordul și masca se suprapun; NoData nu este altitudine zero.",
+        "T06_03: forest_loss_suceava.tif este deasupra hillshade_suceava.tif; zero/no-loss și NoData au tratamente separate, iar clasele anuale/perioadele se verifică după coduri. Layoutul nu condiționează finalizarea comparației."
+      ],
+      "reference": "T06_03 este rezultatul principal: Forest Loss peste hillshade. T06_02 arată varianta DEM + umbrire. Nu există o captură T06_04 în inventarul curent; layoutul/exporturile sunt o extensie opțională descrisă textual.",
+      "limit": "Suprapunerea pierderii forestiere cu relieful nu demonstrează cauzalitate. Semnalul loss-year nu demonstrează singur tăieri ilegale ori pierdere permanentă, iar contururile protejate nu certifică impactul. Edițiile și metodele de detecție pot schimba valorile; nu este o estimare statistică oficială de suprafață.",
+      "next": null,
+      "dataset_ids": [
+        "copernicus_dem_30m",
+        "hansen_lossyear_2024",
+        "protected_areas_ro",
+        "relief_units_ro",
+        "geomorphometry_landforms_ro",
+        "counties_ro",
+        "rivers_ro",
+        "lakes_ro"
+      ],
+      "supplementary_registry_ids": [],
+      "optional_dataset_ids": [
+        "protected_areas_ro",
+        "rivers_ro",
+        "lakes_ro",
+        "relief_units_ro",
+        "geomorphometry_landforms_ro"
+      ]
+    }
+  }
+}
