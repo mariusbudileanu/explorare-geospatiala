@@ -11,6 +11,10 @@
 - **Geodezie și proiecții contemporane:** [PROJ · Mercator](https://proj.org/en/stable/operations/projections/merc.html), [PROJ · Equal Earth](https://proj.org/en/stable/operations/projections/eqearth.html), [NOAA · vertical datums](https://www.ngs.noaa.gov/datums/vertical/), [ANCPI · Marea Neagră 1975](https://www.ocpiilfov.ro/ocpi_ilfov/Regulament600_Valabil01082023.pdf) și [registrul ONU A/RES/80/307](https://public.e-delegate.un.org/reports/ga80_resolutions.html). Detaliile publice sunt în [`data/geodetic-sources.json`](data/geodetic-sources.json).
 - **Formate și operații GIS:** [OGC GeoPackage](https://docs.ogc.org/is/12-128r17/12-128r17.html), [GDAL](https://gdal.org/en/stable/) și [QGIS Processing 3.44](https://docs.qgis.org/3.44/en/docs/user_manual/processing_algs/index.html). Fișele și URL-urile per operație sunt în [`data/geospatial-formats.json`](data/geospatial-formats.json) și [`data/processing-operations.json`](data/processing-operations.json); schemele didactice sunt originale.
 
+## Concepte pentru calitate și parcurs
+
+Explicațiile, glosarul contemporan, întrebările formative și proiectul integrator sunt redactări originale ale platformei. Reperele terminologice și metodologice sunt [BIPM / JCGM, VIM · measurement accuracy](https://jcgm.bipm.org/vim/en/2.13.html), [measurement precision](https://jcgm.bipm.org/vim/en/2.15.html), [ISO 19157-1:2023 · Data quality](https://www.iso.org/standard/78900.html), [USGS · procesare și lineage](https://www.usgs.gov/data-management/process) și documentația QGIS 3.44 deja citată. Nu sunt reproduse tabele, figuri ori texte ale standardelor; citarea nu certifică datele platformei și nu le schimbă licența.
+
 ## Date pentru Provocări GIS
 
 Subseturile școlare și medicale pentru Sectorul 1 conțin date publice prelucrate în cadrul **Observatorului Urban Metropolitan București, ADIZMB**, sub **CC BY 4.0**, conform metodologiilor furnizate. Pentru școli (2022–2023), sursa unor date este [rețeaua școlară de pe data.gov.ro](https://data.gov.ro/dataset/reteaua-scolara-2022-2023). Datele de medicină de familie și spitale descriu anul 2024; cabinetele și ambulatoriile de specialitate, anul 2023.

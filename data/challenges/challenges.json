@@ -69,7 +69,7 @@
     {
       "id": "V1",
       "title": "Opt școli: câți elevi?",
-      "level": "Introductiv",
+      "level": "Începător",
       "question": "Câți elevi sunt înscriși în total în cele opt școli evidențiate?",
       "datasets": [
         "boundary",
@@ -340,7 +340,7 @@
     {
       "id": "R1",
       "title": "Calculează panta din DEM",
-      "level": "Introductiv",
+      "level": "Începător",
       "question": "Ce pantă are relieful din Rîșca, în grade sau procente?",
       "area": "risca",
       "kind": "raster",
@@ -438,7 +438,7 @@
     {
       "id": "R3",
       "title": "Pierderea forestieră într-un an",
-      "level": "Introductiv",
+      "level": "Începător",
       "question": "Ce suprafață din Rîșca este codificată ca pierdere forestieră în anul ales?",
       "area": "risca",
       "kind": "raster",

@@ -3,7 +3,7 @@
   'use strict';
   const messages = {
     content: '<strong>Tip conținut</strong><p>Arată sau ascunde concepte, figuri, formule, exemple, exerciții, context istoric și carduri GIS.</p>',
-    level: '<strong>Nivel</strong><p><b>Esențial:</b> noțiunile principale ale lecției.</p><p><b>Detaliat:</b> explicații și exemple suplimentare.</p><p><b>Avansat:</b> formule, detalii tehnice și particularități.</p>',
+    level: '<strong>Detalierea conținutului</strong><p>Acest filtru alege cantitatea de explicație, separat de nivelul pedagogic al materialului.</p><p><b>Esențial:</b> noțiunile principale ale lecției.</p><p><b>Detaliat:</b> explicații și exemple suplimentare.</p><p><b>Extins:</b> formule, detalii tehnice și particularități.</p>',
     source: '<strong>Sursă</strong><p><b>Manual 1974:</b> conținut istoric atribuit cărții.</p><p><b>Explicație modernă:</b> interpretarea didactică a site-ului.</p><p><b>GIS / QGIS:</b> corespondențe și aplicații actuale.</p>',
     theme: '<strong>Temă</strong><p>Restrânge cardurile după subiect. Poți combina acest filtru cu celelalte categorii.</p>'
   };

@@ -1,0 +1,22 @@
+/* Learning components reuse the site's palette, spacing and focus system. */
+.learning-context,.learning-card,.formative-check,.glossary-entry{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);min-width:0}
+.learning-context{margin:20px 0 28px}.learning-context h2{font-size:17px;margin:14px 0 6px}.learning-context ul{margin:8px 0}.learning-context p{margin:6px 0;font-size:14px}
+.learning-context-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.learning-context-top h3{margin:0}
+.level-badge{display:inline-block;border:1px solid var(--blue);border-radius:var(--radius-small);padding:3px 9px;font-size:12px;font-weight:700;color:var(--ink);background:var(--surface-alt);line-height:1.5;white-space:normal}
+.level-intermediate{border-style:dashed}.level-advanced{border-width:2px}
+.learning-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}.learning-grid .learning-card h3{margin-top:0}.learning-grid p{line-height:1.65}
+.learning-main{padding:var(--page-gutter)}.learning-main .lead{max-width:var(--content-text)}
+.learning-stages{list-style:none;padding:0;display:grid;gap:16px}.learning-stages .learning-card{border-left:4px solid var(--blue)}
+.learning-continuation{display:flex;flex-wrap:wrap;gap:12px 20px;margin:30px 0;padding:20px 0;border-block:1px solid var(--line);font-size:14px}
+.learning-inventory summary,.formative-explanation summary{cursor:pointer;min-height:44px;padding:12px 0}.learning-inventory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.learning-inventory h4{font-size:16px;margin:0 0 8px}.learning-inventory p{font-size:14px}
+.formative-check{margin:16px 0}.formative-check fieldset{border:0;margin:0;padding:0}.formative-check legend{font-size:16px;font-weight:700;line-height:1.6;margin-bottom:12px;width:100%}.formative-check label{display:flex;align-items:flex-start;gap:10px;min-height:44px;padding:10px;border-radius:var(--radius-small)}.formative-check label:has(input:checked){background:var(--surface-alt)}.formative-check input[type=radio]{flex-shrink:0;width:18px;height:18px;margin-top:3px;accent-color:var(--blue)}
+.formative-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}.formative-actions button,.glossary-filter button{border:1px solid var(--line);border-radius:var(--radius-small);padding:8px 14px;background:var(--surface-alt);color:var(--ink);cursor:pointer}.learning-feedback:empty{display:none}.learning-feedback{padding:12px;background:var(--surface-alt);border-left:3px solid var(--blue);line-height:1.6}.formative-explanation p{font-size:14px;line-height:1.65}
+.glossary-filter{padding:20px;background:var(--surface-alt);border-radius:var(--radius-card);margin:20px 0}.glossary-filter label{display:block;font-weight:700;margin-bottom:8px}.glossary-filter input{width:100%;background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:10px;margin-bottom:12px}.glossary-list{display:grid;gap:12px}.glossary-entry dt{display:flex;flex-wrap:wrap;gap:8px 16px}.glossary-entry dt span{color:var(--muted)}.glossary-entry dd{margin:8px 0 0}.glossary-entry p{margin:8px 0;font-size:14px;line-height:1.6}
+.quality-definitions{display:grid;grid-template-columns:minmax(140px,.4fr) minmax(0,1fr);gap:14px 24px;padding:20px;background:var(--surface-alt);border-radius:var(--radius-card)}.quality-definitions dt{font-weight:700}.quality-definitions dd{margin:0}.project-steps li{margin-block:12px}.learning-home-route{font-weight:700;line-height:1.8}.learning-home .outline-button{margin:4px 8px 4px 0}
+.learning-main a,.learning-card a,.learning-context a{overflow-wrap:anywhere}
+.learning-main [hidden],.formative-actions[hidden],.glossary-entry[hidden]{display:none!important}
+/* A recovery message belongs in document flow; it must not cover explanations. */
+body .noscript{position:static;margin:0;border-top:1px solid var(--line)}
+@media(min-width:901px){body[data-page="learning"] .site-workspace{grid-template-columns:var(--sidebar-width) minmax(0,1fr)}body[data-page="learning"].nav-collapsed .site-workspace{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:1200px){.learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.learning-grid,.learning-inventory-grid{grid-template-columns:minmax(0,1fr)}.quality-definitions{display:block}.quality-definitions dd{margin:6px 0 18px}.learning-context-top{align-items:flex-start}.formative-check label{padding:10px 0}}

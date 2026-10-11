@@ -36,8 +36,10 @@ Platforma și codul au fost dezvoltate cu asistență AI; conținutul academic, 
 
 ## Citare și feedback
 
-Budileanu, M. (2026). *Explorare geospațială*. Universitatea din București, Facultatea de Geografie. https://mariusbudileanu.github.io/explorare-geospatiala/
+Budileanu, M. (2026). *Explorare geospațială*.
 
-Metadatele de citare sunt în [CITATION.cff](CITATION.cff). Platforma este în consolidare înainte de versiunea 1.0; nu are încă DOI de release. QGIS țintă: seria 3.44 LTR; comenzile din ateliere folosesc în principal denumirile interfeței în engleză, cu explicații în română.
+Metadatele de citare sunt în [CITATION.cff](CITATION.cff). Versiunea curentă este disponibilă. QGIS țintă: seria 3.44 LTR; comenzile din ateliere folosesc în principal denumirile interfeței în engleză, cu explicații în română.
 
 [Despre platformă](https://mariusbudileanu.github.io/explorare-geospatiala/about.html) · [Registrul datelor și licențele](https://mariusbudileanu.github.io/explorare-geospatiala/resources.html#registrul-datelor) · [Raportează o problemă](https://github.com/mariusbudileanu/explorare-geospatiala/issues)
+
+Parcursul recomandat oferă nivelurile Începător, Intermediar și Avansat, cu prerechizite și verificări formative. Calitatea și incertitudinea datelor, glosarul RO–EN și proiectul final integrator leagă conceptele de aplicarea lor. Accesul rămâne liber; verificările formative nu salvează scoruri sau progres.

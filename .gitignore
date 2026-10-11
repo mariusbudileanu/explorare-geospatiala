@@ -76,3 +76,4 @@ desktop.ini
 !/tools/build-public-content.mjs
 
 !/tools/workshop-content.mjs
+!/tools/learning-content.mjs

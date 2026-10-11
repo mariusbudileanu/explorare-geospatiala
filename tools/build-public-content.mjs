@@ -4,6 +4,7 @@
  */
 import fs from 'node:fs';
 import {buildWorkshops} from './workshop-content.mjs';
+import {buildLearning} from './learning-content.mjs';
 import path from 'node:path';
 import http from 'node:http';
 import vm from 'node:vm';
@@ -14,6 +15,7 @@ const {chromium}=require(process.env.CODEX_NODE_MODULES ? path.join(process.env.
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const check=process.argv.includes('--check');
 buildWorkshops(root,{check});
+buildLearning(root,{check});
 const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'data/content-manifest.js'),'utf8'),context);
 const manifest=context.window.CARTO_CONTENT;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -55,7 +57,7 @@ try {
   await page.goto(base+lesson.href);
   if(lesson.id==='resources')await page.waitForFunction(()=>document.querySelectorAll('.resource-card[data-category="Provocări GIS"]').length===9);
   const record=await page.locator('main').evaluate(main=>{
-   const paragraphs=[...main.querySelectorAll('h2,h3,p,li,dt,dd,th,td,figcaption')].filter(e=>!e.closest('footer,nav,dialog,noscript,.runtime-notice,[aria-live],.feedback')).map(e=>e.textContent.replace(/\s+/g,' ').trim()).filter(t=>t.length>3);
+   const paragraphs=[...main.querySelectorAll('h2,h3,p,li,dt,dd,th,td,figcaption')].filter(e=>!e.closest('footer,nav,dialog,noscript,.runtime-notice,[aria-live],.feedback')).map(e=>{const text=e.textContent.replace(/\s+/g,' ').trim();return e.matches('h3')&&e.parentElement.id.startsWith('nivel-')?text+' · '+e.nextElementSibling.textContent.replace(/\s+/g,' ').trim():text;}).filter(t=>t.length>3);
    const description=main.querySelector('.lead')?.textContent.replace(/\s+/g,' ').trim()||main.querySelector('h1')?.textContent.trim();
    return {description,paragraphs:[...new Set(paragraphs)]};
   });

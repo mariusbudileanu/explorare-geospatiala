@@ -2,7 +2,7 @@
   {
     "id": "T01",
     "title": "Prima hartă tematică în QGIS: unitățile de învățământ din București",
-    "level": "începător",
+    "level": "Începător",
     "duration": "60–90 min",
     "sequence": 1,
     "summary": "Construiește o hartă descriptivă a unităților școlare din București, de la tabelul de atribute și categorii până la layout și export.",
@@ -47,7 +47,7 @@
   {
     "id": "T02",
     "title": "Circumscripții școlare și presiune educațională în București",
-    "level": "începător spre intermediar",
+    "level": "Intermediar",
     "duration": "90–120 min",
     "sequence": 2,
     "summary": "Clasifică poligoane de circumscripții după un raport didactic elevi per sală de clasă și compară rezultatul cu numărul de schimburi.",
@@ -90,7 +90,7 @@
   {
     "id": "T03",
     "title": "Infrastructura medicală București–Ilfov: primary, secondary și tertiary care",
-    "level": "ușor spre mediu",
+    "level": "Intermediar",
     "duration": "90–120 min",
     "sequence": 3,
     "summary": "Organizează trei layere punctuale de servicii medicale într-o ierarhie vizuală și explorează simboluri după paturi și filtre de dotări.",
@@ -136,7 +136,7 @@
   {
     "id": "T04",
     "title": "Baze sportive în Municipiul București: stare, proprietate și transformare urbană",
-    "level": "mediu",
+    "level": "Intermediar",
     "duration": "90–120 min",
     "sequence": 4,
     "summary": "Reprezintă calitativ starea bazelor sportive și compară alternativ tipul proprietății, cu o interpretare civică prudentă.",
@@ -180,7 +180,7 @@
   {
     "id": "T05",
     "title": "Populație și servicii publice în București: grid Recensământ 2021 și infrastructură educațională/medicală",
-    "level": "mediu",
+    "level": "Avansat",
     "duration": "120 min",
     "sequence": 5,
     "summary": "Decupează un grid de populație la București și compară vizual celulele populate cu poziția școlilor și cabinetelor de medicină de familie.",
@@ -231,7 +231,7 @@
   {
     "id": "T06",
     "title": "Relief, arii naturale protejate și pierdere forestieră",
-    "level": "mediu spre avansat",
+    "level": "Avansat",
     "duration": "120–150 min",
     "sequence": 6,
     "summary": "Combină subseturi raster de DEM și pierdere forestieră pentru Suceava cu arii protejate și hidrografie într-o hartă de interpretare vizuală.",

@@ -79,8 +79,8 @@ window.CARTO_CONTENT = {
     { id:'relief-models', source_section:'24', title:'Confecționarea machetelor de hărți în relief', short_title:'24. Machete de relief', part:'Partea a III-a · Capitolul VI', href:'lesson.html?id=relief-models', source_pages:[{printed:'187–189',pdf:'189–191'}], figures:[{number:'Fig. 140',page:189,caption:'Lanțete pentru modelat hărți în relief'}], content_types:['concept','figură','exemplu','qgis'], interactive_components:['terrain-demo'], qgis_correspondence:true, modern_sources_status:'pending', status:'implemented', theme:'relief', method_key:'relief', keywords:['machetă','relief','curbe de nivel','scară verticală','model digital al terenului'] }
   ],
   future: [
-    {title:'Precizie și metadate',status:'Studii de caz în pregătire'},
-    {title:'Terminologie bilingvă',status:'Glosar român–englez – în pregătire'},
+    {title:'Calitate și incertitudine',status:'Disponibil',href:'data-quality.html'},
+    {title:'Terminologie bilingvă',status:'Disponibil',href:'glossary.html'},
     {title:'Cartografie web',status:'Extindere modernă planificată'}
   ]
 };
@@ -117,4 +117,16 @@ for (const group of window.CARTO_CONTENT.groups) {
   const practical=content.groups.find(group=>group.id==='challenges');
   if(practical){practical.id='gis-lab';practical.label='LABORATOR GIS';practical.lessons=['gis-lab','styling-labeling','transparency-blending','raster-styling','topology','formats-interoperability',...practical.lessons];}
   else content.groups.push({id:'gis-lab',label:'LABORATOR GIS',lessons:['gis-lab','styling-labeling','transparency-blending','raster-styling','topology','formats-interoperability']});
+})(window.CARTO_CONTENT);
+
+// Optional learning route; the seven chapters keep their existing numbering.
+(function(content) {
+  const additions=[
+    {id:'learning-path',title:'Parcurs recomandat',href:'learning-path.html',keywords:['începător','intermediar','avansat','competențe','prerechizite','parcurs']},
+    {id:'data-quality',title:'Calitatea și incertitudinea datelor geospațiale',href:'data-quality.html',keywords:['acuratețe','precizie','rezoluție','incertitudine','completitudine','NoData','NULL','lineage','provenance','metadate','calitate']},
+    {id:'glossary',title:'Glosar RO–EN',href:'glossary.html',keywords:['glosar','terminologie','română','engleză','QGIS']},
+    {id:'final-project',title:'Proiect final integrator',href:'final-project.html',keywords:['proiect final','întrebare spațială','autoevaluare','reproductibilitate','avansat']}
+  ];
+  content.groups.splice(1,0,{id:'learning',label:'PARCURS ȘI CONSOLIDARE',lessons:additions.map(item=>item.id)});
+  for(const item of additions)content.lessons.push({...item,short_title:item.title,source_section:'',part:'Parcurs și consolidare',source_pages:[],figures:[],content_types:['concept','exercițiu'],interactive_components:[],qgis_correspondence:true,modern_sources_status:'source-reviewed',status:'implemented',theme:'învățare'});
 })(window.CARTO_CONTENT);

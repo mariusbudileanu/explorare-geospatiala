@@ -31,7 +31,8 @@ async function checkFallbackAccess(page, route, width, mode) {
 }
 const cff=JSON.parse(read('CITATION.cff')); // JSON is a strict subset of YAML 1.2, the CFF serialization format.
 assert.equal(cff['cff-version'],'1.2.0');assert.equal(cff.type,'software');assert.equal(cff.title,'Explorare geospațială');checks+=3;
-assert.deepEqual(cff.authors,[{'family-names':'Budileanu','given-names':'Marius',affiliation:'Universitatea din București, Facultatea de Geografie'}]);checks++;
+// Operation 3: affiliation remains in About, but must not enter citation metadata.
+assert.deepEqual(cff.authors,[{'family-names':'Budileanu','given-names':'Marius'}]);checks++;
 for(const forbidden of ['doi','version','date-released','preferred-citation'])ok(!(forbidden in cff),'No invented release metadata: '+forbidden);
 ok(!/email|orcid/i.test(JSON.stringify(cff)),'No private identifiers');
 const registry=JSON.parse(read('data/data-registry.json'));
