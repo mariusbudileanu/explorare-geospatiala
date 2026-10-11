@@ -58,7 +58,7 @@ body.dark{--surface-alt:#223441;--qgis:#93bd8d}.site-topbar .about-link{color:va
 .dataset-record dd { margin: .2rem 0 0; overflow-wrap: anywhere; }
 .source-thumb { padding: 1rem; }
 .historical-reference { display: block; padding: 1.5rem; line-height: 1.6; }
-.search-results small { white-space: normal; line-height: 1.45; }
+.search-results small { display: block; margin-top: .25rem; white-space: normal; line-height: 1.45; }
 
 /* A mobile drawer is safe only after its interactive controls are initialized. */
 @media (max-width:900px) {

@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import {buildWorkshops} from './workshop-content.mjs';
 import {buildLearning} from './learning-content.mjs';
+import {extractSearchContent} from './search-content.mjs';
 import path from 'node:path';
 import http from 'node:http';
 import vm from 'node:vm';
@@ -18,6 +19,7 @@ buildWorkshops(root,{check});
 buildLearning(root,{check});
 const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'data/content-manifest.js'),'utf8'),context);
 const manifest=context.window.CARTO_CONTENT;
+const qgisBridges=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).bridges;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const write=(relative,content)=>{const p=path.join(root,relative);if(check){if(fs.readFileSync(p,'utf8')!==content){if(relative==='data/search-index.js'){const decode=text=>JSON.parse(text.slice(text.indexOf(' = ')+3).replace(/;\s*$/,''));const old=decode(fs.readFileSync(p,'utf8')),next=decode(content);for(const r of next){const prev=old.find(x=>x.id===r.id);if(JSON.stringify(prev)!==JSON.stringify(r))console.error('Changed search content: '+r.id+' '+JSON.stringify({added:r.paragraphs.filter(x=>!prev?.paragraphs.includes(x)),removed:prev?.paragraphs.filter(x=>!r.paragraphs.includes(x))}));}}throw Error('Generated file is stale: '+relative);}}else fs.writeFileSync(p,content);};
 const registry=JSON.parse(fs.readFileSync(path.join(root,'data/data-registry.json'),'utf8'));
@@ -56,11 +58,9 @@ try {
  for(const lesson of manifest.lessons){
   await page.goto(base+lesson.href);
   if(lesson.id==='resources')await page.waitForFunction(()=>document.querySelectorAll('.resource-card[data-category="Provocări GIS"]').length===9);
-  const record=await page.locator('main').evaluate(main=>{
-   const paragraphs=[...main.querySelectorAll('h2,h3,p,li,dt,dd,th,td,figcaption')].filter(e=>!e.closest('footer,nav,dialog,noscript,.runtime-notice,[aria-live],.feedback')).map(e=>{const text=e.textContent.replace(/\s+/g,' ').trim();return e.matches('h3')&&e.parentElement.id.startsWith('nivel-')?text+' · '+e.nextElementSibling.textContent.replace(/\s+/g,' ').trim():text;}).filter(t=>t.length>3);
-   const description=main.querySelector('.lead')?.textContent.replace(/\s+/g,' ').trim()||main.querySelector('h1')?.textContent.trim();
-   return {description,paragraphs:[...new Set(paragraphs)]};
-  });
+  // This pedagogical section is attached after the QGIS registry fetch resolves.
+  if(qgisBridges.some(bridge=>bridge.lesson_id===lesson.id))await page.locator('main .qgis-bridge').waitFor({state:'attached'});
+  const record=await page.locator('main').evaluate(extractSearchContent);
   records.push({id:lesson.id,href:lesson.href,description:record.description||lesson.title,paragraphs:record.paragraphs});
  }
  if(errors.length)throw Error([...new Set(errors)].join('\n'));

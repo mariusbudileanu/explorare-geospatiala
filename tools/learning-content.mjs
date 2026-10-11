@@ -52,7 +52,18 @@ export function buildLearning(root,{check=false}={}) {
     const item=manifest.lessons.find(l=>l.href===file),id=item?.id;
     // Query-selected lessons receive the same markup after their existing renderer.
     let html=id==='coordinates'?original.replace('<body>','<body data-page-id="coordinates">'):original;
-    if(/^T0[1-6]$/.test(id))html=html.replace(/(<div class="tutorial-meta"><span>)[^<]+/, '$1'+model.levels[model.items[id].level].label);
+    if(/^T0[1-6]$/.test(id)){
+      const level=model.levels[model.items[id].level].label;
+      html=html.replace(/(<div class="tutorial-meta"><span>)[^<]+/, '$1'+level);
+      // Preserve the legacy explanation, but derive its level from the badge's source.
+      let sections=0;
+      html=html.replace(/<article class="tutorial-step\b[\s\S]*?<\/article>/g,block=>{
+        if(!/<h3>[^<]*nivel de dificultate<\/h3>/i.test(block))return block;
+        sections++;
+        return block.replace(/(<p>(?:Nivelul (?:tutorialului )?este )?<strong>)[^<]+(<\/strong>)/, '$1'+level+'$2');
+      });
+      if(sections!==1)throw Error('Missing or duplicate workshop level section: '+id);
+    }
     if(id==='tutorials')html=html.replace(/(<div class="workshop-card-top"><span class="workshop-id">)(T0[1-6])(<\/span><span>)[^<]+( · [^<]+<\/span>)/g,(_,a,key,b,d)=>a+key+b+model.levels[model.items[key].level].label+d);
     write(file,insert(assets(html,prefix),id,prefix));
   }

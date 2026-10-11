@@ -7,6 +7,7 @@ const model=JSON.parse(JSON.stringify(context.window.CARTO_LEARNING)),glossary=J
 let checks=0;const ok=(value,message)=>{checks++;assert.ok(value,message);};
 const equal=(a,b,message)=>{checks++;assert.deepEqual(a,b,message);};
 const normalized=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‐‑–—-]/g,' ');
+const workshopLevels={T01:'Începător',T02:'Intermediar',T03:'Intermediar',T04:'Intermediar',T05:'Avansat',T06:'Avansat'};
 equal(Object.values(model.levels).map(l=>l.label),['Începător','Intermediar','Avansat'],'Three textual levels');
 const referenceOnly=new Set(['home','about','resources']);
 equal(Object.keys(model.items).sort(),content.lessons.filter(l=>!referenceOnly.has(l.id)).map(l=>l.id).sort(),'Every classifiable destination, no extra route');
@@ -19,6 +20,11 @@ for(const [id,item] of Object.entries(model.items)){
 }
 for(const stage of model.stages)for(const id of stage.items)ok(model.items[id],'Real path destination: '+id);
 for(const workshop of JSON.parse(read('data/tutorial-catalog.json')))equal(workshop.level,model.levels[model.items[workshop.id].level].label,'Catalogue level derives from model: '+workshop.id);
+for(const [id,level] of Object.entries(workshopLevels))equal(model.levels[model.items[id].level].label,level,'Official workshop classification unchanged: '+id);
+equal(model.checks.T06[0].options,['Interpolarea biliniară este potrivită tuturor rasterelor.','Nearest neighbour păstrează codurile întregi; verific și NoData și alinierea.','Hillshade poate înlocui codul anual.'],'T06 option only corrects spelling');
+equal(model.checks.T06[0].answer,1,'T06 methodological answer unchanged');
+const searchContext={window:{}};vm.runInNewContext(read('data/search-index.js'),searchContext);
+for(const bridge of JSON.parse(read('data/qgis-links.json')).bridges){const record=searchContext.window.CARTO_SEARCH_INDEX.find(r=>r.id===bridge.lesson_id);ok(record?.paragraphs.includes('În QGIS'),'Index waits for QGIS teaching section: '+bridge.lesson_id);ok(record.paragraphs.some(p=>normalized(p).includes(normalized(bridge.explanation))),'QGIS contextual explanation indexed: '+bridge.lesson_id);}
 let questionCount=0,diagnostics=0;for(const [id,questions] of Object.entries(model.checks)){
  ok(questions.length>=1&&questions.length<=3,id+' compact checks');
  const ids=new Set();for(const q of questions){questionCount++;diagnostics+=Number(q.diagnostic);ok(!ids.has(q.id),'Unique question ID');ids.add(q.id);ok(q.options.length>=2&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<q.options.length,'Answer exists');ok(q.explanation.length>80,'Explanatory feedback');}
@@ -37,14 +43,54 @@ const pages=['index.html','learning-path.html','glossary.html','data-quality.htm
 const out=path.join(root,'tmp/qa/operation3');fs.mkdirSync(out,{recursive:true});
 async function unobstructed(page,selector){const element=page.locator(selector).first();await element.scrollIntoViewIfNeeded();ok(await element.evaluate(e=>{const r=e.getBoundingClientRect(),top=document.elementFromPoint(r.left+Math.min(10,r.width/2),r.top+r.height/2);return !!top&&e.contains(top)&&!top.closest('#sidebar');}),'Actual hit target unobstructed: '+selector);}
 async function internalLinks(page){const links=await page.locator('.learning-context a,.learning-continuation a,.learning-main a,.learning-home a').evaluateAll(es=>es.map(a=>a.href));for(const href of new Set(links)){const url=new URL(href);if(url.origin!==new URL(page.url()).origin)continue;ok(url.pathname.startsWith('/explorare-geospatiala/'),'Project Pages base path');const response=await page.request.get(href);ok(response.ok(),'Destination responds: '+href);if(url.hash){const html=await response.text();ok(html.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`),'Actual target anchor '+href);}}}
+async function workshopLevel(page,id){
+ const section=page.locator('.tutorial-step').filter({has:page.locator('h3', {hasText:/nivel de dificultate/i})});
+ equal(await section.count(),1,'One textual difficulty section '+id);
+ equal(await section.locator('.tutorial-prose strong').filter({hasText:new RegExp('^'+workshopLevels[id]+'$')}).count(),1,'Body level equals model '+id);
+ ok(!/începător spre intermediar|ușor spre mediu|mediu spre avansat|\bmediu\b/i.test(await section.innerText()),'No competing legacy level '+id);
+ equal(await page.locator('main > .learning-context .level-badge').innerText(),workshopLevels[id],'Badge agrees with body '+id);
+}
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${server.address().port}/explorare-geospatiala/`;
  const browser=await playwright().chromium.launch(browserOptions());const errors=[],layouts=[],contrast=[];
  try{
   const page=await browser.newPage({reducedMotion:'reduce'});page.on('pageerror',e=>errors.push(e.message));
+  // Exercise the real extraction function against DOM structure, not known bad strings.
+  const {extractSearchContent}=await import('../../tools/search-content.mjs');
+  await page.setContent('<main><h1>Fixture</h1><p class="lead">Descriere</p><ul><li><a>hartă</a><span class="level-badge">Începător</span><p>Localizează</p></li><li><div>informației.</div><div>Coordonatele</div></li></ul><p>re<strong>pro</strong>iectare EPSG:3844; RO–EN</p><p><label>Alege</label><output>30</output><script type="application/json">SECRET_SCRIPT</script><style>/* SECRET_STYLE */</style><template>SECRET_TEMPLATE</template></p></main>');
+  const extracted=await page.locator('main').evaluate(extractSearchContent);
+  ok(extracted.paragraphs.includes('hartă Începător Localizează'),'Separate link, badge and paragraph');
+  ok(extracted.paragraphs.includes('informației. Coordonatele'),'Separate adjacent structural nodes');
+  ok(extracted.paragraphs.includes('reproiectare EPSG:3844; RO–EN'),'Preserve legitimate inline word, code and diacritics');
+  ok(extracted.paragraphs.includes('Alege 30'),'Separate label and output');
+  ok(!/SECRET|<\/?(?:script|style|template)/.test(extracted.paragraphs.join(' ')),'Exclude nested source code and markup');
+  await page.setContent('<main><h1>Fixture</h1><ul><li><h4>Alpha</h4><p>Beta <em>Gamma</em></p><p>Delta</p></li></ul></main>');
+  ok((await page.locator('main').evaluate(extractSearchContent)).paragraphs.includes('Alpha Beta Gamma Delta'),'General heading/card/paragraph separators, independent of reported examples');
+  await page.setContent('<main><h1>Fixture</h1><p>Aleg <a>CRS</a>, apoi <a>EPSG:3844</a>.</p></main>');
+  ok((await page.locator('main').evaluate(extractSearchContent)).paragraphs.includes('Aleg CRS, apoi EPSG:3844.'),'Structural padding does not separate punctuation or EPSG tokens');
+  await page.setContent('<main><h1>Provocări</h1><p class="lead">Scop pedagogic stabil.</p><section id="challenge-workspace"><h2>Se pregătește provocarea…</h2></section><div id="challenge-catalog"></div></main>');
+  const pending=await page.locator('main').evaluate(extractSearchContent);
+  await page.evaluate(()=>{document.querySelector('#challenge-workspace').innerHTML='<h2>V1</h2><table><tr><td>Date încărcate</td></tr></table>';document.querySelector('#challenge-catalog').innerHTML='<h3>Catalog încărcat</h3>';});
+  equal(await page.locator('main').evaluate(extractSearchContent),pending,'Index is independent of asynchronous exercise load state');
+  const distant=Array(100).fill('Introducere').join(' ')+' EPSG:3844 descrie CRS-ul metric. '+Array(70).fill('Continuare').join(' ');
+  await page.setContent('<div class="global-search"><input id="search"><div id="search-results" hidden></div></div>');
+  await page.evaluate(({distant})=>{window.CARTO_SEARCH_INDEX=[{id:'fixture',description:'Descriere independentă',paragraphs:['Început generic.',distant]}];}, {distant});
+  await page.addScriptTag({content:read('js/search.js')});
+  await page.evaluate(()=>window.CARTO_SEARCH.init({lessons:[{id:'fixture',title:'Fixture',href:'fixture.html',keywords:['proximitate','<test & topic>'],figures:[]}]},'/explorare-geospatiala/'));
+  await page.locator('#search').fill('EPSG:3844');
+  let snippet=await page.locator('#search-results small').innerText();
+  ok(snippet.includes('EPSG:3844 descrie CRS-ul metric.'),'Match deep in body is visible');
+  ok(snippet.startsWith('… ')&&snippet.endsWith(' …'),'Consistent ellipses at both trimmed ends');
+  equal(snippet.slice(2,-2).split(/\s+/).length,42,'Compact whole-word excerpt');
+  ok(!snippet.includes('Început generic'),'Do not default to opening paragraph');
+  await page.locator('#search').fill('proximitate');
+  ok((await page.locator('#search-results small').innerText()).includes('Temă indexată: proximitate.'),'Explain metadata-only match');
+  await page.locator('#search').fill('<test & topic>');
+  ok((await page.locator('#search-results small').innerText()).includes('<test & topic>'),'Escape rendered metadata safely');
+  equal(await page.locator('#search-results small test').count(),0,'Metadata does not become HTML');
   for(const lesson of content.lessons){await page.goto(base+lesson.href);ok(await page.locator('main h1').count()===1,'One heading '+lesson.id);await inspectNavigation(page,content,base);checks++;
    if(model.items[lesson.id]){equal(await page.locator('main > .learning-context .level-badge').innerText(),model.levels[model.items[lesson.id].level].label,'Correct visible level '+lesson.id);equal(await page.locator('.learning-continuation').count(),1,'One continuation '+lesson.id);}
-   if(/^T0[1-6]$/.test(lesson.id))equal(await page.locator('.tutorial-meta > span').first().innerText(),model.levels[model.items[lesson.id].level].label,'Workshop hero has the same level');
+   if(/^T0[1-6]$/.test(lesson.id)){equal(await page.locator('.tutorial-meta > span').first().innerText(),model.levels[model.items[lesson.id].level].label,'Workshop hero has the same level');await workshopLevel(page,lesson.id);}
    if(lesson.id==='tutorials')for(const card of await page.locator('.workshop-card-top').all()){const id=await card.locator('.workshop-id').innerText();ok((await card.innerText()).includes(model.levels[model.items[id].level].label),'Workshop card has the same level: '+id);}
   }
   await page.goto(base+'lesson.html?id=rectangular-coordinates');await page.locator('[data-info="level"]').click();ok((await page.locator('#filter-info-content').innerText()).includes('separat de nivelul pedagogic'),'Detail filter is distinct from difficulty');equal(await page.locator('[data-filter="level"]').evaluateAll(es=>es.map(e=>e.parentElement.textContent.trim())),['Esențial','Detaliat','Extins'],'Detail labels do not introduce competing difficulty levels');
@@ -57,8 +103,23 @@ async function internalLinks(page){const links=await page.locator('.learning-con
     await form.locator('button[type=reset]').click();equal(await radios.filter({visible:true}).evaluateAll(es=>es.filter(e=>e.checked).length),0,'Reset radio selection');equal(await feedback.innerText(),'','Reset feedback');
    }
   }
-  const terms=['acuratețe','precizie','incertitudine','NoData','NULL','lineage','metadate','proiect final','începător','avansat','Stereo 70','EPSG:3844','hillshade','GeoPackage'];
+  const terms=['acuratețe','precizie','incertitudine','NoData','NULL','lineage','metadate','proiect final','Începător','Intermediar','Avansat','proximitate','Coordonatele','hartă','Clip','Stereo 70','EPSG:3844','hillshade','GeoPackage'];
   for(const term of [...terms,'ACURATEȚE','acuratete']){await page.goto(base+'index.html');await page.locator('#search').fill(term);const hits=await page.locator('#search-results a').evaluateAll(es=>es.map(e=>({text:e.textContent,snippet:e.querySelector('small').textContent,href:e.href})));ok(hits.length>0,'Search '+term);ok(hits.some(h=>normalized(h.snippet).includes(normalized(term))),'Contextual snippet '+term);const destination=hits[0].href;await page.locator('#search-results a').first().click();equal(page.url(),destination,'Search click '+term);}
+  const searchExamples=[];
+  for(const term of [...terms,'ÎNCEPĂTOR','incepator','harta','epsg:3844']){
+   await page.goto(base+'index.html');await page.locator('#search').fill(term);
+   const hits=await page.locator('#search-results a').evaluateAll(es=>es.map(e=>({snippet:e.querySelector('small').textContent,href:e.href})));
+   ok(hits.length>0,'Polish search '+term);
+   for(const hit of hits){ok(normalized(hit.snippet).includes(normalized(term)),'Every snippet explains match '+term);ok(!/hartăÎncepător|informației\.Coordonatele|<\/?(?:script|style|template)\b/.test(hit.snippet),'No structural concatenation or technical markup');ok((await page.request.get(hit.href)).ok(),'Actual search destination '+term);}
+   if(['proximitate','Coordonatele','Începător'].includes(term))searchExamples.push({term,...hits[0]});
+  }
+  await page.locator('#search').fill('zzzx-no-such-polish-term');equal(await page.locator('#search-results a').count(),0,'Nonexistent query has no fabricated match');
+  for(const width of [1440,768,390])for(const dark of [false,true]){
+   await page.setViewportSize({width,height:1000});await page.addInitScript(d=>localStorage.setItem('cartografie-theme',d?'dark':'light'),dark);
+   for(const id of ['T02','T03','T04','T05','T06']){await page.goto(base+'tutorials/'+id.toLowerCase()+'.html');await workshopLevel(page,id);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Workshop layout '+id+'/'+width+'/'+dark);const section=page.locator('.tutorial-step').filter({has:page.locator('h3',{hasText:/nivel de dificultate/i})});await section.scrollIntoViewIfNeeded();await section.screenshot({path:path.join(out,`polish-${id}-${width}-${dark?'dark':'light'}.png`)});}
+   await page.goto(base+'index.html');equal(await page.locator('body').evaluate(e=>e.classList.contains('dark')),dark,'Requested theme is active');for(const term of ['proximitate','Coordonatele','Începător','incertitudine']){await page.locator('#search').fill(term);ok(await page.locator('#search-results small').first().evaluate(e=>getComputedStyle(e).display==='block'),'Snippet separate from title');ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Search wrapping '+width);await page.locator('#search-results').screenshot({path:path.join(out,`polish-search-${term}-${width}-${dark?'dark':'light'}.png`)});}
+  }
+  fs.writeFileSync(path.join(out,'polish-search-examples.json'),JSON.stringify(searchExamples,null,2));
   await page.goto(base+'glossary.html');const filter=page.locator('#glossary-filter');for(const term of ['NULL','NoData','EPSG-no-such-term','ACURATEȚE','acuratete','Spatial Join']){await filter.fill(term);const visible=await page.locator('.glossary-entry:visible').count();ok(term==='EPSG-no-such-term'?visible===0:visible>0,'Glossary filter '+term);ok((await page.locator('#glossary-status').innerText()).startsWith(visible+' din'),'Live glossary count');}
   await page.locator('#glossary-reset').focus();await page.keyboard.press('Enter');equal(await page.locator('.glossary-entry:visible').count(),glossary.length,'Keyboard clears glossary');ok(await filter.evaluate(e=>e===document.activeElement),'Filter focus returns');
   const citation='Budileanu, M. (2026). Explorare geospațială.';
@@ -81,7 +142,10 @@ async function internalLinks(page){const links=await page.locator('.learning-con
   for(const width of [1440,1024,768,390])for(const route of [...pages,'about.html']){await staticPage.setViewportSize({width,height:1000});await staticPage.goto(base+route);ok((await staticPage.locator('main').innerText()).length>200,'Essential static content '+route);await unobstructed(staticPage,'main h1');await unobstructed(staticPage,'nav[aria-label="Navigare fără JavaScript"] a');
    if(route==='glossary.html')equal(await staticPage.locator('.glossary-entry:visible').count(),glossary.length,'Full static glossary');if(route==='resources.html'||route==='about.html')equal(await staticPage.locator('#cum-citezi > p').first().innerText(),citation,'Static citation');
    for(const explanation of await staticPage.locator('.formative-explanation').all()){await explanation.locator('summary').click();ok((await explanation.innerText()).length>100,'No-JS justification is accessible');}
-  }await nojs.close();
+  }
+  for(const id of Object.keys(workshopLevels)){await staticPage.goto(base+'tutorials/'+id.toLowerCase()+'.html');await workshopLevel(staticPage,id);}
+  await staticPage.goto(base+'tutorials/t06.html');const explanation=staticPage.locator('[data-learning-question="years"] .formative-explanation');await explanation.locator('summary').click();ok((await explanation.innerText()).includes(model.checks.T06[0].explanation),'T06 static explanation preserves methodology');
+  await nojs.close();
   // File opening must not acquire a backend or CDN for the new material.
   await page.goto('file:///'+path.join(root,'glossary.html').replace(/\\/g,'/'));await page.locator('#glossary-filter').fill('NULL');ok(await page.locator('.glossary-entry:visible').count()>0,'Offline glossary');
   await page.goto('file:///'+path.join(root,'data-quality.html').replace(/\\/g,'/'));await page.locator('[data-learning-question="precision"] input').nth(1).check();await page.locator('[data-learning-question="precision"] button[type=submit]').click();ok((await page.locator('[data-learning-question="precision"] [role=status]').innerText()).startsWith('Alegere justificată'),'Offline formative control');
