@@ -2,6 +2,8 @@
 
 ## Surse și conținut
 
+- **Măsurare elipsoidală:** Charles F. F. Karney, [GeographicLib geodesic](https://geographiclib.sourceforge.io/html/js/), versiunea 2.2.0, MIT/X11. Copia locală și licența sunt documentate în [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md). Laboratorul folosește geometrii sintetice generate în memorie, nu un dataset extern. Referințele numerice independente sunt generate cu pyproj / PROJ din mediul QGIS local și păstrate în testele QA.
+
 - **Manual istoric:** A. Năstase și D. Cernea, *Cartografie generală – manual practic*, Universitatea din București, 1974. Secțiunile, paginile și figurile folosite sunt identificate în [`data/source-audit.json`](data/source-audit.json). [Publicația digitalizată la Biblioteca Digitală](https://biblioteca-digitala.ro/?pub=10971-cartografie-generala). Cartea este disponibilă online; nu este descrisă drept open-source.
 - **Digitizare și context:** [Biblioteca Digitală a Publicațiilor Culturale — Despre](https://biblioteca-digitala.ro/despre.html), administrată de Institutul Național al Patrimoniului. Platforma citează publicația și furnizorul accesului digital; scanurile nu sunt redistribuite.
 - **Documentație GIS:** [QGIS Training Manual 3.44](https://docs.qgis.org/3.44/en/docs/training_manual/index.html) și [QGIS User Manual 3.44](https://docs.qgis.org/3.44/en/docs/user_manual/index.html). Legăturile specifice sunt în [`data/qgis-links.json`](data/qgis-links.json). Rezumatele sunt redactate pentru acest proiect, iar documentația QGIS rămâne la autorii săi.

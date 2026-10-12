@@ -1,5 +1,14 @@
 # Licențe software terțe
 
+## GeographicLib geodesic 2.2.0
+
+- Componentă: `js/vendor/geographiclib-geodesic.min.js`, copie locală, 32.204 bytes; fără CDN runtime.
+- Funcție: distanță și arie geodezică pe elipsoid WGS 84 în Laborator Proiecții & CRS. Proj4js rămâne responsabil pentru transformările CRS.
+- Autor: Charles F. F. Karney; licență MIT/X11, [textul integral](js/vendor/GEOGRAPHICLIB_LICENSE.txt).
+- Sursă: [proiectul oficial](https://github.com/geographiclib/geographiclib-js), pachetul `geographiclib-geodesic` 2.2.0; integritatea SHA-512 a arhivei a fost verificată înaintea extragerii.
+- SHA-256 distribuție minificată: `06e3512904b346575f475f14d0b27ea0979dbcd2b0eddebf5f1eeefd234395b5`.
+- [Documentație oficială](https://geographiclib.sourceforge.io/html/js/). Biblioteca și notificarea sa nu sunt relicențiate prin licențele conținutului platformei.
+
 ## Proj4js 2.22.0
 
 - Componentă: `js/vendor/proj4.js` (copie locală, utilizată fără CDN).

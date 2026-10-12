@@ -1,0 +1,26 @@
+.projection-controls,.projection-point-form{display:flex;flex-wrap:wrap;gap:1rem;align-items:end}
+.projection-controls label,.projection-point-form label{display:flex;flex-direction:column;gap:.4rem;flex:1 1 190px}
+.projection-controls select,.projection-point-form input{width:100%;min-height:44px;max-width:100%}
+.projection-panel{min-width:0;border:1px solid var(--line);border-radius:8px;padding:1rem;background:var(--surface)}
+.projection-views{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0}
+.projection-views[data-compare-mode="toggle"]{grid-template-columns:1fr}
+.projection-panel h3{margin-top:0;font-size:1rem;overflow-wrap:anywhere}
+.projection-drawing svg{display:block;width:100%;height:auto;aspect-ratio:10/7;background:var(--bg);border:1px solid var(--line);border-radius:6px;cursor:crosshair}
+.projection-polygon{fill:#21806d33;stroke:#176b5d;stroke-width:2}
+.projection-segment{fill:none;stroke:#92501d;stroke-width:3}
+.projection-endpoint{fill:#92501d;stroke:var(--bg);stroke-width:1}
+.projection-cursor{stroke:var(--ink);stroke-width:2.5;fill:none;pointer-events:none}
+body.dark .projection-polygon{fill:#6dc6b533;stroke:#7ed9c8}
+body.dark .projection-segment{stroke:#ffbf87}
+body.dark .projection-endpoint{fill:#ffbf87}
+.projection-reference{display:flex;flex-wrap:wrap;gap:1rem;margin:1.25rem 0}
+.projection-reference>div{flex:1 1 220px;padding:1rem;border-left:3px solid var(--ink);background:var(--surface)}
+.projection-reference dt{font-size:.9rem}.projection-reference dd{font-weight:700;margin:.35rem 0 0;overflow-wrap:anywhere}
+.projection-table{width:100%;min-width:0;border-collapse:collapse;table-layout:fixed;font-size:.9rem}
+.projection-table th,.projection-table td{padding:.7rem;text-align:left;border-bottom:1px solid var(--line);overflow-wrap:anywhere;vertical-align:top}
+.projection-table th:first-child{width:38%}.projection-table caption{text-align:left;font-weight:600;margin-bottom:.7rem}
+.projection-help{font-size:.9rem;line-height:1.6}.projection-error{color:var(--ink);font-weight:600}
+.projection-guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.projection-guide article{padding:1rem;border:1px solid var(--line);border-radius:8px;min-width:0}
+@media(max-width:900px){.projection-views{grid-template-columns:1fr}}
+@media(max-width:600px){.projection-guide{grid-template-columns:1fr}.projection-table th,.projection-table td{padding:.4rem;font-size:.8rem}.projection-controls,.projection-point-form{gap:.75rem}}

@@ -12,7 +12,8 @@ window.CARTO_QGIS_LINKS = {
       "used_in": [
         "coordinates",
         "rectangular-coordinates",
-        "projection-basics"
+        "projection-basics",
+        "projection-crs-lab"
       ],
       "source_type": "QGIS Training Manual"
     },
@@ -406,6 +407,18 @@ window.CARTO_QGIS_LINKS = {
       "verified_on": "2026-10-09",
       "used_in": [
         "tutorial-t06"
+      ]
+    },
+    {
+      "id": "project-measurements",
+      "concept": "CRS de proiect, elipsoid și unități pentru măsurători",
+      "qgis_version": "3.44",
+      "source_type": "QGIS User Manual",
+      "title": "QGIS 3.44: Project Properties — General / Measurements",
+      "url": "https://docs.qgis.org/3.44/en/docs/user_manual/introduction/qgis_configuration.html#general-properties",
+      "verified": true,
+      "used_in": [
+        "projection-crs-lab"
       ]
     }
   ],

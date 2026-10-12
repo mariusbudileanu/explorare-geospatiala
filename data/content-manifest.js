@@ -120,6 +120,12 @@ for (const group of window.CARTO_CONTENT.groups) {
 })(window.CARTO_CONTENT);
 
 // Optional learning route; the seven chapters keep their existing numbering.
+(function(content){
+  content.lessons.push({id:'projection-crs-lab',title:'Laborator Proiecții & CRS',short_title:'Laborator Proiecții & CRS',href:'projection-crs-lab.html',part:'Proiecții & CRS',source_section:'',source_pages:[],figures:[],content_types:['concept','exercițiu','qgis'],interactive_components:['projection-crs-lab','comparison-core'],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'proiectii',keywords:['CRS','proiecție','EPSG:4326','EPSG:3857','EPSG:3844','UTM','distanță geodezică','arie','datum','Set Layer CRS','reproiectare']});
+  content.groups.find(g=>g.id==='projections').lessons.push('projection-crs-lab');
+})(window.CARTO_CONTENT);
+
+// Optional learning route; the seven chapters keep their existing numbering.
 (function(content) {
   const additions=[
     {id:'learning-path',title:'Parcurs recomandat',href:'learning-path.html',keywords:['începător','intermediar','avansat','competențe','prerechizite','parcurs']},
