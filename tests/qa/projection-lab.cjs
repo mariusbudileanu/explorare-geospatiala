@@ -44,6 +44,40 @@ function contrastAudit(){
  const ratio=(a,b)=>{const x=lum(rgb(a)),y=lum(rgb(b));return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
  return {cursor:ratio(getComputedStyle(document.querySelector('.projection-cursor')).stroke,getComputedStyle(document.querySelector('.projection-drawing svg')).backgroundColor),error:ratio(getComputedStyle(document.querySelector('#projection-error')).color,getComputedStyle(document.body).backgroundColor)};
 }
+async function validationRegression(page){
+ const snapshot=()=>page.evaluate(()=>{const s=window.CARTO_PROJECTION_LAB.compare.getState();return {geometry:JSON.stringify(s.context.geometry),point:s.sharedLocation,metrics:window.CARTO_PROJECTION_LAB.compare.getMetrics()};});
+ const sequences=[
+  {name:'91 → apply → CRS B',field:'shared-latitude',value:'91',point:[26.106,44.432],action:()=>page.locator('#crs-b').selectOption('EPSG:32635')},
+  {name:'invalid latitude → valid preset',field:'shared-latitude',value:'91',point:[26.22,47.35],newGeometry:true,action:()=>page.locator('#projection-preset').selectOption('risca')},
+  {name:'invalid longitude → reset',field:'shared-longitude',value:'181',point:[26.106,44.432],action:()=>page.locator('#projection-reset').click()},
+  {name:'invalid input → valid numeric input',field:'shared-latitude',value:'91',point:[26.2,44.5],action:async()=>{await page.locator('#shared-longitude').fill('26.2');await page.locator('#shared-latitude').fill('44.5');await page.locator('#shared-latitude').press('Enter');}},
+  {name:'invalid input → CRS A',field:'shared-latitude',value:'91',point:[26.106,44.432],action:()=>page.locator('#crs-a').selectOption('EPSG:3857')},
+  {name:'invalid input → switch A/B',field:'shared-latitude',value:'91',point:[26.106,44.432],action:async()=>{await page.locator('#compare-mode').selectOption('toggle');await page.locator('#show-B').click();}},
+  {name:'invalid input → same CRS A/B',field:'shared-longitude',value:'181',point:[26.106,44.432],action:async()=>{await page.locator('#crs-a').selectOption('EPSG:3844');await page.locator('#crs-b').selectOption('EPSG:3844');}}
+ ];
+ for(const sequence of sequences){
+  await page.locator('#projection-reset').click();const before=await snapshot();
+  await page.locator('#'+sequence.field).fill(sequence.value);await page.locator('#'+sequence.field).press('Enter');
+  ok((await page.locator('#projection-error').innerText()).length>20,'Invalid coordinate explained: '+sequence.name);
+  ok(await page.locator('#'+sequence.field).getAttribute('aria-invalid')==='true','Invalid field identified: '+sequence.name);
+  ok(JSON.stringify(await snapshot())===JSON.stringify(before),'Rejected draft leaves applied geometry, point and metrics unchanged: '+sequence.name);
+  await sequence.action();const after=await snapshot();
+  ok(await page.locator('#projection-error').innerText()==='','Error clears with restored valid state: '+sequence.name);
+  ok(await page.locator('#shared-longitude').getAttribute('aria-invalid')==='false'&&await page.locator('#shared-latitude').getAttribute('aria-invalid')==='false','Both fields valid after recovery: '+sequence.name);
+  ok(JSON.stringify(after.point)===JSON.stringify(sequence.point),'Correct applied shared point after recovery: '+sequence.name);
+  ok(await page.evaluate(()=>{const s=window.CARTO_PROJECTION_LAB.compare.getState();return [document.querySelector('#shared-longitude').valueAsNumber,document.querySelector('#shared-latitude').valueAsNumber].every((v,i)=>Math.abs(v-s.sharedLocation[i])<.0000005);}),'Visible coordinates agree with applied point: '+sequence.name);
+  ok(sequence.newGeometry?after.geometry!==before.geometry:after.geometry===before.geometry,'Geometry follows only intended action: '+sequence.name);
+  ok(await page.evaluate(()=>{const c=window.CARTO_PROJECTION_LAB.compare,s=c.getState(),m=c.getMetrics(),E=window.CARTO_PROJECTION_LAB_ENGINE;return ['A','B'].every(id=>{const expected=E.project(s.views[id].crs,s.context.geometry).metrics;return m[id].coordinates.every(Number.isFinite)&&m[id].geographic.every((v,i)=>v===s.sharedLocation[i])&&m[id].distance===expected.distance&&m[id].area===expected.area;});}),'Finite coordinates and normal metrics after recovery: '+sequence.name);
+  ok((await page.locator('#projection-status').innerText()).includes(sequence.point[1].toFixed(6).replace('.',','))&&await page.locator('#projection-status').getAttribute('aria-live')==='polite','Live status describes the applied point: '+sequence.name);
+ }
+ // Editing a rejected draft also synchronizes feedback, without applying it early.
+ await page.locator('#projection-reset').click();const before=await snapshot();
+ await page.locator('#shared-latitude').fill('91');await page.locator('#shared-latitude').press('Enter');await page.locator('#shared-latitude').fill('44.5');
+ ok(await page.locator('#projection-error').innerText()===''&&await page.locator('#shared-latitude').getAttribute('aria-invalid')==='false','Corrected draft has no stale validation');
+ ok(JSON.stringify(await snapshot())===JSON.stringify(before),'Editing a valid draft does not apply it before submit');
+ ok(await page.locator('#shared-latitude').evaluate(e=>e===document.activeElement),'Validation preserves input focus');
+ await page.locator('#projection-reset').click();return sequences.length;
+}
 const server=http.createServer((req,res)=>{const uri=decodeURIComponent(new URL(req.url,'http://preview.invalid').pathname);if(!uri.startsWith('/explorare-geospatiala/'))return res.writeHead(404).end();const rel=uri.slice('/explorare-geospatiala/'.length)||'index.html',file=path.resolve(root,rel);if(!file.startsWith(root+path.sep)||/^(content|tmp)\//.test(rel))return res.writeHead(404).end();fs.readFile(file,(e,b)=>{if(e)return res.writeHead(404).end();res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'})[path.extname(file)]||'application/octet-stream');res.end(b);});});
 (async()=>{
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${server.address().port}/explorare-geospatiala/`,browser=await playwright().chromium.launch(browserOptions()),errors=[],network=[],layouts=[],contrasts=[];
@@ -60,6 +94,7 @@ const server=http.createServer((req,res)=>{const uri=decodeURIComponent(new URL(
  ok(await page.locator('#shared-latitude').evaluate(e=>e===document.activeElement),'Focus preserved after numeric update');
  await page.locator('#shared-longitude').fill('-26');await page.locator('#shared-latitude').press('Enter');ok((await page.locator('#projection-error').innerText()).length>20,'Invalid input explained');
  await page.locator('#projection-reset').click();ok(await page.locator('#crs-a').inputValue()==='EPSG:4326','Reset CRS');
+ const validationSequences=await validationRegression(page);
  await page.evaluate(()=>{const compare=window.CARTO_PROJECTION_LAB.compare,original=compare.setSharedLocation.bind(compare);window.pointUpdates=0;compare.setSharedLocation=p=>{window.pointUpdates++;return original(p);};});
  await page.locator('#view-A svg').click({position:{x:280,y:100}});
  ok(await page.evaluate(()=>{const m=window.CARTO_PROJECTION_LAB.compare.getMetrics();return window.pointUpdates===1&&Math.abs(m.A.geographic[0]-26.106)>1e-5&&m.A.geographic.every((v,i)=>v===m.B.geographic[i]);}),'One graphic event updates the same geographic location in both views');
@@ -78,9 +113,15 @@ const server=http.createServer((req,res)=>{const uri=decodeURIComponent(new URL(
   const radio=page.locator('[data-learning-question="crs-metric"] input').nth(2);await radio.focus();await page.keyboard.press('Space');await page.locator('[data-learning-question="crs-metric"] button[type=submit]').click();ok((await page.locator('[data-learning-question="crs-metric"] [role=status]').innerText()).startsWith('Alegere justificată'),'Formative feedback via keyboard');
   await page.locator('#experiment').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,`lab-${width}-${dark?'dark':'light'}.png`)});
  }
- for(const query of ['CRS','proiecție','EPSG:4326','EPSG:3857','EPSG:3844','UTM','distanță geodezică','arie','datum','Set Layer CRS','reproiectare']){
+ for(const query of ['CRS','proiecție','EPSG:4326','EPSG:3857','EPSG:3844','UTM','distanță geodezică','arie','arie geodezică','arie elipsoidală','datum','Set Layer CRS','reproiectare']){
   await page.locator('#search').fill(query);const results=page.locator('#search-results a[href*="projection-crs-lab.html"]');await results.first().waitFor();ok(await results.count()>0,'Lab found in contextual search '+query);
-  const snippet=await results.first().locator('small').innerText(),normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();ok(normalize(snippet).includes(normalize(query)),'Snippet explains exact contextual match '+query);await page.locator('#search').fill('');
+  const snippet=await results.first().locator('small').innerText(),normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();ok(normalize(snippet).includes(normalize(query)),'Snippet explains exact contextual match '+query);
+  if(query==='arie geodezică'){
+   ok(snippet.includes('arie elipsoidală')&&snippet.includes('muchii geodezice'),'Canonical teaching text explains the area alias');
+   ok(!/hartăÎncepătorLocalizează|informației\.Coordonatele|<\/?(?:script|style|template|[a-z][\w-]*)\b/.test(snippet),'Plain readable area snippet');
+   await results.first().click();ok(page.url()===base+'projection-crs-lab.html','Area query opens the laboratory destination');await page.waitForFunction(()=>window.CARTO_PROJECTION_LAB);
+  }
+  await page.locator('#search').fill('');
  }
  const staticContext=await browser.newContext({javaScriptEnabled:false});const staticPage=await staticContext.newPage();
  for(const width of [1440,1024,768,390]){await staticPage.setViewportSize({width,height:1000});await staticPage.goto(base+'projection-crs-lab.html');ok(await staticPage.locator('#metoda').isVisible()&&await staticPage.locator('#qgis a').count()>=3,'Static methodology/QGIS');ok(!await staticPage.locator('#projection-interactive').isVisible(),'Unavailable controls hidden without JS');
@@ -90,6 +131,6 @@ const server=http.createServer((req,res)=>{const uri=decodeURIComponent(new URL(
  await page.evaluate(()=>{window.detachedProjectionSVG=document.querySelector('#view-A svg');window.CARTO_PROJECTION_LAB.destroy();});ok(await page.locator('.projection-drawing svg').count()===0,'Actual adapters destroyed');
  await page.evaluate(()=>window.detachedProjectionSVG.dispatchEvent(new MouseEvent('click',{clientX:10,clientY:10})));await page.locator('#projection-reset').click();
  ok(!network.some(u=>/turf|geotiff|\.tif|tile\.openstreetmap/.test(u)),'No unused libraries/raster/basemap');ok(!network.some(u=>/^https?:/.test(u)&&!u.startsWith(base)),'No external runtime requests');ok(errors.length===0,'No browser errors '+errors.join('; '));
- const report={status:'PASS',checks,numeric:{reference:r.implementation,distances:r.distances.length,areas:r.areas.length,scenes:r.scenes.length,transformations:r.transformations.length,existingCRS:old.tests.length,max},layouts:layouts.length,performanceSamples,minimumContrast:Math.min(...contrasts.flatMap(c=>[c.cursor,c.error])),requests:network.length,errors};fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+ const report={status:'PASS',checks,validationSequences,numeric:{reference:r.implementation,distances:r.distances.length,areas:r.areas.length,scenes:r.scenes.length,transformations:r.transformations.length,existingCRS:old.tests.length,max},layouts:layouts.length,performanceSamples,minimumContrast:Math.min(...contrasts.flatMap(c=>[c.cursor,c.error])),requests:network.length,errors};fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
  }finally{await browser.close();await new Promise(r=>server.close(r));}
 })().catch(e=>{console.error(e);process.exitCode=1;});
