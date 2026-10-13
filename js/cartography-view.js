@@ -1,0 +1,56 @@
+/* Persistent SVG adapters. Comparison/lifecycle state belongs to CARTO_COMPARE. */
+(function(root){
+  'use strict';
+  const D=root.CARTO_CARTOGRAPHY,E=root.CARTO_CLASSIFY,L=root.CARTO_LABEL_ENGINE,{esc}=root.CARTO_LAB,ns='http://www.w3.org/2000/svg';
+  const number=v=>v===null?'NULL':String(v).replace('.',','),methodLabel={equal:'Equal Interval',quantile:'Quantile',jenks:'Natural Breaks (Jenks)'};
+  function color(index,total,palette,range,center){
+    if(palette==='diverging'){
+      const midpoint=range.lower/2+range.upper/2;
+      return midpoint<center?'#6598b8':midpoint>center?'#bb775b':'#e8e4d8';
+    }
+    const colors=palette==='qualitative'?D.qualitative:D.sequential;
+    return colors[total===1?3:Math.round(index*(colors.length-1)/(total-1))];
+  }
+  const element=(tag,attrs={},parent)=>{const n=document.createElementNS(ns,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent?.append(n);return n;};
+  function classification(){
+    let host,svg,nodes=[],rows=[],metrics={},selected;
+    return {
+      init(panel){host=panel;const drawing=panel.querySelector('.carto-drawing');svg=element('svg',{viewBox:'0 0 480 300',role:'img','aria-label':'24 zone sintetice; identificatorii și tabelul descriu clasele.'},drawing);
+        const defs=element('defs',{},svg),pattern=element('pattern',{id:panel.id+'-null',width:8,height:8,patternUnits:'userSpaceOnUse'},defs);element('rect',{width:8,height:8,fill:'#eeeeee'},pattern);element('path',{d:'M0 8L8 0',stroke:'#555', 'stroke-width':1},pattern);
+        nodes=D.cells.map(cell=>{const g=element('g',{'data-cell':cell.id},svg),path=element('rect',{x:cell.x,y:cell.y,width:cell.width,height:cell.height,stroke:'#243f46','stroke-width':1},g),title=element('title',{},g),text=element('text',{x:cell.x+35,y:cell.y+31,'text-anchor':'middle','font-size':20,'font-weight':700,fill:'#102f3b',stroke:'#ffffff','stroke-width':3,'paint-order':'stroke'},g);return {path,title,text};});
+        const body=panel.querySelector('tbody');rows=D.cells.map(c=>{const row=document.createElement('tr');row.innerHTML=`<th scope="row">${c.id}</th><td></td><td></td>`;body.append(row);return row;});
+      },
+      update({view}){
+        const result=E.classify(D.cells.map(c=>c.numerator),{method:view.method,classes:Number(view.classes),denominators:view.metric==='rate'?D.cells.map(c=>c.denominator):null,scale:view.metric==='rate'?100:1});
+        const valid=result.values.filter(v=>v!==null),center=valid.reduce((s,v)=>s+v,0)/valid.length;
+        D.cells.forEach((cell,i)=>{const cls=result.assignments[i],n=nodes[i],value=result.values[i];n.path.setAttribute('fill',cls===null?`url(#${host.id}-null)`:color(cls,result.effectiveClasses,view.palette,result.ranges[cls],center));n.text.textContent=cell.id+' '+(cls===null?'?':'C'+(cls+1));n.title.textContent=`Zona ${cell.id}; ${number(value)}; ${cls===null?result.reasons[i]:'clasa '+(cls+1)}`;rows[i].cells[1].textContent=number(value)+(value!==null&&view.metric==='rate'?'%':'');rows[i].cells[2].textContent=cls===null?result.reasons[i]:'C'+(cls+1);});
+        host.querySelector('.carto-legend').innerHTML=result.ranges.map((r,i)=>`<li><i class="carto-swatch" aria-hidden="true" style="background:${color(i,result.effectiveClasses,view.palette,r,center)}"></i><span>C${i+1}: ${r.lowerInclusive?'[':'('}${number(r.lower)}; ${number(r.upper)}] · ${r.count} obiecte</span></li>`).join('')+`<li>▧ Fără clasificare: ${result.missing} · NULL / raport nedefinit</li>`;
+        host.querySelector('.carto-summary').textContent=`${methodLabel[view.method]} · ${result.effectiveClasses}/${view.classes} clase efective/cerute · ${view.metric==='rate'?'rată: cazuri / persoane eligibile × 100 (%)':'valoare absolută: cazuri observate'}. `+(view.palette==='diverging'?`Paletă divergentă: centrul este media distribuției (${number(center)}); o clasă care traversează media are culoarea mijlocului intervalului. Nu este un prag de risc.`:view.palette==='qualitative'?'Paletă calitativă: exemplu nepotrivit pentru valori ordonate; citește clasa și intervalul.':'Paletă secvențială: ordinea claselor este monotonă.');
+        metrics={...result,center};this.setSharedLocation(selected||[1,0]);
+      },
+      setSharedLocation(point){selected=point;nodes.forEach((n,i)=>n.path.dataset.selected=String(i+1===point[0]));},
+      resize(){},getMetrics(){return metrics;},destroy(){svg?.remove();host?.querySelector('tbody').replaceChildren();nodes=[];rows=[];metrics={};host=null;svg=null;}
+    };
+  }
+  function design(){
+    let host,svg,title,background,paths=[],circles=[],labels,metrics={};
+    const points=root.CARTO_LABELING.dense;
+    return {
+      init(panel){host=panel;svg=element('svg',{viewBox:'0 0 480 340',role:'img','aria-label':'Servicii sintetice: ierarhie vizuală, aceleași 25 de puncte.'},panel.querySelector('.carto-drawing'));background=element('rect',{x:0,y:40,width:480,height:300,class:'carto-context-bg'},svg);title=element('text',{x:18,y:30,class:'carto-title'},svg);title.textContent='Servicii · scenă sintetică';const map=element('g',{transform:'translate(0 40)'},svg);paths=root.CARTO_STYLING.polygons.map(p=>element('path',{d:L.polyPath(p.geometry),fill:'none',class:'carto-context'},map));circles=points.map(p=>{const circle=element('circle',{cx:p.x,cy:p.y,'data-point':p.id,class:'carto-points'},map);element('title',{},circle).textContent=p.name+' · '+p.class;return circle;});labels=element('g',{},map);},
+      update({view}){
+        title.setAttribute('font-size',view.title);title.setAttribute('font-weight',view.title>=24?700:400);background.setAttribute('fill-opacity',view.background/100);paths.forEach(p=>p.setAttribute('stroke-width',view.outline));
+        circles.forEach((c,i)=>{c.setAttribute('r',view.hierarchy==='priority'&&points[i].class==='principal'?view.size*1.3:view.size);c.setAttribute('fill',view.palette==='qualitative'?D.qualitative[i%D.qualitative.length]:'#41866b');});
+        const placement=L.solve(points,{avoid:view.hierarchy==='priority',limit:Number(view.density),priority:p=>view.hierarchy==='priority'?p.priority:0,size:15,preferred:'NE',fixed:view.hierarchy==='equal'});
+        labels.innerHTML=placement.accepted.map(p=>L.renderLabel({...p,weight:view.hierarchy==='priority'&&p.feature.class==='principal'?700:400},{buffer:Number(view.halo)})).join('');
+        let collisions=0,overlap=0;for(let i=0;i<placement.accepted.length;i++)for(let j=0;j<i;j++)if(L.overlaps(placement.accepted[i].box,placement.accepted[j].box))collisions++;
+        for(let i=0;i<points.length;i++)for(let j=0;j<i;j++){const radius=p=>view.hierarchy==='priority'&&p.class==='principal'?view.size*1.3:view.size;if(Math.hypot(points[i].x-points[j].x,points[i].y-points[j].y)<radius(points[i])+radius(points[j]))overlap++;}
+        host.querySelector('.carto-legend').innerHTML=`<li>● Servicii sintetice · ${points.length} obiecte</li><li>${view.hierarchy==='priority'?'Prioritate: principal > secundar > local; principal cu simbol mai mare.':'Aceeași greutate pentru toate etichetele și simbolurile.'}</li><li>${view.palette==='qualitative'?'Categorii cromatice fără ordine: nepotrivite pentru ierarhia urmărită.':'O culoare tematică; mărimea și greutatea disting prioritatea.'}</li>`;
+        host.querySelector('.carto-legend').style.fontSize=['.72rem','.9rem','1.15rem'][view.legend];host.querySelector('.carto-legend').style.fontWeight=view.legend===2?'700':'400';
+        host.querySelector('.carto-summary').textContent=`Diagnostic orientativ: ${placement.accepted.length}/${points.length} etichete vizibile; ${collisions} perechi de etichete suprapuse; ${overlap} perechi de simboluri suprapuse (cercuri). Nu este un verdict de calitate; omisiunea textului nu elimină obiectul.`;
+        host.querySelector('.carto-records').innerHTML=L.table(placement.records);metrics={visible:placement.accepted.length,collisions,overlap,records:placement.records};
+      },
+      setSharedLocation(){},resize(){},getMetrics(){return metrics;},destroy(){svg?.remove();host?.querySelector('.carto-records').replaceChildren();host=null;svg=null;paths=[];circles=[];labels=null;metrics={};}
+    };
+  }
+  root.CARTO_CARTOGRAPHY_VIEW={classification,design};
+})(window);

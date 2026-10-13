@@ -6,6 +6,8 @@ export function buildLearning(root,{check=false}={}) {
   const context={window:{}};vm.createContext(context);
   for(const file of ['data/content-manifest.js','data/glossary.js','data/learning-model.js','data/learning-pages.js','js/learning.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
   const {CARTO_CONTENT:manifest,CARTO_LEARNING:model,CARTO_LEARNING_UI:ui,CARTO_LEARNING_PAGES:pages}=context.window;
+  const qgisLinks=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).links;
+  const qgisMarkup=html=>html.replace(/\{\{qgis:([\w-]+)\}\}/g,(_,id)=>{const s=qgisLinks.find(s=>s.id===id&&s.verified);if(!s)throw Error('Unknown QGIS source: '+id);return `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.title} ↗</a>`;});
   for(const id of Object.keys(model.items))if(!manifest.lessons.some(l=>l.id===id))throw Error('Learning item missing in manifest: '+id);
   const write=(relative,html)=>{const file=path.join(root,relative);if(check){if(!fs.existsSync(file)||fs.readFileSync(file,'utf8')!==html)throw Error('Stale generated learning content: '+relative);}else fs.writeFileSync(file,html);};
   // The legacy workshop catalogue and visible labels derive their level from this model.
@@ -55,6 +57,13 @@ export function buildLearning(root,{check=false}={}) {
     const item=manifest.lessons.find(l=>l.href===file),id=item?.id;
     // Query-selected lessons receive the same markup after their existing renderer.
     let html=id==='coordinates'?original.replace('<body>','<body data-page-id="coordinates">'):original;
+    if(id==='styling-labeling'){
+      html=html.replace(/<!-- map-design-entry:start -->[\s\S]*?<!-- map-design-entry:end -->/,'');
+      html=html.replace('<nav class="lab-mode"',`<!-- map-design-entry:start -->${context.window.CARTO_DESIGN_ENTRY}<!-- map-design-entry:end --><nav class="lab-mode"`);
+      html=html.replace(/<!-- map-design:start -->[\s\S]*?<!-- map-design:end -->/,'');
+      html=html.replace('<!-- learning-tail:start -->',`<!-- map-design:start -->${qgisMarkup(context.window.CARTO_DESIGN_PROSE)}<!-- map-design:end --><!-- learning-tail:start -->`);
+      if(!html.includes('css/cartography-labs.css'))html=html.replace('</head>','<link rel="stylesheet" href="css/cartography-labs.css">\n'+['js/compare-core.js','js/classification-engine.js','data/cartography-scenes.js','js/cartography-view.js','js/cartography-labs.js'].map(p=>`<script src="${p}" defer></script>`).join('\n')+'\n</head>');
+    }
     if(/^T0[1-6]$/.test(id)){
       const level=model.levels[model.items[id].level].label;
       html=html.replace(/(<div class="tutorial-meta"><span>)[^<]+/, '$1'+level);

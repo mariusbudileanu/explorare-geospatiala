@@ -121,6 +121,9 @@ for (const group of window.CARTO_CONTENT.groups) {
 
 // Optional learning route; the seven chapters keep their existing numbering.
 (function(content){
+  content.lessons.push({id:'classification-lab',title:'Aceleași date, hărți diferite',short_title:'Aceleași date, hărți diferite',href:'classification-lab.html',part:'Metode de reprezentare',source_section:'',source_pages:[],figures:[],content_types:['concept','exercițiu','qgis'],interactive_components:['classification-lab','comparison-core'],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'reprezentare',keywords:['Equal Interval','Quantile','Jenks','Natural Breaks','clasificare','număr de clase','valori absolute','rate','normalizare','paletă secvențială','paletă divergentă']});
+  content.groups.find(g=>g.id==='methods').lessons.push('classification-lab');
+  const styling=content.lessons.find(l=>l.id==='styling-labeling');styling.keywords.push('Map Design Studio','coliziuni etichete');styling.interactive_components.push('map-design-studio');
   content.lessons.push({id:'projection-crs-lab',title:'Laborator Proiecții & CRS',short_title:'Laborator Proiecții & CRS',href:'projection-crs-lab.html',part:'Proiecții & CRS',source_section:'',source_pages:[],figures:[],content_types:['concept','exercițiu','qgis'],interactive_components:['projection-crs-lab','comparison-core'],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'proiectii',keywords:['CRS','proiecție','EPSG:4326','EPSG:3857','EPSG:3844','UTM','distanță geodezică','arie','datum','Set Layer CRS','reproiectare']});
   content.groups.find(g=>g.id==='projections').lessons.push('projection-crs-lab');
 })(window.CARTO_CONTENT);
