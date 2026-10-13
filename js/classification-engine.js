@@ -1,6 +1,50 @@
 /* Pure numeric classification; no DOM, geometry, network or mutable input. */
 (function(root){
   'use strict';
+  function equalUpper(min,max,index,classes){
+    const span=max-min,scaled=span*index,t=index/classes;
+    // Preserve ordinary arithmetic; divide before multiplying if that product overflows.
+    // Opposite-sign endpoints can overflow the span, but their weighted sum cannot.
+    return Number.isFinite(scaled)?min+scaled/classes:Number.isFinite(span)?min+span*t:min*(1-t)+max*t;
+  }
+  function gcd(a,b){while(b){const next=a%b;a=b;b=next;}return a;}
+  function fraction(n,d){if(n===0n)return {n:0n,d:1n};const divisor=gcd(n,d);return {n:n/divisor,d:d/divisor};}
+  function addCosts(a,b){
+    const divisor=gcd(a.d,b.d),left=b.d/divisor,right=a.d/divisor;
+    return fraction(a.n*left+b.n*right,a.d*left);
+  }
+  function dyadic(value){
+    // Exact binary64 significand/exponent; no Number subtraction or squared costs.
+    const buffer=new ArrayBuffer(8),view=new DataView(buffer);view.setFloat64(0,value);
+    const bits=view.getBigUint64(0),exponent=Number((bits>>52n)&2047n);
+    let significand=bits&((1n<<52n)-1n),power=exponent?exponent-1075:-1074;
+    if(exponent)significand|=1n<<52n;
+    if(!significand)return {significand:0n,power:0};
+    while((significand&1n)===0n){significand>>=1n;power++;}
+    return {significand:bits>>63n?-significand:significand,power};
+  }
+  function jenksUppers(unique,sorted,classes){
+    const parts=unique.map(dyadic),power=parts.reduce((p,v)=>v.significand?Math.min(p,v.power):p,Infinity);
+    const integers=parts.map(v=>v.significand?v.significand<<BigInt(v.power-power):0n),origin=integers[0],units=integers.map(v=>v-origin),n=unique.length;
+    const frequency=new Map(unique.map(v=>[v,0]));sorted.forEach(v=>frequency.set(v,frequency.get(v)+1));
+    // All SSE share the positive factor 2^(2*power). Keep the remaining rational exact.
+    const costs=Array.from({length:n},()=>Array(n+1));
+    for(let start=0;start<n;start++){
+      let weight=0n,sum=0n,squares=0n;
+      for(let end=start;end<n;end++){
+        const f=BigInt(frequency.get(unique[end])),x=units[end];weight+=f;sum+=f*x;squares+=f*x*x;
+        costs[start][end+1]=fraction(weight*squares-sum*sum,weight);
+      }
+    }
+    const dp=Array.from({length:classes+1},()=>Array(n+1).fill(null)),cut=Array.from({length:classes+1},()=>Array(n+1).fill(0));dp[0][0]={n:0n,d:1n};
+    for(let c=1;c<=classes;c++)for(let end=c;end<=n;end++)for(let start=c-1;start<end;start++){
+      if(!dp[c-1][start])continue;
+      const candidate=addCosts(dp[c-1][start],costs[start][end]),previous=dp[c][end];
+      // Strict rational comparison; exact ties retain the first ascending separator.
+      if(!previous||candidate.n*previous.d<previous.n*candidate.d){dp[c][end]=candidate;cut[c][end]=start;}
+    }
+    const uppers=[];let end=n;for(let c=classes;c>0;c--){uppers.unshift(unique[end-1]);end=cut[c][end];}return uppers;
+  }
   function classify(input,{method='equal',classes=5,denominators=null,scale=1}={}){
     if(!Array.isArray(input)||!['equal','quantile','jenks'].includes(method)||!Number.isInteger(classes)||classes<1||classes>100||!Number.isFinite(scale)||scale<=0)throw Error('Parametri de clasificare invalizi.');
     if(denominators!==null&&(!Array.isArray(denominators)||denominators.length!==input.length))throw Error('Numitorii trebuie să corespundă valorilor.');
@@ -16,23 +60,10 @@
     if(!sorted.length)return {method,requestedClasses:classes,values,reasons,breaks:[],assignments:values.map(()=>null),counts:[],ranges:[],min:null,max:null,missing:input.length,effectiveClasses:0};
     const min=sorted[0],max=sorted.at(-1),k=Math.min(classes,unique.length);let uppers=[];
     if(k===1)uppers=[max];
-    else if(method==='equal')uppers=Array.from({length:k},(_,i)=>i===k-1?max:Number.isFinite(max-min)?min+(max-min)*(i+1)/k:min*(1-(i+1)/k)+max*((i+1)/k));
+    else if(method==='equal')uppers=Array.from({length:k},(_,i)=>i===k-1?max:equalUpper(min,max,i+1,k));
     else if(method==='quantile')uppers=Array.from({length:k},(_,i)=>{const p=(sorted.length-1)*(i+1)/k,lo=Math.floor(p),t=p-lo;return lo===sorted.length-1?max:sorted[lo]*(1-t)+sorted[lo+1]*t;});
-    else {
-      // Weighted contiguous least-squares partitions of distinct values. Duplicates never split.
-      // Normalize to bound sums; this changes neither the optimum nor interval boundaries.
-      const magnitude=Math.max(Math.abs(min),Math.abs(max))||1,span=max-min,normalized=unique.map(v=>Number.isFinite(span)?(v-min)/span:(v/magnitude-min/magnitude)/(max/magnitude-min/magnitude)),n=unique.length;
-      const frequency=new Map(unique.map(v=>[v,0]));sorted.forEach(v=>frequency.set(v,frequency.get(v)+1));
-      // Weighted Welford avoids cancellation in narrow intervals.
-      const costs=Array.from({length:n},()=>Array(n+1).fill(0));
-      for(let start=0;start<n;start++){let weight=0,mean=0,sse=0;for(let end=start;end<n;end++){const f=frequency.get(unique[end]),delta=normalized[end]-mean;weight+=f;mean+=delta*f/weight;sse+=f*delta*(normalized[end]-mean);costs[start][end+1]=Math.max(0,sse);}}
-      const dp=Array.from({length:k+1},()=>Array(n+1).fill(Infinity)),cut=Array.from({length:k+1},()=>Array(n+1).fill(0));dp[0][0]=0;
-      for(let c=1;c<=k;c++)for(let end=c;end<=n;end++)for(let start=c-1;start<end;start++){
-        const candidate=dp[c-1][start]+costs[start][end],previous=dp[c][end],tolerance=32*Number.EPSILON*Math.max(Math.abs(candidate),Number.isFinite(previous)?Math.abs(previous):0);
-        if(!Number.isFinite(previous)||candidate<previous-tolerance){dp[c][end]=candidate;cut[c][end]=start;}
-      }
-      let end=n;for(let c=k;c>0;c--){uppers.unshift(unique[end-1]);end=cut[c][end];}
-    }
+    else uppers=jenksUppers(unique,sorted,k);
+    if(uppers.some((v,i)=>!Number.isFinite(v)||v<min||v>max||(i&&v<uppers[i-1]))||uppers.at(-1)!==max)throw Error('Pragurile de clasificare nu respectă domeniul numeric finit.');
     uppers=[...new Set(uppers)];const counts=uppers.map(()=>0);
     const assignments=values.map(v=>{if(v===null)return null;const index=uppers.findIndex(upper=>v<=upper);counts[index]++;return index;});
     const breaks=[min,...uppers],ranges=uppers.map((upper,i)=>({lower:i?uppers[i-1]:min,upper,lowerInclusive:i===0,upperInclusive:true,count:counts[i]}));

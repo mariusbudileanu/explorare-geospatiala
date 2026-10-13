@@ -5566,7 +5566,7 @@ window.CARTO_SEARCH_INDEX = [
       "Quantile · efective apropiate",
       "Pragurile sunt cuantile interpolate liniar: poziția p × (n − 1) în șirul ordonat, pentru p = i / k. Valorile egale nu sunt despărțite; pragurile repetate se reunesc, deci efectivele nu sunt garantat egale.",
       "Natural Breaks (Jenks)",
-      "O partiție deterministă în grupe contigue minimizează suma pătratelor abaterilor față de media fiecărei grupe. Calculăm pe valorile distincte ponderate cu frecvența lor, fără eșantionare. La egalitate în limita toleranței floating-point (32 × epsilon relativ la cost) este păstrată prima soluție întâlnită în ordinea crescătoare a separatoarelor.",
+      "O partiție deterministă în grupe contigue minimizează suma pătratelor abaterilor față de media fiecărei grupe. Calculăm pe valorile distincte ponderate cu frecvența lor, fără eșantionare. La egalitate exactă a costurilor este păstrată prima soluție întâlnită în ordinea crescătoare a separatoarelor.",
       "Alege un număr de clase de 4, 5 sau 7. Compară Equal Interval / Quantile, Quantile / Jenks, 4 / 7 clase și valori absolute / rate. Citește pragurile, efectivele și tabelul; culoarea singură nu explică diferența numerică.",
       "Regula intervalelor și legenda",
       "Prima clasă este [min; prag], iar următoarele sunt (pragul anterior; prag]. Valoarea egală cu un prag aparține clasei care se încheie la acel prag; maximul este inclus. Clasificarea folosește numerele complete, iar legenda afișează aceleași limite fără rotunjire analitică. Solicitarea a mai multor clase decât valori distincte este limitată; toate valorile egale produc o singură clasă. Clasele goale rămân explicite, iar valorile fără clasificare sunt afișate separat.",
