@@ -2,6 +2,7 @@
 (function(root){
   'use strict';
   const D=root.CARTO_DIAGNOSTICS,V=root.CARTO_DIAGNOSTIC_VIEW,P=root.CARTO_DIAGNOSTIC_CONTENT;
+  const defaultScene=D.scenes[0],coordinateNumber=new Intl.NumberFormat('ro-RO',{maximumFractionDigits:6});
   const host=document.querySelector('#diag-interactive');if(!host)return;
   const $=id=>document.getElementById('diag-'+id),clone=value=>JSON.parse(JSON.stringify(value));
   const loaded=new Map();
@@ -12,7 +13,21 @@
   function teardown(){scope?.abort();scope=null;compare?.destroy();compare=null;$('active').replaceChildren();}
   function list(){const items=D.scenes.filter(s=>$('family').value==='all'||s.family===$('family').value);$('select').innerHTML=items.map(s=>`<option value="${s.id}">${P.esc(s.title)}</option>`).join('');return items;}
   function selectItems(s){const items=list();if(!items.includes(s)){$('family').value='all';list();}$('select').value=s.id;}
-  function controls(){const st=compare.getState();$('mode').value=st.mode;$('side').value=st.active;$('side').disabled=st.mode==='side';if($('shared'))$('shared').value=st.sharedLocation.join(',');}
+  function controls(st){
+    $('mode').value=st.mode;$('side').value=st.active;$('side').disabled=st.mode==='side';
+    const shared=$('shared');if(!shared)return;
+    const value=st.sharedLocation.join(','),custom=shared.querySelector('[data-custom]');
+    if(scene.renderer==='projection'){
+      const preset=[...shared.options].find(option=>!option.hasAttribute('data-custom')&&option.value===value);
+      if(preset)custom?.remove();
+      else {
+        const option=custom||document.createElement('option');option.dataset.custom='';option.value=value;
+        option.textContent=`Punct personalizat (lon ${coordinateNumber.format(st.sharedLocation[0])}°, lat ${coordinateNumber.format(st.sharedLocation[1])}°)`;
+        if(!custom)shared.append(option);
+      }
+    }
+    shared.value=value;
+  }
   function semanticState(){if(!state||!compare)return null;const st=compare.getState();return {scenario:scene.id,views:clone(st.views),mode:st.mode,active:st.active,sharedLocation:[...st.sharedLocation],controls:{family:$('family').value,answer:$('active').querySelector('input[type=radio]:checked')?.value??null,book:$('book').value},context:clone(state.context)};}
   function selections(s){if(['raster','resampling'].includes(s.renderer))return Array.from({length:25},(_,i)=>[[i%5,Math.floor(i/5)],`Celula (${i%5}, ${Math.floor(i/5)})`]);if(s.renderer==='projection')return [[[26.106,44.432],'București'],[[26.055,44.465],'Al doilea punct în București']];if(s.renderer==='classification')return Array.from({length:24},(_,i)=>[[i+1,0],`Zona ${i+1}`]);if(s.renderer==='symbols')return Array.from({length:4},(_,i)=>[[i+1,0],`Simbolul ${i+1}`]);return [];}
   async function activate(id,{snapshot,focus=false,hash=true}={}){
@@ -22,11 +37,11 @@
       scope=new AbortController();const signal=scope.signal,choices=selections(next);const bind=(id,event,fn)=>$(id).addEventListener(event,fn,{signal});
       $('active').innerHTML=`<h3 id="diag-active-title" class="diag-active-heading" tabindex="-1">${P.esc(next.title)}</h3><p class="diag-type">${P.esc(next.family)} · ${P.esc(next.type)}</p><div class="carto-controls"><label for="diag-mode">Comparație<select id="diag-mode"><option value="side">A și B alăturat</option><option value="toggle">O vedere: A / B</option></select></label><label for="diag-side">Vedere activă<select id="diag-side"><option>A</option><option>B</option></select></label>${choices.length?`<label for="diag-shared">${next.renderer==='projection'?'Punct geografic comun':'Obiect / celulă comună'}<select id="diag-shared">${choices.map(([p,label])=>`<option value="${p.join(',')}">${P.esc(label)}</option>`).join('')}</select></label>`:''}</div><div id="diag-views" class="carto-views">${V.panel('A')+V.panel('B')}</div>${root.CARTO_LEARNING_UI.form(next.question)}${P.explanation(next)}`;
       const context={scene:next.id};if(next.renderer==='projection'){context.geometry=root.CARTO_PROJECTION_LAB_ENGINE.geometry([26.106,44.432],10);context.type='polygon';}
-      compare=root.CARTO_COMPARE.create({container:$('views'),panels:{A:$('panel-A'),B:$('panel-B')},adapters:{A:V.create(next,p=>p&&compare?.setSharedLocation(p)),B:V.create(next,p=>p&&compare?.setSharedLocation(p))},initial:{...state,context}});
+      compare=root.CARTO_COMPARE.create({container:$('views'),panels:{A:$('panel-A'),B:$('panel-B')},adapters:{A:V.create(next,p=>p&&compare?.setSharedLocation(p)),B:V.create(next,p=>p&&compare?.setSharedLocation(p))},initial:{...state,context},onChange:controls});
       root.CARTO_LEARNING_UI.bindChecks($('active'),[next.question],{signal});
-      bind('mode','change',()=>{compare.update({mode:$('mode').value});controls();});bind('side','change',()=>compare.update({active:$('side').value}));
+      bind('mode','change',()=>compare.update({mode:$('mode').value}));bind('side','change',()=>compare.update({active:$('side').value}));
       if(choices.length)bind('shared','change',()=>compare.setSharedLocation($('shared').value.split(',').map(Number)));
-      controls();$('status').textContent=`${D.scenes.indexOf(next)+1} din ${D.scenes.length} · ${next.type}. B este o posibilă intervenție.`;
+      $('status').textContent=`${D.scenes.indexOf(next)+1} din ${D.scenes.length} · ${next.type}. B este o posibilă intervenție.`;
       const filtered=D.scenes.filter(s=>$('family').value==='all'||s.family===$('family').value);$('prev').disabled=filtered.indexOf(next)===0;$('next').disabled=filtered.indexOf(next)===filtered.length-1;
       $('notice').hidden=true;$('text').hidden=true;host.hidden=false;
       if(hash&&location.hash!=='#'+next.anchor)history.pushState(null,'','#'+next.anchor);
@@ -37,13 +52,14 @@
   const bind=(id,event,fn)=>$(id).addEventListener(event,fn,{signal:lifetime.signal});
   bind('family','change',()=>{const selected=list()[0];if(selected)activate(selected.id,{focus:true});});bind('select','change',()=>activate($('select').value,{focus:true}));
   for(const [id,step] of [['prev',-1],['next',1]])bind(id,'click',()=>{const items=D.scenes.filter(s=>$('family').value==='all'||s.family===$('family').value),s=items[items.indexOf(scene)+step];if(s)activate(s.id,{focus:true});});
-  bind('reset','click',()=>activate(scene.id,{focus:true}));
+  bind('reset','click',()=>activate(scene.id,{focus:true,hash:false}));
   const book=()=>{const snapshot=D.books[$('book').value];if(snapshot){$('family').value=snapshot.controls.family;return activate(snapshot.scenario,{snapshot,focus:true});}return Promise.resolve(false);};
   bind('book','change',book);bind('book-apply','click',book);
-  const fromHash=()=>{const s=D.scenes.find(s=>s.anchor===location.hash.slice(1));if(s)activate(s.id,{focus:true,hash:false});};
+  const hashScene=()=>location.hash?D.scenes.find(s=>s.anchor===location.hash.slice(1)):defaultScene;
+  const fromHash=()=>{const s=hashScene();if(s)activate(s.id,{focus:true,hash:false});};
   root.addEventListener('hashchange',fromHash,{signal:lifetime.signal});
   function destroy(){dead=true;++token;teardown();lifetime.abort();host.hidden=true;$('text').hidden=false;$('notice').hidden=false;}
   root.addEventListener('pagehide',event=>{if(!event.persisted)destroy();},{signal:lifetime.signal});
-  root.CARTO_MAP_DIAGNOSTICS={activate,applyBook:id=>{if(!D.books[id])return Promise.resolve(false);$('book').value=id;return book();},getState:semanticState,getMetrics:()=>compare?.getMetrics(),reset:()=>activate(scene.id),destroy};
-  const initial=D.scenes.find(s=>s.anchor===location.hash.slice(1))||D.scenes[0];activate(initial.id,{hash:false,focus:!!location.hash});
+  root.CARTO_MAP_DIAGNOSTICS={activate,applyBook:id=>{if(!D.books[id])return Promise.resolve(false);$('book').value=id;return book();},getState:semanticState,getMetrics:()=>compare?.getMetrics(),reset:()=>activate(scene.id,{hash:false}),destroy};
+  const initial=hashScene()||defaultScene;activate(initial.id,{hash:false,focus:!!location.hash});
 })(window);
