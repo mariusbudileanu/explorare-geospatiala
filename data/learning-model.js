@@ -69,6 +69,8 @@ window.CARTO_LEARNING = (() => {
   add('projection-crs-lab','intermediate','Compară măsurări plane și elipsoidale și justifică alegerea CRS-ului.',['coordinates','rectangular-coordinates','earth-to-map'],['Compari distanțe și arii față de o referință elipsoidală.','Alegi un CRS după teritoriu, unități și scop.'],'T05',true);
   add('classification-lab','intermediate','Compară clasificarea și normalizarea pe aceeași distribuție sintetică.',['method-choropleth','geospatial-data'],['Compari pragurile și efectivele claselor.','Justifici indicatorul și paleta după întrebarea urmărită.'],'T02',true);
   for(const id of ['method-choropleth','T02','T05','styling-labeling','data-quality'])items[id].related=['classification-lab'];
+  add('map-diagnostics','intermediate','Separă erorile, riscurile metodologice și compromisurile de design.',['geospatial-data','projection-crs-lab','classification-lab'],['Identifici o problemă prin comparație și verificare.','Justifici o intervenție și limita care rămâne.'],'final-project',true);
+  for(const id of ['projection-crs-lab','method-choropleth','classification-lab','styling-labeling','data-quality','topology','raster-styling','transparency-blending','T02','T05','T06','final-project'])items[id].related=[...(items[id].related||[]),'map-diagnostics'];
   const stages = [
     // Existing stages retain their scope; the new lab is available through CRS navigation.
     {title:'Fundamente și hartă',level:'beginner',items:['coordinates','map-definition','map-exterior'],task:'Localizează un punct și explică scara, legenda și selecția informației.'},

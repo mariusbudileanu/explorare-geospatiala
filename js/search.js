@@ -9,7 +9,9 @@
     results.setAttribute('aria-live','polite');results.setAttribute('aria-label','Rezultatele căutării');
     const key=text=>normalize(text).replace(/[‐‑–—-]/g,' ').replace(/\s+/g,' ').trim();
     const records=new Map((window.CARTO_SEARCH_INDEX||[]).map(r=>[r.id,r]));
-    const index=manifest.lessons.map(lesson=>{
+    // Section records inherit the parent's manifest authority, never navigation or levels.
+    const sections=[...records.values()].filter(r=>r.parentId&&manifest.lessons.some(l=>l.id===r.parentId)).map(r=>({...manifest.lessons.find(l=>l.id===r.parentId),id:r.id,title:r.title,href:r.href,editorial_number:'',keywords:r.keywords,figures:[]}));
+    const index=[...manifest.lessons,...sections].map(lesson=>{
       const record=records.get(lesson.id),paragraphs=record?.paragraphs||[];
       const metadataFields=[lesson.title,lesson.editorial_number,lesson.source_section,...lesson.keywords,...lesson.figures.map(f=>f.caption)].filter(Boolean);
       return {lesson,paragraphs,description:record?.description||lesson.title,metadataFields,metadata:key(metadataFields.join(' ')),body:key(paragraphs.join(' '))};

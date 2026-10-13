@@ -4,9 +4,10 @@ import path from 'node:path';
 import vm from 'node:vm';
 export function buildLearning(root,{check=false}={}) {
   const context={window:{}};vm.createContext(context);
-  for(const file of ['data/content-manifest.js','data/glossary.js','data/learning-model.js','data/learning-pages.js','js/learning.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
+  for(const file of ['data/content-manifest.js','data/glossary.js','data/learning-model.js','data/learning-pages.js','data/diagnostic-scenes.js','js/diagnostic-content.js','js/learning.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
   const {CARTO_CONTENT:manifest,CARTO_LEARNING:model,CARTO_LEARNING_UI:ui,CARTO_LEARNING_PAGES:pages}=context.window;
-  const qgisLinks=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).links;
+  context.window.CARTO_QGIS_LINKS=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8'));
+  const qgisLinks=context.window.CARTO_QGIS_LINKS.links;
   const qgisMarkup=html=>html.replace(/\{\{qgis:([\w-]+)\}\}/g,(_,id)=>{const s=qgisLinks.find(s=>s.id===id&&s.verified);if(!s)throw Error('Unknown QGIS source: '+id);return `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.title} ↗</a>`;});
   for(const id of Object.keys(model.items))if(!manifest.lessons.some(l=>l.id===id))throw Error('Learning item missing in manifest: '+id);
   const write=(relative,html)=>{const file=path.join(root,relative);if(check){if(!fs.existsSync(file)||fs.readFileSync(file,'utf8')!==html)throw Error('Stale generated learning content: '+relative);}else fs.writeFileSync(file,html);};
@@ -42,6 +43,7 @@ export function buildLearning(root,{check=false}={}) {
     const record=manifest.lessons.find(l=>l.id===id);
     const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     let body=page.body.replace('{{levels}}',ui.levels()).replace('{{stages}}',ui.stages()).replace('{{inventory}}',ui.inventory()).replace('{{glossary}}',ui.glossary());
+    if(body.includes('{{diagnostic-content}}'))body=body.replace('{{diagnostic-content}}',context.window.CARTO_DIAGNOSTIC_CONTENT.content());
     body=body.replace(/\{\{qgis:([\w-]+)\}\}/g,(_,id)=>{const source=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).links.find(s=>s.id===id&&s.verified);if(!source)throw Error('Unknown QGIS source: '+id);return `<a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(source.title)}; se deschide într-o filă nouă">${escape(source.title)} ↗</a>`;});
     if(body.includes('{{projection-crs-sources}}')){const registry=JSON.parse(fs.readFileSync(path.join(root,'data/crs-registry.json'),'utf8'));body=body.replace('{{projection-crs-sources}}','<ul>'+registry.crs.filter(c=>[4326,3857,3844,32634,32635].includes(c.epsg)).map(c=>`<li><a href="${escape(c.source_url)}" target="_blank" rel="noopener noreferrer">${escape(c.id)} · ${escape(c.name)} ↗</a></li>`).join('')+'</ul>');}
     let html=assets(template,'').replace(/<title>[\s\S]*?<\/title>/,`<title>${page.title} · Explorare geospațială</title>`).replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${page.description}">`).replace('data-page="gis-lab" data-page-id="gis-lab"',`data-page="learning" data-page-id="${id}"`);

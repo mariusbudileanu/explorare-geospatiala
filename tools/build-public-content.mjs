@@ -62,6 +62,10 @@ try {
   if(qgisBridges.some(bridge=>bridge.lesson_id===lesson.id))await page.locator('main .qgis-bridge').waitFor({state:'attached'});
   const record=await page.locator('main').evaluate(extractSearchContent);
   records.push({id:lesson.id,href:lesson.href,description:record.description||lesson.title,paragraphs:record.paragraphs});
+  if(lesson.id==='map-diagnostics')for(const scene of await page.evaluate(()=>window.CARTO_DIAGNOSTICS.scenes)){
+    const section=await page.locator('[data-diagnostic="'+scene.id+'"]').evaluate(extractSearchContent);
+    records.push({id:scene.id,parentId:lesson.id,title:scene.title,href:lesson.href+'#'+scene.anchor,keywords:[...scene.keywords,scene.family,scene.type],description:scene.problem,paragraphs:section.paragraphs});
+  }
  }
  if(errors.length)throw Error([...new Set(errors)].join('\n'));
  write('data/search-index.js','/* Generated from rendered educational content; do not edit by hand. */\nwindow.CARTO_SEARCH_INDEX = '+JSON.stringify(records,null,2)+';\n');

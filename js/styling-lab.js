@@ -7,6 +7,7 @@
   const polyPath=g=>g.map(([x,y],i)=>`${i?'L':'M'}${x},${y}`).join(' ')+'Z';
   function centroid(vertices){let sum=0,x=0,y=0;vertices.forEach((a,i)=>{const b=vertices[(i+1)%vertices.length],cross=a[0]*b[1]-b[0]*a[1];sum+=cross;x+=(a[0]+b[0])*cross;y+=(a[1]+b[1])*cross;});return [x/(3*sum),y/(3*sum)];}
   const linePath=g=>g.map(([x,y],i)=>`${i?'L':'M'}${x},${y}`).join(' ');
+  const proportionalSize=(value,scale=1)=>Math.sqrt(value)*scale;
   function marker(shape,x,y,size,fill,stroke='var(--ink)',width=1,rotation=0,opacity=1){
     const r=size/2,attr=`fill="${fill}" stroke="${stroke}" stroke-width="${width}"`;
     const drawing=shape==='square'?`<rect x="${-r}" y="${-r}" width="${size}" height="${size}" ${attr}/>`:shape==='triangle'?`<path d="M0 ${-r}L${r} ${r}L${-r} ${r}Z" ${attr}/>`:shape==='diamond'?`<path d="M0 ${-r}L${r} 0L0 ${r}L${-r} 0Z" ${attr}/>`:shape==='cross'?`<path d="M${-r} ${-r*.35}H${-r*.35}V${-r}H${r*.35}V${-r*.35}H${r}V${r*.35}H${r*.35}V${r}H${-r*.35}V${r*.35}H${-r}Z" ${attr}/>`:`<circle r="${r}" ${attr}/>`;
@@ -27,10 +28,10 @@
     if(['S0','S1','S2','S3','S12'].includes(id)){
       content=context();const points=id==='S3'?data.points.slice(0,6):data.points;
       for(const p of points){let symbol='';
-        if(id==='S0'){const index=p.type.charCodeAt(0)-65;symbol=marker(s.mode==='categorized'?shapes[index]:'circle',p.x,p.y,s.mode==='proportional'?Math.sqrt(p.value)*3:18,s.mode==='categorized'?catColors[index]:s.mode==='rule'&&p.value>=70?'#ba6350':'#477ba7','var(--ink)',s.mode==='rule'&&p.value>=70?3:1);}
+        if(id==='S0'){const index=p.type.charCodeAt(0)-65;symbol=marker(s.mode==='categorized'?shapes[index]:'circle',p.x,p.y,s.mode==='proportional'?proportionalSize(p.value,3):18,s.mode==='categorized'?catColors[index]:s.mode==='rule'&&p.value>=70?'#ba6350':'#477ba7','var(--ink)',s.mode==='rule'&&p.value>=70?3:1);}
         if(id==='S1'){content+=`<path d="M${p.x-5} ${p.y}h10M${p.x} ${p.y-5}v10" class="lab-reference"/>`;symbol=marker(s.shape,p.x+Number(s.offsetX)*4,p.y+Number(s.offsetY)*4,Number(s.size)*4,s.fill,s.outline?s.stroke:'none',Number(s.strokeWidth)*4,s.rotation);}
         if(id==='S2')symbol=s.type==='font'?`<text x="${p.x}" y="${p.y+9}" fill="#477ba7" stroke="var(--ink)" stroke-width=".4" text-anchor="middle" font-size="28" font-weight="700" font-family="system-ui,sans-serif">H</text>`:marker(s.type==='svg'?'cross':'circle',p.x,p.y,24,'#477ba7');
-        if(id==='S3')symbol=marker('circle',p.x,p.y,(s.mode==='value'?Math.sqrt(p.value)*3:18)*Number(s.factor),'#477ba7');
+        if(id==='S3')symbol=marker('circle',p.x,p.y,(s.mode==='value'?proportionalSize(p.value,3):18)*Number(s.factor),'#477ba7');
         if(id==='S12'){symbol=marker('circle',p.x,p.y,5,'var(--muted)','none');if(s.high&&p.value>=70)symbol+=marker('circle',p.x,p.y,36,'none','#ba6350',3);if(s.typeA&&p.type==='A')symbol+=marker('diamond',p.x,p.y,26,'#d4b061');if(s.active&&p.status==='active')symbol+=marker('cross',p.x,p.y,14,'#41866b');}
         content+=`<g data-feature-id="${p.id}"><title>ID ${p.id}: ${p.type}, value ${p.value}, ${p.status}</title>${symbol}</g>`+pointTag(p,id==='S3'&&s.values?p.value:p.id);
       }
@@ -88,6 +89,6 @@
     document.querySelector('#styling-checkpoint h2').id='checkpoint-title';
     document.querySelector('#lab-source-root').innerHTML=L.sources(['arrow-symbols','symbology','classification','vector-styling']);document.querySelector('#lab-preview').addEventListener('change',preview);document.querySelector('#preview-reset').addEventListener('click',()=>{document.querySelector('#preview-good').checked=true;preview();});preview();
   }
-  root.CARTO_STYLING_RENDER={marker,linePath};
+  root.CARTO_STYLING_RENDER={marker,linePath,proportionalSize};
   start();
 })(window);

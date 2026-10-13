@@ -1,6 +1,7 @@
 'use strict';
 // Canonical prose for the generated static pages. Never requires JavaScript to read.
 window.CARTO_LEARNING_PAGES = {
+  'map-diagnostics': {title:'Ce este greșit în această hartă?',eyebrow:'DIAGNOSTIC CARTOGRAFIC ȘI GEOSPAȚIAL',description:'Compară, verifică și justifică o intervenție: 18 scenarii de CRS, clasificare, simbolizare, date, raster și topologie.',styles:['css/projection-crs-lab.css','css/cartography-labs.css','css/topology-lab.css','css/map-diagnostics.css'],scripts:['data/qgis-links.js','js/gis-lab.js','data/diagnostic-scenes.js','js/diagnostic-content.js','js/compare-core.js','js/diagnostic-view.js','js/map-diagnostics.js'],body:'{{diagnostic-content}}'},
   'learning-path': {title:'Parcurs recomandat',description:'De unde începi, ce competențe verifici și cum continui de la fundamente la proiectul integrator.',body:`
     <section class="lesson-section"><h2>Alege punctul de pornire</h2><p>Parcursul este o recomandare, nu o condiție de acces. Începe cu fundamentele dacă nu ai experiență GIS; dacă lucrezi deja în QGIS, folosește prerechizitele pentru a alege o etapă. Poți reveni oricând la glosar și la surse.</p>{{levels}}</section>
     <section id="etape" class="lesson-section"><h2>De la concept la rezultat verificabil</h2><p>Înțelege conceptul, experimentează în laborator, aplică în QGIS, verifică rezultatul și continuă. Nu toate materialele cer toate aceste forme de lucru.</p>{{stages}}</section>
