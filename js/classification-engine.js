@@ -7,6 +7,17 @@
     // Opposite-sign endpoints can overflow the span, but their weighted sum cannot.
     return Number.isFinite(scaled)?min+scaled/classes:Number.isFinite(span)?min+span*t:min*(1-t)+max*t;
   }
+  function quantileLerp(a,b,t){
+    if(t===0)return a;if(t===1)return b;if(a===b)return a;
+    const value=a*(1-t)+b*t;
+    // Preserve ordinary rounding. Near the finite limit, avoid separately rounded
+    // large products; use the nearer endpoint and the finite same-sign difference.
+    // Also reconstruct from an endpoint if weighted rounding leaves [a,b].
+    if(Number.isFinite(a+b)&&Number.isFinite(value)&&value>=Math.min(a,b)&&value<=Math.max(a,b))return value;
+    const span=b-a;
+    // Opposite signs can overflow the difference; their weighted sum stays finite.
+    return Number.isFinite(span)?t<=.5?a+span*t:b-span*(1-t):value;
+  }
   function gcd(a,b){while(b){const next=a%b;a=b;b=next;}return a;}
   function fraction(n,d){if(n===0n)return {n:0n,d:1n};const divisor=gcd(n,d);return {n:n/divisor,d:d/divisor};}
   function addCosts(a,b){
@@ -61,7 +72,7 @@
     const min=sorted[0],max=sorted.at(-1),k=Math.min(classes,unique.length);let uppers=[];
     if(k===1)uppers=[max];
     else if(method==='equal')uppers=Array.from({length:k},(_,i)=>i===k-1?max:equalUpper(min,max,i+1,k));
-    else if(method==='quantile')uppers=Array.from({length:k},(_,i)=>{const p=(sorted.length-1)*(i+1)/k,lo=Math.floor(p),t=p-lo;return lo===sorted.length-1?max:sorted[lo]*(1-t)+sorted[lo+1]*t;});
+    else if(method==='quantile')uppers=Array.from({length:k},(_,i)=>{const p=(sorted.length-1)*(i+1)/k,lo=Math.floor(p),t=p-lo;return lo===sorted.length-1?max:quantileLerp(sorted[lo],sorted[lo+1],t);});
     else uppers=jenksUppers(unique,sorted,k);
     if(uppers.some((v,i)=>!Number.isFinite(v)||v<min||v>max||(i&&v<uppers[i-1]))||uppers.at(-1)!==max)throw Error('Pragurile de clasificare nu respectă domeniul numeric finit.');
     uppers=[...new Set(uppers)];const counts=uppers.map(()=>0);
