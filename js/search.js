@@ -29,9 +29,16 @@
       results.innerHTML=found.length?found.map(({lesson,paragraphs,metadataFields,description})=>{
         // Prefer actual teaching text; a metadata-only match must explain its topic.
         const field=metadataFields.find(text=>key(text).includes(query));
+        const fallback=key(field||'')===key(lesson.title)
+          ?(key(description)!==key(lesson.title)?description:paragraphs.find(p=>key(p)!==key(lesson.title))||description)
+          :`Temă indexată: ${field||metadataFields.join(' ')}. ${description}`;
         const context=paragraphs.find(p=>key(p).includes(query))
-          ||`Temă indexată: ${field||metadataFields.join(' ')}. ${description}`;
-        return `<a href="${rootPrefix}${lesson.href}"><strong>${esc(lesson.editorial_number||'')}</strong> ${esc(lesson.title)} <small>${esc(excerpt(context,query))}</small></a>`;
+          ||fallback;
+        // A specific experience match uses its existing anchored destination;
+        // general page queries retain the page URL and the same ranking/entity.
+        const href=lesson.companion?.href&&key(lesson.companion.title||'').includes(query)
+          ?lesson.companion.href:lesson.href;
+        return `<a href="${rootPrefix}${href}"><strong>${esc(lesson.editorial_number||'')}</strong> ${esc(lesson.title)} <small>${esc(excerpt(context,query))}</small></a>`;
       }).join(''):'<p>Niciun rezultat.</p>';
     });
     input.addEventListener('keydown',event=>{if(event.key==='Escape')results.hidden=true;if(event.key==='ArrowDown'){event.preventDefault();$('a',results)?.focus();}if(event.key==='Enter'&&!results.hidden){event.preventDefault();$('a',results)?.click();}});

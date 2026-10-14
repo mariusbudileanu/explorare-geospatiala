@@ -109,9 +109,15 @@ async function workshopLevel(page,id){
   const searchExamples=[];
   for(const term of [...terms,'ÎNCEPĂTOR','incepator','harta','epsg:3844']){
    await page.goto(base+'index.html');await page.locator('#search').fill(term);
-   const hits=await page.locator('#search-results a').evaluateAll(es=>es.map(e=>({snippet:e.querySelector('small').textContent,href:e.href})));
+   const hits=await page.locator('#search-results a').evaluateAll(es=>es.map(e=>{const title=e.cloneNode(true);title.querySelector('small').remove();title.querySelector('strong').remove();return {title:title.textContent.trim(),snippet:e.querySelector('small').textContent,href:e.href};}));
    ok(hits.length>0,'Polish search '+term);
-   for(const hit of hits){ok(normalized(hit.snippet).includes(normalized(term)),'Every snippet explains match '+term);ok(!/hartăÎncepător|informației\.Coordonatele|<\/?(?:script|style|template)\b/.test(hit.snippet),'No structural concatenation or technical markup');ok((await page.request.get(hit.href)).ok(),'Actual search destination '+term);}
+   for(const hit of hits){
+    // A visible title explains a title-only match; the snippet must then give
+    // the actual resource description, not repeat the query/title mechanically.
+    const contextual=normalized(hit.snippet).includes(normalized(term));ok(contextual||normalized(hit.title).includes(normalized(term)),'Visible context explains match '+term);
+    if(!contextual){const record=searchContext.window.CARTO_SEARCH_INDEX.find(r=>new URL(r.href,base).href===hit.href);equal(hit.snippet,record?.description,'Canonical descriptive snippet for title-only match '+term);ok(normalized(hit.snippet)!==normalized(hit.title),'Title-only snippet adds context '+term);}
+    ok(!/hartăÎncepător|informației\.Coordonatele|<\/?(?:script|style|template)\b/.test(hit.snippet),'No structural concatenation or technical markup');ok((await page.request.get(hit.href)).ok(),'Actual search destination '+term);
+   }
    if(['proximitate','Coordonatele','Începător'].includes(term))searchExamples.push({term,...hits[0]});
   }
   await page.locator('#search').fill('zzzx-no-such-polish-term');equal(await page.locator('#search-results a').count(),0,'Nonexistent query has no fabricated match');
