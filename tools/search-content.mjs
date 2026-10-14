@@ -15,6 +15,11 @@ export function extractSearchContent(main) {
   const paragraphs=[...main.querySelectorAll('h2,h3,h4,h5,h6,p,li,dt,dd,th,td,figcaption,label,legend')]
     .filter(e=>!e.closest(excluded)).map(e=>{
       const text=clean(e);
+      // Discovery headings need their card's explanation, not a bare short title.
+      if(e.matches('h2,h3')&&e.closest('[data-experience],[data-companion-callout]')){
+        const description=e.parentElement.querySelector('p');
+        return text+(description?' · '+clean(description):'');
+      }
       return e.matches('h3')&&e.parentElement.id.startsWith('nivel-')&&e.nextElementSibling
         ?text+' · '+clean(e.nextElementSibling):text;
     }).filter(t=>t.length>3);

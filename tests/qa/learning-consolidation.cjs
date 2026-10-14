@@ -9,7 +9,8 @@ const equal=(a,b,message)=>{checks++;assert.deepEqual(a,b,message);};
 const normalized=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[‐‑–—-]/g,' ');
 const workshopLevels={T01:'Începător',T02:'Intermediar',T03:'Intermediar',T04:'Intermediar',T05:'Avansat',T06:'Avansat'};
 equal(Object.values(model.levels).map(l=>l.label),['Începător','Intermediar','Avansat'],'Three textual levels');
-const referenceOnly=new Set(['home','about','resources']);
+// The discovery Hub links to classified experiences; it is not another lesson.
+const referenceOnly=new Set(['home','about','resources','digital-companion']);
 equal(Object.keys(model.items).sort(),content.lessons.filter(l=>!referenceOnly.has(l.id)).map(l=>l.id).sort(),'Every classifiable destination, no extra route');
 const observable=/^(Identifici|Explici|Interpretezi|Convertești|Distingi|Verifici|Compari|Alegi|Clasifici|Reproduci|Construiești|Formulezi|Justifici|Separi|Documentezi|Încarci|Creezi|Filtrezi)/;
 for(const [id,item] of Object.entries(model.items)){

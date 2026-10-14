@@ -27,7 +27,8 @@ export function buildLearning(root,{check=false}={}) {
   };
   const insert=(html,id,prefix)=>{
     html=strip(html);
-    if(id==='home')return html.replace(/(<section class="overview-section")/,mark('home',ui.home())+'$1');
+    if(id==='home')return html.replace(/(<section class="overview-section")/,mark('home',ui.companionHome()+ui.home())+'$1');
+    if(id==='digital-companion')return html;
     if(!model.items[id])return html;
     const main=html.match(/<main\b[^>]*>[\s\S]*?<\/main>/)?.[0];if(!main)throw Error('Missing main: '+id);
     // The older coordinates page calls its opening section "intro".
@@ -43,6 +44,7 @@ export function buildLearning(root,{check=false}={}) {
     const record=manifest.lessons.find(l=>l.id===id);
     const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     let body=page.body.replace('{{levels}}',ui.levels()).replace('{{stages}}',ui.stages()).replace('{{inventory}}',ui.inventory()).replace('{{glossary}}',ui.glossary());
+    body=body.replace('{{companion-hub}}',ui.companionHub());
     if(body.includes('{{diagnostic-content}}'))body=body.replace('{{diagnostic-content}}',context.window.CARTO_DIAGNOSTIC_CONTENT.content());
     body=body.replace(/\{\{qgis:([\w-]+)\}\}/g,(_,id)=>{const source=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).links.find(s=>s.id===id&&s.verified);if(!source)throw Error('Unknown QGIS source: '+id);return `<a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(source.title)}; se deschide într-o filă nouă">${escape(source.title)} ↗</a>`;});
     if(body.includes('{{projection-crs-sources}}')){const registry=JSON.parse(fs.readFileSync(path.join(root,'data/crs-registry.json'),'utf8'));body=body.replace('{{projection-crs-sources}}','<ul>'+registry.crs.filter(c=>[4326,3857,3844,32634,32635].includes(c.epsg)).map(c=>`<li><a href="${escape(c.source_url)}" target="_blank" rel="noopener noreferrer">${escape(c.id)} · ${escape(c.name)} ↗</a></li>`).join('')+'</ul>');}
@@ -61,7 +63,6 @@ export function buildLearning(root,{check=false}={}) {
     let html=id==='coordinates'?original.replace('<body>','<body data-page-id="coordinates">'):original;
     if(id==='styling-labeling'){
       html=html.replace(/<!-- map-design-entry:start -->[\s\S]*?<!-- map-design-entry:end -->/,'');
-      html=html.replace('<nav class="lab-mode"',`<!-- map-design-entry:start -->${context.window.CARTO_DESIGN_ENTRY}<!-- map-design-entry:end --><nav class="lab-mode"`);
       html=html.replace(/<!-- map-design:start -->[\s\S]*?<!-- map-design:end -->/,'');
       html=html.replace('<!-- learning-tail:start -->',`<!-- map-design:start -->${qgisMarkup(context.window.CARTO_DESIGN_PROSE)}<!-- map-design:end --><!-- learning-tail:start -->`);
       if(!html.includes('css/cartography-labs.css'))html=html.replace('</head>','<link rel="stylesheet" href="css/cartography-labs.css">\n'+['js/compare-core.js','js/classification-engine.js','data/cartography-scenes.js','js/cartography-view.js','js/cartography-labs.js'].map(p=>`<script src="${p}" defer></script>`).join('\n')+'\n</head>');

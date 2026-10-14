@@ -25,10 +25,7 @@
 
   const manifest = window.CARTO_CONTENT;
   const lessonById = Object.fromEntries(manifest.lessons.map(lesson => [lesson.id, lesson]));
-  $('#chapter-nav').innerHTML = manifest.groups.map(group => `<details class="nav-group" open><summary>${group.label}</summary>${group.lessons.map(id => {
-    const lesson = lessonById[id];
-    return `<a class="nav-item ${id === 'coordinates' ? 'active' : ''}" href="${lesson.href}" ${id === 'coordinates' ? 'aria-current="page"' : ''}>${lesson.editorial_number ? lesson.editorial_number + ' ' : ''}${lesson.title}</a>`;
-  }).join('')}</details>`).join('');
+  $('#chapter-nav').innerHTML = manifest.navigationMarkup({currentId:'coordinates'});
   $('#future-lessons').innerHTML = [
     ['Coordonatele rectangulare', 'CRS, grilă metrică și transformări', 'rectangular-coordinates'],
     ['Sfera', 'Zone, calote, trapeze și fuse sferice', 'sphere'],

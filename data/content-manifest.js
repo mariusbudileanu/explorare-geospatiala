@@ -141,3 +141,29 @@ for (const group of window.CARTO_CONTENT.groups) {
   content.groups.splice(1,0,{id:'learning',label:'PARCURS ȘI CONSOLIDARE',lessons:additions.map(item=>item.id)});
   for(const item of additions)content.lessons.push({...item,short_title:item.title,source_section:'',part:'Parcurs și consolidare',source_pages:[],figures:[],content_types:['concept','exercițiu'],interactive_components:[],qgis_correspondence:true,modern_sources_status:'source-reviewed',status:'implemented',theme:'învățare'});
 })(window.CARTO_CONTENT);
+
+// Discovery metadata belongs to the existing inventory; levels remain in CARTO_LEARNING.
+(function(content) {
+  const byId=new Map(content.lessons.map(lesson=>[lesson.id,lesson]));
+  const describe=(id,experience)=>{byId.get(id).companion=experience;};
+  describe('projection-crs-lab',{title:'Proiecții & CRS',category:'Laborator interactiv',description:'Compară sisteme de coordonate, distanțe și suprafețe și observă cum alegerea CRS influențează măsurarea și reprezentarea.',contexts:['rectangular-coordinates','earth-to-map','projection-basics']});
+  describe('classification-lab',{category:'Laborator interactiv',description:'Experimentează cu metode de clasificare, numărul de clase, valori absolute și rate și observă cum se schimbă mesajul hărții.',contexts:['method-choropleth']});
+  describe('styling-labeling',{title:'Map Design Studio',href:'styling-labeling.html#map-design-studio',category:'Studio interactiv',description:'Explorează ierarhia vizuală, simbolurile, etichetarea, densitatea informației și compromisurile de design.',contextDescription:'Experimentează cu o ierarhie vizuală potrivită scopului, fără să ascunzi contextul.',contexts:['styling-labeling']});
+  describe('map-diagnostics',{category:'Laborator de diagnostic',description:'Diagnostichează 18 probleme și riscuri cartografice și GIS, de la CRS și clasificare până la raster, topologie și blending.',contexts:['gis-lab','data-quality','topology','raster-styling','transparency-blending']});
+  describe('challenges',{category:'Provocări pe date reale',description:'Aplică operații vector și raster în Sectorul 1 și Rîșca; verifică rezultatul și limitele interpretării.'});
+  describe('raster-styling',{category:'Laborator raster',description:'Compară stilizarea unui DEM și a pierderii forestiere, hillshade și legenda valorilor.'});
+  describe('topology',{category:'Laborator vector',description:'Identifică relații, verifică reguli și repară probleme topologice în scenele existente.'});
+  describe('transparency-blending',{category:'Laborator de compoziție',description:'Separă opacitatea de blending și compară efectele ordinii straturilor.'});
+  describe('formats-interoperability',{category:'Experimente ghidate',description:'Compară organizarea formatelor și a serviciilor și alege accesul potrivit scenariului.'});
+  content.companion={primary:['projection-crs-lab','classification-lab','styling-labeling','map-diagnostics'],secondary:['challenges','raster-styling','topology','transparency-blending','formats-interoperability']};
+  content.lessons.push({id:'digital-companion',title:'Explorează interactiv',short_title:'Explorează interactiv',description:'Un spațiu pentru experimentare, comparație și diagnostic, complementar capitolelor teoretice și atelierelor QGIS.',href:'digital-companion.html',part:'Introducere',source_section:'',source_pages:[],figures:[],content_types:['concept'],interactive_components:[],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'qgis',keywords:['digital companion','laboratoare','experimente','experiențe interactive']});
+  content.groups.find(g=>g.id==='intro').lessons.push('digital-companion');
+  for(const [id,keywords] of Object.entries({'projection-crs-lab':['proiecții interactive'],'classification-lab':['clasificare interactivă'],'map-diagnostics':['diagnostic hartă'],'challenges':['challenge']}))byId.get(id).keywords.push(...keywords);
+  const escape=text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  content.navigationMarkup=({prefix='',currentId=''}={})=>content.groups.map(group=>`<details class="nav-group" open><summary>${escape(group.label)}</summary>${group.lessons.map(id=>{
+    const lesson=content.lessons.find(l=>l.id===id),active=id===currentId;
+    const associated=content.companion.primary.some(key=>byId.get(key).companion.contexts.includes(id));
+    const title=(lesson.editorial_number?lesson.editorial_number+' ':'')+lesson.title;
+    return `<a class="nav-item${active?' active':''}" href="${escape(prefix+lesson.href)}"${active?' aria-current="page"':''}${associated?` data-interactive="LAB" aria-label="${escape(title)} · Experiență interactivă asociată"`:''}>${escape(title)}</a>`;
+  }).join('')}</details>`).join('');
+})(window.CARTO_CONTENT);

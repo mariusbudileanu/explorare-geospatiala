@@ -17,6 +17,17 @@
 .learning-main [hidden],.formative-actions[hidden],.glossary-entry[hidden]{display:none!important}
 /* A recovery message belongs in document flow; it must not cover explanations. */
 body .noscript{position:static;margin:0;border-top:1px solid var(--line)}
+/* Discovery cards share the course palette and textual educational levels. */
+.companion-primary-grid,.companion-secondary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+.companion-card{display:flex;flex-direction:column;gap:12px}.companion-card h3,.companion-card p{margin:0}.companion-card h3{font-size:clamp(20px,2vw,25px)}.companion-card p{line-height:1.65}
+.companion-card-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}.companion-card-meta .eyebrow{font-size:11px;letter-spacing:.06em}
+.companion-card-link{margin-top:auto;align-self:flex-start;min-height:44px;display:inline-flex;align-items:center;gap:4px;font-weight:700}
+.companion-card-compact{padding:18px;gap:8px}.companion-card-compact h3{font-size:18px}.companion-card-compact p{font-size:14px}
+.companion-home{margin-top:30px}.companion-home h3{margin-top:0}.companion-home .outline-button{min-height:44px;white-space:normal}
+.companion-callout{margin:20px 0 28px;padding:20px;background:var(--surface-alt);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:var(--radius-card)}
+.companion-callout h2{font-size:20px;margin:8px 0}.companion-callout p{font-size:14px;line-height:1.65}.companion-callout .outline-button{white-space:normal;min-height:44px}
+.nav-item[data-interactive]::after{content:attr(data-interactive);display:inline-block;margin-left:8px;font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:var(--radius-small);padding:1px 4px}
+@media(max-width:640px){.companion-primary-grid,.companion-secondary-grid{grid-template-columns:minmax(0,1fr)}}
 @media(min-width:901px){body[data-page="learning"] .site-workspace{grid-template-columns:var(--sidebar-width) minmax(0,1fr)}body[data-page="learning"].nav-collapsed .site-workspace{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:1200px){.learning-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.learning-grid,.learning-inventory-grid{grid-template-columns:minmax(0,1fr)}.quality-definitions{display:block}.quality-definitions dd{margin:6px 0 18px}.learning-context-top{align-items:flex-start}.formative-check label{padding:10px 0}}

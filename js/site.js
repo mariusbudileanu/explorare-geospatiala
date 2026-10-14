@@ -69,10 +69,7 @@
 
   function renderNav() {
     const nav = $('#chapter-nav'); if (!nav) return;
-    nav.innerHTML = manifest.groups.map(group => `<details class="nav-group" open><summary>${group.label}</summary>${group.lessons.map(id => {
-      const lesson = lessonById[id];
-      return `<a class="nav-item ${id === currentId ? 'active' : ''}" href="${rootPrefix}${lesson.href}" ${id === currentId ? 'aria-current="page"' : ''}>${lesson.editorial_number ? `${lesson.editorial_number} ` : ''}${esc(lesson.title)}</a>`;
-    }).join('')}</details>`).join('');
+    nav.innerHTML = manifest.navigationMarkup({prefix:rootPrefix,currentId});
   }
 
   function initSidebarPosition() {

@@ -20,7 +20,6 @@ buildLearning(root,{check});
 const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'data/content-manifest.js'),'utf8'),context);
 const manifest=context.window.CARTO_CONTENT;
 const qgisBridges=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).bridges;
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const write=(relative,content)=>{const p=path.join(root,relative);if(check){if(fs.readFileSync(p,'utf8')!==content){if(relative==='data/search-index.js'){const decode=text=>JSON.parse(text.slice(text.indexOf(' = ')+3).replace(/;\s*$/,''));const old=decode(fs.readFileSync(p,'utf8')),next=decode(content);for(const r of next){const prev=old.find(x=>x.id===r.id);if(JSON.stringify(prev)!==JSON.stringify(r))console.error('Changed search content: '+r.id+' '+JSON.stringify({added:r.paragraphs.filter(x=>!prev?.paragraphs.includes(x)),removed:prev?.paragraphs.filter(x=>!r.paragraphs.includes(x))}));}}throw Error('Generated file is stale: '+relative);}}else fs.writeFileSync(p,content);};
 const registry=JSON.parse(fs.readFileSync(path.join(root,'data/data-registry.json'),'utf8'));
 write('data/data-registry.js','/* Generated from data-registry.json. */\nwindow.CARTO_DATA_REGISTRY = '+JSON.stringify(registry,null,2)+';\n');
@@ -37,6 +36,9 @@ const browser=await chromium.launch({headless:true,...(process.env.QA_BROWSER_PA
 try {
  const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const generated=new Map();let licenseSummary='';
+ const homeSections=new Map();
+ await page.goto(base+'index.html');
+ for(const id of ['theme-overview','feature-cards','future-cards'])homeSections.set(id,await page.locator('#'+id).innerHTML());
  for(const [file,route,selector] of [['about.html','lesson.html?id=about','#lesson-root'],['resources.html','resources.html','#resources-root']]){
   await page.goto(base+route);if(file==='resources.html')await page.waitForFunction(()=>document.querySelectorAll('.resource-card[data-category="Provocări GIS"]').length===9);
   const html=await page.locator(selector).innerHTML();if(!html.includes('<h1>'))throw Error('Incomplete '+file);
@@ -47,8 +49,12 @@ try {
   if(generated.has(file)){const id=file==='about.html'?'lesson-root':'resources-root';html=html.replace(new RegExp(`(<main[^>]+id="${id}"[^>]*>)[\\s\\S]*?</main>`),(_,open)=>open+generated.get(file)+'</main>');}
   // Static navigation is also generated from the manifest, never maintained separately.
   const prefix=file.startsWith('tutorials/')?'../':'';
-  const nav=manifest.groups.map(g=>`<details class="nav-group" open><summary>${esc(g.label)}</summary>${g.lessons.map(id=>{const l=manifest.lessons.find(x=>x.id===id);return `<a class="nav-item" href="${prefix}${esc(l.href)}">${l.editorial_number?esc(l.editorial_number)+' ':''}${esc(l.title)}</a>`;}).join('')}</details>`).join('');
+  const nav=manifest.navigationMarkup({prefix});
   html=html.replace(/(<nav[^>]+id="chapter-nav"[^>]*>)[\s\S]*?<\/nav>/,(_,open)=>open+nav+'</nav>');
+  if(file==='index.html'){
+   html=html.replace(/<section class="overview-section"(?: id="cuprins")?>/,'<section class="overview-section" id="cuprins">');
+   for(const [id,markup] of homeSections)html=html.replace(new RegExp(`(<div id="${id}"[^>]*>)[\\s\\S]*?</div>(?=<(?:p|/section))`),(_,open)=>open+markup+'</div>');
+  }
   if(file==='about.html')html=html.replace(/(<meta name="description" content=")[^"]*/, '$1Resursă educațională de cartografie și GIS pentru licență și master; autor, metodologie, licențe și citare.');
   if(file==='resources.html')html=html.replace('class="resource-filters"','class="resource-filters" hidden');
   if(!html.includes('class="license-summary"'))html=html.replace(/(<footer[^>]*class="[^"]*site-footer[^"]*"[^>]*>)[\s\S]*?<\/footer>/,block=>block.replace('</footer>',licenseSummary.replace(/href="(?!https:)([^"]*)"/g,(_,href)=>`href="${prefix}${href}"`)+'</footer>'));
