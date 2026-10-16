@@ -34,11 +34,34 @@ try{
  const searchStart=checks,normalize=text=>text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  const indexContext={window:{}};vm.runInNewContext(read('data/search-index.js'),indexContext);
  const records=indexContext.window.CARTO_SEARCH_INDEX;
+ const genericSnippetStart=checks;
+ for(const query of ['proiecții','PROIECȚII','proiectii']){
+  await page.fill('#search',query);const result=page.locator('#search-results a[href="lesson.html?id=projection-classification"]');
+  equal(await result.count(),1,'Canonical projection lesson '+query);equal(await result.locator('small').innerText(),'Distingi proiecțiile conforme de cele echivalente.','Meaningful term-bearing educational body wins over a generic overview '+query);
+  const matches=await page.locator('#search-results a').evaluateAll(es=>es.map(e=>({href:e.getAttribute('href'),context:e.querySelector('small')?.textContent})));
+  ok(matches.some(m=>normalize(m.context||'').includes(normalize(query))),'Academic contextual projection invariant '+query);equal(new Set(matches.map(m=>m.href)).size,matches.length,'Unique projection destinations');
+  search.push({query,href:await result.getAttribute('href'),snippet:await result.locator('small').innerText()});
+ }
+ for(const query of ['NoData','NODATA']){
+  await page.fill('#search',query);const result=page.locator('#search-results a[href="map-diagnostics.html#nodata-nu-este-zero"]');
+  equal(await result.count(),1,'One canonical NoData result '+query);equal(await page.locator('#search-results a').first().getAttribute('href'),'map-diagnostics.html#nodata-nu-este-zero','NoData ranking/destination preserved');
+  equal(await result.locator('small').innerText(),'Absența unei valori raster este tratată drept observație numerică zero.','NoData description, never category metadata');equal(await result.locator('small > *').count(),0,'Plain NoData explanation');
+  search.push({query,title:'NoData nu este zero',href:await result.getAttribute('href'),snippet:await result.locator('small').innerText()});
+ }
+ for(const query of ['parcurs recomandat','PARCURS RECOMANDAT']){
+  await page.fill('#search',query);const hit=await page.locator('#search-results a').first().evaluate(a=>({href:a.getAttribute('href'),title:[...a.childNodes].filter(n=>n.nodeType===Node.TEXT_NODE).map(n=>n.textContent).join('').trim(),snippet:a.querySelector('small').textContent,markup:a.querySelector('small').children.length}));
+  equal(hit.href,'learning-path.html','Learning path destination '+query);equal(hit.title,'Parcurs recomandat','Unchanged learning path title');equal(hit.snippet,'Punct de orientare, cu acces liber la toate nivelurile.','Associated paragraph replaces isolated title '+query);ok(normalize(hit.snippet)!==normalize(hit.title)&&hit.markup===0,'Distinct plain descriptive snippet '+query);
+  search.push({query,...hit});
+ }
+ const pathSnippetChecks=checks-genericSnippetStart;
  const expectedQueries={'explorează interactiv':'digital-companion.html','digital companion':'digital-companion.html','laboratoare':'digital-companion.html','experimente':'digital-companion.html','proiecții interactive':'projection-crs-lab.html','clasificare interactivă':'classification-lab.html','map design':'styling-labeling.html#map-design-studio','map design studio':'styling-labeling.html#map-design-studio','diagnostic hartă':'map-diagnostics.html','ce este greșit în această hartă':'map-diagnostics.html','challenge':'challenges.html','topologie':'topology.html','raster styling':'raster-styling.html','blending':'transparency-blending.html'};
  for(const [query,expected] of Object.entries(expectedQueries)){
   await page.fill('#search',query);const hits=await page.locator('#search-results a').evaluateAll(nodes=>nodes.map(a=>({href:a.getAttribute('href'),text:a.textContent,snippet:a.querySelector('small').textContent,markup:a.querySelector('small').children.length})));
   equal(hits[0]?.href,expected,'Exact specific/generic destination '+query);
-  if(['explorează interactiv','ce este greșit în această hartă'].includes(query))equal(hits[0].snippet,records.find(r=>r.href===expected).description,'Title-only match uses canonical description '+query);
+  if(!normalize(hits[0].snippet).includes(normalize(query))){
+   const title=content.lessons.find(l=>l.href===expected)?.title||records.find(r=>r.href===expected)?.title||'';
+   ok(normalize(title).includes(normalize(query)),'Visible title explains the query '+query);equal(hits[0].snippet,records.find(r=>r.href===expected).description,'Title-only match uses canonical description '+query);
+  }
   else ok(normalize(hits[0].snippet).includes(normalize(query)),'Keyword/body context preserved '+query);
   ok(hits.every(hit=>hit.markup===0&&!/<(?:script|style|template)|hartăÎncepător|informației\.Coordonatele/.test(hit.snippet)),'Plain clean snippets '+query);
   ok(!normalize(hits[0].snippet).startsWith('temă indexată: '+normalize(content.lessons.find(l=>l.href===expected.split('#')[0])?.title||'')), 'No immediate metadata title repetition '+query);
@@ -51,20 +74,66 @@ try{
  await page.fill('#search','xyz-no-such-companion-923');equal(await page.locator('#search-results a').count(),0,'Unknown query no invented result');
  equal(records.length,80,'Same search inventory');equal(new Set(records.map(r=>r.id)).size,80,'Unique search IDs');equal(new Set(records.map(r=>r.href)).size,80,'Unique indexed URLs');equal(records.filter(r=>r.id==='styling-labeling').length,1,'One Styling/Studio entity');
  // Exercise the generic rules with unrelated names/anchors in an isolated DOM.
+ const fixtureStart=checks;
  const fixture=await browser.newPage();await fixture.setContent('<div class="global-search"><label for="search">Caută</label><input id="search"><div id="search-results" hidden></div></div>');
  await fixture.evaluate(()=>{
-  const lessons=[{id:'orientation',title:'Orientare în platformă',href:'orientation.html',keywords:['orientare'],figures:[]},{id:'intro',title:'Introducere în cartografie',href:'intro.html',keywords:[],figures:[]},{id:'symbols',title:'Simbolizare și etichete',href:'symbols.html',keywords:['studio de simboluri','symbology'],figures:[],companion:{title:'Studio de simboluri',href:'symbols.html#studio'}}];
-  window.CARTO_SEARCH_INDEX=[{id:'orientation',description:'Un ghid pentru alegerea materialelor potrivite scopului.',paragraphs:[]},{id:'intro',description:'Introducere în cartografie',paragraphs:['Compari metodele și verifici sursele înainte de reprezentare.']},{id:'symbols',description:'Alege simbolurile potrivite mesajului.',paragraphs:['Studio de simboluri: compară accentul temei cu lizibilitatea contextului.']}];window.searchFixture={lessons};
+  const lessons=[{id:'orientation',title:'Orientare în platformă',href:'orientation.html',keywords:['orientare'],figures:[]},{id:'intro',title:'Introducere în cartografie',href:'intro.html',keywords:[],figures:[]},{id:'symbols',title:'Simbolizare și etichete',href:'symbols.html',keywords:['studio de simboluri','symbology'],figures:[],companion:{title:'Studio de simboluri',href:'symbols.html#studio'}},{id:'field',title:'Observații în teren',href:'field.html',keywords:[],figures:[]},{id:'isolated',title:'Scări de reprezentare',href:'scale.html',keywords:[],figures:[]}];
+  window.CARTO_SEARCH_INDEX=[{id:'orientation',description:'Un ghid pentru alegerea materialelor potrivite scopului.',paragraphs:[]},{id:'intro',description:'Introducere în cartografie',paragraphs:['Compari metodele și verifici sursele înainte de reprezentare.']},{id:'symbols',description:'Alege simbolurile potrivite mesajului.',paragraphs:['Studio de simboluri: compară accentul temei cu lizibilitatea contextului.','Lizibilitatea pe fundal urban','Compară simbolurile la scara de afișare.']},{id:'field',description:'O descriere canonică distinctă de contextul paragrafului.',paragraphs:['  OBSERVATII   IN TEREN  ','Documentează sursa și compară măsurătorile repetate.']},{id:'isolated',description:'Compară nivelul de generalizare pentru două reprezentări.',paragraphs:['Scări de reprezentare']}];window.searchFixture={lessons};
+  lessons.push(
+   {id:'validation',title:'Validarea observațiilor',href:'validation.html',keywords:['Date tematice','Risc metodologic','Intermediar','Laborator interactiv','tipare'],figures:[]},
+   {id:'boundary',title:'Măsurarea distanțelor',href:'measure.html',keywords:['Date vectoriale'],figures:[]},
+   {id:'missing',title:'Documentarea limitelor',href:'limits.html',keywords:['Intermediar'],figures:[]},
+   {id:'overview',title:'Analiza informațiilor',href:'information.html',keywords:[],figures:[]},
+   {id:'foreign',title:'Controlul aspectului',href:'appearance.html',keywords:[],figures:[],companion:{description:'Analiza informațiilor este menționată și într-un alt laborator despre aspectul hărții.',contexts:['overview']}},
+   {id:'projection',title:'Compararea proiecțiilor',href:'projections.html',keywords:['clasificare'],figures:[]},
+   {id:'measure',title:'Unități de suprafață',href:'areas.html',keywords:['măsurare areală'],figures:[]},
+   {id:'S07',title:'S07 · Compararea suprafețelor',href:'surface-workshop.html',keywords:['S07'],figures:[]},
+   {id:'catalog',title:'Catalog general',href:'catalog.html',keywords:[],figures:[]});
+  window.CARTO_SEARCH_INDEX.push(
+   {id:'validation',description:'Verifică proveniența datelor și consemnează metoda de control.',paragraphs:['Validarea observațiilor','Date tematice · Risc metodologic','Intermediar','Laborator interactiv','Compari observațiile cu sursa și documentezi excepțiile înaintea interpretării.']},
+   {id:'boundary',description:'Alege unitățile și sistemul de coordonate înaintea măsurării.',paragraphs:['Măsurarea distanțelor','Date vectoriale','Un alt subiect','Această propoziție aparține altei secțiuni și nu explică măsurarea.']},
+   {id:'missing',description:'',paragraphs:['Documentarea limitelor','Intermediar']},
+   {id:'overview',description:'Compară câmpurile și documentează alegerea indicatorului analizat.',paragraphs:['Analiza informațiilor este menționată și într-un alt laborator despre aspectul hărții.']},
+   {id:'projection',description:'Compară proprietățile păstrate înainte de alegerea reprezentării.',paragraphs:['O explicație introductivă poate descrie scopul fără termenul căutat.','Compari proiecții conforme și echivalente; clasificarea privește proprietățile păstrate, nu culoarea.']},
+   {id:'measure',description:'La măsurare areală folosești unități pătrate și verifici sistemul de coordonate.',paragraphs:[]},
+   {id:'S07',description:'Compară unitățile și verifică suprafața înaintea interpretării.',paragraphs:['Organizează fișierele în atelier_S07/data_raw/ înainte de import.','Punctele de control sunt încărcate într-o etapă din S07.']},
+   {id:'catalog',description:'Materiale și activități pentru explorare.',paragraphs:['Calitate și incertitudine']});
  });
  await fixture.addScriptTag({content:read('js/search.js')});await fixture.evaluate(()=>window.CARTO_SEARCH.init(window.searchFixture,'../'));
- for(const [query,href,snippet] of [['Orientare în platformă','../orientation.html','Un ghid pentru alegerea materialelor potrivite scopului.'],['Introducere în cartografie','../intro.html','Compari metodele și verifici sursele înainte de reprezentare.'],['studio de simboluri','../symbols.html#studio','Studio de simboluri: compară accentul temei cu lizibilitatea contextului.'],['symbology','../symbols.html',null]]){
+ for(const [query,href,snippet] of [['Orientare în platformă','../orientation.html','Un ghid pentru alegerea materialelor potrivite scopului.'],['Introducere în cartografie','../intro.html','Compari metodele și verifici sursele înainte de reprezentare.'],['studio de simboluri','../symbols.html#studio','Studio de simboluri: compară accentul temei cu lizibilitatea contextului.'],['symbology','../symbols.html',null],['Observații în teren','../field.html','Documentează sursa și compară măsurătorile repetate.'],['OBSERVATII IN TEREN','../field.html','Documentează sursa și compară măsurătorile repetate.'],['Lizibilitatea pe fundal urban','../symbols.html','Lizibilitatea pe fundal urban · Compară simbolurile la scara de afișare.'],['Scări de reprezentare','../scale.html','Compară nivelul de generalizare pentru două reprezentări.'],['Validarea observațiilor','../validation.html','Compari observațiile cu sursa și documentezi excepțiile înaintea interpretării.'],['Risc metodologic','../validation.html','Temă indexată: Risc metodologic. Verifică proveniența datelor și consemnează metoda de control.'],['tipare','../validation.html','Temă indexată: tipare. Verifică proveniența datelor și consemnează metoda de control.'],['Măsurarea distanțelor','../measure.html','Alege unitățile și sistemul de coordonate înaintea măsurării.'],['Documentarea limitelor','../limits.html','Temă indexată: Documentarea limitelor.'],['proiecții','../projections.html','Compari proiecții conforme și echivalente; clasificarea privește proprietățile păstrate, nu culoarea.'],['clasificare','../projections.html','Compari proiecții conforme și echivalente; clasificarea privește proprietățile păstrate, nu culoarea.'],['măsurare areală','../areas.html','La măsurare areală folosești unități pătrate și verifici sistemul de coordonate.']]){
   await fixture.fill('#search',query);equal(await fixture.locator('#search-results a').count(),1,'Generic rule retains one entity '+query);equal(await fixture.locator('#search-results a').getAttribute('href'),href,'Generic canonical/page URL and relative prefix '+query);const text=await fixture.locator('#search-results small').innerText();if(snippet)equal(text,snippet,'Generic descriptive/body context '+query);else ok(text.includes('symbology'),'Metadata keyword context retained');
+  ok(text.trim().length>0&&!/<(?:script|style|template)|<[^>]+>/.test(text)&&await fixture.locator('#search-results small > *').count()===0,'Nonblank plain-text generic snippet '+query);
  }
+ await fixture.fill('#search','Analiza informațiilor');equal(await fixture.locator('#search-results small').innerText(),'Compară câmpurile și documentează alegerea indicatorului analizat.','Page overview instead of an incidental mention in another section');
+ await fixture.fill('#search','S07');equal(await fixture.locator('#search-results a').count(),1,'Exact material ID keeps one result');equal(await fixture.locator('#search-results small').innerText(),'Compară unitățile și verifică suprafața înaintea interpretării.','An exact ID uses the resource overview, not an incidental filename or step');
+ await fixture.fill('#search','incertitudine');equal(await fixture.locator('#search-results a').count(),1,'Body-only navigation match has a destination');equal(await fixture.locator('#search-results small').innerText(),'Calitate și incertitudine','Without related prose, keep the actual navigation text instead of an unrelated fallback');
+ const genericSnippetChecks=pathSnippetChecks+checks-fixtureStart;
  await fixture.close();
+ // Inspect actual explanations across the ten public content families. These
+ // topic assertions reject bare labels, not just short or empty strings.
+ const semanticStart=checks,semanticCases=[
+  ['Fundamente','latitudine','coordinates.html',/latitudine|longitudine/i],
+  ['Harta','Definiția hărții','lesson.html?id=map-definition',/micșorare|generalizare|scar/i],
+  ['CRS','proiecții interactive','projection-crs-lab.html',/coordonat|distan|arii/i],
+  ['Clasificare','clasificare interactivă','classification-lab.html',/clas|normaliz|indicator/i],
+  ['Design','map design','styling-labeling.html#map-design-studio',/ierarh|lizibil|simbol/i],
+  ['Raster','raster styling','raster-styling.html',/contrast|culoar|relief|pixel/i],
+  ['Topologie','topologie','topology.html',/geometri|regul|topologic/i],
+  ['Map Diagnostics','NoData','map-diagnostics.html#nodata-nu-este-zero',/valo.*raster|masc|zero/i],
+  ['Ateliere QGIS','T05','tutorials/t05.html',/grid|celule|popula/i],
+  ['Hub','explorează interactiv','digital-companion.html',/experiment|compara|diagnostic/i]];
+ const semanticExamples=[];
+ for(const [family,query,href,topic] of semanticCases){
+  await page.fill('#search',query);const hit=await page.locator('#search-results a').first().evaluate(a=>{const title=a.cloneNode(true);title.querySelector('small').remove();title.querySelector('strong').remove();return {title:title.textContent.trim(),href:a.getAttribute('href'),snippet:a.querySelector('small').textContent,markup:a.querySelector('small').children.length};});
+  equal(hit.href,href,'Semantic family destination '+family);ok(topic.test(hit.snippet),'Explanation describes the actual topic '+family);ok(hit.snippet.trim().split(/\s+/).length>=6&&normalize(hit.snippet)!==normalize(hit.title),'Descriptive rather than isolated heading/label '+family);ok(hit.markup===0&&!/<(?:script|style|template)|hartăÎncepător|informației\.Coordonatele/.test(hit.snippet),'Clean semantic text '+family);ok((await page.request.get(new URL(href,base).href)).ok(),'Actual semantic destination responds '+family);semanticExamples.push({family,query,...hit});
+ }
+ const semanticChecks=checks-semanticStart;
  // Activate the actual result by keyboard; no second user click reaches Studio.
  for(const width of [1440,768,390])for(const dark of [false,true]){
   await page.setViewportSize({width,height:1000});await page.goto(base+'index.html');await page.evaluate(d=>{document.body.classList.toggle('dark',d);localStorage.setItem('cartografie-theme',d?'dark':'light');},dark);
   await page.fill('#search','explorează interactiv');equal(await page.locator('#search-results a').first().getAttribute('href'),'digital-companion.html','Hub result '+width+'/'+dark);equal(await page.locator('#search-results small').first().innerText(),content.lessons.find(l=>l.id==='digital-companion').description,'Descriptive Hub snippet '+width+'/'+dark);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Search wrapping '+width+'/'+dark);await page.locator('#search-results').screenshot({path:path.join(out,`polish-search-${width}-${dark?'dark':'light'}.png`)});
+  await page.fill('#search','parcurs recomandat');equal(await page.locator('#search-results small').first().innerText(),'Punct de orientare, cu acces liber la toate nivelurile.','Descriptive learning path snippet '+width+'/'+dark);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Learning path search wrapping '+width+'/'+dark);await page.locator('#search-results').screenshot({path:path.join(out,`polish-path-search-${width}-${dark?'dark':'light'}.png`)});
+  await page.fill('#search','NoData');equal(await page.locator('#search-results small').first().innerText(),'Absența unei valori raster este tratată drept observație numerică zero.','Descriptive NoData snippet '+width+'/'+dark);ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'NoData search wrapping '+width+'/'+dark);await page.locator('#search-results').screenshot({path:path.join(out,`polish-nodata-search-${width}-${dark?'dark':'light'}.png`)});
   await page.fill('#search','map design');await page.locator('#search').press('ArrowDown');ok(await page.locator('#search-results a').first().evaluate(e=>e===document.activeElement&&getComputedStyle(e).outlineStyle!=='none'),'Visible keyboard focus on Studio result');await page.keyboard.press('Enter');await page.waitForURL(base+'styling-labeling.html#map-design-studio');equal(new URL(page.url()).hash,'#map-design-studio','Direct Studio result '+width+'/'+dark);equal(await page.locator('#map-design-studio').count(),1,'Studio anchor exists');await page.waitForFunction(()=>{const r=document.querySelector('#map-design-studio h2').getBoundingClientRect();return r.top>=document.querySelector('.topbar').getBoundingClientRect().bottom-2&&r.bottom<=innerHeight;});ok(await page.locator('#map-design-studio h2').isVisible(),'Studio heading in viewport without extra click');equal(await page.locator('body').evaluate(e=>e.classList.contains('dark')),dark,'Requested destination theme');
  }
  const searchChecks=checks-searchStart;
@@ -97,5 +166,5 @@ try{
   if(route==='index.html')equal(await fallback.locator('#cuprins .theme-card').count(),7,'No-JS seven usable chapter destinations');
  }
  await nojs.close();equal(errors,[],'Zero browser errors');equal(badResponses,[],'Zero missing public assets');equal(warnings,[],'Zero browser warnings');
- const report={status:'PASS',checks,searchChecks,primary,secondary:content.companion.secondary,search,layouts,hubRequests,hubTiming,external:hubRequests.filter(u=>!u.startsWith(base)),heavyEngines:0,brokenLinks:badResponses.length,errors,warnings};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({status:'PASS',checks,searchChecks,errors:errors.length,warnings:warnings.length,brokenLinks:badResponses.length,report:path.relative(root,path.join(out,'result.json'))}));
+ const report={status:'PASS',checks,searchChecks,genericSnippetChecks,semanticChecks,semanticExamples,primary,secondary:content.companion.secondary,search,layouts,hubRequests,hubTiming,external:hubRequests.filter(u=>!u.startsWith(base)),heavyEngines:0,brokenLinks:badResponses.length,errors,warnings};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({status:'PASS',checks,searchChecks,genericSnippetChecks,semanticChecks,errors:errors.length,warnings:warnings.length,brokenLinks:badResponses.length,report:path.relative(root,path.join(out,'result.json'))}));
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}})().catch(error=>{console.error(error);process.exitCode=1;});
