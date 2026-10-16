@@ -8,13 +8,13 @@ Toate GeoJSON-urile păstrează coordonate WGS 84, **EPSG:4326**, în ordinea lo
 
 | Subset | Entități | Octeți |
 |---|---:|---:|
-| Sectorul 1, București | 1 | 76,952 |
-| Unități de învățământ — Sectorul 1 | 164 | 90,488 |
-| Grid de populație — Sectorul 1 | 99 | 130,789 |
-| Medicină de familie — Sectorul 1 | 267 | 50,256 |
-| Cabinete și ambulatorii de specialitate — Sectorul 1 | 200 | 43,597 |
-| Spitale — Sectorul 1 | 50 | 26,147 |
-| Rîșca, județul Suceava — contur | 1 | 61,134 |
+| Sectorul 1, București | 1 | 76,951 |
+| Unități de învățământ — Sectorul 1 | 164 | 90,487 |
+| Grid de populație — Sectorul 1 | 99 | 130,788 |
+| Medicină de familie — Sectorul 1 | 267 | 50,255 |
+| Cabinete și ambulatorii de specialitate — Sectorul 1 | 200 | 43,596 |
+| Spitale — Sectorul 1 | 50 | 26,146 |
+| Rîșca, județul Suceava — contur | 1 | 61,133 |
 
 Dicționarele CSV din `sector1/metadata/` descriu numai atributele publice păstrate. Atributele personale, de contact și cele nefolosite au fost eliminate.
 

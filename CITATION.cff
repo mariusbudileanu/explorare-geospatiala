@@ -7,7 +7,8 @@
   "authors": [
     {
       "family-names": "Budileanu",
-      "given-names": "Marius"
+      "given-names": "Marius",
+      "affiliation": "University of Bucharest, Faculty of Geography"
     }
   ],
   "repository-code": "https://github.com/mariusbudileanu/explorare-geospatiala",

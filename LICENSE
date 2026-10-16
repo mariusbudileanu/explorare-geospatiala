@@ -24,7 +24,13 @@ Scope: this MIT licence applies only to the original website software code
 (HTML structure, CSS, JavaScript, architecture and code components). It does
 not license educational prose, exercises, tutorial content or the original
 didactic expression of diagrams, even when embedded in source files. Original
-educational content is covered separately by CONTENT_LICENSE.md (CC BY-NC 4.0).
+educational text, diagrams, explanatory graphics and other copyrightable
+learning resources authored for this project are licensed under Creative
+Commons Attribution 4.0 International (CC BY 4.0), unless expressly stated
+otherwise. See CONTENT_LICENSE.md and the official license:
+https://creativecommons.org/licenses/by/4.0/
+Legal text: https://creativecommons.org/licenses/by/4.0/legalcode
 The 1974 publication, scans, extracted figures, EPSG references, QGIS materials,
-external data and other third-party materials retain their original terms.
+external data and other third-party materials retain their original terms,
+notices, attribution requirements and applicable redistribution permissions.
 Vendored Proj4js has its own licence notice.
