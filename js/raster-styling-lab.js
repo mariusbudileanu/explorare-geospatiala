@@ -44,7 +44,13 @@ function paint(node,s){const rendered=engine.render(s);node.width=rendered.width
 function afterRender(state,result,card){const d=D.demos.find(d=>d.id===card.id),s=engine.spec(d.id,state);if(!(s.source==='forestLoss'?engine.forest:engine.dem))return;paint(card.querySelector('.lab-map canvas'),s);card.querySelector('.lab-legend').innerHTML='<li>'+legend(s)+'</li>';
   const compare=card.querySelector('.lab-compare');if(state.compare){const items=comparisons(d,state);compare.innerHTML=items.map(([label,s],i)=>`<section><h4>${esc(label)}</h4>${canvas(d.id+'-compare-'+i,d.title+'. '+label)}</section>`).join('');items.forEach(([,s],i)=>paint(compare.querySelector('#'+d.id+'-compare-'+i+'-canvas'),s));}
 }
-function attribution(metadata){const dem=metadata.rasters.dem,forest=metadata.rasters.forestLoss;return `<h2>Aceleași surse, aceleași rastere</h2><p>${esc(dem.source_name)} · altitudine în metri. ${esc(dem.attribution)}</p><p>${esc(forest.citation)} ${forest.source_url?`<a href="${esc(forest.source_url)}" target="_blank" rel="noopener noreferrer">${esc(forest.source_platform)} · sursa documentată ↗</a>`:''}</p><p class="small">Versiunea exactă și termenii de licență ai subseturilor, data accesării Forest Loss și datum-ul vertical DEM rămân de clarificat. Resursele terțe păstrează termenii lor; stilizarea nu schimbă atribuirea.</p>`;}
+function attribution(metadata){
+  const dem=metadata.rasters.dem,forest=metadata.rasters.forestLoss,records=window.CARTO_DATA_REGISTRY?.datasets||[];
+  const documented=['copernicus-dem','hansen-loss'].map(id=>{
+    const r=records.find(r=>r.id===id);return r?`<p>${esc(r.name)} — ${esc(r.license_name)}. Acces documentat: ${esc(r.accessed||'neînregistrat')}. <a href="resources.html#data-${id}">Metadate și atribuire</a></p>`:'';
+  }).join('');
+  return `<h2>Aceleași surse, aceleași rastere</h2><p>${esc(dem.source_name)} · altitudine în metri. ${esc(dem.attribution)}</p><p>${esc(forest.citation)}</p>${documented}<p class="small">Sursa, licența și accesul documentat sunt separate de detaliile încă neconfirmate ale subseturilor: ediția exactă, rețeta originală de reproiectare/resampling și referința verticală DEM. Stilizarea nu modifică pixelii sau atribuirea.</p>`;
+}
 
 function mount(d){
   if(controllers.has(d.id)){if(d.id==='R0')controllers.get(d.id).render();return;}

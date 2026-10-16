@@ -1,6 +1,7 @@
 'use strict';
 window.CARTO_DEMO = {
   note: 'Date sintetice, fictive, create pentru demonstrațiile educaționale.',
+  units: {population:'unități convenționale de populație',production:'indice sintetic de producție, fără unitate'},
   regions: [
     {id:'A',name:'Nordia',population:72,production:34,category:'munte',polygon:[[16,12],[44,9],[50,30],[37,43],[12,35]]},
     {id:'B',name:'Estalia',population:118,production:81,category:'deal',polygon:[[44,9],[79,15],[91,38],[63,47],[50,30]]},

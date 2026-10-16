@@ -46,5 +46,5 @@
     const c=L.mountDemo(d,card,{draw,onChange:(s,key)=>{if(d.id==='F7'&&key==='scenario')s.answer='';},afterRender:(s,out,card)=>{const ids=d.id==='F1'?[s.format]:d.id==='F2'?[s.format]:d.id==='F3'?[s.format]:d.id==='F4'?['netcdf']:d.id==='F5'?['zarr']:d.id==='F6'?['netcdf','zarr']:d.id==='F8'?[s.a,s.b]:[];card.querySelector('.qgis-path').textContent=ids.length?[...new Set(ids)].map(id=>F.byId[id].name+': '+F.byId[id].qgisSupport).join(' '):base.where;}});controllers.set(d.id,c);}
   L.checkpoint(document.getElementById('formats-checkpoint'),F.checkpoint,{title:'Checkpoint · Formate & interoperabilitate',id:'formats-checkpoint-title',namespace:'formats-quiz'});
   document.getElementById('formats-qgis-root').innerHTML=L.sources(['formats-support'],{id:'formats-qgis-sources',title:'Continuă în QGIS · formate și compatibilitate'});
-  root.CARTO_FORMATS_LAB={controllers,draw,demos,cube,grid};const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+  root.CARTO_FORMATS_LAB={controllers,draw,demos,cube,grid};const target=document.getElementById(L.fragment());if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
 })(window);

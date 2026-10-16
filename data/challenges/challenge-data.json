@@ -7,7 +7,7 @@
     "boundary": {
       "file": "data/challenges/sector1/sector1_boundary.geojson",
       "feature_count": 1,
-      "size_bytes": 76952,
+      "size_bytes": 76951,
       "geometry_types": [
         "MultiPolygon"
       ],
@@ -39,7 +39,7 @@
     "schools": {
       "file": "data/challenges/sector1/4326_S1_Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023.geojson",
       "feature_count": 164,
-      "size_bytes": 90488,
+      "size_bytes": 90487,
       "geometry_types": [
         "Point"
       ],
@@ -92,7 +92,7 @@
     "censusGrid": {
       "file": "data/challenges/sector1/4326_S1_Recensamant2021_GridData — recensamant2021_griddata.geojson",
       "feature_count": 99,
-      "size_bytes": 130789,
+      "size_bytes": 130788,
       "geometry_types": [
         "MultiPolygon"
       ],
@@ -134,7 +134,7 @@
     "primaryCare": {
       "file": "data/challenges/sector1/4326_S1_Cabinete Medicină de Familie (Primary Care).geojson",
       "feature_count": 267,
-      "size_bytes": 50256,
+      "size_bytes": 50255,
       "geometry_types": [
         "Point"
       ],
@@ -177,7 +177,7 @@
     "secondaryCare": {
       "file": "data/challenges/sector1/4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care).geojson",
       "feature_count": 200,
-      "size_bytes": 43597,
+      "size_bytes": 43596,
       "geometry_types": [
         "Point"
       ],
@@ -223,7 +223,7 @@
     "hospitals": {
       "file": "data/challenges/sector1/4326_S1_Spitale București-Ilfov (Tertiary Care).geojson",
       "feature_count": 50,
-      "size_bytes": 26147,
+      "size_bytes": 26146,
       "geometry_types": [
         "Point"
       ],
@@ -277,7 +277,7 @@
     "boundary": {
       "file": "data/challenges/risca/risca_boundary.geojson",
       "feature_count": 1,
-      "size_bytes": 61134,
+      "size_bytes": 61133,
       "geometry_types": [
         "MultiPolygon"
       ],

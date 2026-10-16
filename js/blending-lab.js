@@ -61,7 +61,7 @@
     document.getElementById('blend-source-root').innerHTML=L.sources(['vector-layer-rendering','symbol-opacity','color-opacity','group-rendering','blending-modes','raster-transparency'],{id:'blend-qgis-sources',title:'Transparență & blending · QGIS · Surse oficiale'});
     document.getElementById('blend-effects-source').innerHTML=L.sourceLink('draw-effects');
     root.CARTO_BLEND_CONTROLLERS=controllers;
-    const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+    const target=document.getElementById(L.fragment());if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
   }
   root.CARTO_BLEND_RENDER={draw,params,kind,comparisons};start();
 })(window);

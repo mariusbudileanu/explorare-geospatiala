@@ -6,7 +6,11 @@ module.exports=function(E,{ok,equal}){
   // Exercise the actual private helper without adding a public runtime API.
   const start=source.indexOf('  function quantileLerp('),end=source.indexOf('\n  function ',start+1);
   ok(start>=0&&end>start,'Quantile interpolation has one canonical private helper');
-  const lerp=vm.runInNewContext('('+source.slice(start,end)+')');
+  // The helper now uses exact dyadic arithmetic shared with rate recovery. Keep
+  // that private dependency graph intact; expose it only in this test VM.
+  const context={};vm.runInNewContext(source.replace('  root.CARTO_CLASSIFY=',
+    '  root.QA_QUANTILE_LERP=quantileLerp;\n  root.CARTO_CLASSIFY='),context);
+  const lerp=context.QA_QUANTILE_LERP;
   const fixture=JSON.parse(fs.readFileSync(path.join(__dirname,'quantile-reference.json'),'utf8'));
   const summary={cases:fixture.cases.length,interpolation:fixture.interpolation.length,auditCases:0,targetCases:0,fuzzCases:0,seeds:fixture.seeds};
   for(const t of fixture.interpolation){

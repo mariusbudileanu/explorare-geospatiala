@@ -56,7 +56,7 @@
     document.getElementById('topology-source-root').innerHTML=L.sources(['topology-checker','geometry-checker','topological-editing'],{id:'topology-qgis-sources',title:'Topologie · QGIS · Surse oficiale'});
     const mini=(kind,stop)=>ruleFrame('digitizing-'+kind,kind,kind==='Overshoot'?'Linia depășește conexiunea dorită.':'Linia se oprește înainte de conexiune.',[root.CARTO_TOPOLOGY.line('referință','B',[240,60],[240,270]),root.CARTO_TOPOLOGY.line('traseu','A',[80,160],[stop,160])]);
     document.getElementById('T4').insertAdjacentHTML('afterend',`<section class="lab-principles topology-digitizing"><h3>Situații de digitizare</h3><p><strong>Exemple conceptuale asociate problemelor de conectivitate; nu sunt prezentate aici ca reguli QGIS separate.</strong></p><div class="topology-notes"><figure>${mini('Overshoot',285)}<figcaption><strong>Overshoot:</strong> linia depășește conexiunea dorită.</figcaption></figure><figure>${mini('Undershoot',195)}<figcaption><strong>Undershoot:</strong> linia se oprește înainte de conexiune.</figcaption></figure></div></section>`);
-    document.getElementById('topology-editing-source').innerHTML=L.sourceLink('topological-editing');root.CARTO_TOPOLOGY_RULES_RENDER={draw,demos};const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+    document.getElementById('topology-editing-source').innerHTML=L.sourceLink('topological-editing');root.CARTO_TOPOLOGY_RULES_RENDER={draw,demos};const target=document.getElementById(L.fragment());if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
   }
   start();
 })(window);

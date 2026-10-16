@@ -35,5 +35,7 @@
     card.addEventListener('input',change);card.addEventListener('change',event=>{if(!['range','color'].includes(event.target.type))change(event);});
     const reset=()=>{state={...d.defaults,compare:!!d.initialCompare};onReset();render();};card.addEventListener('click',event=>{const b=event.target.closest('button');if(b?.hasAttribute('data-reset'))reset();else if(b?.hasAttribute('data-compare')){state.compare=!state.compare;render();}});render();return {getState:()=>({...state}),setState:patch=>{state={...state,...patch};render();},reset,render};
   }
-  root.CARTO_LAB={esc,sourceLink,sources,compactSources,controls,shell,checkpoint,mountDemo};
+  // A damaged fragment is an unknown destination, never a reason to abort a lab.
+  function fragment(hash=location.hash){try{return decodeURIComponent(hash.replace(/^#/,''));}catch{return '';}}
+  root.CARTO_LAB={esc,sourceLink,sources,compactSources,controls,shell,checkpoint,mountDemo,fragment};
 })(window);

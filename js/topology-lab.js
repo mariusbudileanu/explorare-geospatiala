@@ -16,7 +16,7 @@
     }
     const card=document.getElementById('T1');card.after(document.getElementById('topology-symmetry'));card.addEventListener('change',event=>{if(event.target.hasAttribute('data-answer'))controllers.get('T1').setState({answer:event.target.value});});card.addEventListener('click',event=>{if(event.target.closest('[data-next-round]')){const c=controllers.get('T1'),s=c.getState();if(Number(s.round)<D.rounds.length-1)c.setState({round:String(Number(s.round)+1),perspective:'A',answer:''});}});
     document.getElementById('topology-source-compact').innerHTML=L.compactSources(sources,{target:'topology-qgis-sources',subject:'topologie'});document.getElementById('topology-source-root').innerHTML=L.sources(sources,{id:'topology-qgis-sources',title:'Topologie · QGIS · Surse oficiale'});
-    root.CARTO_TOPOLOGY_CONTROLLERS=controllers;root.CARTO_TOPOLOGY_RENDER={draw,afterRender};const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+    root.CARTO_TOPOLOGY_CONTROLLERS=controllers;root.CARTO_TOPOLOGY_RENDER={draw,afterRender};const target=document.getElementById(L.fragment());if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
   }
   start();
 })(window);

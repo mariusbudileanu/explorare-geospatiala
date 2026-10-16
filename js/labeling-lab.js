@@ -55,7 +55,7 @@
     return {svg:E.frame(prefix,d.title,status,content),legend:currentLegend,status,dynamic};
   }
   function switchPanel(labeling,updateHash=false){for(const name of ['styling','labeling']){const active=(name==='labeling')===labeling,tab=document.getElementById(name+'-tab');tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;document.getElementById(name+'-panel').hidden=!active;}document.querySelector('.lesson-hero .lab-source-compact').href=labeling?'#qgis-label-sources':'#qgis-sources';if(updateHash)history.replaceState(null,'',labeling?'#etichetare':'#stilizare');}
-  function hashPanel(){const id=decodeURIComponent(location.hash.slice(1)),target=document.getElementById(id);if(id==='etichetare'||target?.closest('#labeling-panel'))switchPanel(true);else if(id==='stilizare'||target?.closest('#styling-panel'))switchPanel(false);if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));}
+  function hashPanel(){const id=L.fragment(),target=document.getElementById(id);if(id==='etichetare'||target?.closest('#labeling-panel'))switchPanel(true);else if(id==='stilizare'||target?.closest('#styling-panel'))switchPanel(false);if(target)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));}
   function start(){const container=document.getElementById('labeling-root');if(!container)return;
     container.innerHTML=sectionNames.map(([id,title])=>`<section id="${id}" class="styling-section"><h2>${title}</h2>${D.demos.filter(d=>d.section===id).map(L.shell).join('')}</section>`).join('');
     const classic=document.getElementById('labeling-classic'),source=root.CARTO_CONTENT.source;

@@ -84,7 +84,9 @@ for name, raw in cases:
                     position = (len(ordered)-1)*i/k
                     lower = math.floor(position)
                     t = position-lower
-                    upper.append(ordered[lower]*(1-t)+ordered[lower+1]*t)
+                    # Audit correction: round exact binary64 endpoint interpolation
+                    # once, rather than round the two products before their sum.
+                    upper.append(float(F(ordered[lower])*(1-F(t))+F(ordered[lower+1])*F(t)))
                 breaks = [ordered[0]]+list(dict.fromkeys(upper+[ordered[-1]]))
             assignments = [next(i for i, upper in enumerate(breaks[1:]) if v <= upper) for v in raw]
             result.append({'name': name, 'values': raw, 'method': method, 'classes': requested,

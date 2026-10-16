@@ -67,7 +67,7 @@
     document.getElementById('repair-source-root').innerHTML=L.sources(['vector-styling','symbology','classification','label-settings','labels'],{id:'qgis-repair-sources',title:'Aplică toate corecțiile în QGIS'});
     // A small public teaching API also permits independent result verification.
     root.CARTO_REPAIR_LAB={scene,draw,getState:controller.getState};
-    const target=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(target?.closest('#repair-map,#repair-qgis,#qgis-repair-sources'))requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
+    const target=document.getElementById(L.fragment());if(target?.closest('#repair-map,#repair-qgis,#qgis-repair-sources'))requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));
   }
   start();
 })(window);

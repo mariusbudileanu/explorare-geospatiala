@@ -83,7 +83,7 @@ Textul exact de atribuire a produsului rămâne de verificat; nu este inventat.
 
 Modificări: Decupare pentru Sectorul 1 și Rîșca; export GeoJSON în EPSG:4326. Atributul 2017-09-27 al conturului Sectorului 1 nu confirmă ediția produsului actual.
 Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.
-Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei.
+Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este confirmată explicit de proprietarul platformei, participant la inițiativa geo-spatial.org. Această autorizare este distinctă de licența publicată și atribuirea produsului exact, care rămân de documentat.
 
 ### RECENSĂMÂNTUL POPULAȚIEI ȘI LOCUINȚELOR 2021
 
@@ -93,7 +93,7 @@ Textul exact de atribuire a produsului rămâne de verificat; nu este inventat.
 
 Modificări: Decupare Sectorul 1; selectarea atributelor; export GeoJSON în EPSG:4326. Suportul populației după decupare necesită confirmare.
 Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.
-Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei.
+Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este confirmată explicit de proprietarul platformei, participant la inițiativa geo-spatial.org. Această autorizare este distinctă de licența publicată și atribuirea produsului exact, care rămân de documentat.
 
 ### Tree cover loss
 
@@ -112,3 +112,7 @@ produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defenc
 
 Modificări: Decupare Suceava/Rîșca; reproiectare EPSG:3844 (metoda originală de resampling neconfirmată); optimizare GeoTIFF fără modificarea pixelilor.
 Ediția exactă, datum-ul vertical și rețeta originală de reproiectare rămân de confirmat. Rezoluția nominală GLO-30 diferă de pasul efectiv al subsetului EPSG:3844.
+
+## Disponibilitatea surselor externe
+
+La 16 octombrie 2026, cele două endpointuri oficiale MMAP (metadate și ATOM), indicate în registru pentru contextul opțional T06, nu au putut fi validate prin TLS. Păstrăm proveniența; nu dezactivăm verificarea certificatelor și nu înlocuim sursa cu una fără legătură. Această indisponibilitate nu condiționează analiza Forest Loss peste hillshade.

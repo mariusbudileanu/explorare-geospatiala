@@ -118,7 +118,7 @@
         legend=selectedYears.map((year,i)=>({color:yearColors[i%yearColors.length],label:String(year)}));
         metrics.push(metric(id==='R6'?'Pixeli de pierdere peste prag':'Pixeli selectați',count,'pixeli',0),metric(id==='R6'?'Pierdere forestieră peste prag':'Suprafață cumulată',ha,'ha'));
         interpretation.push('Codurile 1–24 reprezintă anii 2001–2024. Selectorul folosește corespondența din metadate. Valoarea 0 este NoData și nu contribuie la ani, suprafețe sau grafice.','Un pixel forestier codifică un singur an. Reunirea anilor nu dublează pixeli și nu indică o cauză a pierderii.');
-        warnings.push('Versiunea exactă, licența subsetului și data accesării sursei forest-loss rămân de clarificat.');
+        warnings.push('Sursa, licența și data accesării Forest Loss sunt documentate în registrul public al datelor. Ediția exactă și rețeta de reproiectare/resampling a subsetului rămân de confirmat.');
         if(id==='R6'){
           metrics.push(metric('Pierdere totală în interval',total*forest.area/10000,'ha'),metric('Pierdere cu pantă evaluabilă',known*forest.area/10000,'ha'),metric('Pierdere cu pantă necunoscută',unknown*forest.area/10000,'ha'),metric('Peste prag / pierdere evaluabilă',known?count/known*100:null,'%'),metric('Peste prag / pierdere totală',total?count/total*100:null,'%'));
           legend.push({color:'#a2aeb6',label:'Pierdere în interval sub prag'},{color:'#cbbbdd',label:'Pierdere în interval cu pantă necunoscută'});

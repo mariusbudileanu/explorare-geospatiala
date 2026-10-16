@@ -6,6 +6,7 @@ const c={window:{}};vm.runInNewContext(read('js/classification-engine.js'),c);vm
 const reference=JSON.parse(read('tests/qa/classification-reference.json'));
 const robustness=require('./classification-robustness.cjs')(E,{ok,equal});
 const quantileRobustness=require('./quantile-robustness.cjs')(E,{ok,equal});
+const auditNumeric=require('./audit-numeric.cjs')(E,{ok,equal});
 for(const t of reference.cases){const before=JSON.stringify(t.values),r=E.classify(t.values,{method:t.method,classes:t.classes});equal(r.assignments,t.assignments,`Independent assignments ${t.name} ${t.method} ${t.classes}`);ok(r.breaks.length===t.breaks.length,'Independent effective class count');r.breaks.forEach((v,i)=>ok(Math.abs(v-t.breaks[i])<=1e-10*Math.max(1,Math.abs(v)),'Independent break'));ok(r.counts.reduce((s,v)=>s+v,0)+r.missing===t.values.length,'All objects accounted for');ok(JSON.stringify(t.values)===before,'Input immutable');
  for(let i=0;i<r.ranges.length;i++){const range=r.ranges[i];ok(range.lowerInclusive===(i===0)&&range.upperInclusive,'Interval contract');ok(r.values.every((v,j)=>r.assignments[j]!==i||(v<=range.upper&&(i===0?v>=range.lower:v>range.lower))),'Assignment agrees with exact legend bounds');}
  if(t.method==='jenks')equal(E.classify([...t.values].reverse(),{method:t.method,classes:t.classes}).breaks,r.breaks,'Deterministic order-independent Jenks');

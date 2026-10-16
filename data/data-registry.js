@@ -36,7 +36,7 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/sector1/4326_S1_Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023.geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 90488,
+          "bytes": 90487,
           "operations": [
             "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
             "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
@@ -76,7 +76,7 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/sector1/4326_S1_Cabinete Medicină de Familie (Primary Care).geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 50256,
+          "bytes": 50255,
           "operations": [
             "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
             "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
@@ -88,7 +88,7 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/sector1/4326_S1_Cabinete și Ambulatorii de Specialitate (Secondary Care).geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 43597,
+          "bytes": 43596,
           "operations": [
             "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
             "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
@@ -100,7 +100,7 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/sector1/4326_S1_Spitale București-Ilfov (Tertiary Care).geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 26147,
+          "bytes": 26146,
           "operations": [
             "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
             "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
@@ -167,7 +167,7 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/sector1/sector1_boundary.geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 76952,
+          "bytes": 76951,
           "operations": []
         },
         {
@@ -175,15 +175,20 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/risca/risca_boundary.geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 61134,
+          "bytes": 61133,
           "operations": []
         }
       ],
       "notes": [
         "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.",
-        "Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei."
+        "Distribuție prin geo-spatial.org; producătorii originali sunt indicați separat. Redistribuirea subseturilor este confirmată explicit de proprietarul platformei, participant la inițiativă. Licența publicată și textul exact de atribuire ale produsului necesită în continuare documentare; nu deducem o licență CC din politica generală."
       ],
-      "workshop_access_note": "Catalog: poligoane UAT / București (limită reunită) pentru T01–T05; poligoane județe pentru T06. Alege GeoPackage în EPSG:3844. Ediția produsului descărcat se consemnează separat de copiile istorice."
+      "workshop_access_note": "Catalog: poligoane UAT / București (limită reunită) pentru T01–T05; poligoane județe pentru T06. Alege GeoPackage în EPSG:3844. Ediția produsului descărcat se consemnează separat de copiile istorice.",
+      "redistribution_permission": {
+        "status": "owner_confirmed",
+        "scope": "Subseturile tehnice distribuite de aplicația interactivă",
+        "basis": "Proprietarul platformei participă la inițiativa geo-spatial.org și confirmă autorizarea redistribuirii acestor subseturi. Această confirmare este distinctă de o licență publicată pentru produsul exact."
+      }
     },
     {
       "id": "census2021",
@@ -212,7 +217,7 @@ window.CARTO_DATA_REGISTRY = {
           "file": "data/challenges/sector1/4326_S1_Recensamant2021_GridData — recensamant2021_griddata.geojson",
           "format": "GeoJSON",
           "crs": "EPSG:4326",
-          "bytes": 130789,
+          "bytes": 130788,
           "operations": [
             "Subset deja decupat geometric după conturul Sectorului 1, conform brief-ului furnizat.",
             "Eliminarea atributelor nefolosite; geometria, identificatorii și valorile păstrate nu au fost modificate.",
@@ -222,9 +227,14 @@ window.CARTO_DATA_REGISTRY = {
       ],
       "notes": [
         "Ediția 1 este declarată în registrul furnizat; nu identifică automat versiunea fișierului public curent.",
-        "Politica generală geo-spatial.org menționează exemple de licențe deschise; licența și textul de atribuire pentru acest produs exact rămân de verificat. Redistribuirea subseturilor este autorizată de proprietarul platformei."
+        "Distribuție prin geo-spatial.org; producătorii originali sunt indicați separat. Redistribuirea subseturilor este confirmată explicit de proprietarul platformei, participant la inițiativă. Licența publicată și textul exact de atribuire ale produsului necesită în continuare documentare; nu deducem o licență CC din politica generală."
       ],
-      "documentation_url": "https://doi.org/10.55779/ng52348"
+      "documentation_url": "https://doi.org/10.55779/ng52348",
+      "redistribution_permission": {
+        "status": "owner_confirmed",
+        "scope": "Subseturile tehnice distribuite de aplicația interactivă",
+        "basis": "Proprietarul platformei participă la inițiativa geo-spatial.org și confirmă autorizarea redistribuirii acestor subseturi. Această confirmare este distinctă de o licență publicată pentru produsul exact."
+      }
     },
     {
       "id": "hansen-loss",
@@ -357,7 +367,8 @@ window.CARTO_DATA_REGISTRY = {
       "interactive_subsets": [],
       "notes": [
         "Sursa propusă pentru lucru public nu confirmă automat proveniența copiei istorice din capturi.",
-        "La verificarea din 09.10.2026, serviciul oficial a raportat certificat TLS expirat. Nu ocoli verificarea certificatului; comparația raster se poate realiza fără acest context."
+        "La verificarea din 09.10.2026, serviciul oficial a raportat certificat TLS expirat. Nu ocoli verificarea certificatului; comparația raster se poate realiza fără acest context.",
+        "La verificarea din 16.10.2026, endpointurile oficiale MMAP de metadate și ATOM nu au putut fi validate prin TLS. Proveniența este păstrată; contextul este opțional și nu condiționează atelierul."
       ],
       "access_requirements": "Portal/ATOM oficial; la verificarea din 09.10.2026 certificatul TLS era expirat. Nu ocoli avertismentul de securitate. Acest context este opțional; rezultatul raster de bază poate fi finalizat fără el."
     },

@@ -1,0 +1,2 @@
+# Distributed GeoJSON bytes must match the canonical registry on every checkout.
+*.geojson text eol=lf

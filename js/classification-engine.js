@@ -2,6 +2,7 @@
 (function(root){
   'use strict';
   function equalUpper(min,max,index,classes){
+    if(Math.max(Math.abs(min),Math.abs(max))<2**-1022)return interpolate(min,max,BigInt(index),BigInt(classes));
     const span=max-min,scaled=span*index,t=index/classes;
     // Preserve ordinary arithmetic; divide before multiplying if that product overflows.
     // Opposite-sign endpoints can overflow the span, but their weighted sum cannot.
@@ -9,14 +10,36 @@
   }
   function quantileLerp(a,b,t){
     if(t===0)return a;if(t===1)return b;if(a===b)return a;
-    const value=a*(1-t)+b*t;
-    // Preserve ordinary rounding. Near the finite limit, avoid separately rounded
-    // large products; use the nearer endpoint and the finite same-sign difference.
-    // Also reconstruct from an endpoint if weighted rounding leaves [a,b].
-    if(Number.isFinite(a+b)&&Number.isFinite(value)&&value>=Math.min(a,b)&&value<=Math.max(a,b))return value;
-    const span=b-a;
-    // Opposite signs can overflow the difference; their weighted sum stays finite.
-    return Number.isFinite(span)?t<=.5?a+span*t:b-span*(1-t):value;
+    // R7 keeps its existing binary64 position. Interpolate its binary64 t exactly,
+    // then round once to nearest binary64, ties to even (also for subnormals).
+    const weight=dyadic(t);
+    return interpolate(a,b,weight.significand,1n<<BigInt(-weight.power));
+  }
+  function roundedRatio(n,d,power){
+    const negative=n<0n;if(negative)n=-n;if(!n)return negative?-0:0;
+    let e=n.toString(2).length-d.toString(2).length;
+    if(e>=0?n<(d<<BigInt(e)):(n<<BigInt(-e))<d)e--;
+    e+=power;if(e>1023)return negative?-Infinity:Infinity;
+    const unit=Math.max(-1074,e-52),shift=power-unit;
+    if(shift>=0)n<<=BigInt(shift);else d<<=BigInt(-shift);
+    let q=n/d;const remainder=n%d;
+    if(2n*remainder>d||(2n*remainder===d&&(q&1n)))q++;
+    const value=Number(q)*2**unit;return negative?-value:value;
+  }
+  function interpolate(a,b,n,d){
+    const x=dyadic(a),y=dyadic(b),power=Math.min(x.power,y.power);
+    const left=x.significand<<BigInt(x.power-power),right=y.significand<<BigInt(y.power-power);
+    return roundedRatio(left*(d-n)+right*n,d,power);
+  }
+  function scaledRate(value,denominator,scale){
+    const quotient=value/denominator,result=quotient*scale;
+    // Preserve accepted ordinary arithmetic. Recover only when the intermediate
+    // quotient overflowed or lost precision/range in the subnormal regime.
+    if(!Number.isFinite(result)||(value!==0&&Math.abs(quotient)<2**-1022)){
+      const v=dyadic(value),d=dyadic(denominator),s=dyadic(scale);
+      return roundedRatio(v.significand*s.significand,d.significand,v.power+s.power-d.power);
+    }
+    return result;
   }
   function gcd(a,b){while(b){const next=a%b;a=b;b=next;}return a;}
   function fraction(n,d){if(n===0n)return {n:0n,d:1n};const divisor=gcd(n,d);return {n:n/divisor,d:d/divisor};}
@@ -63,7 +86,7 @@
       let reason=v===null||v===undefined?'NULL':typeof v!=='number'||!Number.isFinite(v)?'valoare nefinită / nenumerică':'';
       const d=denominators?.[i];
       if(!reason&&denominators!==null)reason=d===null||d===undefined?'numitor NULL':typeof d!=='number'||!Number.isFinite(d)||d<=0?'numitor nepozitiv / invalid':'';
-      const value=reason?null:denominators===null?v:v/d*scale;
+      const value=reason?null:denominators===null?v:scaledRate(v,d,scale);
       if(value!==null&&!Number.isFinite(value))reason='rezultat nefinit';
       reasons.push(reason);return reason?null:value;
     });
