@@ -60,6 +60,6 @@
   root.addEventListener('hashchange',fromHash,{signal:lifetime.signal});
   function destroy(){dead=true;++token;teardown();lifetime.abort();host.hidden=true;$('text').hidden=false;$('notice').hidden=false;}
   root.addEventListener('pagehide',event=>{if(!event.persisted)destroy();},{signal:lifetime.signal});
-  root.CARTO_MAP_DIAGNOSTICS={activate,applyBook:id=>{if(!D.books[id])return Promise.resolve(false);$('book').value=id;return book();},getState:semanticState,getMetrics:()=>compare?.getMetrics(),reset:()=>activate(scene.id,{hash:false}),destroy};
-  const initial=hashScene()||defaultScene;activate(initial.id,{hash:false,focus:!!location.hash});
+  root.CARTO_MAP_DIAGNOSTICS={loadScript:script,activate,applyBook:id=>{if(!D.books[id])return Promise.resolve(false);$('book').value=id;return book();},getState:semanticState,getMetrics:()=>compare?.getMetrics(),reset:()=>activate(scene.id,{hash:false}),destroy};
+  const initial=hashScene()||defaultScene;root.CARTO_MAP_DIAGNOSTICS.ready=activate(initial.id,{hash:false,focus:!!location.hash&&!!hashScene()});
 })(window);

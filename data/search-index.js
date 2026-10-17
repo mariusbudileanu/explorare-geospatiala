@@ -601,6 +601,8 @@ window.CARTO_SEARCH_INDEX = [
       "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion",
       "Verifică suportul și accesibilitatea",
       "L16 · Agregare și MAUP · L17 · Costuri și rețele",
+      "De la analiză la diagnostic și decizie",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces.",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Cabinetul cel mai apropiat în linie dreaptă este și cel mai accesibil?",
@@ -5855,7 +5857,13 @@ window.CARTO_SEARCH_INDEX = [
       "Întrebare: Ce intervenție poate sprijini tema?",
       "Compar modurile cu legenda și contrastul. — Păstrează modul care servește scopului după verificarea lizibilității.",
       "Ajustez opacitatea sau ordinea și explic efectul. — Este o alternativă defensabilă; verifică separat tema și contextul.",
-      "Normal este corect în orice hartă. — Alegerea depinde de scop; nu există un mod universal corect."
+      "Normal este corect în orice hartă. — Alegerea depinde de scop; nu există un mod universal corect.",
+      "Map Diagnostics 3.0 · diagnostic controlat",
+      "Cele 18 scenarii de mai sus rămân disponibile. Aici investighezi trei întrebări suplimentare: intensitate, suport statistic și acces pe rețea. Inspectează A, modifică numai parametrii B, verifică valorile și apoi formulează diagnosticul.",
+      "Date exclusiv sintetice, aceleași ca în L16 și L17. Densitate: beneficiari / km², nu număr absolut și nu rata față de populația eligibilă. MAUP: totalul și aria se conservă, dar suportul și vecinătatea se schimbă; Moran I este descriptiv, cu vecini Rook și ponderi standardizate pe rând. Rețea: Dijkstra reutilizat, muchii în metri și minute; costurile și accesul se recalculează. Punctul de referință este nodul 0 în ambele vederi, nu o poziție geografică reală.",
+      "Separă operația invalidă (unități incompatibile, numitor zero), limita metodei (proximitatea nu stabilește accesul), alegerea contextuală (număr, densitate ori rată pentru întrebări diferite) și simplificarea didactică (rețea inventată). Nu există scor universal de calitate sau design unic corect. Răspunsul așteptat este derivat din parametrii și rezultatele curente, nu din culoarea hărții. Aceeași zonare poate produce aceeași statistică; nu pretindem semnificație ori cauzalitate.",
+      "Interactivitatea și controalele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "Digital Companion · L16 · MAUP · L17 · Rețele / Networks · L18 · Decizie / Decision · Calitate / Quality · Surse și licențe / Sources"
     ]
   },
   {
@@ -6826,6 +6834,9 @@ window.CARTO_SEARCH_INDEX = [
       "Calculezi densități și autocorelație cu ponderi explicite.",
       "Rețele și accesibilitate",
       "Compari trasee după distanță și timp.",
+      "Decizie spațială multicriterială",
+      "Justifici normalizarea, preferințele și restricțiile pe alternative comparabile.",
+      "Calculezi contribuții și ranguri cu ponderi explicite.",
       "T05 · Populație și servicii publice",
       "Integrează recensământ, servicii și CRS, cu problema realocării atributelor.",
       "Compari populația și serviciile fără a confunda proximitatea cu accesul.",
@@ -6834,7 +6845,9 @@ window.CARTO_SEARCH_INDEX = [
       "Verifici grila, NoData și codurile anuale.",
       "Topologie",
       "Alege reguli în funcție de model și validează reparații.",
-      "Distingi geometria invalidă de încălcarea unei reguli topologice."
+      "Distingi geometria invalidă de încălcarea unei reguli topologice.",
+      "De la analiză la diagnostic și decizie",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces."
     ]
   },
   {
@@ -6899,6 +6912,8 @@ window.CARTO_SEARCH_INDEX = [
       "Cunoscut, lipsă, necunoscut și invalid sunt stări diferite. Rezoluția mai fină nu garantează acuratețe; NULL nu este zero; publicarea recentă nu înseamnă observație recentă. Nu calculăm un scor universal de calitate.",
       "Fișele reale sunt citite numai din registrul public. Operațiile sintetice nu descriu istoria dataseturilor reale. Autorizarea subseturilor și calificările licențelor upstream rămân neschimbate.",
       "Controalele RO/EN și experimentele necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "De la analiză la diagnostic și decizie",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces.",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Un DEM este resamplat de la 30 m la 5 m. Ce se îmbunătățește sigur?",
@@ -7198,6 +7213,8 @@ window.CARTO_SEARCH_INDEX = [
       "Înainte de a încheia",
       "Compară o alegere alternativă și explică de ce păstrezi soluția ta. Dacă diferența schimbă concluzia, menționeaz-o ca sensibilitate a rezultatului. Nu adăuga o estimare de eroare pe care nu ai validat-o.",
       "Revino la calitate și incertitudine · Recapitulează fluxul QGIS · Alege următoarea întrebare",
+      "De la analiză la diagnostic și decizie",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces.",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Ai o hartă frumoasă și două operații GIS. Ce mai este necesar?",
@@ -7258,7 +7275,10 @@ window.CARTO_SEARCH_INDEX = [
       "Design cartografic, statistici spațiale și accesibilitate pe rețele.",
       "L07 · Stilizare & etichetare",
       "L16 · Statistici spațiale și MAUP",
-      "L17 · Rețele și accesibilitate"
+      "L17 · Rețele și accesibilitate",
+      "Laboratoare v3 · P06",
+      "Inspectează metodele, corectează controlat și compară decizii explicite.",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială"
     ]
   },
   {
@@ -7395,7 +7415,9 @@ window.CARTO_SEARCH_INDEX = [
       "Suport sintetic: 4×4 dreptunghiuri contigue într-un plan cartezian metric de 4×4 km. Coloane de 0,5 / 1 / 1,5 / 1 km; rânduri de 1 / 0,5 / 1,5 / 1 km. Fiecare unitate are un număr fictiv de beneficiari (subset al persoanelor eligibile) și un numitor fictiv de persoane eligibile; aria vine din dimensiunile metrice. Agregarea însumează numărătorul, numitorul și aria. Densitate = SUM(beneficiari) / SUM(km²); rată = 100 × SUM(beneficiari) / SUM(eligibili). Nu folosim media neponderată a ratelor.",
       "Moran I = (n/S0) × SUM(wij zi zj) / SUM(zi²), zi = xi − media unităților; diagonala ponderilor este zero. Rook: frontieră comună; Queen: frontieră sau colț. Vecinătatea agregată rezultă din contactele celulelor membre. Ponderi binare sau standardizare pe rând; S0 este suma efectivă. Opțiunea insulă elimină legăturile ultimei unități: rând zero, unitatea rămâne în n și în centrare (convenție explicită). Fără vecini sau varianță zero: I nedefinit, nu zero. Nu calculăm p-value sau semnificație; I descriptiv nu demonstrează cauzalitate. MAUP: aceeași populație poate produce statistici diferite prin scară și zonare. Două zonări pot întâmplător avea același I; nu promitem o diferență universală.",
       "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe"
+      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
+      "De la analiză la diagnostic și decizie",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces."
     ]
   },
   {
@@ -7414,7 +7436,29 @@ window.CARTO_SEARCH_INDEX = [
       "Nu există rețea rutieră adecvată în registrul actual: folosim exclusiv un graf educațional sintetic, nedirecționat, cu 14 noduri și 18 muchii inițiale. Coordonate carteziene în metri; lungime = distanța dintre capetele fiecărei muchii drepte. Viteze inventate explicit pentru demonstrație: 3 sau 6 km/h; muchia 5–6 poate fi încetinită la 1 km/h. Minute = metri / (km/h × 1000/60). Algoritm Dijkstra pentru costuri strict pozitive; intersecții numai la noduri, fără conectare automată după desen.",
       "Zona de serviciu este mulțimea nodurilor și fragmentelor de muchii cu cost minim ≤ buget. Costul este uniform de-a lungul fiecărei muchii; uniunea intervalelor accesibile din ambele capete evită dubla numărare. Nu desenăm un buffer euclidian și nu atribuim accesibilitate unor suprafețe fără rețea. Nodurile 12–13 sunt o componentă separată; destinațiile inaccesibile sunt marcate explicit. Barierele elimină muchiile 1–2 și 9–10; traversarea 5–6 rămâne. Școala: nodurile 3 și 12; serviciu medical: nodul 11. Accesibilitatea aici nu include capacitate, orar, eligibilitate, trafic sau acces real la servicii. Distanța în linie dreaptă nu este timp și nu garantează accesibilitate.",
       "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe"
+      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
+      "De la analiză la diagnostic și decizie",
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces."
+    ]
+  },
+  {
+    "id": "spatial-decision",
+    "href": "spatial-decision.html",
+    "description": "Criterii, normalizare, ponderi, excluderi și sensibilitate pe alternative explicit sintetice.",
+    "paragraphs": [
+      "Criterii, normalizare, ponderi, excluderi și sensibilitate pe alternative explicit sintetice.",
+      "Ce vei ști să faci",
+      "Calculezi contribuții și ranguri cu ponderi explicite.",
+      "Compari sensibilitatea și excluderile fără a pretinde un optim universal.",
+      "Înainte de a începe",
+      "Statistici spațiale și MAUP · Rețele și accesibilitate. Recomandări de pregătire; accesul rămâne liber.",
+      "Decizie spațială multicriterială",
+      "Compară A (ponderi egale, fără restricții dure suplimentare) cu B controlabil. Alternativele sunt șapte amplasamente fictive pe aceeași rețea metrică L17, cu origine 0. Nu reprezintă recomandări reale de planificare. Inspectează intrările, normalizarea, contribuțiile și motivele excluderii înainte de a interpreta rangul.",
+      "Criterii: timp minim pe rețea din nodul 0 (minute, cost), gospodării potențiale atribuite sintetic (beneficiu, nu populație observată) și investiție sintetică (mii EUR, cost). Normalizare min–max: beneficiu n=(x−min)/(max−min); cost n=(max−x)/(max−min). Domeniile folosesc toate valorile finite ale scenariului înaintea restricțiilor; criteriu constant → 0,5 (convenție neutră explicită). Ponderi finite nenegative, wj=aj/Σaj; toate zero → fără scor/rang. Combinație liniară ponderată Si=Σwj nij; contribuțiile sunt afișate. Unitățile nu se adună direct. Ranguri de competiție, egalitate la toleranță absolută 10⁻¹² față de primul scor al grupului; ordinea IDs nu rupe egalitățile.",
+      "NULL/NoData nu sunt zero. Date lipsă, nefinite ori tip invalid la un criteriu activ împiedică evaluarea alternativei; un criteriu cu pondere zero nu cere valoarea. Nodurile 12–13 sunt neconectate, deci timpul este NULL. Restricțiile dure (zonă protejată fictivă, plafon investiție) sunt separate de preferințe; atributele necunoscute necesare restricției exclud, nu devin zero. Scorul exclus este absent, nu mic. Sensibilitatea enumeră cinci ponderi pentru fiecare criteriu, redistribuind restul proporțional (egal când restul este zero); nu este probabilitate, încredere statistică ori dovadă de robustețe globală. Compensarea criteriilor, dependența de alternativele domeniului, incertitudinea intrărilor și preferințele utilizatorului limitează concluzia.",
+      "Interactivitatea și controalele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "Digital Companion · L16 · MAUP · L17 · Rețele / Networks · L08 · Diagnostic · Calitate / Quality · Surse și licențe / Sources",
+      "Metodologie / Methodology: OECD / EU / JRC · Handbook on Constructing Composite Indicators (2008) ↗. Nu reprezintă validarea externă a scenariului sintetic / not external validation of the synthetic scenario."
     ]
   }
 ];

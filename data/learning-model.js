@@ -130,3 +130,6 @@ for(const [id,prerequisites,outcomes,next] of [
   ['network-accessibility',['measurement-lab','analysis'],['Compari trasee după distanță și timp.','Verifici accesibilitatea și componentele neconectate.'],'data-quality']
 ])window.CARTO_LEARNING.items[id]={level:'advanced',reason:'Justifici suportul, costul și limitele unei analize sintetice.',prerequisites,outcomes,next,quality:true};
 for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id&&window.CARTO_LEARNING.items[lesson.id])window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;
+
+window.CARTO_LEARNING.items['spatial-decision']={level:'advanced',reason:'Justifici normalizarea, preferințele și restricțiile pe alternative comparabile.',prerequisites:['spatial-statistics','network-accessibility'],outcomes:['Calculezi contribuții și ranguri cu ponderi explicite.','Compari sensibilitatea și excluderile fără a pretinde un optim universal.'],next:'final-project',quality:true};
+for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id&&window.CARTO_LEARNING.items[lesson.id])window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;

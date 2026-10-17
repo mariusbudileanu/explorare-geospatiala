@@ -22,6 +22,9 @@ for(const file of protectedFiles){
  if(file==='CITATION.cff'){const citation=JSON.parse(actual);equal(citation.authors[0].affiliation,'University of Bucharest, Faculty of Geography','Verified v2.0.0 affiliation');delete citation.authors[0].affiliation;actual=JSON.stringify(citation);before=JSON.stringify(JSON.parse(before));}
  if(file==='js/map-diagnostics.js'){
   const old="topology:['data/topology-lab.js','data/topology-rules.js','js/topology-engine.js','js/topology-rule-engine.js','js/topology-scene.js']",updated="topology:['data/topology-lab.js','data/topology-rules.js','js/topology-engine.js','js/vendor/turf.min.js','js/topology-geometry.js','js/topology-rule-engine.js','js/topology-scene.js']";
+  equal(actual.split('focus:!!location.hash&&!!hashScene()').length,2,'P06: focus only a recognized diagnostic hash');actual=actual.replace('focus:!!location.hash&&!!hashScene()','focus:!!location.hash');
+  equal(actual.split('root.CARTO_MAP_DIAGNOSTICS.ready=activate(initial.id,').length,2,'P06: expose the existing first activation promise');actual=actual.replace('root.CARTO_MAP_DIAGNOSTICS.ready=activate(initial.id,','activate(initial.id,');
+  equal(actual.split('loadScript:script,').length,2,'P06: one explicit existing-loader export');actual=actual.replace('loadScript:script,','');
   equal(actual.split(updated).length,2,'P02: exact local topology dependency list');actual=actual.replace(updated,old);
  }
  if(file==='js/classification-engine.js'){
