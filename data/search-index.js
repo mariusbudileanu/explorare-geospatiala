@@ -6708,6 +6708,9 @@ window.CARTO_SEARCH_INDEX = [
       "Calitatea și incertitudinea datelor geospațiale",
       "Evaluează datele în raport cu scopul și ipotezele procesării.",
       "Distingi acuratețea, precizia și rezoluția.",
+      "Generalizare cartografică",
+      "Alegi și verifici operații și interpretări pe exemple controlate.",
+      "Compari geometrii simplificate și verifici topologia.",
       "Clasificarea proiecțiilor cartografice",
       "Compară criterii independente de clasificare și deformare.",
       "Distingi proiecțiile conforme de cele echivalente.",
@@ -6765,9 +6768,13 @@ window.CARTO_SEARCH_INDEX = [
       "Aceleași date, hărți diferite",
       "Compară clasificarea și normalizarea pe aceeași distribuție sintetică.",
       "Compari pragurile și efectivele claselor.",
+      "Metode tematice interactive",
+      "Compari șase metode de reprezentare și cerințele datelor.",
       "Calculator GIS",
       "Calculezi expresii sigure și verifici valori lipsă și tipuri.",
       "Calculezi valori pixel cu pixel și feature cu feature.",
+      "Analiză raster",
+      "Calculezi măști, expresii și suprafețe pe grile native.",
       "T02 · Circumscripții și presiune educațională",
       "Combină poligoane, puncte, raport cu numitor protejat și clasificare.",
       "Verifici un raport care tratează NULL și zero.",
@@ -7226,7 +7233,12 @@ window.CARTO_SEARCH_INDEX = [
       "L01 · Scară și rezoluție",
       "L05 · Aceleași date, hărți diferite",
       "L11 · Raster Styling",
-      "L14 · Analiza datelor geospațiale"
+      "L14 · Analiza datelor geospațiale",
+      "Laboratoare v3 · P04",
+      "Generalizare, metode tematice și calcule raster inspectabile.",
+      "L02 · Generalizare cartografică",
+      "L06 · Metode tematice interactive",
+      "L15 · Analiză raster"
     ]
   },
   {
@@ -7282,6 +7294,69 @@ window.CARTO_SEARCH_INDEX = [
       "Cadrul este un model de tipar, nu o scară fizică exactă a ecranului: aceasta necesită calibrare. Extentul și selecția detaliilor se schimbă; geometria sursă nu este simplificată. Simbolul are 1 mm în model, etichetele apar de la 0,5 mm. Zoom nu creează detaliu nou. Rezoluția nu este acuratețe pozițională.",
       "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
       "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion"
+    ]
+  },
+  {
+    "id": "generalization-lab",
+    "href": "generalization-lab.html",
+    "description": "Simplificare, agregare, selecție și deplasare cu măsurători și diagnostic topologic.",
+    "paragraphs": [
+      "Simplificare, agregare, selecție și deplasare cu măsurători și diagnostic topologic.",
+      "Ce vei ști să faci",
+      "Compari geometrii simplificate și verifici topologia.",
+      "Alegi parametri de selecție, agregare și deplasare.",
+      "Înainte de a începe",
+      "Scară și rezoluție · Topologie. Recomandări de pregătire; accesul rămâne liber.",
+      "Generalizare: geometrie și decizie cartografică",
+      "Alege linia, poligonul, gaura sau un experiment de agregare, selecție ori deplasare. Modifică toleranța în metri și scara cadrului de reprezentare. Compară geometria și diagnosticul înainte/după.",
+      "Plan cartezian sintetic în metri, fără geolocalizare. Simplificare Turf: cleanCoords elimină noduri coliniare, apoi Douglas–Peucker highQuality. Chiar la toleranță zero se pot elimina noduri coliniare. Pentru inele, Turf reduce intern toleranța dacă este necesar; nu garantăm o limită Hausdorff. Agregarea este reuniune geometrică pe atributul A/B; se pierd limitele și identitățile individuale, păstrând lista IDs sursă. Selecția păstrează obiecte cu arie de tipar ≥ prag (mm²), derivată din scara L01.",
+      "L09 verifică validitatea și relația cu un punct-probă fix. Simplificarea poate schimba acoperirea unui punct/interiorul unui poligon. Aspectul plauzibil nu garantează topologia. Abaterea liniei este maximul distanțelor vârfurilor originale la segmentele rezultatului, nu Hausdorff simetric. În experimentul de deplasare se mută doar reprezentarea simbolului p pe verticală, nu sursa; diametrul simbolic este 16 m în model. Nu este un solver universal de conflicte.",
+      "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
+      "Digital Companion · Surse și licențe"
+    ]
+  },
+  {
+    "id": "thematic-methods",
+    "href": "thematic-methods.html",
+    "description": "Compară șase metode cartografice, mărimi proporționale, clasificări și limitele interpretării.",
+    "paragraphs": [
+      "Compară șase metode cartografice, mărimi proporționale, clasificări și limitele interpretării.",
+      "Ce vei ști să faci",
+      "Compari șase metode de reprezentare și cerințele datelor.",
+      "Verifici mărimi proporționale, legende și normalizare.",
+      "Înainte de a începe",
+      "Aceleași date, hărți diferite. Recomandări de pregătire; accesul rămâne liber.",
+      "Alege metoda, verifică mărimea reprezentată",
+      "Compară două metode sau două parametrizări. Cele șase experimente ghidate acoperă coropleta, cercurile proporționale, punctele, fluxurile, izoliniile și cartodiagramele. Selectează un obiect pentru valorile și legenda sa.",
+      "Populația și poligoanele provin din exemplul sintetic existent al punctelor; ariile statistice didactice sunt 10, 20, 30, 40, 50, 60 km², nu ariile desenului SVG. Densitate = populație / arie; variabila este aleasă explicit. Coropleta folosește motorul L05. Cerc: r = Rmax × sqrt(v/vmax), deci aria codifică valoarea. Flux: grosime = valoare × factor / 10; mișcarea are alt suport decât populația. Cartodiagramele energetice reutilizează totalurile și sectoarele existente, în GWh/an.",
+      "Coropleta pe numere absolute este permisă pentru diagnostic, dar arii diferite cer de regulă o normalizare justificată. Puncte: număr rotunjit la cel mai apropiat întreg, rezidual raportat; plasare Halton deterministă în interior, nu locații de persoane. Izolinii: câmp sintetic 7×7 în °C, interpolare liniară pe muchii (marching squares cu tabel fix pentru șei), fără precizie observațională pretinsă. Fluxurile, temperatura și energia au seturi sintetice distincte: nu sunt aceeași variabilă ca populația. Nu există scor universal pentru cea mai bună hartă.",
+      "Compară clasificări și număr versus densitate; verifică unitatea și apartenența la clasă.",
+      "Modifică Rmax în A/B; verifică păstrarea raportului ariilor pentru aceleași valori.",
+      "Modifică valoarea punctului; verifică numărul reprezentat și rezidualul de rotunjire.",
+      "Modifică factorul grosimii; verifică raporturile fluxurilor și direcția săgeților.",
+      "Modifică intervalul; verifică nivelurile și numărul segmentelor interpolate pe același câmp.",
+      "Modifică mărimea diagramelor; separă volumul total de structura energetică.",
+      "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
+      "Digital Companion · Surse și licențe"
+    ]
+  },
+  {
+    "id": "raster-analysis",
+    "href": "raster-analysis.html",
+    "description": "Operații reale pe DEM și Forest Loss Rîșca, cu expresii sigure, NoData și sumar pe grila nativă.",
+    "paragraphs": [
+      "Operații reale pe DEM și Forest Loss Rîșca, cu expresii sigure, NoData și sumar pe grila nativă.",
+      "Ce vei ști să faci",
+      "Calculezi măști, expresii și suprafețe pe grile native.",
+      "Verifici NoData, compatibilitatea și codificarea anilor.",
+      "Înainte de a începe",
+      "Raster Styling · Calculator GIS. Recomandări de pregătire; accesul rămâne liber.",
+      "Calculează și inspectează rasterele aprobate",
+      "Alege DEM sau Forest Loss Rîșca, operația și parametrii, apoi Rulează. Rasterele sunt încărcate numai la cerere prin serviciul existent. Selectează o celulă din previzualizare sau introdu un index nativ și inspectează rezultatul.",
+      "Procesare în worker pe toate celulele native, mascate de conturul Rîșca. L20 evaluează expresii în blocuri de maximum 512 celule, cu maximum 40 noduri AST; parserul nu este duplicat. Grilele sunt verificate pentru CRS, affine/extent/origine/pas, dimensiuni, tip numeric și mască. Grilele rotite ori incompatibile sunt refuzate, fără resampling implicit. Horn 3×3 reutilizează L11. Aria celulei = valoarea absolută a determinantului affine; hectare = pixeli selectați × aria celulei / 10000.",
+      "Forest Loss: codificarea anilor este citită din metadatele existente; 0 este NoData semantic al produsului local, nu an sau dovada absenței pierderii. 2013 și 2014 se combină prin OR, fără dublă numărare; aceeași celulă are un singur cod de an. Sumarul folosește grila completă, dar imaginile 16×12 sunt doar eșantioane nearest ale centrelor native, nu un raster resamplat pentru analiză. Nu se estimează pierderi în celule NoData. Preview nu înlocuiește harta completă; overlay nu demonstrează cauzalitate. Datele complete de atelier nu sunt distribuite aici.",
+      "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
+      "Digital Companion · Surse și licențe"
     ]
   }
 ];

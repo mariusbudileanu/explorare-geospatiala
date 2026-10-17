@@ -187,3 +187,13 @@ window.CARTO_CONTENT.lessons.push({id:'scale-resolution',title:'Scară și rezol
 window.CARTO_CONTENT.groups.find(g=>g.id==='map').lessons.push('scale-resolution');
 for(const [id,lab] of Object.entries({'classification-lab':'L05','raster-styling':'L11','analysis':'L14'}))window.CARTO_CONTENT.lessons.find(l=>l.id===id).lab_id=lab;
 window.CARTO_CONTENT.companion.p03=['scale-resolution','classification-lab','raster-styling','analysis'];
+// P04 uses one destination per stable laboratory identity.
+for(const [id,lab,title,group,keywords] of [
+  ['generalization-lab','L02','Generalizare cartografică','map',['generalizare','simplificare','Douglas–Peucker','agregare','deplasare']],
+  ['thematic-methods','L06','Metode tematice interactive','methods',['coropletă','cercuri proporționale','fluxuri','puncte','izolinii','cartodiagrame']],
+  ['raster-analysis','L15','Analiză raster','analysis',['raster analysis','Raster Calculator','prag','NoData','Forest Loss','2013','2014','mască']]
+]){
+  window.CARTO_CONTENT.lessons.push({id,lab_id:lab,title,short_title:title,href:id+'.html',part:group==='map'?'Harta':group==='methods'?'Metode de reprezentare':'Analiză geospațială',source_section:'',source_pages:[],figures:[],keywords,content_types:['concept','exercițiu'],interactive_components:[id],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'qgis'});
+  window.CARTO_CONTENT.groups.find(g=>g.id===group).lessons.push(id);
+}
+window.CARTO_CONTENT.companion.p04=['generalization-lab','thematic-methods','raster-analysis'];

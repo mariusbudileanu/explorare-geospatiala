@@ -1,0 +1,15 @@
+.p04-section .p04-geometry{fill:var(--blue-soft);stroke:var(--blue);stroke-width:2;fill-rule:evenodd}
+.p04-section .p04-geometry:is(circle){fill-opacity:.35}.p04-section .p04-selected,.p04-section .p04-region.p04-selected{stroke:var(--ink);stroke-width:4;stroke-dasharray:5 3}
+.p04-section .p04-region{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+.p04-section .p04-symbol{fill:var(--blue);fill-opacity:.5;stroke:var(--ink);stroke-dasharray:none;pointer-events:none}
+.p04-section .p04-dot,.p04-section .p04-sample{fill:var(--ink);stroke:none;pointer-events:none}
+.p04-section .p04-flow{fill:none;stroke:var(--blue);stroke-width:2}
+.p04-section marker path{fill:var(--blue);stroke:none}.p04-section .p04-map-label{fill:#142634;paint-order:stroke;stroke:white;stroke-width:3;pointer-events:none}
+.p04-section svg g.p04-pie path{stroke:var(--surface);stroke-width:1}.p04-section .p04-results{min-width:0}
+.p04-section .p03-grid{font-variant-numeric:tabular-nums}.p04-section .p03-grid button{font-size:10px;min-height:25px}
+.p04-section .p03-controls :disabled{opacity:.65}.p04-section summary{cursor:pointer}
+@media(max-width:600px){.p04-section .p01-panel{padding:10px}}
+
+.p04-section g.p04-pie[aria-pressed=true] path{stroke:var(--ink);stroke-width:3}.p04-section .p04-flow[aria-pressed=true]{stroke-dasharray:8 3}
+
+.p04-section .p04-details table,.p04-section .p04-results>.p03-scroll table{min-width:0;table-layout:fixed}

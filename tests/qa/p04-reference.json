@@ -1,0 +1,292 @@
+{
+  "method": "Shapely/GEOS simplification; independent GDAL/PROJ/Shapely centre mask and NumPy Horn",
+  "geometry": [
+    {
+      "scene": "line",
+      "tolerance": 0,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          10.0,
+          0.0
+        ],
+        [
+          20.0,
+          3.0
+        ],
+        [
+          30.0,
+          0.0
+        ],
+        [
+          40.0,
+          0.0
+        ],
+        [
+          50.0,
+          20.0
+        ],
+        [
+          60.0,
+          0.0
+        ],
+        [
+          70.0,
+          0.0
+        ],
+        [
+          80.0,
+          -3.0
+        ],
+        [
+          90.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 126.482585585638,
+      "vertices": 11,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "line",
+      "tolerance": 1,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          10.0,
+          0.0
+        ],
+        [
+          20.0,
+          3.0
+        ],
+        [
+          30.0,
+          0.0
+        ],
+        [
+          40.0,
+          0.0
+        ],
+        [
+          50.0,
+          20.0
+        ],
+        [
+          60.0,
+          0.0
+        ],
+        [
+          70.0,
+          0.0
+        ],
+        [
+          80.0,
+          -3.0
+        ],
+        [
+          90.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 126.482585585638,
+      "vertices": 11,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "line",
+      "tolerance": 3,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          40.0,
+          0.0
+        ],
+        [
+          50.0,
+          20.0
+        ],
+        [
+          60.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 124.7213595499958,
+      "vertices": 5,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "line",
+      "tolerance": 5,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          40.0,
+          0.0
+        ],
+        [
+          50.0,
+          20.0
+        ],
+        [
+          60.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 124.7213595499958,
+      "vertices": 5,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "line",
+      "tolerance": 15,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          50.0,
+          20.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 107.70329614269008,
+      "vertices": 3,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "line",
+      "tolerance": 25,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 100.0,
+      "vertices": 2,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "line",
+      "tolerance": 200,
+      "coordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ]
+      ],
+      "length": 100.0,
+      "vertices": 2,
+      "sourceLength": 126.482585585638
+    },
+    {
+      "scene": "polygon",
+      "tolerance": 0,
+      "area": 9800.0,
+      "vertices": 7
+    },
+    {
+      "scene": "polygon",
+      "tolerance": 1,
+      "area": 9800.0,
+      "vertices": 7
+    },
+    {
+      "scene": "polygon",
+      "tolerance": 5,
+      "area": 9800.0,
+      "vertices": 7
+    },
+    {
+      "scene": "polygon",
+      "tolerance": 15,
+      "area": 9000.0,
+      "vertices": 5
+    },
+    {
+      "scene": "polygon",
+      "tolerance": 25,
+      "area": 10000.0,
+      "vertices": 4
+    }
+  ],
+  "native": {
+    "slopeValid": 372182,
+    "slopeAbove10": 226742,
+    "r6Known": 1608,
+    "r6Unknown": 26,
+    "r6Above10": 1070,
+    "demValid": 376159,
+    "demThreshold500": 263850,
+    "demTerrain500Slope10": 203936,
+    "forestValid": 32922,
+    "forestYears": {
+      "2001": 590,
+      "2002": 683,
+      "2003": 170,
+      "2004": 1154,
+      "2005": 756,
+      "2006": 1222,
+      "2007": 588,
+      "2008": 864,
+      "2009": 777,
+      "2010": 1046,
+      "2011": 1303,
+      "2012": 826,
+      "2013": 889,
+      "2014": 745,
+      "2015": 1156,
+      "2016": 1021,
+      "2017": 1407,
+      "2018": 1806,
+      "2019": 1412,
+      "2020": 2433,
+      "2021": 2193,
+      "2022": 1702,
+      "2023": 4085,
+      "2024": 4094
+    },
+    "forestCellArea": 578.9005785649892
+  }
+}

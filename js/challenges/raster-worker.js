@@ -1,7 +1,7 @@
 /* Full-file decoding, native-grid analysis and display warping stay off the UI thread. */
 importScripts('../vendor/geotiff.js','../vendor/proj4.js','raster-engine.js');
 let engine,displayProject;
-const grids={};let context;
+const grids={};let context,p04Result;
 async function decode(buffer,expected){
   const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',buffer)),n=>n.toString(16).padStart(2,'0')).join('');
   if(buffer.byteLength!==expected.size_bytes||digest!==expected.sha256)throw Error('Fișierul raster nu corespunde amprentei verificate.');
@@ -34,7 +34,14 @@ async function handle(event){
       engine=GISRaster.create(...grids,metadata,polygons);result=engine.summary;
     }else{
       if(!engine)throw Error('Rasterele nu sunt încă pregătite.');
-      if(type==='analyze')result=engine.analyze(payload.id,payload.params);
+      if(type==='p04'){
+        if(!self.CARTO_P04_RASTER)importScripts('../gis-expression.js','../calculator-model.js','../p04-raster.js');
+        const source=payload.source,data=engine.samples({all:true,grid:source}).grid;
+        p04Result=CARTO_P04_RASTER.run({...data,crs:'EPSG:3844',dataType:source==='dem'?'Float32':'Byte'},context.metadata,payload);
+        result=CARTO_P04_RASTER.view(p04Result,payload.pixel||0);
+      }else if(type==='p04-inspect'){
+        if(!p04Result)throw Error('No workbench result');result=CARTO_P04_RASTER.view(p04Result,payload.pixel);
+      }else if(type==='analyze')result=engine.analyze(payload.id,payload.params);
       else if(type==='inspect')result=engine.inspect(payload.x,payload.y);
       else if(type==='samples')result=engine.samples(payload);
       else if(type==='render'){const start=performance.now(),pixels=engine.render(payload,displayProject);result={pixels,width:payload.width,height:payload.height,render_ms:performance.now()-start};postMessage({token,result},[pixels.buffer]);return;}
