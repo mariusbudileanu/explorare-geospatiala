@@ -529,6 +529,8 @@ window.CARTO_SEARCH_INDEX = [
       "Dimensiunea fișierelor vectoriale depinde adesea de numărul și complexitatea entităților și de atribute; la raster contează rânduri × coloane, benzi, tipul de date și compresia. Niciun model nu este mereu mai mare. În T06, subsetul Suceava evită folosirea rasterelor naționale complete ca pachet standard.",
       "Aplică modelul vectorial",
       "L09 · Topologie completă: verifică relațiile puncte–linii–poligoane, găurile și regulile modelului pe scene editabile.",
+      "Calculează pe grila raster",
+      "L11 · Raster Styling & Terrain: inspectează Horn 3×3, NoData și resampling pe un teren sintetic metric.",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Vrei un subset de obiecte întregi care intersectează limita. Ce alegi?",
@@ -589,6 +591,12 @@ window.CARTO_SEARCH_INDEX = [
       "Întrebările mai puternice cer date și metode suplimentare: rețele și timpi de deplasare pentru accesibilitate, documente și verificări de teren pentru situații juridice sau cauze ale schimbărilor de mediu.",
       "Aplică modelul în QGIS",
       "Explorează cele șase ateliere → Vezi fluxul de lucru → Rezolvă Provocări GIS direct pe hartă → Vezi conceptul: cartogramă →",
+      "Operații vectoriale inspectabile",
+      "Alege scena, operația, predicatul și parametrii, apoi rulează. Compară intrările cu ieșirile; selectează ID-uri în hartă sau tabel. Expresiile folosesc evaluatorul sigur L20: câmpuri între ghilimele, de exemplu \"population\" >= 100 sau \"population\" / \"area_m2\".",
+      "Scene sintetice locale în EPSG:4326, ordine [longitudine, latitudine]. Overlay și predicate: segmente drepte în lon/lat, geometrie P02 și Turf local. Arie și distanță: modelul sferic Turf (R = 6371008,8 m), nu metri calculați direct din grade. Bufferul este un cerc geodezic sferic aproximat cu 64 laturi. Inside exclude frontiera; covered o include. Join numără punctele și însumează numai valori cunoscute, raportând separat lipsurile. Nearest caută alt punct în aceeași scenă, nu accesibilitate.",
+      "Doar puncte și poligoane simple cu găuri/multipoligoane disjuncte în scenele controlate. Poligoanele invalide sunt refuzate. Clip și Intersect păstrează atributele, fără realocarea populației; Intersect adaugă ID-ul limitei. Contactul numai pe frontieră nu produce poligon. Suma ariilor pe features include suprapuneri, nu este aria reuniunii. NULL, câmp absent și rezultat gol sunt distincte. Cache: maximum 16 rezultate, cheie cu scena, operația și toți parametrii.",
+      "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Cabinetul cel mai apropiat în linie dreaptă este și cel mai accesibil?",
@@ -4591,7 +4599,13 @@ window.CARTO_SEARCH_INDEX = [
       "Manual QGIS: Hillshade ↗ Hillshade din DTM: azimuth față de nord, vertical angle și iluminare 0–255",
       "Hillshade din DTM: azimuth față de nord, vertical angle și iluminare 0–255",
       "Manual QGIS: Blending Modes ↗ Normal, familii de blending și măștile copiilor unui grup",
-      "Normal, familii de blending și măștile copiilor unui grup"
+      "Normal, familii de blending și măștile copiilor unui grup",
+      "Inspector de teren și resampling",
+      "Explorează un plan înclinat, o movilă sau un plan orizontal sintetic. Schimbă exagerarea verticală și iluminarea; selectează celula și parametrul derivat. Compară sursa cu rezultatul. Modul categoric permite numai nearest neighbour.",
+      "Grilă 7×7, pas orizontal 30 m, altitudini în metri. Factorul vertical este o exagerare controlată a modelului sintetic (1 = m/m), nu o calibrare a unui DEM real. Horn 3×3 din motorul raster existent calculează gradientul est/nord. Pantă = atan(normă gradient); procent = 100 × normă. Aspectul indică coborârea: 0° nord, 90° est, sens orar. Hillshade folosește iluminarea existentă, azimut orar de la nord, altitudine deasupra orizontului.",
+      "Marginile și vecinătățile 3×3 incomplete rămân necunoscute; aspectul terenului plat este nedefinit. Bilinear cere patru centre valide, inclusiv la margine, fără înlocuirea NoData cu zero. Grila resamplată 12×12 păstrează extentul de 210 m; un pas mai fin nu adaugă observații. Codurile tematice nu sunt altitudini. Subseturile reale și semantica zero/NoData din laboratorul existent rămân separate.",
+      "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion"
     ]
   },
   {
@@ -6465,6 +6479,12 @@ window.CARTO_SEARCH_INDEX = [
       "2.4. Lesson: Symbology ↗",
       "3.2. Lesson: Labels ↗",
       "4.1. Lesson: Using Print Layout ↗",
+      "Distribuții editabile și clasificări A/B",
+      "Alege distribuția, editează cele 12 observații (număr sau null), selectează metodele și k. Selectează aceeași observație în hartă sau tabel pentru a explica apartenența la clasă. Ratele sunt la 1000 de unități ale numitorului sintetic.",
+      "Equal Interval, Quantile R7 și Jenks folosesc motorul existent, fără alte praguri în renderer. Prima clasă include ambele capete; celelalte sunt (limita inferioară, limita superioară]. Egalitățile rămân împreună. Numărul efectiv de clase poate fi mai mic decât k; unele intervale pot fi goale. Histograma arată frecvențele claselor calculate.",
+      "12 observații, k între 1 și 7, valori finite între −1000000 și 1000000: costul Jenks este limitat. Harta este o grilă schematică de zone egale, nu un teritoriu real. O hartă echilibrată cromatic nu este automat o analiză statistică mai bună. Numitorul invalid și NULL sunt excluse, nu devin zero.",
+      "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Două zone aflate în clase diferite sunt neapărat foarte diferite numeric?",
@@ -6651,6 +6671,9 @@ window.CARTO_SEARCH_INDEX = [
       "Elementele din interiorul cadrului",
       "Separă planimetria, altimetria și caroiajul.",
       "Identifici informația din interiorul cadrului.",
+      "Scară și rezoluție",
+      "Compari scara, pasul grilei și rezoluția de tipar pe exemple controlate.",
+      "Calculezi distanțe pe hartă și pe teren.",
       "De la Pământ la hartă",
       "Introduce modelele Pământului și deformările prin comparație vizuală.",
       "Compari deformarea formelor și a ariilor.",
@@ -7197,7 +7220,13 @@ window.CARTO_SEARCH_INDEX = [
       "Măsurare, reguli topologice și expresii GIS, cu date sintetice editabile.",
       "L04 · Măsurători geospațiale",
       "L09 · Topologie",
-      "L20 · Calculator GIS"
+      "L20 · Calculator GIS",
+      "Laboratoare v3 · P03",
+      "Scară, clasificare, teren și procesare vectorială pe modele controlate.",
+      "L01 · Scară și rezoluție",
+      "L05 · Aceleași date, hărți diferite",
+      "L11 · Raster Styling",
+      "L14 · Analiza datelor geospațiale"
     ]
   },
   {
@@ -7236,6 +7265,23 @@ window.CARTO_SEARCH_INDEX = [
       "Nu este întregul QGIS Expression Engine. NULL/NoData se propagă; FALSE AND necunoscut = FALSE, TRUE OR necunoscut = TRUE, altfel rezultatul logic rămâne necunoscut. CASE sare peste condițiile necunoscute; IF cu o condiție necunoscută produce necunoscut. COALESCE înlocuiește NULL, nu masca NoData. Evaluarea condițională este lazy. Împărțirea la zero și rezultatul nefinit sunt erori, nu zero. În mod raster, un rezultat NULL devine NoData în masca de ieșire. Grilele incompatibile sunt refuzate, fără resampling. suprafata_km2 este atribut furnizat, nu $area; zero este inclus intenționat ca numitor problematic. Geometriile sunt în metri sintetici EPSG:3844.",
       "Experimentele și controalele RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
       "Analiză geospațială · Calitate și incertitudine"
+    ]
+  },
+  {
+    "id": "scale-resolution",
+    "href": "scale-resolution.html",
+    "description": "Compară scara de tipar, distanțele, DPI și agregarea rasterelor fără a confunda rezoluția cu acuratețea.",
+    "paragraphs": [
+      "Compară scara de tipar, distanțele, DPI și agregarea rasterelor fără a confunda rezoluția cu acuratețea.",
+      "Ce vei ști să faci",
+      "Calculezi distanțe pe hartă și pe teren.",
+      "Compari agregarea raster cu rezoluția și acuratețea.",
+      "Scară, rezoluție și tipar",
+      "Schimbă numitorul scării și distanța în ambele sensuri. Compară un cadru de tipar cu lățimea de 100 mm la două scări, apoi agregă aceeași suprafață sintetică. Selectează celule pentru a inspecta valorile.",
+      "Distanță pe hartă (mm) = distanță pe teren (m) × 1000 / numitor. Pixeli tipăriți = lățime în mm / 25,4 × DPI, rotunjit la întreg. Regiunea este un plan cartezian sintetic în metri, fără un datum geodezic. Suprafața are 12×12 celule de 10 m. Agregarea folosește media blocului; nearest alege celula de la centrul blocului (la egalitate, dreapta/jos).",
+      "Cadrul este un model de tipar, nu o scară fizică exactă a ecranului: aceasta necesită calibrare. Extentul și selecția detaliilor se schimbă; geometria sursă nu este simplificată. Simbolul are 1 mm în model, etichetele apar de la 0,5 mm. Zoom nu creează detaliu nou. Rezoluția nu este acuratețe pozițională.",
+      "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion"
     ]
   }
 ];

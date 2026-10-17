@@ -181,3 +181,9 @@ for(const [id,title,lab,group,description,keywords] of [
 }
 window.CARTO_CONTENT.lessons.find(l=>l.id==='topology').lab_id='L09';
 window.CARTO_CONTENT.companion.packages=['measurement-lab','topology','gis-calculator'];
+
+// P03 reuses existing destinations; only Scale & Resolution needs a new route.
+window.CARTO_CONTENT.lessons.push({id:'scale-resolution',title:'Scară și rezoluție',short_title:'Scară și rezoluție',lab_id:'L01',href:'scale-resolution.html',part:'Harta',source_section:'',source_pages:[],figures:[],keywords:['scară','rezoluție','DPI','agregare','scale','resolution'],content_types:['concept','exercițiu'],interactive_components:['scale-resolution'],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'harta',companion:{category:'Laborator v3 · L01',description:'Compară scara, rezoluția raster și tiparul pe modele sintetice.',contexts:['map-classification']}});
+window.CARTO_CONTENT.groups.find(g=>g.id==='map').lessons.push('scale-resolution');
+for(const [id,lab] of Object.entries({'classification-lab':'L05','raster-styling':'L11','analysis':'L14'}))window.CARTO_CONTENT.lessons.find(l=>l.id===id).lab_id=lab;
+window.CARTO_CONTENT.companion.p03=['scale-resolution','classification-lab','raster-styling','analysis'];

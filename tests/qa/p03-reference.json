@@ -1,0 +1,1116 @@
+{
+  "method": "Independent Python analytical surfaces, pyproj sphere and Shapely/GEOS overlays",
+  "terrain": [
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 180.31222920256963
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 255.0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 180.31222920256963
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 255.0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 180.31222920256963
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 255.0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 180.31222920256963
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 255.0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 180.31222920256963
+    },
+    {
+      "gx": 0,
+      "gy": 0,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 0.0,
+      "percent": 0.0,
+      "aspect": null,
+      "shade": 255.0
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 0
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 140.77337410584025
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 0
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 158.3700458690703
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 49.77090372037519
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 211.1600611587604
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 24.885451860187604
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 193.56338939553038
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 0
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 163.52399170220656
+    },
+    {
+      "gx": 0.1,
+      "gy": 0.2,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 206.565051177078,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 0
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 140.77337410584025
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 24.88545186018759
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 193.56338939553035
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 49.77090372037519
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 211.1600611587604
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 0
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 158.3700458690703
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 0
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 138.63853984201893
+    },
+    {
+      "gx": -0.1,
+      "gy": 0.2,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 153.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 49.77090372037519
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 211.1600611587604
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 0
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 158.3700458690703
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 0
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 140.77337410584025
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 24.885451860187583
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 193.56338939553035
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 52.79001528969009
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 213.29489542258173
+    },
+    {
+      "gx": 0.1,
+      "gy": -0.2,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 333.434948822922,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 49.77090372037519
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 211.1600611587604
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 24.885451860187597
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 193.56338939553035
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 0
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 140.77337410584025
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 0
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 158.37004586907028
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 17.596671763230024
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 188.4094435623941
+    },
+    {
+      "gx": -0.1,
+      "gy": -0.2,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 12.604382648379184,
+      "percent": 22.360679774997898,
+      "aspect": 26.56505117707799,
+      "shade": 248.85451860187595
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 0
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 127.5
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 0
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 0
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 180.31222920256957
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 0
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 127.49999999999999
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 255.0
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 127.50000000000003
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 217.65611460128483
+    },
+    {
+      "gx": 1,
+      "gy": 0,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 270.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 0,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 0,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 0,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 180.31222920256957
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 90,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 90,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 127.5
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 90,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 180,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 180,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 255.0
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 180,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 270,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 3.3122819151007616e-14
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 270,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 127.50000000000003
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 270,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 180.3122292025696
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 315,
+      "altitude": 0,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 0
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 315,
+      "altitude": 45,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 37.34388539871522
+    },
+    {
+      "gx": 0,
+      "gy": 1,
+      "azimuth": 315,
+      "altitude": 90,
+      "degrees": 45.0,
+      "percent": 100.0,
+      "aspect": 180.0,
+      "shade": 180.3122292025696
+    }
+  ],
+  "overlays": [
+    {
+      "scene": "normal",
+      "count": 2,
+      "planarArea": 0.0004250000000000085,
+      "sphereArea": 3779299.0740848524
+    },
+    {
+      "scene": "empty",
+      "count": 0,
+      "planarArea": 0,
+      "sphereArea": 0
+    },
+    {
+      "scene": "touch",
+      "count": 0,
+      "planarArea": 0,
+      "sphereArea": 0
+    },
+    {
+      "scene": "multipart",
+      "count": 1,
+      "planarArea": 9.999999999999574e-05,
+      "sphereArea": 889341.6511624273
+    }
+  ],
+  "distances": [
+    {
+      "a": [
+        26.005,
+        44.01
+      ],
+      "b": [
+        26.02,
+        44.01
+      ],
+      "metres": 1199.603461644492
+    },
+    {
+      "a": [
+        26.005,
+        44.01
+      ],
+      "b": [
+        26.01,
+        44.02
+      ],
+      "metres": 1181.6521911221785
+    },
+    {
+      "a": [
+        26.02,
+        44.01
+      ],
+      "b": [
+        26.01,
+        44.02
+      ],
+      "metres": 1369.636390466796
+    }
+  ]
+}

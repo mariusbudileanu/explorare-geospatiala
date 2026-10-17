@@ -1,0 +1,17 @@
+/* Scoped P03 controls; all surfaces inherit the existing light/dark tokens. */
+.p03-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin:1rem 0}
+.p03-controls label{display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.p03-controls input,.p03-controls select,.p03-controls textarea{width:100%;max-width:100%;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:.4rem;padding:.6rem;font:inherit;box-sizing:border-box}
+.p03-controls textarea{min-height:5rem}.p03-wide{grid-column:1/-1}
+.p03-actions button,.p03-section td button{background:var(--surface);color:var(--ink);border:1px solid var(--muted)}
+.p03-section{min-width:0}.p03-section svg{display:block;width:100%;max-height:320px;background:var(--surface);border:1px solid var(--line)}
+.p03-section svg text{fill:var(--ink);font-size:11px}.p03-section svg .p03-shape{stroke:var(--ink);stroke-width:1.5;fill:var(--blue);fill-opacity:.2;fill-rule:evenodd}
+.p03-section svg .p03-selected{stroke:var(--ink);stroke-width:4;stroke-dasharray:4 2;fill-opacity:.55}
+.p03-scroll{overflow:auto;max-width:100%}.p03-section table{border-collapse:collapse;width:100%;font-size:.88rem}
+.p03-section th,.p03-section td{padding:.4rem;border:1px solid var(--line);text-align:left;overflow-wrap:anywhere}
+.p03-grid{display:grid;gap:2px}.p03-grid button,.p03-grid span{padding:.3rem .1rem;min-width:0;font-size:.8rem;overflow-wrap:anywhere;background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.p03-grid button[aria-pressed=true]{outline:3px solid var(--blue);outline-offset:-3px;font-weight:bold}
+.p03-error{color:var(--ink);font-weight:bold}.p03-error:not(:empty){border-left:4px solid var(--blue);padding:.5rem}
+.p03-section :is(button,input,select,textarea,[tabindex]):focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.p03-bar{fill:var(--blue);stroke:var(--ink)}.p03-interval{font-variant-numeric:tabular-nums}
+@media(max-width:600px){.p03-controls{grid-template-columns:1fr}.p03-section .p01-panels{grid-template-columns:1fr}.p03-grid button,.p03-grid span{font-size:.65rem}.p03-section th,.p03-section td{padding:.3rem}}
