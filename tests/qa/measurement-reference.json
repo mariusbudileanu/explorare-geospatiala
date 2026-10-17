@@ -1,0 +1,1355 @@
+{
+  "source": "pyproj 3.7.0 / PROJ 9.6.2; WGS84 Geod; Shapely planar area/length; always_xy; 250m geodesic densification",
+  "cases": [
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.106001,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 0.07962194276518018,
+      "geodesicArea": null,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.106001,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 0.07962194276518018,
+      "geodesicArea": null,
+      "planarLength": 0.11131949070841074,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.106001,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 0.07962194276518018,
+      "geodesicArea": null,
+      "planarLength": 0.07962059003121665,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.106001,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 0.07962194276518018,
+      "geodesicArea": null,
+      "planarLength": 0.07975186179133299,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.106001,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 0.07962194276518018,
+      "geodesicArea": null,
+      "planarLength": 0.0795950513616474,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.116,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 796.2194291666257,
+      "geodesicArea": null,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.116,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 796.2194291666257,
+      "geodesicArea": null,
+      "planarLength": 1113.1949079325423,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.116,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 796.2194291666257,
+      "geodesicArea": null,
+      "planarLength": 796.2062379809541,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.116,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 796.2194291666257,
+      "geodesicArea": null,
+      "planarLength": 797.5217907670327,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            44.432
+          ],
+          [
+            26.116,
+            44.432
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 796.2194291666257,
+      "geodesicArea": null,
+      "planarLength": 795.9499624468899,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            21,
+            44
+          ],
+          [
+            29,
+            48
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 762055.0059799384,
+      "geodesicArea": null,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            21,
+            44
+          ],
+          [
+            29,
+            48
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 762055.0059799384,
+      "geodesicArea": null,
+      "planarLength": 1097497.1742717728,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            21,
+            44
+          ],
+          [
+            29,
+            48
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 762055.0059799384,
+      "geodesicArea": null,
+      "planarLength": 762092.1455084331,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            21,
+            44
+          ],
+          [
+            29,
+            48
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 762055.0059799384,
+      "geodesicArea": null,
+      "planarLength": 762860.7743197643,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            21,
+            44
+          ],
+          [
+            29,
+            48
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 762055.0059799384,
+      "geodesicArea": null,
+      "planarLength": 762318.1529754378,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            24,
+            46
+          ],
+          [
+            24,
+            47
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 111161.08250383123,
+      "geodesicArea": null,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            24,
+            46
+          ],
+          [
+            24,
+            47
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 111161.08250383123,
+      "geodesicArea": null,
+      "planarLength": 161724.8521747552,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            24,
+            46
+          ],
+          [
+            24,
+            47
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 111161.08250383123,
+      "geodesicArea": null,
+      "planarLength": 111140.20435736186,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            24,
+            46
+          ],
+          [
+            24,
+            47
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 111161.08250383123,
+      "geodesicArea": null,
+      "planarLength": 111189.0231356731,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            24,
+            46
+          ],
+          [
+            24,
+            47
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 111161.08250383123,
+      "geodesicArea": null,
+      "planarLength": 111189.0231356731,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            55
+          ],
+          [
+            26.116,
+            55
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 639.9412924321093,
+      "geodesicArea": null,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            55
+          ],
+          [
+            26.116,
+            55
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 639.9412924321093,
+      "geodesicArea": null,
+      "planarLength": 1113.1949079325423,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            55
+          ],
+          [
+            26.116,
+            55
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 639.9412924321093,
+      "geodesicArea": null,
+      "planarLength": 643.7559327297788,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            55
+          ],
+          [
+            26.116,
+            55
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 639.9412924321093,
+      "geodesicArea": null,
+      "planarLength": 640.5238838733765,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "distance",
+        "coordinates": [
+          [
+            26.106,
+            55
+          ],
+          [
+            26.116,
+            55
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 639.9412924321093,
+      "geodesicArea": null,
+      "planarLength": 639.7107042593983,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "line",
+        "coordinates": [
+          [
+            26,
+            44
+          ],
+          [
+            26.1,
+            44.1
+          ],
+          [
+            26.2,
+            44
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 27399.53902056412,
+      "geodesicArea": null,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "line",
+        "coordinates": [
+          [
+            26,
+            44
+          ],
+          [
+            26.1,
+            44.1
+          ],
+          [
+            26.2,
+            44
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 27399.53902056412,
+      "geodesicArea": null,
+      "planarLength": 38147.4794343061,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "line",
+        "coordinates": [
+          [
+            26,
+            44
+          ],
+          [
+            26.1,
+            44.1
+          ],
+          [
+            26.2,
+            44
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 27399.53902056412,
+      "geodesicArea": null,
+      "planarLength": 27401.868916363437,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "line",
+        "coordinates": [
+          [
+            26,
+            44
+          ],
+          [
+            26.1,
+            44.1
+          ],
+          [
+            26.2,
+            44
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 27399.53902056412,
+      "geodesicArea": null,
+      "planarLength": 27444.853875320445,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "line",
+        "coordinates": [
+          [
+            26,
+            44
+          ],
+          [
+            26.1,
+            44.1
+          ],
+          [
+            26.2,
+            44
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 27399.53902056412,
+      "geodesicArea": null,
+      "planarLength": 27390.3380039567,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.18,
+              44.46
+            ],
+            [
+              26.1,
+              44.45
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 26840.844373085158,
+      "geodesicArea": 44241120.61154556,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.18,
+              44.46
+            ],
+            [
+              26.1,
+              44.45
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 26840.844373085158,
+      "geodesicArea": 44241120.61154556,
+      "planarLength": 37581.204461971865,
+      "planarArea": 86758965.059336
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.18,
+              44.46
+            ],
+            [
+              26.1,
+              44.45
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 26840.844373085158,
+      "geodesicArea": 44241120.61154556,
+      "planarLength": 26840.52398493503,
+      "planarArea": 44240042.064958684
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.18,
+              44.46
+            ],
+            [
+              26.1,
+              44.45
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 26840.844373085158,
+      "geodesicArea": 44241120.61154556,
+      "planarLength": 26885.544111715295,
+      "planarArea": 44388533.98240155
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.18,
+              44.46
+            ],
+            [
+              26.1,
+              44.45
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 26840.844373085158,
+      "geodesicArea": 44241120.61154556,
+      "planarLength": 26831.630858760367,
+      "planarArea": 44210757.78015229
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 64140.11438035538,
+      "planarArea": 166650226.96363994
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 45772.74046120692,
+      "planarArea": 84907387.59457152
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 45849.645186953276,
+      "planarArea": 85193566.94483769
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 45757.802390522025,
+      "planarArea": 84851989.46686317
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": null,
+      "planarArea": null
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:3857",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 64140.11438035537,
+      "planarArea": 166650226.96364
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:3844",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 45772.740461206944,
+      "planarArea": 84907387.59457265
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:32634",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 45849.645186953305,
+      "planarArea": 85193566.94483814
+    },
+    {
+      "geometry": {
+        "type": "polygon",
+        "coordinates": [
+          [
+            [
+              26.1,
+              44.4
+            ],
+            [
+              26.1,
+              44.5
+            ],
+            [
+              26.2,
+              44.5
+            ],
+            [
+              26.2,
+              44.4
+            ],
+            [
+              26.1,
+              44.4
+            ]
+          ],
+          [
+            [
+              26.12,
+              44.42
+            ],
+            [
+              26.12,
+              44.44
+            ],
+            [
+              26.14,
+              44.44
+            ],
+            [
+              26.14,
+              44.42
+            ],
+            [
+              26.12,
+              44.42
+            ]
+          ]
+        ]
+      },
+      "crs": "EPSG:32635",
+      "geodesicLength": 45773.51095997083,
+      "geodesicArea": 84910363.35872078,
+      "planarLength": 45757.802390522054,
+      "planarArea": 84851989.46686345
+    }
+  ]
+}

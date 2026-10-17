@@ -1,0 +1,1455 @@
+{
+  "source": "Independent Cartesian coordinates and hand-checked rule expectations; GEOS-generated geometry serialization. Boundary triangle pair shares only its diagonal. Donut hole is strictly interior.",
+  "cases": [
+    {
+      "type": "Point",
+      "rule": "covered",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            5.0,
+            0.0
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "expected": true
+    },
+    {
+      "type": "Point",
+      "rule": "covered",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            5.0,
+            1.0
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "expected": false
+    },
+    {
+      "type": "Point",
+      "rule": "point-end",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "expected": true
+    },
+    {
+      "type": "Point",
+      "rule": "point-end",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            5.0,
+            0.0
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "expected": false
+    },
+    {
+      "type": "Point",
+      "rule": "inside",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                3.0,
+                3.0
+              ],
+              [
+                7.0,
+                3.0
+              ],
+              [
+                7.0,
+                7.0
+              ],
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                3.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "expected": true
+    },
+    {
+      "type": "Point",
+      "rule": "inside",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            5.0,
+            5.0
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                3.0,
+                3.0
+              ],
+              [
+                7.0,
+                3.0
+              ],
+              [
+                7.0,
+                7.0
+              ],
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                3.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "expected": false
+    },
+    {
+      "type": "Point",
+      "rule": "duplicates",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Point",
+      "rule": "duplicates",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "id": "b",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Point",
+      "rule": "invalid",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Point",
+      "rule": "invalid",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            null,
+            0
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Point",
+      "rule": "multipart",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Point",
+          "coordinates": [
+            1.0,
+            1.0
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Point",
+      "rule": "multipart",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "MultiPoint",
+          "coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "LineString",
+      "rule": "duplicates",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "LineString",
+      "rule": "duplicates",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "id": "b",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "LineString",
+      "rule": "invalid",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "LineString",
+      "rule": "invalid",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "LineString",
+      "rule": "multipart",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "LineString",
+      "rule": "multipart",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "MultiLineString",
+          "coordinates": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            [
+              [
+                2,
+                2
+              ],
+              [
+                3,
+                3
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "duplicates",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "duplicates",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "b",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "invalid",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "invalid",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                10,
+                10
+              ],
+              [
+                0,
+                10
+              ],
+              [
+                10,
+                0
+              ],
+              [
+                0,
+                0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "multipart",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "multipart",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "MultiPolygon",
+          "coordinates": [
+            [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            ],
+            [
+              [
+                [
+                  5,
+                  5
+                ],
+                [
+                  7,
+                  5
+                ],
+                [
+                  5,
+                  7
+                ],
+                [
+                  5,
+                  5
+                ]
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "LineString",
+      "rule": "line-end",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r1",
+          "layer": "B",
+          "type": "Point",
+          "coordinates": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "id": "r2",
+          "layer": "B",
+          "type": "Point",
+          "coordinates": [
+            10.0,
+            0.0
+          ]
+        }
+      ],
+      "expected": true
+    },
+    {
+      "type": "LineString",
+      "rule": "line-end",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              9.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r1",
+          "layer": "B",
+          "type": "Point",
+          "coordinates": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "id": "r2",
+          "layer": "B",
+          "type": "Point",
+          "coordinates": [
+            10.0,
+            0.0
+          ]
+        }
+      ],
+      "expected": false
+    },
+    {
+      "type": "LineString",
+      "rule": "dangles",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ],
+            [
+              5.0,
+              10.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "LineString",
+      "rule": "dangles",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "LineString",
+      "rule": "pseudos",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              5.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "LineString",
+      "rule": "pseudos",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              5.0,
+              0.0
+            ]
+          ]
+        },
+        {
+          "id": "b",
+          "layer": "A",
+          "type": "LineString",
+          "coordinates": [
+            [
+              5.0,
+              0.0
+            ],
+            [
+              10.0,
+              0.0
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "contain",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "Point",
+          "coordinates": [
+            5.0,
+            5.0
+          ]
+        }
+      ],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "contain",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                3.0,
+                3.0
+              ],
+              [
+                7.0,
+                3.0
+              ],
+              [
+                7.0,
+                7.0
+              ],
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                3.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "Point",
+          "coordinates": [
+            5.0,
+            5.0
+          ]
+        }
+      ],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "gaps",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "gaps",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                3.0,
+                3.0
+              ],
+              [
+                7.0,
+                3.0
+              ],
+              [
+                7.0,
+                7.0
+              ],
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                3.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "overlap",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "b",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                10.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "overlap",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "b",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                2.0,
+                0.0
+              ],
+              [
+                12.0,
+                0.0
+              ],
+              [
+                2.0,
+                10.0
+              ],
+              [
+                2.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [],
+      "expected": false
+    },
+    {
+      "type": "Polygon",
+      "rule": "overlap-with",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                10.0,
+                0.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                0.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                10.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "expected": true
+    },
+    {
+      "type": "Polygon",
+      "rule": "overlap-with",
+      "target": [
+        {
+          "id": "a",
+          "layer": "A",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                5.0,
+                0.0
+              ],
+              [
+                15.0,
+                0.0
+              ],
+              [
+                5.0,
+                10.0
+              ],
+              [
+                5.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "reference": [
+        {
+          "id": "r",
+          "layer": "B",
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                10.0,
+                0.0
+              ],
+              [
+                10.0,
+                10.0
+              ],
+              [
+                0.0,
+                10.0
+              ],
+              [
+                10.0,
+                0.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "expected": false
+    }
+  ]
+}

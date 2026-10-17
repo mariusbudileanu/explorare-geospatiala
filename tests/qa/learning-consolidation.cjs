@@ -12,7 +12,10 @@ equal(Object.values(model.levels).map(l=>l.label),['Începător','Intermediar','
 // The discovery Hub links to classified experiences; it is not another lesson.
 const referenceOnly=new Set(['home','about','resources','digital-companion']);
 equal(Object.keys(model.items).sort(),content.lessons.filter(l=>!referenceOnly.has(l.id)).map(l=>l.id).sort(),'Every classifiable destination, no extra route');
-const observable=/^(Identifici|Explici|Interpretezi|Convertești|Distingi|Verifici|Compari|Alegi|Clasifici|Reproduci|Construiești|Formulezi|Justifici|Separi|Documentezi|Încarci|Creezi|Filtrezi)/;
+// P02 adds actual geometry editing and per-cell/per-feature calculation.
+// Keep the observable-action whitelist; do not accept vague cognitive outcomes.
+const observable=/^(Identifici|Explici|Interpretezi|Convertești|Distingi|Verifici|Compari|Alegi|Clasifici|Reproduci|Construiești|Formulezi|Justifici|Separi|Documentezi|Încarci|Creezi|Filtrezi|Editezi|Calculezi)/;
+ok(!observable.test('Înțelegi datele')&&!observable.test('Cunoști GIS'),'Non-observable outcomes remain excluded');
 for(const [id,item] of Object.entries(model.items)){
  ok(model.levels[item.level],id+' valid level');ok(item.reason.length>20,id+' substantive classification');
  ok(item.outcomes.length>=2&&item.outcomes.every(t=>observable.test(t)),id+' observable outcomes');

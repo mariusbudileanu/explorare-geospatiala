@@ -20,6 +20,10 @@ const omitFunctions=(source,names)=>{for(const name of names){const start=source
 for(const file of protectedFiles){
  let actual=fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n'),before=execFileSync('git',['show','44325c3f1db1ebbd6bf322eda7045632c7858d52:'+file],{cwd:root}).toString('utf8').replace(/\r\n/g,'\n');
  if(file==='CITATION.cff'){const citation=JSON.parse(actual);equal(citation.authors[0].affiliation,'University of Bucharest, Faculty of Geography','Verified v2.0.0 affiliation');delete citation.authors[0].affiliation;actual=JSON.stringify(citation);before=JSON.stringify(JSON.parse(before));}
+ if(file==='js/map-diagnostics.js'){
+  const old="topology:['data/topology-lab.js','data/topology-rules.js','js/topology-engine.js','js/topology-rule-engine.js','js/topology-scene.js']",updated="topology:['data/topology-lab.js','data/topology-rules.js','js/topology-engine.js','js/vendor/turf.min.js','js/topology-geometry.js','js/topology-rule-engine.js','js/topology-scene.js']";
+  equal(actual.split(updated).length,2,'P02: exact local topology dependency list');actual=actual.replace(updated,old);
+ }
  if(file==='js/classification-engine.js'){
   actual=omitFunctions(actual,['equalUpper','quantileLerp','roundedRatio','interpolate','scaledRate']).replace(':scaledRate(v,d,scale)',':v/d*scale');
   before=omitFunctions(before,['equalUpper','quantileLerp']);
@@ -85,7 +89,11 @@ try{
  for(const query of ['Stereo 70','EPSG:3844','arie geodezică','arie elipsoidală','distanță geodezică','hillshade','NULL','Clip','GeoPackage','incertitudine','reproiectare']){await page.fill('#search',query);ok(await page.locator('#search-results a').count()>0,'Prior discovery preserved '+query);}
  for(const query of ['PROIECȚII INTERACTIVE','proiectii interactive']){await page.fill('#search',query);equal(await page.locator('#search-results a').first().getAttribute('href'),'projection-crs-lab.html','Case/diacritics '+query);}
  await page.fill('#search','xyz-no-such-companion-923');equal(await page.locator('#search-results a').count(),0,'Unknown query no invented result');
- equal(records.length,80,'Same search inventory');equal(new Set(records.map(r=>r.id)).size,80,'Unique search IDs');equal(new Set(records.map(r=>r.href)).size,80,'Unique indexed URLs');equal(records.filter(r=>r.id==='styling-labeling').length,1,'One Styling/Studio entity');
+ // P02 adds two canonical destinations. Require exact manifest + diagnostic
+ // coverage instead of retaining the pre-P02 count; uniqueness remains strict.
+ const sceneContext={window:{}};vm.runInNewContext(read('data/diagnostic-scenes.js'),sceneContext);
+ const expectedIDs=[...content.lessons.map(l=>l.id),...sceneContext.window.CARTO_DIAGNOSTICS.scenes.map(s=>s.id)];
+ equal(records.map(r=>r.id).sort(),expectedIDs.sort(),'Exact canonical search inventory');equal(new Set(records.map(r=>r.id)).size,expectedIDs.length,'Unique search IDs');equal(new Set(records.map(r=>r.href)).size,expectedIDs.length,'Unique indexed URLs');equal(records.filter(r=>r.id==='styling-labeling').length,1,'One Styling/Studio entity');
  // Exercise the generic rules with unrelated names/anchors in an isolated DOM.
  const fixtureStart=checks;
  const fixture=await browser.newPage();await fixture.setContent('<div class="global-search"><label for="search">Caută</label><input id="search"><div id="search-results" hidden></div></div>');

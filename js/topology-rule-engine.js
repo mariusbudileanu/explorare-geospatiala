@@ -2,26 +2,26 @@
 (function(root){
   'use strict';
   const E=root.CARTO_TOPOLOGY_ENGINE,R=root.CARTO_TOPOLOGY_RULES;
-  const parts=f=>f.type.startsWith('Multi')?f.coordinates.map(coordinates=>({...f,type:f.type.slice(5),coordinates})):[f];
-  const vertices=f=>parts(f).flatMap(p=>p.type==='Point'?[p.coordinates]:p.coordinates);
-  const endpoints=f=>parts(f).flatMap(p=>p.type==='LineString'?[p.coordinates[0],p.coordinates.at(-1)]:[]);
-  const anchor=f=>vertices(f).find(p=>p?.every(Number.isFinite))||null;
-  function validity(f){const g=f.coordinates;if(f.type.startsWith('Multi'))return parts(f).every(p=>validity(p));if(!vertices(f).every(p=>p?.length===2&&p.every(Number.isFinite)))return false;if(f.type==='Point')return g.length===2;if(f.type==='LineString')return g.length>=2&&g.some(p=>!E.same(p,g[0]));return E.polygonValidity(f).valid;}
-  function equal(a,b){if(a.type!==b.type)return false;if(a.type==='Point')return E.same(a.coordinates,b.coordinates);if(a.type==='Polygon')return E.rectangle(a).every((v,i)=>v===E.rectangle(b)[i]);const A=a.coordinates,B=b.coordinates;return A.length===B.length&&(A.every((p,i)=>E.same(p,B[i]))||A.every((p,i)=>E.same(p,B[B.length-1-i])));}
-  function covers(f,p){return parts(f).some(g=>g.type==='Point'?E.same(g.coordinates,p):g.type==='Polygon'?E.pointPosition(p,g.coordinates)!=='outside':g.coordinates.slice(1).some((b,i)=>E.onSegment(p,g.coordinates[i],b)));}
+  const G=E.geometry,{parts,vertices,endpoints,anchor,validity,equal,covers}=G;
   function evaluate(scene){
     const {rule,target,reference=[],domain}=scene,errors=[];
+    const definition=R.byId[rule];if(!definition||!Array.isArray(target)||target.length+reference.length>32||!target.every(f=>definition.types.includes(f.type.replace('Multi','')))||(definition.reference.length>0&&reference.some(f=>!definition.reference.includes(f.type.replace('Multi',''))))||target.concat(reference).reduce((n,f)=>n+vertices(f).length,0)>256)throw Error('Unsupported rule/geometry domain');
+    if(target.concat(reference).some(f=>vertices(f).some(p=>Array.isArray(p)&&p.some(x=>typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)>10000))))throw Error('Unsupported coordinate domain: -10000..10000');
+    if(target.concat(reference).some(G.ringTangency))throw Error('Unsupported ring tangency: use QGIS/GEOS for this configuration');
+    if(!['invalid','multipart'].includes(rule)&&!target.concat(reference).every(validity))throw Error('Invalid operands: run geometry validity first');
     const add=(type,features,location,area=0)=>errors.push({type,affectedFeatureIds:features.map(f=>f.id),location,area});
-    if(['covered','point-end','inside'].includes(rule))for(const f of target)if(!reference.some(r=>rule==='inside'?parts(r).some(p=>E.pointPosition(f.coordinates,p.coordinates)==='inside'):rule==='point-end'?endpoints(r).some(p=>E.same(p,f.coordinates)):covers(r,f.coordinates)))add(rule==='inside'?'point-outside':'endpoint-mismatch',[f],f.coordinates);
+    if(['covered','point-end','inside'].includes(rule))for(const f of target)for(const p of parts(f))if(!reference.some(r=>rule==='inside'?G.position(p.coordinates,r)==='inside':rule==='point-end'?endpoints(r).some(q=>E.same(q,p.coordinates)):covers(r,p.coordinates)))add(rule==='inside'?'point-outside':'endpoint-mismatch',[f],p.coordinates);
     if(rule==='line-end')for(const f of target)for(const p of endpoints(f))if(!reference.some(r=>covers(r,p)))add('endpoint-mismatch',[f],p);
     if(rule==='duplicates')for(let i=0;i<target.length;i++)for(let j=i+1;j<target.length;j++)if(equal(target[i],target[j]))add('duplicate',[target[i],target[j]],anchor(target[i]));
-    if(rule==='invalid')for(const f of target)if(!validity(f))add('invalid-geometry',[f],f.type==='Polygon'?E.polygonValidity(f).location:anchor(f));
+    if(rule==='invalid')for(const f of target)if(!validity(f))add('invalid-geometry',[f],anchor(f));
     if(rule==='multipart')for(const f of target)if(f.type.startsWith('Multi'))add('multipart',[f],anchor(f));
-    if(rule==='dangles')for(const f of target)for(const p of endpoints(f))if(!target.some(g=>g.id!==f.id&&covers(g,p)))add('dangle',[f],p);
-    if(rule==='pseudos'){const seen=[];for(const f of target)for(const p of endpoints(f)){const linked=target.filter(g=>endpoints(g).some(q=>E.same(p,q)));if(linked.length===2&&!seen.some(q=>E.same(p,q))){seen.push(p);add('pseudo-node',linked,p);}}}
-    if(rule==='contain')for(const f of target)if(!reference.some(p=>E.pointPosition(p.coordinates,f.coordinates)==='inside'))add('missing-point',[f],E.ring(E.rectangle(f)));
-    if(rule==='overlap'||rule==='overlap-with')for(let i=0;i<target.length;i++)for(const g of rule==='overlap-with'?reference:target.slice(i+1)){const hit=E.rectangleIntersection(E.rectangle(target[i]),E.rectangle(g));if(hit.area>0)add('overlap',[target[i],g],E.ring(hit.box),hit.area);}
-    if(rule==='gaps'&&domain){const checks=E.introductionCheck({features:target,domain});for(const e of checks.errors.filter(e=>e.type==='gap')){const box=e.location,area=(box[1][0]-box[0][0])*(box[2][1]-box[1][1]);add('gap',target.filter(f=>E.rectangleIntersection(E.rectangle(f),[box[0][0],box[0][1],box[2][0],box[2][1]]).exists),e.location,area);}}
+    const lines=target.flatMap(f=>parts(f).filter(p=>p.type==='LineString').map((p,i)=>({...p,partId:f.id+':'+i})));
+    if(rule==='dangles')for(const f of lines)if(!E.same(f.coordinates[0],f.coordinates.at(-1)))for(const p of endpoints(f))if(!lines.some(g=>g.partId!==f.partId&&covers(g,p)))add('dangle',[f],p);
+    if(rule==='pseudos'){const seen=[];for(const f of lines)for(const p of endpoints(f)){const linked=lines.filter(g=>!E.same(g.coordinates[0],g.coordinates.at(-1))&&endpoints(g).some(q=>E.same(p,q))),interior=lines.some(g=>covers(g,p)&&!endpoints(g).some(q=>E.same(q,p)));if(linked.length===2&&!interior&&!seen.some(q=>E.same(p,q))){seen.push(p);add('pseudo-node',linked,p);}}}
+    if(rule==='contain')for(const f of target)if(!reference.some(p=>parts(p).some(q=>G.position(q.coordinates,f)==='inside')))add('missing-point',[f],anchor(f));
+    if(rule==='overlap'||rule==='overlap-with')for(let i=0;i<target.length;i++)for(const g of rule==='overlap-with'?reference:target.slice(i+1)){const hit=G.overlay(target[i],g);if(hit&&G.area(hit)>1e-9)for(const p of parts(hit))add('overlap',[target[i],g],G.rings(p)[0],G.area(p));}
+    // Gaps are bounded holes of the polygon union, never unbounded exterior space.
+    if(rule==='gaps'&&target.length){let union=target[0];for(const f of target.slice(1))union=G.overlay(union,f,'union');for(const p of parts(union))for(const hole of G.rings(p).slice(1))add('gap',target,hole,G.areaRing(hole));}
     return {valid:errors.length===0,rule,errors,affectedFeatureIds:[...new Set(errors.flatMap(e=>e.affectedFeatureIds))],area:errors.reduce((s,e)=>s+e.area,0)};
   }
   const bounds=f=>{const v=vertices(f);return [Math.min(...v.map(p=>p[0])),Math.min(...v.map(p=>p[1])),Math.max(...v.map(p=>p[0])),Math.max(...v.map(p=>p[1]))];};

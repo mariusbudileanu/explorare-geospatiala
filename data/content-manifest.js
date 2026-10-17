@@ -170,3 +170,14 @@ for (const group of window.CARTO_CONTENT.groups) {
 
 // Stable v3 IDs extend existing canonical destinations; no duplicate lesson entries.
 for(const [id,lab] of Object.entries({"projection-crs-lab":"L03","formats-interoperability":"L10","data-quality":"L13"}))window.CARTO_CONTENT.lessons.find(l=>l.id===id).lab_id=lab;
+
+// P02 adds destinations to their academic chapter; legacy URLs remain stable.
+for(const [id,title,lab,group,description,keywords] of [
+  ['measurement-lab','Măsurători geospațiale','L04','projections','Editează geometrii și compară lungimi, perimetre și arii plane cu măsurarea elipsoidală.',['măsurători','perimetru','arie','geodezic','gaură','measurement']],
+  ['gis-calculator','Calculator GIS','L20','analysis','Calculează expresii pe rastere sintetice și pe atribute; inspectează AST, NULL, NoData și rezultatele.',['calculator','raster calculator','field calculator','CASE WHEN','expresii','densitate','NULL','NoData']]
+]){
+  window.CARTO_CONTENT.lessons.push({id,title,short_title:title,lab_id:lab,href:id+'.html',part:group==='projections'?'Proiecții & CRS':'Analiză geospațială',source_section:'',source_pages:[],figures:[],keywords,content_types:['concept','exercițiu'],interactive_components:[id],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'qgis',companion:{category:'Laborator v3 · '+lab,description,contexts:[]}});
+  window.CARTO_CONTENT.groups.find(g=>g.id===group).lessons.push(id);
+}
+window.CARTO_CONTENT.lessons.find(l=>l.id==='topology').lab_id='L09';
+window.CARTO_CONTENT.companion.packages=['measurement-lab','topology','gis-calculator'];

@@ -527,6 +527,8 @@ window.CARTO_SEARCH_INDEX = [
       "Datele digitale nu sunt realitatea însăși",
       "Verifică scara, rezoluția, acuratețea pozițională, completitudinea, momentul observației, calitatea atributelor și CRS-ul. Vom reveni asupra acestora în capitolul planificat Precizie și metadate.",
       "Dimensiunea fișierelor vectoriale depinde adesea de numărul și complexitatea entităților și de atribute; la raster contează rânduri × coloane, benzi, tipul de date și compresia. Niciun model nu este mereu mai mare. În T06, subsetul Suceava evită folosirea rasterelor naționale complete ca pachet standard.",
+      "Aplică modelul vectorial",
+      "L09 · Topologie completă: verifică relațiile puncte–linii–poligoane, găurile și regulile modelului pe scene editabile.",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Vrei un subset de obiecte întregi care intersectează limita. Ce alegi?",
@@ -4478,7 +4480,12 @@ window.CARTO_SEARCH_INDEX = [
       "Manual QGIS: Geometry Checker ↗ Calitatea geometriei, verificare și reparare; include și verificări topologice.",
       "Calitatea geometriei, verificare și reparare; include și verificări topologice.",
       "Manual QGIS: Topological editing ↗ Menținerea limitelor comune în timpul editării; documentație pregătită pentru continuarea modulului.",
-      "Menținerea limitelor comune în timpul editării; documentație pregătită pentru continuarea modulului."
+      "Menținerea limitelor comune în timpul editării; documentație pregătită pentru continuarea modulului.",
+      "Matricea completă Topology Checker",
+      "Selectează geometria și regula, apoi un exemplu conform sau cu defect. Rulează verificarea, inspectează IDs semnalate și restabilește exemplul conform sau editează scena JSON. Cele 13 denumiri și 19 combinații provin din catalogul QGIS existent.",
+      "Model cartezian cu segmente drepte, puncte/multipuncte, linii/multilinii și poligoane simple cu găuri/multipoligoane disjuncte. Overlay folosește Turf local. Toleranța numerică a predicatelor este 10⁻⁹; coordonate între −10000 și 10000, maximum 32 features și 256 vârfuri. Gap = gaură mărginită a reuniunii; exteriorul nu este gap.",
+      "Nu este GEOS/DE-9IM universal. Inelele interioare tangente/intersectate și părțile poligonale cu muchii comune nu sunt acceptate; operandul invalid este raportat, nu certificat. Topology Checker verifică regulile modelului; Geometry Checker oferă verificări și reparații geometrice distincte. Un drum fără ieșire sau un obiect multipart poate fi legitim; regula îl semnalează dacă ai ales acel model.",
+      "Experimentele și controalele RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile."
     ]
   },
   {
@@ -6711,6 +6718,9 @@ window.CARTO_SEARCH_INDEX = [
       "Laborator Proiecții & CRS",
       "Compară măsurări plane și elipsoidale și justifică alegerea CRS-ului.",
       "Compari distanțe și arii față de o referință elipsoidală.",
+      "Măsurători geospațiale",
+      "Compari metode metrice pe geometrii editabile.",
+      "Editezi vârfuri și verifici lungimea, perimetrul și aria.",
       "Cartograma",
       "Alegerea indicatorului și a claselor afectează interpretarea.",
       "Alegi un indicator comparabil între unități.",
@@ -6732,6 +6742,9 @@ window.CARTO_SEARCH_INDEX = [
       "Aceleași date, hărți diferite",
       "Compară clasificarea și normalizarea pe aceeași distribuție sintetică.",
       "Compari pragurile și efectivele claselor.",
+      "Calculator GIS",
+      "Calculezi expresii sigure și verifici valori lipsă și tipuri.",
+      "Calculezi valori pixel cu pixel și feature cu feature.",
       "T02 · Circumscripții și presiune educațională",
       "Combină poligoane, puncte, raport cu numitor protejat și clasificare.",
       "Verifici un raport care tratează NULL și zero.",
@@ -7179,7 +7192,50 @@ window.CARTO_SEARCH_INDEX = [
       "De la experiment la curs și QGIS",
       "Laboratoarele din browser ajută la explorarea conceptelor; atelierele QGIS transferă aceleași concepte într-un flux GIS complet. Experiențele sunt complementare capitolelor și nu înlocuiesc QGIS.",
       "Ateliere QGIS →",
-      "Preferi traseul structurat? Învață pe capitole sau alege Parcursul recomandat. Accesul la toate materialele rămâne liber."
+      "Preferi traseul structurat? Învață pe capitole sau alege Parcursul recomandat. Accesul la toate materialele rămâne liber.",
+      "Laboratoare v3 · P02",
+      "Măsurare, reguli topologice și expresii GIS, cu date sintetice editabile.",
+      "L04 · Măsurători geospațiale",
+      "L09 · Topologie",
+      "L20 · Calculator GIS"
+    ]
+  },
+  {
+    "id": "measurement-lab",
+    "href": "measurement-lab.html",
+    "description": "Editează distanțe, polilinii și poligoane cu găuri și compară metode plane și elipsoidale.",
+    "paragraphs": [
+      "Editează distanțe, polilinii și poligoane cu găuri și compară metode plane și elipsoidale.",
+      "Ce vei ști să faci",
+      "Editezi vârfuri și verifici lungimea, perimetrul și aria.",
+      "Separi geometria, CRS-ul și metoda de măsurare.",
+      "Înainte de a începe",
+      "Laborator Proiecții & CRS. Recomandări de pregătire; accesul rămâne liber.",
+      "Geometrie editabilă și măsurare",
+      "Alege un exemplu, modifică longitudine/latitudine în JSON și aplică geometria. Ordinea este [longitudine, latitudine], grade. Compară aceeași geometrie în două CRS-uri. Domeniul didactic este 10–35° E / 35–60° N, maximum 16 vârfuri/inel și trei inele, muchii de maximum 1000 km și lungime totală de maximum 3000 km.",
+      "Distanță/lungime: segmente geodezice WGS 84 versus corzi drepte în planul proiectat. Poligon: arie elipsoidală GeographicLib; aceeași frontieră densificată geodezic la maximum 250 m pentru arie și perimetru plane. Gaura scade aria și adaugă perimetru, independent de orientarea inelelor.",
+      "Geometrii sintetice locale, muchii geodezice, fără antimeridian sau poli. Validarea inelelor este liniară în lon/lat. Metri proiectați nu garantează acuratețe; diferența include și operația de datum pentru Stereo 70. Nu estimăm incertitudinea fizică. EPSG:4326 nu produce măsurători plane metrice.",
+      "Experimentele și controalele RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
+      "L03 · Proiecții & CRS · Calitate și incertitudine"
+    ]
+  },
+  {
+    "id": "gis-calculator",
+    "href": "gis-calculator.html",
+    "description": "Expresii sigure pe rastere și atribute sintetice, cu pași de evaluare, NULL și NoData.",
+    "paragraphs": [
+      "Expresii sigure pe rastere și atribute sintetice, cu pași de evaluare, NULL și NoData.",
+      "Ce vei ști să faci",
+      "Calculezi valori pixel cu pixel și feature cu feature.",
+      "Explici rezultatul și erorile din arborele expresiei.",
+      "Înainte de a începe",
+      "Date geospațiale. Recomandări de pregătire; accesul rămâne liber.",
+      "Raster Calculator și Field Calculator",
+      "Alege modul și un exemplu, editează expresia și calculează. Selectează pixelul sau feature-ul pentru a vedea valorile și pașii evaluării efective. Rasterele 3×3 și poligoanele/atributele sunt sintetice; nu se descarcă date.",
+      "Subset explicit: numere, text între apostrofuri, referințe între ghilimele duble, + − * / %, comparații, ||, AND OR NOT, IS NULL, CASE WHEN … THEN … ELSE … END, IF, COALESCE, ABS, UPPER, LOWER, CONCAT. Precedență: OR, AND, NOT, comparații, concatenare, +/−, */%, semn unar. Parantezele schimbă ordinea.",
+      "Nu este întregul QGIS Expression Engine. NULL/NoData se propagă; FALSE AND necunoscut = FALSE, TRUE OR necunoscut = TRUE, altfel rezultatul logic rămâne necunoscut. CASE sare peste condițiile necunoscute; IF cu o condiție necunoscută produce necunoscut. COALESCE înlocuiește NULL, nu masca NoData. Evaluarea condițională este lazy. Împărțirea la zero și rezultatul nefinit sunt erori, nu zero. În mod raster, un rezultat NULL devine NoData în masca de ieșire. Grilele incompatibile sunt refuzate, fără resampling. suprafata_km2 este atribut furnizat, nu $area; zero este inclus intenționat ca numitor problematic. Geometriile sunt în metri sintetici EPSG:3844.",
+      "Experimentele și controalele RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
+      "Analiză geospațială · Calitate și incertitudine"
     ]
   }
 ];

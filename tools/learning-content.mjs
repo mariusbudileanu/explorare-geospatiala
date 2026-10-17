@@ -4,7 +4,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 export function buildLearning(root,{check=false}={}) {
   const context={window:{}};vm.createContext(context);
-  for(const file of ['data/content-manifest.js','data/glossary.js','data/learning-model.js','data/learning-pages.js','data/p01-content.js','data/diagnostic-scenes.js','js/diagnostic-content.js','js/learning.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
+  for(const file of ['data/content-manifest.js','data/glossary.js','data/learning-model.js','data/learning-pages.js','data/p01-content.js','data/p02-content.js','data/diagnostic-scenes.js','js/diagnostic-content.js','js/learning.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context,{filename:file});
   const {CARTO_CONTENT:manifest,CARTO_LEARNING:model,CARTO_LEARNING_UI:ui,CARTO_LEARNING_PAGES:pages}=context.window;
   context.window.CARTO_QGIS_LINKS=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8'));
   const qgisLinks=context.window.CARTO_QGIS_LINKS.links;
@@ -21,6 +21,30 @@ export function buildLearning(root,{check=false}={}) {
     return html;
   };
   const qgisMarkup=html=>html.replace(/\{\{qgis:([\w-]+)\}\}/g,(_,id)=>{const s=qgisLinks.find(s=>s.id===id&&s.verified);if(!s)throw Error('Unknown QGIS source: '+id);return `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.title} ↗</a>`;});
+  const p02=(html,id)=>{
+    const lab=manifest.lessons.find(l=>l.id===id)?.lab_id;
+    if(id==='geospatial-data'){
+      html=html.replace(/<!-- p02-chapter:start -->[\s\S]*?<!-- p02-chapter:end -->/g,'');
+      return html.replace('<!-- learning-tail:start -->','<!-- p02-chapter:start --><section class="lesson-section"><h2>Aplică modelul vectorial</h2><p><a href="topology.html#v3-L09">L09 · Topologie completă</a>: verifică relațiile puncte–linii–poligoane, găurile și regulile modelului pe scene editabile.</p></section><!-- p02-chapter:end --><!-- learning-tail:start -->');
+    }
+    if(id==='digital-companion'){
+      html=html.replace(/<!-- p02-hub:start -->[\s\S]*?<!-- p02-hub:end -->/g,'');
+      return html.replace(/<footer\b[^>]*class="[^"]*site-footer[^\"]*"/,`<!-- p02-hub:start --><section class="lesson-section"><h2>Laboratoare v3 · P02</h2><p>Măsurare, reguli topologice și expresii GIS, cu date sintetice editabile.</p><ul>${manifest.companion.packages.map(key=>{const l=manifest.lessons.find(l=>l.id===key);return `<li><a href="${l.href}${key==='topology'?'#v3-L09':''}">${l.lab_id} · ${l.title}</a></li>`;}).join('')}</ul></section><!-- p02-hub:end -->$&`);
+    }
+    if(!['L04','L09','L20'].includes(lab))return html;
+    if(lab==='L09'){
+      html=html.replace(/<!-- p02:start -->[\s\S]*?<!-- p02:end -->/g,'');
+      html=html.replace('<!-- learning-tail:start -->','<!-- p02:start -->'+context.window.CARTO_P02_CONTENT.section(lab)+'<!-- p02:end --><!-- learning-tail:start -->');
+      // Extend the existing rule engine before any legacy topology controller runs.
+      html=html.replace(/<script src="(?:js\/vendor\/turf.min.js|js\/topology-geometry.js)" defer><\/script>\s*/g,'');
+      html=html.replace('<script src="js/topology-rule-engine.js" defer></script>','<script src="js/vendor/turf.min.js" defer></script><script src="js/topology-geometry.js" defer></script><script src="js/topology-rule-engine.js" defer></script>');
+    }
+    const scripts=['data/p02-content.js','js/v3-lab.js',...(lab==='L04'?['js/vendor/proj4.js','data/crs-registry.js','js/crs-engine.js','js/vendor/geographiclib-geodesic.min.js','js/geodesic-adapter.js','js/projection-lab-engine.js','js/topology-engine.js','js/topology-geometry.js','js/measurement-model.js','js/compare-core.js']:lab==='L20'?['js/gis-expression.js','js/calculator-model.js']:['data/p02-topology-scenes.js']),'js/p02-labs.js'];
+    for(const script of scripts)html=html.replace(new RegExp(`<script src="${script.replaceAll('.','\\.')}" defer></script>\\s*`,'g'),'');
+    if(!html.includes('css/p01-labs.css'))html=html.replace('</head>','<link rel="stylesheet" href="css/p01-labs.css">\n</head>');
+    if(!html.includes('css/p02-labs.css'))html=html.replace('</head>','<link rel="stylesheet" href="css/p02-labs.css">\n</head>');
+    return html.replace('</head>',scripts.map(p=>`<script src="${p}" defer></script>`).join('\n')+'\n</head>');
+  };
   for(const id of Object.keys(model.items))if(!manifest.lessons.some(l=>l.id===id))throw Error('Learning item missing in manifest: '+id);
   const write=(relative,html)=>{const file=path.join(root,relative);if(check){if(!fs.existsSync(file)||fs.readFileSync(file,'utf8')!==html)throw Error('Stale generated learning content: '+relative);}else fs.writeFileSync(file,html);};
   // Shared IDs map the short teaching cards to the existing detailed catalog.
@@ -71,7 +95,7 @@ export function buildLearning(root,{check=false}={}) {
     html=html.replace(/<main\b[^>]*>[\s\S]*?<\/main>/,`<main id="main-content" class="learning-main"><div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> → <a href="learning-path.html">Parcurs recomandat</a></div><section class="lesson-hero"><span class="eyebrow">${page.eyebrow||'CONSOLIDARE · ÎNVĂȚARE ȘI APLICARE'}</span><h1>${page.title}</h1><p class="lead">${page.description}</p></section>${body}${footer}</main>`);
     if(!html.includes('data/glossary.js'))html=html.replace('<script src="data/content-manifest.js" defer></script>','<script src="data/content-manifest.js" defer></script>\n<script src="data/glossary.js" defer></script>');
     html=html.replace('</head>',`${(page.styles||[]).map(p=>`<link rel="stylesheet" href="${p}">`).join('\n')}\n${(page.scripts||[]).map(p=>`<script src="${p}" defer></script>`).join('\n')}\n<link rel="canonical" href="https://mariusbudileanu.github.io/explorare-geospatiala/${record.href}">\n</head>`);
-    write(record.href,p01(insert(html,id,''),id));
+    write(record.href,p02(p01(insert(html,id,''),id),id));
   }
   const files=fs.readdirSync(root).filter(f=>f.endsWith('.html')).concat(fs.readdirSync(path.join(root,'tutorials')).filter(f=>f.endsWith('.html')).map(f=>'tutorials/'+f));
   for(const file of files){
@@ -99,6 +123,6 @@ export function buildLearning(root,{check=false}={}) {
       if(sections!==1)throw Error('Missing or duplicate workshop level section: '+id);
     }
     if(id==='tutorials')html=html.replace(/(<div class="workshop-card-top"><span class="workshop-id">)(T0[1-6])(<\/span><span>)[^<]+( · [^<]+<\/span>)/g,(_,a,key,b,d)=>a+key+b+model.levels[model.items[key].level].label+d);
-    write(file,p01(insert(assets(html,prefix),id,prefix),id));
+    write(file,p02(p01(insert(assets(html,prefix),id,prefix),id),id));
   }
 }

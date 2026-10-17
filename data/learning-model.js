@@ -115,4 +115,6 @@ window.CARTO_LEARNING = (() => {
 })();
 
 // Learning metadata derives laboratory identity from the content manifest.
+window.CARTO_LEARNING.items['measurement-lab']={level:'intermediate',reason:'Compari metode metrice pe geometrii editabile.',prerequisites:['projection-crs-lab'],outcomes:['Editezi vârfuri și verifici lungimea, perimetrul și aria.','Separi geometria, CRS-ul și metoda de măsurare.'],next:'data-quality',quality:true};
+window.CARTO_LEARNING.items['gis-calculator']={level:'intermediate',reason:'Calculezi expresii sigure și verifici valori lipsă și tipuri.',prerequisites:['geospatial-data'],outcomes:['Calculezi valori pixel cu pixel și feature cu feature.','Explici rezultatul și erorile din arborele expresiei.'],next:'data-quality',quality:true};
 for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id)window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;
