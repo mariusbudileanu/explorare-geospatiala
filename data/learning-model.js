@@ -123,4 +123,10 @@ for(const [id,prerequisites,outcomes,next] of [
   ['thematic-methods',['classification-lab'],['Compari șase metode de reprezentare și cerințele datelor.','Verifici mărimi proporționale, legende și normalizare.'],'raster-analysis'],
   ['raster-analysis',['raster-styling','gis-calculator'],['Calculezi măști, expresii și suprafețe pe grile native.','Verifici NoData, compatibilitatea și codificarea anilor.'],'data-quality']
 ])window.CARTO_LEARNING.items[id]={level:'intermediate',reason:'Alegi și verifici operații și interpretări pe exemple controlate.',prerequisites,outcomes,next,quality:true};
-for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id)window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;
+for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id&&window.CARTO_LEARNING.items[lesson.id])window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;
+
+for(const [id,prerequisites,outcomes,next] of [
+  ['spatial-statistics',['thematic-methods','analysis'],['Calculezi densități și autocorelație cu ponderi explicite.','Compari scara și zonarea fără inferență nejustificată.'],'network-accessibility'],
+  ['network-accessibility',['measurement-lab','analysis'],['Compari trasee după distanță și timp.','Verifici accesibilitatea și componentele neconectate.'],'data-quality']
+])window.CARTO_LEARNING.items[id]={level:'advanced',reason:'Justifici suportul, costul și limitele unei analize sintetice.',prerequisites,outcomes,next,quality:true};
+for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id&&window.CARTO_LEARNING.items[lesson.id])window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;

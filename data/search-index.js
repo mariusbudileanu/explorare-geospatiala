@@ -531,6 +531,8 @@ window.CARTO_SEARCH_INDEX = [
       "L09 · Topologie completă: verifică relațiile puncte–linii–poligoane, găurile și regulile modelului pe scene editabile.",
       "Calculează pe grila raster",
       "L11 · Raster Styling & Terrain: inspectează Horn 3×3, NoData și resampling pe un teren sintetic metric.",
+      "Verifică suportul și accesibilitatea",
+      "L16 · Agregare și MAUP · L17 · Costuri și rețele",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Vrei un subset de obiecte întregi care intersectează limita. Ce alegi?",
@@ -597,6 +599,8 @@ window.CARTO_SEARCH_INDEX = [
       "Doar puncte și poligoane simple cu găuri/multipoligoane disjuncte în scenele controlate. Poligoanele invalide sunt refuzate. Clip și Intersect păstrează atributele, fără realocarea populației; Intersect adaugă ID-ul limitei. Contactul numai pe frontieră nu produce poligon. Suma ariilor pe features include suprapuneri, nu este aria reuniunii. NULL, câmp absent și rezultat gol sunt distincte. Cache: maximum 16 rezultate, cheie cu scena, operația și toți parametrii.",
       "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
       "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion",
+      "Verifică suportul și accesibilitatea",
+      "L16 · Agregare și MAUP · L17 · Costuri și rețele",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Cabinetul cel mai apropiat în linie dreaptă este și cel mai accesibil?",
@@ -5294,6 +5298,12 @@ window.CARTO_SEARCH_INDEX = [
       "Map Design Studio",
       "Cum fac vizibilă informația principală fără să ascund contextul?",
       "Comparația păstrează 25 de puncte sintetice și contururile contextuale. Modifică accentul titlului, proeminența legendei, mărimea simbolului tematic, grosimea conturului, intensitatea fundalului, densitatea și ierarhia etichetelor, halo și paleta. Dimensiunile sunt unități vizuale SVG, nu o scară geografică.",
+      "Map Design Studio 3.0 · alegeri și consecințe",
+      "Modifică A și B separat: paletă, mărime, contur, opacitate, titlu, fundal și etichete. Citește legenda efectivă și inspectează contrastul. Preseturile sunt puncte de plecare, nu soluții optime universale.",
+      "Aceleași 25 de servicii sintetice și aceleași poziții în A/B; coordonatele SVG nu sunt distanțe geografice. Mărimea exprimă accent semantic, nu populație sau capacitate. Clasele principal / secondary / local sunt documentate în tabel. Schema secvențială ordonează importanța; cea divergentă este un contraexemplu: aceste categorii nu au un zero cantitativ. Paleta calitativă separă categorii fără ordine. Legenda listează culorile, razele, opacitatea și numărul real de obiecte pentru fiecare categorie.",
+      "Plasarea reutilizează motorul determinist de etichetare: prioritate semantică sau egală, poziții alternative ori fixate, plafon de etichete. Coliziunile folosesc bounding boxes estimative, nu formele exacte ale literelor; nu este QGIS PAL. Contrastul este raportul luminanțelor sRGB pentru interiorul simbolului compus pe fundalul contextual uniform și pentru contur; suprapunerile și textura nu sunt modelate. Pragul 3:1 este orientativ pentru simboluri, nu certificare WCAG a hărții. Textul, IDs și tabelul completează culoarea. Vezi L06 pentru simboluri cantitative proporționale, fluxuri și clasificare L05; aceste formule rămân neschimbate.",
+      "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
+      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
       "Presetări ca puncte de plecare, fără verdict universal",
       "Balanced",
       "Context discret, simboluri moderate, maximum 12 etichete și prioritate semantică: un compromis pentru citirea temei.",
@@ -6811,6 +6821,11 @@ window.CARTO_SEARCH_INDEX = [
       "Analiza datelor geospațiale",
       "Alege și justifică un lanț de operații și limitele concluziei.",
       "Formulezi o întrebare spațială verificabilă.",
+      "Statistici spațiale și MAUP",
+      "Justifici suportul, costul și limitele unei analize sintetice.",
+      "Calculezi densități și autocorelație cu ponderi explicite.",
+      "Rețele și accesibilitate",
+      "Compari trasee după distanță și timp.",
       "T05 · Populație și servicii publice",
       "Integrează recensământ, servicii și CRS, cu problema realocării atributelor.",
       "Compari populația și serviciile fără a confunda proximitatea cu accesul.",
@@ -7238,7 +7253,12 @@ window.CARTO_SEARCH_INDEX = [
       "Generalizare, metode tematice și calcule raster inspectabile.",
       "L02 · Generalizare cartografică",
       "L06 · Metode tematice interactive",
-      "L15 · Analiză raster"
+      "L15 · Analiză raster",
+      "Laboratoare v3 · P05",
+      "Design cartografic, statistici spațiale și accesibilitate pe rețele.",
+      "L07 · Stilizare & etichetare",
+      "L16 · Statistici spațiale și MAUP",
+      "L17 · Rețele și accesibilitate"
     ]
   },
   {
@@ -7357,6 +7377,44 @@ window.CARTO_SEARCH_INDEX = [
       "Forest Loss: codificarea anilor este citită din metadatele existente; 0 este NoData semantic al produsului local, nu an sau dovada absenței pierderii. 2013 și 2014 se combină prin OR, fără dublă numărare; aceeași celulă are un singur cod de an. Sumarul folosește grila completă, dar imaginile 16×12 sunt doar eșantioane nearest ale centrelor native, nu un raster resamplat pentru analiză. Nu se estimează pierderi în celule NoData. Preview nu înlocuiește harta completă; overlay nu demonstrează cauzalitate. Datele complete de atelier nu sunt distribuite aici.",
       "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
       "Digital Companion · Surse și licențe"
+    ]
+  },
+  {
+    "id": "spatial-statistics",
+    "href": "spatial-statistics.html",
+    "description": "Agregare, normalizare, vecinătate și autocorelație descriptivă pe unități sintetice.",
+    "paragraphs": [
+      "Agregare, normalizare, vecinătate și autocorelație descriptivă pe unități sintetice.",
+      "Ce vei ști să faci",
+      "Calculezi densități și autocorelație cu ponderi explicite.",
+      "Compari scara și zonarea fără inferență nejustificată.",
+      "Înainte de a începe",
+      "Metode tematice interactive · Analiza datelor geospațiale. Recomandări de pregătire; accesul rămâne liber.",
+      "Statistici spațiale și MAUP",
+      "Compară unitățile de bază din A cu blocuri, benzi orizontale sau verticale în B. Schimbă numărul, densitatea sau rata; verifică totalul, ponderile și indicele Moran recalculat.",
+      "Suport sintetic: 4×4 dreptunghiuri contigue într-un plan cartezian metric de 4×4 km. Coloane de 0,5 / 1 / 1,5 / 1 km; rânduri de 1 / 0,5 / 1,5 / 1 km. Fiecare unitate are un număr fictiv de beneficiari (subset al persoanelor eligibile) și un numitor fictiv de persoane eligibile; aria vine din dimensiunile metrice. Agregarea însumează numărătorul, numitorul și aria. Densitate = SUM(beneficiari) / SUM(km²); rată = 100 × SUM(beneficiari) / SUM(eligibili). Nu folosim media neponderată a ratelor.",
+      "Moran I = (n/S0) × SUM(wij zi zj) / SUM(zi²), zi = xi − media unităților; diagonala ponderilor este zero. Rook: frontieră comună; Queen: frontieră sau colț. Vecinătatea agregată rezultă din contactele celulelor membre. Ponderi binare sau standardizare pe rând; S0 este suma efectivă. Opțiunea insulă elimină legăturile ultimei unități: rând zero, unitatea rămâne în n și în centrare (convenție explicită). Fără vecini sau varianță zero: I nedefinit, nu zero. Nu calculăm p-value sau semnificație; I descriptiv nu demonstrează cauzalitate. MAUP: aceeași populație poate produce statistici diferite prin scară și zonare. Două zonări pot întâmplător avea același I; nu promitem o diferență universală.",
+      "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
+      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe"
+    ]
+  },
+  {
+    "id": "network-accessibility",
+    "href": "network-accessibility.html",
+    "description": "Trasee minime după distanță sau timp și zone de serviciu pe o rețea explicit sintetică.",
+    "paragraphs": [
+      "Trasee minime după distanță sau timp și zone de serviciu pe o rețea explicit sintetică.",
+      "Ce vei ști să faci",
+      "Compari trasee după distanță și timp.",
+      "Verifici accesibilitatea și componentele neconectate.",
+      "Înainte de a începe",
+      "Măsurători geospațiale · Analiza datelor geospațiale. Recomandări de pregătire; accesul rămâne liber.",
+      "Rețele și accesibilitate",
+      "Alege origine, destinație, cost (metri sau minute) și buget. Compară traseul cel mai scurt după distanță cu cel mai rapid după vitezele didactice. Activează barierele sau încetinirea și observă serviciile accesibile.",
+      "Nu există rețea rutieră adecvată în registrul actual: folosim exclusiv un graf educațional sintetic, nedirecționat, cu 14 noduri și 18 muchii inițiale. Coordonate carteziene în metri; lungime = distanța dintre capetele fiecărei muchii drepte. Viteze inventate explicit pentru demonstrație: 3 sau 6 km/h; muchia 5–6 poate fi încetinită la 1 km/h. Minute = metri / (km/h × 1000/60). Algoritm Dijkstra pentru costuri strict pozitive; intersecții numai la noduri, fără conectare automată după desen.",
+      "Zona de serviciu este mulțimea nodurilor și fragmentelor de muchii cu cost minim ≤ buget. Costul este uniform de-a lungul fiecărei muchii; uniunea intervalelor accesibile din ambele capete evită dubla numărare. Nu desenăm un buffer euclidian și nu atribuim accesibilitate unor suprafețe fără rețea. Nodurile 12–13 sunt o componentă separată; destinațiile inaccesibile sunt marcate explicit. Barierele elimină muchiile 1–2 și 9–10; traversarea 5–6 rămâne. Școala: nodurile 3 și 12; serviciu medical: nodul 11. Accesibilitatea aici nu include capacitate, orar, eligibilitate, trafic sau acces real la servicii. Distanța în linie dreaptă nu este timp și nu garantează accesibilitate.",
+      "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
+      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe"
     ]
   }
 ];

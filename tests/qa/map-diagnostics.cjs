@@ -24,13 +24,13 @@ const server=http.createServer((req,res)=>{const relative=decodeURIComponent(new
    window.qaResourceSnapshot=()=>({observers:window.qaObservers,listeners:window.qaListeners(),nodes:document.querySelector('#diag-active').querySelectorAll('*').length,canvas:document.querySelectorAll('#diag-active canvas').length,svg:document.querySelectorAll('#diag-active svg').length,raf:frames.size});
    // Use the uninstrumented frame only for this probe. Sampling in its following
    // task includes ResizeObserver delivery, which occurs after frame callbacks.
-   window.qaQuiescent=async({maxFrames=32,maxMs=1500,stableFrames=3}={},sample=()=>({resources:window.qaResourceSnapshot(),activity:window.qaFrameActivity(),state:window.CARTO_MAP_DIAGNOSTICS.getState(),metrics:window.CARTO_MAP_DIAGNOSTICS.getMetrics(),ready:!!document.querySelector('#diag-active-title')&&!!document.querySelector('#diag-panel-A svg, #diag-panel-A canvas')}))=>{
+   window.qaQuiescent=async({maxFrames=32,maxMs=1500,stableFrames=3,frame=fn=>raf.call(window,fn),cancelFrame=id=>cancel.call(window,id)}={},sample=()=>({resources:window.qaResourceSnapshot(),activity:window.qaFrameActivity(),state:window.CARTO_MAP_DIAGNOSTICS.getState(),metrics:window.CARTO_MAP_DIAGNOSTICS.getMetrics(),ready:!!document.querySelector('#diag-active-title')&&!!document.querySelector('#diag-panel-A svg, #diag-panel-A canvas')}))=>{
      const started=performance.now(),samples=[];let previous='',stable=0;
      for(let step=1;step<=maxFrames;step++){
        const remaining=maxMs-(performance.now()-started);if(remaining<=0)break;
        await new Promise((resolve,reject)=>{
-         let task;const deadline=setTimeout(()=>{cancel.call(window,id);clearTimeout(task);reject(Error('Lifecycle quiescence deadline: '+JSON.stringify({maxFrames,maxMs,samples:samples.slice(-6)})));},remaining);
-         const id=raf.call(window,()=>{task=setTimeout(()=>{clearTimeout(deadline);resolve();},0);});
+         let task;const deadline=setTimeout(()=>{cancelFrame(id);clearTimeout(task);reject(Error('Lifecycle quiescence deadline: '+JSON.stringify({maxFrames,maxMs,samples:samples.slice(-6)})));},remaining);
+         const id=frame(()=>{task=setTimeout(()=>{clearTimeout(deadline);resolve();},0);});
        });
        const current=sample(),signature=JSON.stringify(current);samples.push({step,...current});
        stable=current.ready&&current.resources.raf===0&&signature===previous?stable+1:0;previous=signature;
@@ -48,10 +48,16 @@ const server=http.createServer((req,res)=>{const relative=decodeURIComponent(new
  const resourceState=async()=>{const result=await page.evaluate(()=>window.qaQuiescent());equal(result.resources.raf,0,'No pending application RAF after bounded stabilization');equal(result.activity.scheduled,result.activity.completed+result.activity.cancelled,'Every scheduled callback drained or cancelled by application lifecycle');quiescence.push({steps:result.steps,elapsedMs:result.elapsedMs,activity:result.activity});return result.resources;};
  // Prove that the probe rejects persistent pending frames, continuous activity,
  // and resource growth, rather than hiding those failure modes with a wait.
+ // Self-tests inject microtask frames: these probe-contract assertions must not
+ // depend on OS delivery of six real animation frames within 500 ms. All actual
+ // application measurements below still use the unchanged native RAF defaults.
  for(const defect of ['pending','continuous','growing']){
-   const result=await page.evaluate(async defect=>{let tick=0;try{await window.qaQuiescent({maxFrames:6,maxMs:500},()=>{tick++;return {ready:true,resources:{raf:defect==='pending'?1:0,nodes:defect==='growing'?tick:1},activity:{scheduled:defect==='continuous'?tick:1}};});return {rejected:false};}catch(error){return {rejected:true,diagnostic:error.message,tick};}},defect);
+   const result=await page.evaluate(async defect=>{let tick=0;try{await window.qaQuiescent({maxFrames:6,maxMs:500,frame:fn=>{queueMicrotask(fn);return 0;},cancelFrame:()=>{}},()=>{tick++;return {ready:true,resources:{raf:defect==='pending'?1:0,nodes:defect==='growing'?tick:1},activity:{scheduled:defect==='continuous'?tick:1}};});return {rejected:false};}catch(error){return {rejected:true,diagnostic:error.message,tick};}},defect);
    ok(result.rejected&&result.diagnostic.includes('Lifecycle')&&result.diagnostic.includes('samples'),'Bounded probe diagnoses '+defect);equal(result.tick,6,'Finite frame bound for '+defect);
  }
+ // Independently retain the deadline/cancellation contract with a stalled frame.
+ const deadlineProbe=await page.evaluate(async()=>{let cancelled=0,tick=0;try{await window.qaQuiescent({maxFrames:6,maxMs:50,frame:()=>41,cancelFrame:id=>{if(id===41)cancelled++;}},()=>{tick++;return {};});return {rejected:false};}catch(error){return {rejected:true,diagnostic:error.message,cancelled,tick};}});
+ ok(deadlineProbe.rejected&&deadlineProbe.diagnostic.includes('Lifecycle quiescence deadline'),'Probe rejects a stalled frame at its wall-clock deadline');equal(deadlineProbe.cancelled,1,'Deadline cancels its pending frame');equal(deadlineProbe.tick,0,'No fictional sample is generated by deadline recovery');
  const sceneUI=()=>page.evaluate(()=>({hash:location.hash,state:window.CARTO_MAP_DIAGNOSTICS.getState(),metrics:window.CARTO_MAP_DIAGNOSTICS.getMetrics(),heading:document.querySelector('#diag-active-title').textContent,selector:document.querySelector('#diag-select').value,shared:document.querySelector('#diag-shared')?.value,sharedLabel:document.querySelector('#diag-shared')?.selectedOptions[0]?.textContent,custom:document.querySelectorAll('#diag-shared [data-custom]').length,customDisabled:document.querySelector('#diag-shared [data-custom]')?.disabled,focus:document.activeElement.id,historyWrites:window.qaHistoryWrites}));
  async function expectScene(id,hash){await page.waitForFunction(id=>window.CARTO_MAP_DIAGNOSTICS?.getState()?.scenario===id,id);const ui=await sceneUI(),s=D.scenes.find(s=>s.id===id);equal(ui.hash,hash,'URL matches '+id);equal(ui.heading,s.title,'Heading matches '+id);equal(ui.selector,id,'Selector matches '+id);if(ui.shared!==undefined)equal(ui.shared,ui.state.sharedLocation.join(','),'Shared control matches state '+id);return ui;}
  async function expectPoint(point,custom,label){const ui=await sceneUI();equal(ui.state.sharedLocation,point,'Canonical shared location');equal(ui.shared,point.join(','),'Selector represents exact shared coordinates');equal(ui.custom,custom?1:0,'Exactly one custom option only when needed');ok(custom?ui.sharedLabel.startsWith('Punct personalizat'):ui.sharedLabel===label,'Accurate native option label');if(custom)equal(ui.customDisabled,false,'Custom option is readable and selectable');for(const side of ['A','B']){equal(ui.metrics[side].geographic,point,'Same geographic point in '+side);ok(ui.metrics[side].coordinates.every(Number.isFinite),'Finite projected coordinates in '+side);}return ui;}

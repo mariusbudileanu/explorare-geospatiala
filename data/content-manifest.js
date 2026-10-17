@@ -197,3 +197,14 @@ for(const [id,lab,title,group,keywords] of [
   window.CARTO_CONTENT.groups.find(g=>g.id===group).lessons.push(id);
 }
 window.CARTO_CONTENT.companion.p04=['generalization-lab','thematic-methods','raster-analysis'];
+
+// P05 extends the existing L07 destination; two new analytical destinations.
+window.CARTO_CONTENT.lessons.find(l=>l.id==='styling-labeling').lab_id='L07';
+for(const [id,lab,title,keywords] of [
+  ['spatial-statistics','L16','Statistici spațiale și MAUP',['Moran','MAUP','autocorelație','agregare','ponderi','densitate','zoning']],
+  ['network-accessibility','L17','Rețele și accesibilitate',['Dijkstra','rețea','traseu minim','network','service area','accesibilitate']]
+]){
+  window.CARTO_CONTENT.lessons.push({id,lab_id:lab,title,short_title:title,href:id+'.html',part:'Analiză geospațială',source_section:'',source_pages:[],figures:[],keywords,content_types:['concept','exercițiu'],interactive_components:[id],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'qgis'});
+  window.CARTO_CONTENT.groups.find(g=>g.id==='analysis').lessons.push(id);
+}
+window.CARTO_CONTENT.companion.p05=['styling-labeling','spatial-statistics','network-accessibility'];
