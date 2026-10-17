@@ -167,3 +167,6 @@ for (const group of window.CARTO_CONTENT.groups) {
     return `<a class="nav-item${active?' active':''}" href="${escape(prefix+lesson.href)}"${active?' aria-current="page"':''}${associated?` data-interactive="LAB" aria-label="${escape(title)} · Experiență interactivă asociată"`:''}>${escape(title)}</a>`;
   }).join('')}</details>`).join('');
 })(window.CARTO_CONTENT);
+
+// Stable v3 IDs extend existing canonical destinations; no duplicate lesson entries.
+for(const [id,lab] of Object.entries({"projection-crs-lab":"L03","formats-interoperability":"L10","data-quality":"L13"}))window.CARTO_CONTENT.lessons.find(l=>l.id===id).lab_id=lab;

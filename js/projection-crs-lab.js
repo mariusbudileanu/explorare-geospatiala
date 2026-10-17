@@ -33,6 +33,7 @@
     $('compare-mode').value=state.mode;$('compare-toggle-buttons').hidden=state.mode!=='toggle';
     for(const id of ['A','B'])$('show-'+id).setAttribute('aria-pressed',String(state.active===id));
     $('projection-status').textContent='Aceeași geometrie și același punct în ambele vederi. Punct: '+format(state.sharedLocation[0],6)+'° E, '+format(state.sharedLocation[1],6)+'° N.';
+    root.dispatchEvent(new CustomEvent('carto:projection-point',{detail:[...state.sharedLocation]}));
   }
   function initialize(){
     if(!E||!C||!root.CARTO_COMPARE){$('projection-load-message').textContent='Experimentul nu s-a inițializat. Explicațiile și legăturile de mai jos rămân disponibile.';return;}

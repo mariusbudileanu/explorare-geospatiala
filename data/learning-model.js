@@ -113,3 +113,6 @@ window.CARTO_LEARNING = (() => {
   };
   return {levels,items,stages,checks};
 })();
+
+// Learning metadata derives laboratory identity from the content manifest.
+for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id)window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;

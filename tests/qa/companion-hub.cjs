@@ -19,6 +19,7 @@ const textHash=value=>crypto.createHash('sha256').update(value.toString('utf8').
 const omitFunctions=(source,names)=>{for(const name of names){const start=source.indexOf('  function '+name+'(');if(start<0)continue;const end=source.indexOf('\n  function ',start+1);source=source.slice(0,start)+source.slice(end+1);}return source;};
 for(const file of protectedFiles){
  let actual=fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n'),before=execFileSync('git',['show','44325c3f1db1ebbd6bf322eda7045632c7858d52:'+file],{cwd:root}).toString('utf8').replace(/\r\n/g,'\n');
+ if(file==='CITATION.cff'){const citation=JSON.parse(actual);equal(citation.authors[0].affiliation,'University of Bucharest, Faculty of Geography','Verified v2.0.0 affiliation');delete citation.authors[0].affiliation;actual=JSON.stringify(citation);before=JSON.stringify(JSON.parse(before));}
  if(file==='js/classification-engine.js'){
   actual=omitFunctions(actual,['equalUpper','quantileLerp','roundedRatio','interpolate','scaledRate']).replace(':scaledRate(v,d,scale)',':v/d*scale');
   before=omitFunctions(before,['equalUpper','quantileLerp']);
