@@ -214,3 +214,10 @@ window.CARTO_CONTENT.lessons.find(l=>l.id==='map-diagnostics').lab_id='L08';
 window.CARTO_CONTENT.lessons.push({id:'spatial-decision',lab_id:'L18',title:'Decizie spațială multicriterială',short_title:'Decizie spațială',href:'spatial-decision.html',part:'Analiză geospațială',source_section:'',source_pages:[],figures:[],keywords:['decizie','multicriterial','normalizare','ponderi','sensibilitate','WLC','suitability','constraints'],content_types:['concept','exercițiu'],interactive_components:['spatial-decision'],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'qgis'});
 window.CARTO_CONTENT.groups.find(g=>g.id==='analysis').lessons.push('spatial-decision');
 window.CARTO_CONTENT.companion.p06=['map-diagnostics','spatial-decision'];
+
+// P07: one stable destination for each external laboratory; both belong to geospatial data.
+for(const [id,lab,title,keywords,description] of [
+ ['zarr-cloud-data','L12','Zarr Cloud Data Lab',['Zarr','chunk','ANM','EOCube','sharding','cub temporal','cloud'],'Explorează un snapshot offline, agregări și costurile modelate ale accesului la chunks.'],
+ ['georeferencing-lab','L19','Laborator de georeferențiere',['georeferențiere','georeferencing','GCP','RMSE','Stereo 70','PNG','world file'],'Georeferențiază două hărți fictive Stereo 70 și verifică independent rezultatul.']
+]){window.CARTO_CONTENT.lessons.push({id,lab_id:lab,title,short_title:title,href:id+'.html',part:'Date geospațiale',source_section:'',source_pages:[],figures:[],keywords,content_types:['concept','exercițiu'],interactive_components:[id],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'date',companion:{category:'Laborator v3 · '+lab,description,contexts:['geospatial-data']}});window.CARTO_CONTENT.groups.find(g=>g.id==='geospatial-data').lessons.push(id);}
+window.CARTO_CONTENT.companion.p07=['zarr-cloud-data','georeferencing-lab'];

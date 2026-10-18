@@ -38,7 +38,7 @@ ok(!/email|orcid/i.test(JSON.stringify(cff)),'No private identifiers');
 const registry=JSON.parse(read('data/data-registry.json'));
 const originalIds=['adizmb-schools','adizmb-medical','adizmb-sports','administrative-boundaries','census2021','hansen-loss','copernicus-dem'];
 const contextIds=['protected-areas-context','hydrography-context','relief-context','landforms-context'];
-assert.deepEqual(registry.datasets.map(d=>d.id),[...originalIds,...contextIds]);checks++;
+assert.deepEqual(registry.datasets.map(d=>d.id),[...originalIds,...contextIds,'anm-eocube-snapshot']);checks++;
 const unverifiedUrls=new Set(['hydrography-context','landforms-context']);
 const sandbox={window:{}};vm.runInNewContext(read('data/data-registry.js'),sandbox);assert.deepEqual(JSON.parse(JSON.stringify(sandbox.window.CARTO_DATA_REGISTRY)),registry);checks++;
 for(const d of registry.datasets){for(const field of ['name','provider','original_format','original_crs','license_name','modifications','platform_use'])ok(typeof d[field]==='string'&&d[field].length>0,d.id+' metadata '+field);for(const field of ['official_source','access_url','license_url']){if(unverifiedUrls.has(d.id)){assert.equal(d[field],null,'No invented source or license URL');ok(d.license_status==='needs_confirmation'&&!d.interactive_subsets.length,'Unknown context is not distributed');}else ok(new URL(d[field]).protocol==='https:',d.id+' public HTTPS '+field);}ok(!d.educational_download_package,d.id+' no workshop package');for(const s of d.interactive_subsets){ok(fs.existsSync(path.join(root,s.file)),'Runtime subset exists: '+s.file);assert.equal(fs.statSync(path.join(root,s.file)).size,s.bytes);checks++;}}

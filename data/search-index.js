@@ -356,6 +356,18 @@ window.CARTO_SEARCH_INDEX = [
       "Landforms geomorfometrice — extensie opțională T06",
       "Proveniența fișierului istoric necesită confirmare",
       "GeoPackage în tutorial; format original neconfirmat · CRS original neconfirmat; verifică fișierul",
+      "ANM daily grids — snapshot educațional EOCube",
+      "ANM / MeteoRomania (producător); UVT / EOCube (procesator și gazdă)",
+      "open-v1; snapshot exportat 2026-10-16T10:41:19 · 1961–2026; maxime/precipitații până la 2026-10-15, minime până la 2026-10-16; 2026 parțial",
+      "Zarr; sursa ANM în NetCDF · EPSG:4326",
+      "România · Grilă nativă 0.01°; sumar spațial 7×12 celule (0.07°×0.12°)",
+      "Date meteorologice zilnice gridate: ANM / MeteoRomania, Departamentul de Climatologie; procesare și găzduire UVT / EOCube.Ro. CC BY 4.0.",
+      "Snapshot furnizat: agregare spațială 7×12, medii anuale (nu totaluri de precipitații), ultima hartă zilnică și rezumate de localități, cuantizare uint8 cu 255 pentru lipsă. Nicio extracție nouă în P07.",
+      "L12 Zarr Cloud Data Lab — interactiv offline; layout-urile B/C și timpii sunt modelați, nu acces cloud live.",
+      "Niciun pachet educațional. Snapshot agregat offline ANM/EOCube: JSON agregat și cuantizat, EPSG:4326, 1622791 bytes",
+      "Nu este întregul cub zilnic sau un pachet T01–T06.",
+      "Extinderea prealocată până în 2050 nu este acoperire observată.",
+      "Exporterul Python original nu este distribuit și nu se execută în aplicație; regenerarea completă nu a fost verificată în acest pachet.",
       "Licențe",
       "Cod propriu: MIT. Explicații, exerciții și reconstrucții originale: Creative Commons Attribution 4.0 International (CC BY 4.0). Datele, interfețele, imaginile și bibliotecile terțe își păstrează licențele; această schemă nu le relicențiază.",
       "Surse și atribuiri",
@@ -546,7 +558,9 @@ window.CARTO_SEARCH_INDEX = [
       "Informația este absentă sau necunoscută; verific sursa.",
       "Serviciul este prezent.",
       "Alegerea justificată: Informația este absentă sau necunoscută; verific sursa.",
-      "NULL nu este un zero observat. Păstrează informația necunoscută separat de prezența și absența documentate."
+      "NULL nu este un zero observat. Păstrează informația necunoscută separat de prezența și absența documentate.",
+      "Laboratoare v3 · P07",
+      "L12 · Zarr Cloud Data Lab · L19 · Georeferențiere Stereo 70"
     ]
   },
   {
@@ -4236,8 +4250,10 @@ window.CARTO_SEARCH_INDEX = [
       "Experimente de stocare și acces",
       "Compară schimbul unui vector mic, subsetarea unui raster și un cub temporal. Volumul util, obiectele necesare și read amplification sunt mărimi distincte.",
       "Model ipotetic necomprimat: raster 6×6, cub 6×6×6, float32 de 4 bytes, tiles 2×2 și chunks 2×2×2. Metadatele, compresia și overhead-ul HTTP sunt excluse. Bytes modelați / bytes utili exprimă amplificarea citirii; traficul real al experimentului este zero. Nu este benchmark și nu se interoghează S3 sau EOCube.",
-      "F5 și F6 rămân explicațiile pentru cuburi. L12 Zarr este planificat pentru P07; simulatorul extern nu este încă integrat.",
-      "Controalele RO/EN și experimentele necesită JavaScript. Metoda, limitele și navigarea rămân disponibile."
+      "F5 și F6 rămân explicațiile pentru cuburi. L12 Zarr este disponibil separat, cu snapshot offline și acces modelat.",
+      "Controalele RO/EN și experimentele necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
+      "Experimentează după F5/F6",
+      "L12 · Zarr: snapshot offline și acces modelat"
     ]
   },
   {
@@ -6589,7 +6605,9 @@ window.CARTO_SEARCH_INDEX = [
       "Atribui EPSG:3844 prin Set Layer CRS, fără transformare.",
       "Măsor geodezic pe elipsoid sau reproiectez într-un CRS metric adecvat și verific deformarea.",
       "Alegerea justificată: Măsor geodezic pe elipsoid sau reproiectez într-un CRS metric adecvat și verific deformarea.",
-      "EPSG:4326 are coordonate unghiulare. O măsurare elipsoidală poate întoarce metri fără a schimba coordonatele; calculul plan cere reproiectare reală. Set Layer CRS schimbă interpretarea numerelor, nu geometria."
+      "EPSG:4326 are coordonate unghiulare. O măsurare elipsoidală poate întoarce metri fără a schimba coordonatele; calculul plan cere reproiectare reală. Set Layer CRS schimbă interpretarea numerelor, nu geometria.",
+      "Aplică coordonatele proiectate",
+      "L19 · Două hărți fictive în Stereo 70"
     ]
   },
   {
@@ -6788,6 +6806,11 @@ window.CARTO_SEARCH_INDEX = [
       "Compari pragurile și efectivele claselor.",
       "Metode tematice interactive",
       "Compari șase metode de reprezentare și cerințele datelor.",
+      "Zarr Cloud Data Lab",
+      "Verifici ipotezele și rezultatele unui experiment controlat.",
+      "Compari chunks, volume utile și costuri modelate.",
+      "Laborator de georeferențiere",
+      "Editezi GCP-uri și interpretezi puncte independente.",
       "Calculator GIS",
       "Calculezi expresii sigure și verifici valori lipsă și tipuri.",
       "Calculezi valori pixel cu pixel și feature cu feature.",
@@ -7278,7 +7301,9 @@ window.CARTO_SEARCH_INDEX = [
       "L17 · Rețele și accesibilitate",
       "Laboratoare v3 · P06",
       "Inspectează metodele, corectează controlat și compară decizii explicite.",
-      "L08 · Diagnostic controlat · L18 · Decizie multicriterială"
+      "L08 · Diagnostic controlat · L18 · Decizie multicriterială",
+      "Laboratoare v3 · P07",
+      "L12 · Zarr Cloud Data Lab · L19 · Georeferențiere Stereo 70"
     ]
   },
   {
@@ -7459,6 +7484,45 @@ window.CARTO_SEARCH_INDEX = [
       "Interactivitatea și controalele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
       "Digital Companion · L16 · MAUP · L17 · Rețele / Networks · L08 · Diagnostic · Calitate / Quality · Surse și licențe / Sources",
       "Metodologie / Methodology: OECD / EU / JRC · Handbook on Constructing Composite Indicators (2008) ↗. Nu reprezintă validarea externă a scenariului sintetic / not external validation of the synthetic scenario."
+    ]
+  },
+  {
+    "id": "zarr-cloud-data",
+    "href": "zarr-cloud-data.html",
+    "description": "Un snapshot offline pentru a explora chunks, selecții și costuri de acces modelate.",
+    "paragraphs": [
+      "Un snapshot offline pentru a explora chunks, selecții și costuri de acces modelate.",
+      "Ce vei ști să faci",
+      "Compari chunks, volume utile și costuri modelate.",
+      "Separi ziua solicitată de agregatul încorporat și perioada observată.",
+      "Înainte de a începe",
+      "Formate & interoperabilitate. Recomandări de pregătire; accesul rămâne liber.",
+      "Metodă, date și limite",
+      "Snapshot ANM / MeteoRomania, procesat de UVT / EOCube; export 16 octombrie 2026. Maximele și precipitațiile sunt disponibile până la 15 octombrie, minimele până la 16 octombrie. Grila EPSG:4326 are pasul 0,01°. Sunt încorporate numai agregări spațiale 7×12, medii anuale cuantizate, ultima hartă zilnică și rezumate pentru localități, nu întregul cub zilnic.",
+      "Ziua selectată definește interogarea modelată. Înaintea ultimei zile valide se afișează media anului respectiv; ultima zi are un grid zilnic separat. Anul 2026 este incomplet. Precipitația anuală reprezentată este media valorilor zilnice, în mm, nu suma anuală. Extinderea până în 2050 este prealocare; zerourile după frontieră nu sunt observații.",
+      "Layout A [90,161,324] este configurația documentată; B și C sunt ipotetice. Obiectele, transferul și volumul decomprimat sunt modelate. Traficul real către cloud este zero; volumul decomprimat nu este memoria browserului. Mediane comprimate și ipoteze de latență/debit produc estimări, nu benchmark-uri. Regula de citire se referă la layout-ul comprimat demonstrat; sharding Zarr v3 poate permite acces separat la inner chunks.",
+      "Tendința afișată este o regresie liniară descriptivă pe anii compleți; nu se calculează semnificație statistică.",
+      "Metadate și licențe · F5 · Zarr · F6 · NetCDF vs Zarr",
+      "Interactivitatea necesită JavaScript. Metoda, limitele și navigarea rămân disponibile dacă JavaScript este dezactivat sau eșuează."
+    ]
+  },
+  {
+    "id": "georeferencing-lab",
+    "href": "georeferencing-lab.html",
+    "description": "Două hărți fictive, Stereo 70 și verificarea critică a georeferențierii.",
+    "paragraphs": [
+      "Două hărți fictive, Stereo 70 și verificarea critică a georeferențierii.",
+      "Ce vei ști să faci",
+      "Editezi GCP-uri și interpretezi puncte independente.",
+      "Verifici inversabilitatea, RMSE și exportul PNG + PGW în Stereo 70.",
+      "Înainte de a începe",
+      "Laborator Proiecții & CRS. Recomandări de pregătire; accesul rămâne liber.",
+      "Metodă, date și limite",
+      "Exact două hărți fictive originale: ZAREA 1:10.000 și Delta Sălciilor 1:100.000, exclusiv Stereo 70 / EPSG:3844. X este nordul, Y este estul; coloana crește spre dreapta, rândul în jos. Nu sunt hărți istorice sau date pentru planificare reală.",
+      "RMSE GCP este reziduul ajustării, în metri, nu precizia independentă. Punctele de verificare nu participă la ajustare. TPS poate avea RMSE GCP zero fără acuratețe între puncte. Eroarea cunoscută folosește 825 de probe; nu reprezintă măsurarea fiecărui pixel. Elipsele Monte Carlo sunt condiționate de zgomotul simulat. Elipsele Jacobian descriu deformarea imaginii, nu un audit al proiecției.",
+      "Polynomial 2/3 și TPS folosesc o inversă ajustată separat, aproximativă; extrapolarea poate fi instabilă. Rectificarea folosește grilă inversă la 8 pixeli și resampling biliniar; marginile fără vecini compleți devin transparente. PNG și PGW trebuie păstrate împreună, cu același nume. World file-ul nu encodează CRS: atribuie EPSG:3844 în QGIS 3.44 LTR.",
+      "Proiecții & CRS · Calitate și incertitudine · Licențe și atribuiri",
+      "Interactivitatea necesită JavaScript. Metoda, limitele și navigarea rămân disponibile dacă JavaScript este dezactivat sau eșuează."
     ]
   }
 ];

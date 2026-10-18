@@ -451,6 +451,42 @@ window.CARTO_DATA_REGISTRY = {
         "Sursa propusă pentru lucru public nu confirmă automat proveniența copiei istorice din capturi.",
         "Fără sursă verificată, acest strat este opțional și nu este o condiție de finalizare."
       ]
+    },
+    {
+      "id": "anm-eocube-snapshot",
+      "name": "ANM daily grids — snapshot educațional EOCube",
+      "provider": "ANM / MeteoRomania (producător); UVT / EOCube (procesator și gazdă)",
+      "official_source": "https://browser.stac.eocube.ro/collections/anm-daily-grids",
+      "access_url": "https://browser.stac.eocube.ro/collections/anm-daily-grids",
+      "accessed": null,
+      "edition": "open-v1; snapshot exportat 2026-10-16T10:41:19",
+      "spatial_coverage": "România",
+      "temporal_coverage": "1961–2026; maxime/precipitații până la 2026-10-15, minime până la 2026-10-16; 2026 parțial",
+      "original_format": "Zarr; sursa ANM în NetCDF",
+      "original_crs": "EPSG:4326",
+      "resolution_or_scale": "Grilă nativă 0.01°; sumar spațial 7×12 celule (0.07°×0.12°)",
+      "license_name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_status": "confirmed",
+      "attribution_required": true,
+      "attribution": "Date meteorologice zilnice gridate: ANM / MeteoRomania, Departamentul de Climatologie; procesare și găzduire UVT / EOCube.Ro. CC BY 4.0.",
+      "modifications": "Snapshot furnizat: agregare spațială 7×12, medii anuale (nu totaluri de precipitații), ultima hartă zilnică și rezumate de localități, cuantizare uint8 cu 255 pentru lipsă. Nicio extracție nouă în P07.",
+      "platform_use": "L12 Zarr Cloud Data Lab — interactiv offline; layout-urile B/C și timpii sunt modelați, nu acces cloud live.",
+      "educational_download_package": false,
+      "interactive_subsets": [
+        {
+          "name": "Snapshot agregat offline ANM/EOCube",
+          "file": "data/zarr/anm-snapshot.json",
+          "format": "JSON agregat și cuantizat",
+          "crs": "EPSG:4326",
+          "bytes": 1622791
+        }
+      ],
+      "notes": [
+        "Nu este întregul cub zilnic sau un pachet T01–T06.",
+        "Extinderea prealocată până în 2050 nu este acoperire observată.",
+        "Exporterul Python original nu este distribuit și nu se execută în aplicație; regenerarea completă nu a fost verificată în acest pachet."
+      ]
     }
   ]
 };

@@ -1,0 +1,15 @@
+/* Native application boundary: original visuals remain local to the laboratory. */
+#p07-app{border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0;overflow:clip}
+#p07-app[hidden],#p07-app [hidden]{display:none!important}
+#p07-app *{box-sizing:border-box}#p07-app .wrap{padding:0;max-width:100%}
+#p07-app header{position:static;display:block}#p07-app button,#p07-app select,#p07-app input{max-width:100%}
+#p07-app :focus-visible,.p07-controls :focus-visible{outline:3px solid var(--accent,#1676b9);outline-offset:3px}
+#p07-app .panes{min-width:0}#p07-app .pane{min-width:0}#p07-app .view{max-width:100%}
+.p07-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:16px 0}.p07-controls label{display:flex;gap:8px;align-items:center}
+.p07-controls button,.p07-controls select{padding:8px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px}
+#p07-status{flex-basis:100%;min-height:1.5em}.p07-keyboard label{display:inline-flex;flex-direction:column;gap:4px;margin:6px}
+@media(max-width:768px){#p07-app .panes{grid-template-columns:1fr}#p07-app .columns{grid-template-columns:1fr}#p07-app .wrap{padding:0}#p07-app{padding:8px}.learning-main{min-width:0}#p07-app .toolbar{flex-wrap:wrap}}
+
+body:not(.dark) #p07-app{--muted:#58616a}body.dark #p07-app{--muted:#b6c2cb}
+
+.p07-controls[hidden]{display:none!important}

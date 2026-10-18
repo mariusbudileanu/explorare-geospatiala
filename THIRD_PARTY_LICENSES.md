@@ -33,3 +33,11 @@ Fișierele runtime sunt păstrate local; harta și analizele nu necesită un CDN
 Manualul istoric, documentația QGIS, referințele EPSG și sursele de date sunt atribuite în [`ATTRIBUTION.md`](ATTRIBUTION.md). Linkurile și includerea unei figuri ori capturi nu transferă drepturile asupra materialului terț. Termenii sursei respective continuă să se aplice; seturile GIS complete pentru curs nu sunt incluse în repository.
 
 Subseturile școlare și medicale pentru Provocări GIS păstrează **CC BY 4.0**, confirmată în metodologiile surselor, și atribuirea Observatorului Urban Metropolitan București / ADIZMB. Celelalte subseturi au starea licenței consemnată în [documentația datelor](data/challenges/README.md); o licență neconfirmată nu este înlocuită de MIT sau CC BY 4.0.
+
+## P07 Georeferencing — D3 și fonturi locale
+
+Bundle-ul ESM `js/vendor/p07-d3.js` conține versiunile din lockfile-ul sursei auditate: d3-contour 4.0.2, d3-array 3.2.4, internmap 2.0.3, d3-delaunay 6.0.4, delaunator 5.1.0 (ISC), robust-predicates 3.0.3 (Unlicense). Textele notificărilor sunt păstrate în [P07_NOTICES.md](js/vendor/P07_NOTICES.md). Build-ul temporar folosește esbuild 0.28.2; nu este dependență runtime publicată.
+
+IBM Plex Sans Condensed 5.3.0 și Source Serif 4 5.3.1 sunt păstrate local, sub OFL-1.1, cu notificările originale lângă fișierele WOFF2 în `assets/georef/fonts/`. Proj4/CRS folosește biblioteca și registrul existente ale platformei; nu este introdus un al doilea bundle Proj4.
+
+Datele ANM/EOCube își păstrează CC BY 4.0 și atribuirea din registrul public; conturul Natural Earth își păstrează proveniența de domeniu public. Licențele MIT/CC BY 4.0 ale conținutului original nu relicențiază aceste componente terțe.

@@ -116,3 +116,11 @@ Ediția exactă, datum-ul vertical și rețeta originală de reproiectare rămâ
 ## Disponibilitatea surselor externe
 
 La 16 octombrie 2026, cele două endpointuri oficiale MMAP (metadate și ATOM), indicate în registru pentru contextul opțional T06, nu au putut fi validate prin TLS. Păstrăm proveniența; nu dezactivăm verificarea certificatelor și nu înlocuim sursa cu una fără legătură. Această indisponibilitate nu condiționează analiza Forest Loss peste hillshade.
+
+## P07 — laboratoare externe integrate
+
+Proprietarul Marius Budileanu a confirmat drepturile de publicare asupra codului original, scriptului de export și hărților fictive. Codul original integrat: MIT; textul educațional și cele două hărți fictive ZAREA (1:10.000) și Delta Sălciilor (1:100.000): CC BY 4.0. Ambele hărți sunt exclusiv EPSG:3844. Nu sunt reproduceri istorice.
+
+L12 folosește snapshot-ul ANM / MeteoRomania, procesat de UVT / EOCube, exportat la 16 octombrie 2026, conform intrării `anm-eocube-snapshot` din registrul canonic. Contur: Natural Earth 1:50m, domeniu public. Agregările, cuantizarea și anul parțial sunt documentate în laborator. Nu se efectuează citiri cloud. Exporterul original rămâne extern: regenerarea sa completă, mediul și cache-ul nu au fost validate pentru distribuție publică.
+
+Artefacte de intrare SHA256: simulator `3185c64833090c6dc9c11ceedb92e71e9ef4b32588292758c7e1b60dadbed2db`; exporter `2b549953708460dd766064aa1531a8506ac89808c1c53a13375a060c6cdd3f66`; Georef HTML `a1a3a66b3ec84ccf86dff631a9fa7209af141963b7d4fd521c09a7851ab76b23`; arhivă sursă `1bd87ca472eb362aebd98e7cdd616859605a2f945696da7767fd39339972a55f`. Originalele nu sunt modificate.

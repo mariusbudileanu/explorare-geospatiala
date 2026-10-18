@@ -133,3 +133,8 @@ for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id&&window.CARTO_
 
 window.CARTO_LEARNING.items['spatial-decision']={level:'advanced',reason:'Justifici normalizarea, preferințele și restricțiile pe alternative comparabile.',prerequisites:['spatial-statistics','network-accessibility'],outcomes:['Calculezi contribuții și ranguri cu ponderi explicite.','Compari sensibilitatea și excluderile fără a pretinde un optim universal.'],next:'final-project',quality:true};
 for(const lesson of window.CARTO_CONTENT.lessons)if(lesson.lab_id&&window.CARTO_LEARNING.items[lesson.id])window.CARTO_LEARNING.items[lesson.id].lab_id=lesson.lab_id;
+
+for(const [id,lab,prerequisites,outcomes]of [
+ ['zarr-cloud-data','L12',['formats-interoperability'],['Compari chunks, volume utile și costuri modelate.','Separi ziua solicitată de agregatul încorporat și perioada observată.']],
+ ['georeferencing-lab','L19',['projection-crs-lab'],['Editezi GCP-uri și interpretezi puncte independente.','Verifici inversabilitatea, RMSE și exportul PNG + PGW în Stereo 70.']]
+])window.CARTO_LEARNING.items[id]={lab_id:lab,level:'intermediate',reason:'Verifici ipotezele și rezultatele unui experiment controlat.',prerequisites,outcomes,next:'data-quality',quality:true};

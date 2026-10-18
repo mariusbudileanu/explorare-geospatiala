@@ -120,6 +120,12 @@ export function buildLearning(root,{check=false}={}) {
     }
     return html;
   };
+  const p07=(html,id)=>{
+    html=html.replace(/<!-- p07-links:start -->[\s\S]*?<!-- p07-links:end -->/g,'');
+    const links=id==='digital-companion'||id==='geospatial-data'?'<h2>Laboratoare v3 · P07</h2><p><a href="zarr-cloud-data.html">L12 · Zarr Cloud Data Lab</a> · <a href="georeferencing-lab.html">L19 · Georeferențiere Stereo 70</a></p>':id==='formats-interoperability'?'<h2>Experimentează după F5/F6</h2><p><a href="zarr-cloud-data.html">L12 · Zarr: snapshot offline și acces modelat</a></p>':id==='projection-crs-lab'?'<h2>Aplică coordonatele proiectate</h2><p><a href="georeferencing-lab.html">L19 · Două hărți fictive în Stereo 70</a></p>':'';
+    if(!links)return html;const block='<!-- p07-links:start --><section class="lesson-section">'+links+'</section><!-- p07-links:end -->';
+    return html.replace(/<footer\b[^>]*class="[^"]*site-footer[^"]*"/,block+'$&');
+  };
   const insert=(html,id,prefix)=>{
     html=strip(html);
     if(id==='home')return html.replace(/(<section class="overview-section")/,mark('home',ui.companionHome()+ui.home())+'$1');
@@ -147,7 +153,7 @@ export function buildLearning(root,{check=false}={}) {
     html=html.replace(/<main\b[^>]*>[\s\S]*?<\/main>/,`<main id="main-content" class="learning-main"><div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> → <a href="learning-path.html">Parcurs recomandat</a></div><section class="lesson-hero"><span class="eyebrow">${page.eyebrow||'CONSOLIDARE · ÎNVĂȚARE ȘI APLICARE'}</span><h1>${page.title}</h1><p class="lead">${page.description}</p></section>${body}${footer}</main>`);
     if(!html.includes('data/glossary.js'))html=html.replace('<script src="data/content-manifest.js" defer></script>','<script src="data/content-manifest.js" defer></script>\n<script src="data/glossary.js" defer></script>');
     html=html.replace('</head>',`${(page.styles||[]).map(p=>`<link rel="stylesheet" href="${p}">`).join('\n')}\n${(page.scripts||[]).map(p=>`<script src="${p}" defer></script>`).join('\n')}\n<link rel="canonical" href="https://mariusbudileanu.github.io/explorare-geospatiala/${record.href}">\n</head>`);
-    write(record.href,p06(p05(p04(p03(p02(p01(insert(html,id,''),id),id),id),id),id),id));
+    write(record.href,p07(p06(p05(p04(p03(p02(p01(insert(html,id,''),id),id),id),id),id),id),id));
   }
   const files=fs.readdirSync(root).filter(f=>f.endsWith('.html')).concat(fs.readdirSync(path.join(root,'tutorials')).filter(f=>f.endsWith('.html')).map(f=>'tutorials/'+f));
   for(const file of files){
@@ -175,6 +181,6 @@ export function buildLearning(root,{check=false}={}) {
       if(sections!==1)throw Error('Missing or duplicate workshop level section: '+id);
     }
     if(id==='tutorials')html=html.replace(/(<div class="workshop-card-top"><span class="workshop-id">)(T0[1-6])(<\/span><span>)[^<]+( · [^<]+<\/span>)/g,(_,a,key,b,d)=>a+key+b+model.levels[model.items[key].level].label+d);
-    write(file,p06(p05(p04(p03(p02(p01(insert(assets(html,prefix),id,prefix),id),id),id),id),id),id));
+    write(file,p07(p06(p05(p04(p03(p02(p01(insert(assets(html,prefix),id,prefix),id),id),id),id),id),id),id));
   }
 }
