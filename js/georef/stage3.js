@@ -3,8 +3,8 @@
 // punctul recomandat, curba RMSE față de eroarea reală și exportul PNG + world file.
 import { Viewer } from './viewer.js';
 import { TRANSFORMS, fitTransform } from './transforms.js';
-import { evaluate } from './diagnose.js';
-import { frameRaster, rectify, worldFile, drawMorph, jacobian, monteCarlo, convexHull } from './rectify.js';
+import { evaluate, denseTruth } from './diagnose.js';
+import { frameRaster, rectify, worldFile, drawMorph, jacobian, monteCarlo, convexHull, inverseConsistency } from './rectify.js';
 
 const $ = (s) => document.querySelector(s);
 const nf = (v, d = 1) => (Number.isFinite(v) ? v.toLocaleString(window.CARTO_P07?.lang==='en'?'en-GB':'ro-RO', { minimumFractionDigits: d, maximumFractionDigits: d }) : '—');
@@ -69,23 +69,26 @@ export function createStage3(get, hooks) {
 
   function setModel(m) { model = m; }
 
-  let rasterKey = '', chartKey = '', lastScene = null;
+  let rasterKey = '', chartKey = '', checkKey='', inverseCheck=null, lastScene = null;
   const tabVisible = () => $('#tab-rect').classList.contains('on');
   function update() {
     const { scene, ev, store, state } = get();
     if (!probes || probes.scene !== scene) { buildProbes(); probes.scene = scene; }
-    if (lastScene !== scene) { lastScene = scene; rasterKey = ''; mcKey = ''; v.fitted = false; }
+    if (lastScene !== scene) { lastScene = scene; rasterKey = ''; mcKey = ''; checkKey=''; v.fitted = false; }
     Rfull = frameRaster(scene.S, 1);
     model = ev?.model || null;
-    for(const id of ["#x-png","#x-pgw","#x-copy","#r-play","#go-rect"])$(id).disabled=!model;
     liveModel = null;
     $('#rect-empty').hidden = !!model;
     const key = JSON.stringify([state.type, gcpsOf(store.points).map(p => [p.x, p.y, p.E, p.N])]);
+    if(key!==checkKey){checkKey=key;inverseCheck=model?inverseConsistency(model,Rfull,denseTruth(scene).map(p=>[p.col,-p.row])):null;}
+    ev.inverseCheck=inverseCheck;
+    for(const id of ["#x-png","#x-pgw","#x-copy","#r-play","#go-rect"])$(id).disabled=!model||!inverseCheck?.safe;
     const ck = key + '|' + store.undoStack.length;
     if (ck !== chartKey) { chartKey = ck; renderChart(); }
     if (!model) { rectCanvas = null; rasterKey = ''; v.setSource(null); renderInfo(); return; }
     runMC();
     renderInfo();
+    if(!inverseCheck.safe){rectCanvas=null;rasterKey='';v.setSource(null);$('#rect-empty').hidden=false;$('#rect-empty').textContent='Inversă inconsistentă: rectificarea și exportul sunt blocate. Corectează GCP-urile sau alege alt model.';return;}
     if (!tabVisible() || key === rasterKey) { v.render(); return; }
     rasterKey = key;
     // quick low-resolution first, the full resolution a moment later
@@ -300,6 +303,7 @@ export function createStage3(get, hooks) {
     const el = $('#rect-info');
     const { state } = get();
     const parts = [];
+    if(inverseCheck){parts.push(`Consistența inversei pe grilă (inclusiv margini): maxim ${nf(inverseCheck.maxPixels,2)} px; avertizare > 2 px, blocare export > 10 px. Este distinctă de RMSE GCP și nu certifică acuratețea.`);}
     if (mc) parts.push(`Incertitudine din ${mc.runs} reajustări cu σ = ${nf(R3.sigma, 1)} px. Elipsele arată zona de 95 %.`);
     else if (model) parts.push(`Pentru incertitudine și punctul recomandat ai nevoie de cel puțin ${TRANSFORMS[state.type].min + 1} GCP-uri.`);
     if (nextBest) parts.push(`Punctul recomandat: intersecția X ${Math.round(nextBest.N).toLocaleString('ro-RO').replace(/\./g, ' ')} · Y ${Math.round(nextBest.E).toLocaleString('ro-RO').replace(/\./g, ' ')}, unde incertitudinea este cea mai mare (±${nf(2.45 * Math.sqrt(nextBest.trace), 2)} m).`);
@@ -400,7 +404,7 @@ export function createStage3(get, hooks) {
   }
 
   async function exportPNG() {
-    if(!get().ev?.model){hooks.toast('Transformare nevalidă: export indisponibil.');return;}
+    if(!get().ev?.model||!get().ev.inverseCheck?.safe){hooks.toast('Transformare nevalidă sau inversă inconsistentă: export indisponibil.');return;}
     if (!model) return;
     const state={...get().state}, sceneAtStart=get().scene, modelAtStart=model;
     hooks.busy('Rectific la rezoluție completă pentru export…');
@@ -413,7 +417,7 @@ export function createStage3(get, hooks) {
     await saveFile(`${name}.png`, blob);
   }
   async function exportPGW() {
-    if(!get().ev?.model){hooks.toast('Transformare nevalidă: export indisponibil.');return;}
+    if(!get().ev?.model||!get().ev.inverseCheck?.safe){hooks.toast('Transformare nevalidă sau inversă inconsistentă: export indisponibil.');return;}
     if (!model) return;
     const { state } = get();
     const name = `rectificat_${state.world}_${state.scen}_${state.seed}_${state.type}`;

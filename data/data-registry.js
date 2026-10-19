@@ -268,8 +268,8 @@ window.CARTO_DATA_REGISTRY = {
         }
       ],
       "notes": [
-        "Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 este NoData, nu absență observată a pierderii.",
-        "În granula originală Hansen v1.12/50N_020E verificată la 09.10.2026, TIFF-ul nu are tag NoData; zero indică fără pierdere detectată. Datamask distinge acoperirea validă. Acest fapt nu redefinește NoData al subsetului Rîșca."
+        "Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 înseamnă fără pierdere detectată. Proprietarul confirmă clip la limita localității, fără recodare științifică. Masca/exteriorul nu reprezintă observații.",
+        "În granula originală Hansen v1.12/50N_020E verificată la 09.10.2026, TIFF-ul nu are tag NoData; zero indică fără pierdere detectată. Datamask distinge acoperirea validă. Aceeași semantică a valorii zero se păstrează în subsetul Rîșca. Filtrul interactiv existent numără numai celulele cu an pozitiv, nu toate celulele terestre valide."
       ],
       "download_documentation_url": "https://storage.googleapis.com/earthenginepartners-hansen/GFC-2024-v1.12/download.html",
       "display_credit": "Source: Hansen/UMD/Google/USGS/NASA",
@@ -284,7 +284,7 @@ window.CARTO_DATA_REGISTRY = {
           24
         ],
         "datamask": {
-          "0": "NoData",
+          "0": "fără pierdere detectată",
           "1": "land",
           "2": "water"
         }

@@ -19,8 +19,27 @@ export function worldFile(R) {
 
 // Inverse-map every output pixel to the scan (map → pixel), using an inverse grid every `step`
 // output pixels and bilinear interpolation between grid nodes; then bilinear resampling of the scan.
+// Separate from fit RMSE: sampled consistency of the independently fitted inverse.
+// Ten pixels is an educational export guard, not a geodetic accuracy standard.
+// A two-pixel warning preserves usable approximate polynomial/TPS inverses.
+export function inverseConsistency(model, R, sourceProbes = []) {
+  let maxMapPixels=0,maxSourcePixels=0,samples=0;
+  try {
+    if(!model?.forward||!model.inverse||!Number.isFinite(R.res)||R.res<=0)throw Error('Invalid model');
+    for(let i=0;i<=32;i++)for(let j=0;j<=24;j++){
+      const E=R.E0+R.w*R.res*i/32,N=R.N1-R.h*R.res*j/24;
+      const p=model.inverse(E,N),q=model.forward(...p);
+      if(![...p,...q].every(Number.isFinite))throw Error('Nonfinite round trip');
+      maxMapPixels=Math.max(maxMapPixels,Math.hypot(q[0]-E,q[1]-N)/R.res);samples++;
+    }
+    for(const p of sourceProbes){const q=model.forward(...p),back=model.inverse(...q);if(![...q,...back].every(Number.isFinite))throw Error('Nonfinite round trip');maxSourcePixels=Math.max(maxSourcePixels,Math.hypot(back[0]-p[0],back[1]-p[1]));samples++;}
+  }catch{return {safe:false,warning:true,maxPixels:null,maxMapPixels:null,maxSourcePixels:null,samples,limitPixels:10};}
+  const maxPixels=Math.max(maxMapPixels,maxSourcePixels);
+  return {safe:maxPixels<=10,warning:maxPixels>2,maxPixels,maxMapPixels,maxSourcePixels,samples,limitPixels:10};
+}
 export function rectify(scan, scanW, scanH, R, model, step = 8) {
   if(!model?.inverse||model.ok===false||![R.res,R.E0,R.N1,R.w,R.h,step].every(Number.isFinite)||R.res<=0||R.w<1||R.h<1||R.w*R.h>2e7||step<1)throw Error('Invalid rectification');
+  if(!inverseConsistency(model,R).safe)throw Error('Inconsistent inverse: rectification rejected');
   const gw = Math.ceil(R.w / step) + 2, gh = Math.ceil(R.h / step) + 2;
   const gx = new Float64Array(gw * gh), gy = new Float64Array(gw * gh);
   for (let j = 0; j < gh; j++) for (let i = 0; i < gw; i++) {

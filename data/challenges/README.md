@@ -29,7 +29,7 @@ Rasterele rămân în **EPSG:3844 — Pulkovo 1942(58) / Stereo70**. [raster_met
 
 Ambele fișiere sunt GeoTIFF-uri tiled (blocuri 256 × 256), comprimate DEFLATE, fără overviews, validate COG. Optimizarea web păstrează exact pixelii, grila și NoData. Cititorul poate descărca integral aceste subseturi mici; nu depinde de range requests.
 
-DEM-ul exprimă elevația în metri; datum-ul vertical necesită confirmare. În rasterul forest-loss, codurile 1–24 corespund anilor 2001–2024, iar 0 = NoData. Valoarea 0 este exclusă din selectorii de ani, totaluri, suprafețe și grafice.
+DEM-ul exprimă elevația în metri; datum-ul vertical necesită confirmare. În rasterul forest-loss, codurile 1–24 corespund anilor 2001–2024, iar 0 = fără pierdere detectată. Masca separă exteriorul/excluderile de observațiile din localitate. Selectorii de ani, totalurile de evenimente, suprafețele de pierdere și graficele folosesc numai codurile pozitive; nu reprezintă întreaga suprafață terestră validă.
 
 ## Surse, atribuiri și licențe
 
@@ -51,7 +51,7 @@ Datele terțe își păstrează propriile licențe. MIT pentru cod și CC BY 4.0
 - Cele 164 de puncte școlare au 151 de coduri SIIIR distincte. `fid` identifică fiecare înregistrare; agregarea pe instituții trebuie să țină cont de codurile repetate.
 - Gridul conține celule deja tăiate la contur. Suportul spațial al populației după această decupare necesită confirmare înaintea ponderării la suprafață. O estimare pe celule presupune explicit distribuție uniformă.
 - `Contract Ecograf` descrie contractul de ecografie, nu proprietatea unui aparat. Distanțele euclidiene și bufferele exprimă proximitate, fără a măsura accesibilitatea pe rețeaua rutieră.
-- TIFF-urile nu au tag NoData declarat. Pentru subsetul forest-loss, **0 = NoData**, independent de tag-ul fișierului. DEM-ul folosește masca UAT; valoarea sa zero din afara conturului nu este elevație validă pentru exerciții.
+- TIFF-urile nu au tag NoData declarat. Pentru subsetul forest-loss, **0 = fără pierdere detectată**. Proprietarul confirmă clip la limita localității, fără recodare științifică. Cheia legacy `semantic_nodata` documentează filtrul analitic existent care exclude zero din evenimente; nu definește zero drept NoData al produsului. DEM-ul folosește masca UAT; valoarea sa zero din afara conturului nu este elevație validă pentru exerciții.
 - Pentru analize trebuie aplicată masca UAT. Rasterele au rezoluții și origini diferite; combinațiile celulă cu celulă necesită aliniere în EPSG:3844 și o metodă potrivită datelor categoriale.
 
 ## Metoda provocărilor raster R1–R6

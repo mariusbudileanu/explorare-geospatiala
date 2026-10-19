@@ -26,7 +26,7 @@ Copiile tehnice au fost decupate la conturul zonei de studiu și reduse la atrib
 - **Limite administrative:** geo-spatial.org, cu proveniență ANCPI documentată pentru Sectorul 1. Produsul, ediția exactă și atribuirea/termenii subseturilor necesită verificare; politica generală nu este o licență de produs.
 - **Grid de recensământ 2021:** INS / Eurostat, distribuit prin geo-spatial.org. Sursa și accesul sunt documentate în registru; licența exactă și textul de atribuire rămân de verificat.
 - **DEM Rîșca:** Copernicus DEM GLO-30, licență specifică produsului, cu notificarea pentru date modificate păstrată integral în registru și în secțiunea de mai jos. Ediția exactă și datum-ul vertical rămân de confirmat.
-- **Forest Loss Rîșca:** Hansen et al. (2013), GLAD / University of Maryland. CC BY 4.0 este documentată în metadatele furnizate; ediția exactă a subsetului rămâne de confirmat. Codurile 1–24 indică 2001–2024, iar 0 este NoData. Acces înregistrat: 20 septembrie 2026.
+- **Forest Loss Rîșca:** Hansen et al. (2013), GLAD / University of Maryland. CC BY 4.0 este documentată în metadatele furnizate; ediția exactă a subsetului rămâne de confirmat. Codurile 1–24 indică 2001–2024, iar 0 înseamnă fără pierdere detectată. Proprietarul confirmă clip la limita localității, fără recodare științifică; exteriorul/măștile nu sunt observații. Acces înregistrat: 20 septembrie 2026.
 
 Cardurile de Resurse prezintă rolul, anul/versiunea și licența documentate. Numai o adresă originală consemnată în registrul surselor este oferită ca link; copiile didactice nu sunt prezentate drept surse oficiale.
 
@@ -102,7 +102,7 @@ Furnizor: University of Maryland / GLAD, Hansen et al.; platformă de acces indi
 Hansen, M. C., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science, 342, 850–853. https://doi.org/10.1126/science.1244693
 
 Modificări: Decupare Suceava/Rîșca; reproiectare EPSG:3844 (metoda originală de resampling neconfirmată); optimizare GeoTIFF fără modificarea pixelilor.
-Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 este NoData, nu absență observată a pierderii.
+Ediția exactă și rețeta de reproiectare a subsetului rămân de confirmat. În subset, codurile 1–24 indică 2001–2024; 0 înseamnă fără pierdere detectată. Clip-ul confirmat de proprietar nu a recodat științific rasterul. Filtrul analitic existent păstrează numai codurile pozitive: numărul lor nu este numărul tuturor pixelilor terestri valizi.
 
 ### Copernicus DEM
 

@@ -2,7 +2,9 @@
  * -> {kind,value,code,trace}. Quoted identifiers are references, single quotes
  * are strings. No JavaScript evaluation. Limits: 1024 chars, 256 tokens, depth 40.
  * NULL/NoData use three-valued logic; AND/OR, IF, CASE and COALESCE are lazy.
- * COALESCE replaces NULL, not a raster NoData mask. Unknown names are errors.
+ * IF and CASE select a branch only when the condition is TRUE; NULL selects ELSE.
+ * IF preserves a raster NoData mask. COALESCE replaces NULL, not NoData.
+ * Unknown names are errors. Other Boolean operators retain three-valued logic.
  */
 (function(root){
   'use strict';
@@ -82,7 +84,7 @@
       }else if(n.type==='case'){r=NULL;label='CASE';let chosen=false;for(const [condition,result] of n.branches){if(bool(run(condition))===true){r=run(result);chosen=true;break;}}if(!chosen)r=run(n.otherwise);}
       else if(n.type==='call'){
         label=n.name;
-        if(n.name==='IF'){const test=run(n.args[0]);r=missing(test)?test:run(n.args[bool(test)?1:2]);}
+        if(n.name==='IF'){const test=run(n.args[0]);r=test.kind==='nodata'?test:run(n.args[bool(test)===true?1:2]);}
         else if(n.name==='COALESCE'){r=NULL;for(const arg of n.args){r=run(arg);if(r.kind!=='null')break;}}
         else{const a=n.args.map(run);if(a.some(missing))r=a.some(x=>x.kind==='nodata')?NODATA:NULL;else if(n.name==='ABS')r=value(Math.abs(numeric(a[0])));else{if(a.some(x=>typeof x.value!=='string'))fail('type','text required');r=value(n.name==='CONCAT'?a.map(x=>x.value).join(''):n.name==='UPPER'?a[0].value.toUpperCase():a[0].value.toLowerCase());}}
       }else fail('expression','invalid AST');

@@ -199,7 +199,7 @@ export function fitTransform(type, gcps, opts = {}) {
     const order = +type.slice(4);
     const f = fitPoly(order, src, dst);
     const g = wantInverse ? fitPoly(order, dst, src) : { ok: true, apply: null }; // GDAL-style: inverse estimated separately
-    if (!f.ok || !g.ok) return { ...base, msg: 'Configurație degenerată pentru acest grad (puncte prea aliniate).' };
+    if (!f.ok || !g.ok) return { ...base, msg: 'Rang insuficient al matricei polinomiale pentru acest grad; punctele nu determină independent coeficienții.' };
     forward = f.apply; inverse = g.apply; cond = f.cond;
     if (order === 1) {
       const [E0, N0] = forward(0, 0), [E1, N1] = forward(1, 0), [E2, N2] = forward(0, 1);

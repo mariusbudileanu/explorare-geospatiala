@@ -13,8 +13,8 @@
     const rawWeights=cs.map(c=>weights[c.id]);need(rawWeights.every(w=>finite(w)&&w>=0),'Weights must be finite and nonnegative');
     const max=Math.max(...rawWeights),scaled=rawWeights.map(w=>max?w/max:0),total=sum(scaled),effective=Object.fromEntries(cs.map((c,i)=>[c.id,total?scaled[i]/total:0]));
     const parsed=rows.map(r=>Object.fromEntries(cs.map(c=>[c.id,value(r[c.id])]))),domains=Object.fromEntries(cs.map(c=>{const vs=parsed.flatMap(r=>r[c.id].kind==='value'?[r[c.id].value]:[]);return [c.id,vs.length?{min:Math.min(...vs),max:Math.max(...vs),constant:Math.min(...vs)===Math.max(...vs)}:null];}));
-    const result=rows.map((r,i)=>{const reasons=[];if(excludeProtected){if(typeof r.protected!=='boolean')reasons.push('constraint-protected-unknown');else if(r.protected)reasons.push('constraint-protected');}if(cap!==null){const p=value(r.investment);if(p.kind!=='value')reasons.push('constraint-investment-unknown');else if(p.value>cap)reasons.push('constraint-cap');}
-      const cells=Object.fromEntries(cs.map(c=>{const p=parsed[i][c.id],d=domains[c.id],n=p.kind==='value'&&d?normalize(p.value,d.min,d.max,c.direction):null;if(weights[c.id]>0&&n===null)reasons.push('data-'+c.id+'-'+p.kind);return [c.id,{...p,normalized:n,active:weights[c.id]>0,weight:effective[c.id],contribution:effective[c.id]===0?0:n===null?null:effective[c.id]*n}];}));
+    const result=rows.map((r,i)=>{const reasons=[];if(r.networkReachable===false)reasons.push('constraint-unreachable');if(excludeProtected){if(typeof r.protected!=='boolean')reasons.push('constraint-protected-unknown');else if(r.protected)reasons.push('constraint-protected');}if(cap!==null){const p=value(r.investment);if(p.kind!=='value')reasons.push('constraint-investment-unknown');else if(p.value>cap)reasons.push('constraint-cap');}
+      const cells=Object.fromEntries(cs.map(c=>{const p=parsed[i][c.id],d=domains[c.id],n=p.kind==='value'&&d?normalize(p.value,d.min,d.max,c.direction):null;if(weights[c.id]>0&&n===null&&!(c.id==='travel'&&r.networkReachable===false))reasons.push('data-'+c.id+'-'+p.kind);return [c.id,{...p,normalized:n,active:weights[c.id]>0,weight:effective[c.id],contribution:effective[c.id]===0?0:n===null?null:effective[c.id]*n}];}));
       const eligible=reasons.length===0,score=total&&eligible?sum(cs.map(c=>cells[c.id].contribution)):null;
       return {id:r.id,x:r.x,y:r.y,cells,reasons,eligible,score,rank:null};});
     const ranked=result.filter(r=>r.score!==null).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id));
@@ -25,7 +25,7 @@
   function dataset({barrier=false,slow=false,quality='complete'}={}){
     need(['complete','missing','invalid','constant'].includes(quality));const network=root.CARTO_P05_MODEL.network({cost:'time',barrier,slow});
     const ids=['3','5','7','10','11','12','13'],served=[500,300,750,450,900,600,200],investment=[80,40,110,60,150,50,30];
-    return ids.map((id,i)=>{const n=network.graph.nodes.find(n=>n.id===id);return {id,x:n.x,y:n.y,travel:network.distance[id],served:quality==='constant'?500:quality==='missing'&&i===1?null:quality==='invalid'&&i===2?'unknown':served[i],investment:investment[i],protected:i===2||i===5};});
+    return ids.map((id,i)=>{const n=network.graph.nodes.find(n=>n.id===id);return {id,x:n.x,y:n.y,networkReachable:network.distance[id]!==null,travel:network.distance[id],served:quality==='constant'?500:quality==='missing'&&i===1?null:quality==='invalid'&&i===2?'unknown':served[i],investment:investment[i],protected:i===2||i===5};});
   }
   const baseline={travel:1,served:1,investment:1};
   function decision({weights=baseline,cap=null,excludeProtected=false,barrier=false,slow=false,quality='complete'}={}){return evaluate(dataset({barrier,slow,quality}),criteria,weights,{cap,excludeProtected});}

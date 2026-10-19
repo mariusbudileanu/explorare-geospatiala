@@ -748,8 +748,12 @@ function afiseaza(R) {
   // avertismente
   const w = [];
   if (!R.inGrila) w.push("Punctul este în afara grilei: s-a folosit cel mai apropiat pixel de pe margine.");
-  if ((S.sc === "harta" || S.sc === "punct") && R.it > R.itf)
-    w.push(`Ziua ${S.data} este după frontiera ${CONFIG.FRONTIERE[v]}: chunk-ul există, dar conține numai <b>0,0</b>.`);
+  if ((S.sc === "harta" || S.sc === "punct") && R.it > R.itf) {
+    const start=Math.floor(R.it/R.ct)*R.ct,end=Math.min(CONFIG.NT-1,start+R.ct-1);
+    const date=i=>new Date(Date.parse(CONFIG.T0)+i*86400000).toISOString().slice(0,10);
+    w.push(`Ziua ${S.data} este după frontiera ${CONFIG.FRONTIERE[v]}: ziua selectată nu are observații și folosește fill <b>0,0</b>.`);
+    w.push(start<=R.itf?`Chunk-ul temporal ${date(start)} – ${date(end)} este mixt: include date istorice până la frontieră și fill după ea; nu este integral zero.`:`Chunk-ul temporal ${date(start)} – ${date(end)} este complet după frontieră: conține numai fill, nu observații.`);
+  }
   if (S.sc === "sezon" && zi(anotimp(S.an, S.anot)[1]) > R.itf)
     w.push(`Sezonul depășește frontiera ${CONFIG.FRONTIERE[v]}: zilele de după ea se citesc ca <b>0,0</b>.`);
   if (S.sc === "serie" && !S.filtru) {

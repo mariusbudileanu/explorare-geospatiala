@@ -188,7 +188,7 @@
       "pixel_value_meaning": {
         "value": "year_code_for_positive_values",
         "status": "verified_dataset_definition",
-        "zero_value_meaning": "NoData"
+        "zero_value_meaning": "no_detected_forest_loss"
       },
       "license": {
         "id": "CC-BY-4.0",
@@ -198,7 +198,7 @@
       "local_preprocessing": {
         "subset_area": "Rîșca",
         "stored_crs": "EPSG:3844",
-        "recipe": "needs_confirmation",
+        "recipe": "Locality-boundary clip; owner confirms no scientific recoding. Original reprojection details remain unconfirmed.",
         "resampling_method": "needs_confirmation",
         "boundary_mask_encoding": "needs_confirmation"
       },
@@ -290,10 +290,10 @@
         "independently_verified_from_product_metadata": false
       },
       "year_exercises": {
-        "R3": "use_verified_year_mapping; exclude_semantic_nodata; use_boundary_mask; confirm_source_terms",
-        "R4": "use_verified_year_mapping; exclude_semantic_nodata; use_boundary_mask; confirm_source_terms",
-        "R5": "use_verified_year_mapping; exclude_semantic_nodata; use_boundary_mask; confirm_source_terms",
-        "R6": "requires_common_grid_alignment; use_verified_year_mapping; exclude_semantic_nodata"
+        "R3": "use_verified_year_mapping; count_positive_loss_codes; distinguish_zero_from_mask; use_boundary_mask; confirm_source_terms",
+        "R4": "use_verified_year_mapping; count_positive_loss_codes; distinguish_zero_from_mask; use_boundary_mask; confirm_source_terms",
+        "R5": "use_verified_year_mapping; count_positive_loss_codes; distinguish_zero_from_mask; use_boundary_mask; confirm_source_terms",
+        "R6": "requires_common_grid_alignment; use_verified_year_mapping; count_positive_loss_codes; distinguish_zero_from_mask"
       },
       "boundary_mask_diagnostic": {
         "pixel_centres_inside_supplied_boundary": 360654,
@@ -303,7 +303,7 @@
         "nonzero_pixels_outside_boundary": 0,
         "boundary_mask_method": "GDAL rasterization by pixel centre; a diagnostic, not a change to the raster"
       },
-      "boundary_mask_requirement": "Aplicați conturul UAT și excludeți valoarea 0 (NoData). Tag-ul NoData nu este declarat în TIFF.",
+      "boundary_mask_requirement": "Aplicați conturul UAT. În interior, 0 = fără pierdere detectată; în afara conturului, valorile de umplere nu sunt observații. Filtrul analitic existent păstrează numai codurile pozitive de pierdere. TIFF-ul nu declară tag NoData.",
       "source_name": "Hansen et al. (2013)",
       "citation": "Hansen et al., 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.”",
       "source_platform": "Global Nature Watch",
@@ -312,10 +312,10 @@
       "attribution": "Hansen, M. C., et al. (2013). High-Resolution Global Maps of 21st-Century Forest Cover Change. Science, 342, 850–853. https://doi.org/10.1126/science.1244693",
       "semantic_nodata": {
         "value": 0,
-        "meaning": "NoData",
+        "meaning": "analysis_excluded_zero_not_product_nodata",
         "status": "verified_dataset_definition",
         "embedded_nodata": null,
-        "note": "Valoarea 0 este NoData pentru subsetul didactic; fișierul TIFF nu are un tag NoData declarat."
+        "note": "Cheie legacy păstrată pentru compatibilitatea filtrului analitic existent: 0 este exclus din numărarea evenimentelor, dar în produs înseamnă fără pierdere detectată, nu NoData. Excluderea prin mască se interpretează separat. Proprietarul confirmă doar clip la limita localității, fără recodare științifică."
       },
       "registry_id": "hansen-loss"
     }

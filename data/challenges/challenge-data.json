@@ -396,7 +396,7 @@
     "Se folosește familia INS centrată pe Populatia_totala_T; TOT_P_2021 nu este amestecat cu ea.",
     "Contract Ecograf este un statut contractual, nu dovada proprietății unui echipament.",
     "Numărul de paturi este o capacitate, nu un indicator boolean.",
-    "TIFF-urile nu au tag NoData declarat; valoarea 0 este NoData în subsetul forest-loss. Rasterele au grile diferite; analiza aplică masca UAT și alinierea.",
+    "TIFF-urile nu au tag NoData declarat; 0 înseamnă fără pierdere detectată în Forest Loss. Filtrul de evenimente păstrează numai anii pozitivi; zero și exteriorul/măștile nu sunt toate NoData. Rasterele au grile diferite; analiza aplică masca UAT și alinierea.",
     "Licențele marcate needs_confirmation trebuie clarificate înaintea publicării acelor date."
   ]
 }

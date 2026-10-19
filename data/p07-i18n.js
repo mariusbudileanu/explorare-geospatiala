@@ -277,7 +277,7 @@ window.CARTO_P07_MESSAGES = {
   "Configurație degenerată (puncte aliniate pe X sau pe Y).": "Degenerate configuration: no variation along a required source axis.",
   "Configurație degenerată (puncte suprapuse).": "Degenerate configuration: coincident points.",
   "Configurație degenerată (trei puncte coliniare sau suprapuse).": "Degenerate projective control configuration.",
-  "Configurație degenerată pentru acest grad (puncte prea aliniate).": "Rank-deficient control configuration for this polynomial degree.",
+  "Rang insuficient al matricei polinomiale pentru acest grad; punctele nu determină independent coeficienții.": "Polynomial design matrix has insufficient rank for this degree; the points do not independently determine its coefficients.",
   "Sistem singular (GCP-uri duplicate).": "Singular system (duplicate GCPs).",
   "Un singur tensor 3D: timp (vertical, 1961 → 2050), latitudine și longitudine. Planul verde este frontiera last_*_time; deasupra lui, zona pre-alocată.": "A 3D tensor: time (vertical, preallocated 1961–2050), latitude and longitude. The green plane marks last_*_time; above it are preallocated dates, not observations.",
   "Cărămizile: chunk-urile": "The building blocks: chunks",
@@ -480,4 +480,18 @@ Object.assign(window.CARTO_P07_MESSAGES,{
  'Evoluția RMSE GCP, RMSE verificare și eroarea reală medie pe pașii sesiunii':'GCP RMSE, independent check RMSE and mean known error over session changes',
  '1,61 GB în ~145 s.':'1.61 GB in ~145 s.','0,5–0,7 s':'0.5–0.7 s','2,8–3,9 s':'2.8–3.9 s','0,9–1,1 s':'0.9–1.1 s',
  'Cubul de date':'Data cube','Harta unei zile':'One-day map','Seria de timp a unui punct':'One-point time series','Capcana 2050':'The 2050 fill trap','Pasul':'Step','Gata ✓':'Done ✓'
+});
+window.CARTO_P07_PATTERNS.push(
+ [/Consistența inversei pe grilă \(inclusiv margini\): maxim (.*?) px; avertizare > 2 px, blocare export > 10 px\. Este distinctă de RMSE GCP și nu certifică acuratețea\./g,(_,n)=>`Grid inverse consistency (including boundaries): maximum ${n} px; warning > 2 px, export blocked > 10 px. Separate from GCP RMSE; not an accuracy certificate.`],
+ [/Ziua (\d{4}-\d{2}-\d{2}) este după frontiera (\d{4}-\d{2}-\d{2}): ziua selectată nu are observații și folosește fill/g,(_,day,frontier)=>`Day ${day} is after frontier ${frontier}: the selected day has no observations and uses fill`],
+ [/Chunk-ul temporal (\d{4}-\d{2}-\d{2}) – (\d{4}-\d{2}-\d{2}) este mixt: include date istorice până la frontieră și fill după ea; nu este integral zero\./g,(_,a,b)=>`Temporal chunk ${a} – ${b} is mixed: historical dates through the frontier and fill after it; it is not entirely zero.`],
+ [/Chunk-ul temporal (\d{4}-\d{2}-\d{2}) – (\d{4}-\d{2}-\d{2}) este complet după frontieră: conține numai fill, nu observații\./g,(_,a,b)=>`Temporal chunk ${a} – ${b} is wholly after the frontier: it contains fill only, not observations.`]
+);
+Object.assign(window.CARTO_P07_MESSAGES,{
+ 'Inversă inconsistentă: rectificarea și exportul sunt blocate. Corectează GCP-urile sau alege alt model.':'Inconsistent inverse: rectification and export are blocked. Correct GCPs or choose another model.',
+ 'Transformare nevalidă sau inversă inconsistentă: export indisponibil.':'Invalid transform or inconsistent inverse: export unavailable.'
+});
+
+Object.assign(window.CARTO_P07_MESSAGES,{
+"Consistența inversei este verificată pe o grilă 33×25 inclusiv margini, în ambele direcții: avertizare peste 2 pixeli, blocare a rectificării/exportului peste 10 pixeli. Pragul este o protecție didactică împotriva inconsistențelor severe, nu un standard de acuratețe. Un RMSE GCP zero nu garantează o inversă utilizabilă.":"Inverse consistency is checked on a 33×25 grid including boundaries, in both directions: warning above 2 pixels, rectification/export blocked above 10 pixels. This is an educational guard against severe inconsistency, not an accuracy standard. Zero GCP RMSE does not guarantee a usable inverse."
 });

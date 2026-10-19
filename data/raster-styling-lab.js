@@ -27,7 +27,7 @@
       ['De ce poate fi util Cumulative count cut?',['Reduce influența extremelor asupra intervalului de display.','Șterge pixelii extremi.','Reclasifică DEM-ul.'],0,'Limitele cumulative schimbă contrastul; pixelii și valorile rămân în raster.'],
       ['Ce face Singleband pseudocolor pentru DEM?',['Înlocuiește altitudinea cu un cod de an.','Mapează altitudinea continuu pe o Color ramp.','Calculează o altă elevație.'],1,'Culoarea reprezintă valoarea, fără a o modifica.'],
       ['Un pixel foarte luminos într-un hillshade indică neapărat altitudine mare?',['Da.','Da, dacă este gri.','Nu: luminozitatea depinde de iluminarea și orientarea suprafeței.'],2,'Hillshade este o reprezentare a iluminării reliefului.'],
-      ['Care alegere respectă tipul datelor și compoziția?',['DEM colorat + hillshade cu opacity/blending controlate; Forest Loss cu culori pentru anii verificați.','Hillshade înlocuiește valoarea DEM; Forest Loss devine altitudine.','Valoarea 0 trebuie transformată automat într-un an.'],0,'Stilul păstrează semnificația sursei. În subsetul Forest Loss, 0 este NoData conform definiției existente.']
+      ['Care alegere respectă tipul datelor și compoziția?',['DEM colorat + hillshade cu opacity/blending controlate; Forest Loss cu culori pentru anii verificați.','Hillshade înlocuiește valoarea DEM; Forest Loss devine altitudine.','Valoarea 0 trebuie transformată automat într-un an.'],0,'Stilul păstrează semnificația sursei. În Forest Loss, 0 înseamnă fără pierdere detectată. Filtrul afișează anii pozitivi; zero și celulele excluse nu sunt o categorie de an.']
     ]
   };
 })(window);

@@ -57,7 +57,7 @@
     const start=performance.now();
     if(metadata.rasters.dem.units?.value!=='m'||metadata.rasters.dem.units?.status!=='verified_dataset_definition')throw Error('Unitățile DEM în metri trebuie confirmate în metadate.');
     const semanticNoData=metadata.rasters.forestLoss.semantic_nodata;
-    if(semanticNoData?.status!=='verified_dataset_definition'||semanticNoData.value!==0)throw Error('Semantica NoData a rasterului forestier trebuie verificată în metadate.');
+    if(semanticNoData?.status!=='verified_dataset_definition'||semanticNoData.value!==0)throw Error('Filtrul codurilor forestiere trebuie verificat în metadate.');
     let forestNoData=0;
     for(const grid of [dem,forest].filter(Boolean)){grid.mask=boundaryMask(grid,polygons);if(grid===forest)for(let i=0;i<grid.mask.length;i++)if(grid.mask[i]&&grid.values[i]===semanticNoData.value){grid.mask[i]=0;forestNoData++;}grid.area=area(grid.affine);grid.valid=grid.mask.reduce((a,b)=>a+b,0);grid.min=Infinity;grid.max=-Infinity;for(let i=0;i<grid.values.length;i++)if(grid.mask[i]){grid.min=Math.min(grid.min,grid.values[i]);grid.max=Math.max(grid.max,grid.values[i]);}}
     const slope=dem?horn(dem):{values:[],valid:null},aligned=new Float64Array(forest?.values.length||0);aligned.fill(NaN);
@@ -117,7 +117,7 @@
       }else {
         legend=selectedYears.map((year,i)=>({color:yearColors[i%yearColors.length],label:String(year)}));
         metrics.push(metric(id==='R6'?'Pixeli de pierdere peste prag':'Pixeli selectați',count,'pixeli',0),metric(id==='R6'?'Pierdere forestieră peste prag':'Suprafață cumulată',ha,'ha'));
-        interpretation.push('Codurile 1–24 reprezintă anii 2001–2024. Selectorul folosește corespondența din metadate. Valoarea 0 este NoData și nu contribuie la ani, suprafețe sau grafice.','Un pixel forestier codifică un singur an. Reunirea anilor nu dublează pixeli și nu indică o cauză a pierderii.');
+        interpretation.push('Codurile 1–24 reprezintă anii 2001–2024. Selectorul folosește corespondența din metadate. Valoarea 0 înseamnă fără pierdere detectată și nu contribuie la numărarea evenimentelor, suprafețele de pierdere sau graficele anuale. Filtrul pozitiv nu reprezintă toți pixelii terestri valizi; exteriorul/măștile nu sunt observații.','Un pixel forestier codifică un singur an. Reunirea anilor nu dublează pixeli și nu indică o cauză a pierderii.');
         warnings.push('Sursa, licența și data accesării Forest Loss sunt documentate în registrul public al datelor. Ediția exactă și rețeta de reproiectare/resampling a subsetului rămân de confirmat.');
         if(id==='R6'){
           metrics.push(metric('Pierdere totală în interval',total*forest.area/10000,'ha'),metric('Pierdere cu pantă evaluabilă',known*forest.area/10000,'ha'),metric('Pierdere cu pantă necunoscută',unknown*forest.area/10000,'ha'),metric('Peste prag / pierdere evaluabilă',known?count/known*100:null,'%'),metric('Peste prag / pierdere totală',total?count/total*100:null,'%'));
