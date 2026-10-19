@@ -284,7 +284,7 @@ window.CARTO_DATA_REGISTRY = {
           24
         ],
         "datamask": {
-          "0": "fără pierdere detectată",
+          "0": "no data",
           "1": "land",
           "2": "water"
         }

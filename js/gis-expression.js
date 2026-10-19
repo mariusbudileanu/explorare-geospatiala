@@ -3,7 +3,8 @@
  * are strings. No JavaScript evaluation. Limits: 1024 chars, 256 tokens, depth 40.
  * NULL/NoData use three-valued logic; AND/OR, IF, CASE and COALESCE are lazy.
  * IF and CASE select a branch only when the condition is TRUE; NULL selects ELSE.
- * IF preserves a raster NoData mask. COALESCE replaces NULL, not NoData.
+ * IF/CASE propagate an evaluated NoData condition; unvisited branches stay lazy.
+ * COALESCE replaces NULL, not NoData.
  * Unknown names are errors. Other Boolean operators retain three-valued logic.
  */
 (function(root){
@@ -81,7 +82,7 @@
           }else{const x=numeric(a),y=numeric(b);if((n.op==='/'||n.op==='%')&&y===0)fail('division-zero');r=value(n.op==='+'?x+y:n.op==='-'?x-y:n.op==='*'?x*y:n.op==='/'?x/y:x%y);}
         }
         label=display(a)+' '+n.op+' '+(b?display(b):'[short-circuit]');
-      }else if(n.type==='case'){r=NULL;label='CASE';let chosen=false;for(const [condition,result] of n.branches){if(bool(run(condition))===true){r=run(result);chosen=true;break;}}if(!chosen)r=run(n.otherwise);}
+      }else if(n.type==='case'){r=NULL;label='CASE';let chosen=false;for(const [condition,result] of n.branches){const test=run(condition);if(test.kind==='nodata'){r=test;chosen=true;break;}if(bool(test)===true){r=run(result);chosen=true;break;}}if(!chosen)r=run(n.otherwise);}
       else if(n.type==='call'){
         label=n.name;
         if(n.name==='IF'){const test=run(n.args[0]);r=test.kind==='nodata'?test:run(n.args[bool(test)===true?1:2]);}

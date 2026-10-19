@@ -79,16 +79,17 @@ export function createStage3(get, hooks) {
     model = ev?.model || null;
     liveModel = null;
     $('#rect-empty').hidden = !!model;
+    $('#rect-empty').textContent = model ? '' : (ev?.msg || 'Transformarea nu poate fi calculată.');
     const key = JSON.stringify([state.type, gcpsOf(store.points).map(p => [p.x, p.y, p.E, p.N])]);
-    if(key!==checkKey){checkKey=key;inverseCheck=model?inverseConsistency(model,Rfull,denseTruth(scene).map(p=>[p.col,-p.row])):null;}
+    if(!model||key!==checkKey){checkKey=key;inverseCheck=model?inverseConsistency(model,Rfull,denseTruth(scene).map(p=>[p.col,-p.row])):null;}
     ev.inverseCheck=inverseCheck;
     for(const id of ["#x-png","#x-pgw","#x-copy","#r-play","#go-rect"])$(id).disabled=!model||!inverseCheck?.safe;
     const ck = key + '|' + store.undoStack.length;
     if (ck !== chartKey) { chartKey = ck; renderChart(); }
-    if (!model) { rectCanvas = null; rasterKey = ''; v.setSource(null); renderInfo(); return; }
+    if (!model) { rectCanvas = null; rasterKey = ''; mc = null; nextBest = null; mcKey = ''; v.setSource(null); renderInfo(); return; }
     runMC();
     renderInfo();
-    if(!inverseCheck.safe){rectCanvas=null;rasterKey='';v.setSource(null);$('#rect-empty').hidden=false;$('#rect-empty').textContent='Inversă inconsistentă: rectificarea și exportul sunt blocate. Corectează GCP-urile sau alege alt model.';return;}
+    if(!inverseCheck.safe){rectCanvas=null;rasterKey='';v.setSource(null);$('#rect-empty').hidden=false;$('#rect-empty').textContent='Aproximarea transformării inverse este insuficient de stabilă pentru această configurație. Încearcă o altă transformare disponibilă sau o altă configurație de puncte de control. Rectificarea și exportul sunt blocate; coordonatele GCP nu sunt neapărat greșite.';return;}
     if (!tabVisible() || key === rasterKey) { v.render(); return; }
     rasterKey = key;
     // quick low-resolution first, the full resolution a moment later
@@ -303,6 +304,9 @@ export function createStage3(get, hooks) {
     const el = $('#rect-info');
     const { state } = get();
     const parts = [];
+    el.setAttribute('role','status');el.setAttribute('aria-live','polite');
+    el.dataset.inverseStatus=!inverseCheck?'unavailable':!inverseCheck.safe?'blocked':inverseCheck.warning?'warning':'ok';
+    if(inverseCheck?.safe&&inverseCheck.warning)parts.push('Avertizare: consistența inversei depășește 2 px. Exportul rămâne permis de pragul de siguranță; inspectează rezultatul. Aceasta nu declară transformarea invalidă.');
     if(inverseCheck){parts.push(`Consistența inversei pe grilă (inclusiv margini): maxim ${nf(inverseCheck.maxPixels,2)} px; avertizare > 2 px, blocare export > 10 px. Este distinctă de RMSE GCP și nu certifică acuratețea.`);}
     if (mc) parts.push(`Incertitudine din ${mc.runs} reajustări cu σ = ${nf(R3.sigma, 1)} px. Elipsele arată zona de 95 %.`);
     else if (model) parts.push(`Pentru incertitudine și punctul recomandat ai nevoie de cel puțin ${TRANSFORMS[state.type].min + 1} GCP-uri.`);

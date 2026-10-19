@@ -488,7 +488,8 @@ window.CARTO_P07_PATTERNS.push(
  [/Chunk-ul temporal (\d{4}-\d{2}-\d{2}) – (\d{4}-\d{2}-\d{2}) este complet după frontieră: conține numai fill, nu observații\./g,(_,a,b)=>`Temporal chunk ${a} – ${b} is wholly after the frontier: it contains fill only, not observations.`]
 );
 Object.assign(window.CARTO_P07_MESSAGES,{
- 'Inversă inconsistentă: rectificarea și exportul sunt blocate. Corectează GCP-urile sau alege alt model.':'Inconsistent inverse: rectification and export are blocked. Correct GCPs or choose another model.',
+ 'Aproximarea transformării inverse este insuficient de stabilă pentru această configurație. Încearcă o altă transformare disponibilă sau o altă configurație de puncte de control. Rectificarea și exportul sunt blocate; coordonatele GCP nu sunt neapărat greșite.':'The approximation of the inverse transformation is insufficiently stable for this configuration. Try a different supported transformation or control-point configuration. Rectification and export are blocked; GCP coordinates are not necessarily incorrect.',
+ 'Avertizare: consistența inversei depășește 2 px. Exportul rămâne permis de pragul de siguranță; inspectează rezultatul. Aceasta nu declară transformarea invalidă.':'Warning: inverse consistency exceeds 2 px. Export remains permitted by the safety threshold; inspect the result. This does not declare the transformation invalid.',
  'Transformare nevalidă sau inversă inconsistentă: export indisponibil.':'Invalid transform or inconsistent inverse: export unavailable.'
 });
 

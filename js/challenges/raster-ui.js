@@ -29,7 +29,7 @@ export function syncRasterControls(event){
   if(event.target===slider)threshold.value=slider.value;
 }
 export function renderPixel(info){
-  const text=info.elevation===null&&info.forestCode===null?'DEM exclus/indisponibil; Forest Loss: fără pierdere detectată (0) sau celulă exclusă de mască.':`DEM: ${info.elevation===null?'necunoscut':fmt(info.elevation,2)+' m'} · Pantă DEM: ${info.slopeDegrees===null?'vecinătate incompletă':fmt(info.slopeDegrees,3)+'° / '+fmt(info.slopePercent,3)+'%'} · Forestier: ${info.forestCode===null?'fără pierdere detectată (0) sau celulă exclusă de mască':info.year?`cod ${info.forestCode} → ${info.year}`:'NoData'}${info.alignedSlopeDegrees!==null?' · Pantă la centrul pixelului forestier (R6): '+fmt(info.alignedSlopeDegrees,3)+'° / '+fmt(info.alignedSlopePercent,3)+'%':''}`;
+  const text=info.elevation===null&&info.forestCode===null?'DEM exclus/indisponibil; Forest Loss: fără pierdere detectată (0) sau celulă exclusă de mască.':`DEM: ${info.elevation===null?'necunoscut':fmt(info.elevation,2)+' m'} · Pantă DEM: ${info.slopeDegrees===null?'vecinătate incompletă':fmt(info.slopeDegrees,3)+'° / '+fmt(info.slopePercent,3)+'%'} · Forestier: ${info.forestCode===null?'fără pierdere detectată (0) sau celulă exclusă de mască':info.year?`cod ${info.forestCode} → ${info.year}`:'cod fără an documentat'}${info.alignedSlopeDegrees!==null?' · Pantă la centrul pixelului forestier (R6): '+fmt(info.alignedSlopeDegrees,3)+'° / '+fmt(info.alignedSlopePercent,3)+'%':''}`;
   $('raster-pixel-info').textContent=text;
 }
 export function renderAnnualChart(series,intersection=false){

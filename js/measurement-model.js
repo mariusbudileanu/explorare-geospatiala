@@ -23,7 +23,11 @@
     for(const r of rs)for(const p of r){G.point(p);if(p[0]<10||p[0]>35||p[1]<35||p[1]>60)throw Error('domain: 10–35° E / 35–60° N');}
     let total=0;for(const r of rs)for(let i=1;i<r.length;i++){const d=G.inverse(r[i-1],r[i]).s12;if(d>1000000)throw Error('edge limit: 1000 km');total+=d;}if(total>3000000)throw Error('boundary limit: 3000 km');
     if(geometry.type==='distance'&&rs[0].length!==2)throw Error('two points required');
-    if(geometry.type==='polygon'&&!root.CARTO_TOPOLOGY_ENGINE.geometry.validity({type:'Polygon',coordinates:rs}))throw Error('invalid polygon / holes');
+    if(geometry.type==='polygon'&&!root.CARTO_TOPOLOGY_ENGINE.geometry.validity({type:'Polygon',coordinates:rs})){
+      const unsupported=root.CARTO_TOPOLOGY_ENGINE.geometry.ringTangency({type:'Polygon',coordinates:rs});
+      const error=Error(unsupported?'unsupported touching rings; not necessarily OGC-invalid':'invalid polygon / holes');
+      if(unsupported)error.code='unsupported-rings';throw error;
+    }
     return copy(geometry);
   }
   function measure(input,crs){
