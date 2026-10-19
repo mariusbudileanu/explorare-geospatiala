@@ -1,8 +1,8 @@
 # Changelog
 
-## v3.0.0 — prepared, not yet released
+## v3.0.0
 
-No release date, tag or v3-specific DOI has been assigned. Changes below summarize the accepted development history since `v2.0.0` (`ee0bf9aaba344042095d5d2804389b7016694d54`). Scientific baseline: `3f4ce5d2a6c4c7deea4ca8ee3fcabf5cfb01e17b`; this release-preparation patch changes documentation and metadata, not laboratory calculations.
+Changes below summarize the accepted development history since `v2.0.0` (`ee0bf9aaba344042095d5d2804389b7016694d54`). Scientific baseline: `3f4ce5d2a6c4c7deea4ca8ee3fcabf5cfb01e17b`; this release-preparation patch changes documentation and metadata, not laboratory calculations.
 
 ### Educational expansion
 

@@ -6,7 +6,7 @@ Platformă educațională statică de cartografie și GIS, organizată în șapt
 
 Proiectul se adresează studenților de licență și master, în special celor de la Geografie.
 
-**Stare:** pregătire locală pentru release-ul v3.0.0; tagul și publicarea acestei versiuni nu sunt încă efectuate. [Platforma publică](https://mariusbudileanu.github.io/explorare-geospatiala/) servește versiunea publicată din `main`; funcțiile v3 vor fi disponibile acolo după integrarea și deployment-ul autorizate. [Repository](https://github.com/mariusbudileanu/explorare-geospatiala) · [Changelog](CHANGELOG.md) · [Note pentru viitorul release](docs/releases/v3.0.0.md).
+**Versiune:** v3.0.0. [Platforma publică](https://mariusbudileanu.github.io/explorare-geospatiala/) reflectă versiunea publicată din `main`. Pentru o versiune fixă, consultă tagul și release-ul corespunzător din repository. [Repository](https://github.com/mariusbudileanu/explorare-geospatiala) · [Changelog](CHANGELOG.md) · [Note de release](docs/releases/v3.0.0.md).
 
 ## Parcurs educațional
 
@@ -83,6 +83,6 @@ Platforma și codul au fost dezvoltate cu asistență AI; conținutul academic, 
 
 Budileanu, M. (2026). *Explorare geospațială*.
 
-Metadatele pentru versiunea pregătită sunt în [CITATION.cff](CITATION.cff), cu `version: 3.0.0`. [DOI-ul de concept](https://doi.org/10.5281/zenodo.23422847) identifică familia de versiuni; [DOI-ul v2.0.0](https://doi.org/10.5281/zenodo.23422848) identifică numai release-ul anterior. DOI-ul specific v3.0.0 și data release-ului nu au fost încă atribuite și nu sunt anticipate în metadate. URL-ul platformei publice este o adresă evolutivă, nu un permalink al versiunii.
+Metadatele versiunii sunt în [CITATION.cff](CITATION.cff), cu `version: 3.0.0`. [DOI-ul de concept](https://doi.org/10.5281/zenodo.23422847) identifică familia de versiuni; [DOI-ul v2.0.0](https://doi.org/10.5281/zenodo.23422848) identifică numai release-ul anterior. Pentru DOI-ul specific și data publicării unei versiuni, consultă înregistrarea Zenodo și release-ul GitHub corespunzătoare. URL-ul platformei publice este o adresă evolutivă, nu un permalink al versiunii.
 
 [Despre platformă](https://mariusbudileanu.github.io/explorare-geospatiala/about.html) · [Registrul datelor și licențele](https://mariusbudileanu.github.io/explorare-geospatiala/resources.html#registrul-datelor) · [Raportează o problemă](https://github.com/mariusbudileanu/explorare-geospatiala/issues)
