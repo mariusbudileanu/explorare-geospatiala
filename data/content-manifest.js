@@ -3,7 +3,7 @@
 // Central inventory. source_section and source_pages always refer to the 1974 book;
 // editorial_number is the site's independent learning sequence.
 window.CARTO_CONTENT = {
-  version: '2.1.0-geospatial-data',
+  version: '3.0.0',
   source: {
     authors: 'A. Năstase & D. Cernea',
     title: 'Cartografie generală – manual practic',

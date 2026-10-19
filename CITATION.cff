@@ -3,7 +3,7 @@
   "message": "Pentru citarea platformei, utilizați aceste metadate.",
   "type": "software",
   "title": "Explorare geospațială",
-  "abstract": "Resursă educațională în limba română: de la concepte clasice la GIS (QGIS), pentru studenți de licență și master. Codul propriu este MIT; conținutul educațional original este CC BY 4.0. Resursele terțe își păstrează licențele.",
+  "abstract": "Static educational GIS and cartography platform organized into seven academic sections and twenty interactive laboratories, complemented by QGIS workshops T01–T06. The v3 laboratories provide Romanian/English interfaces and explanations; legacy lessons and workshops remain predominantly Romanian. Experiments include cartographic comparison, spatial analysis and explicitly identified synthetic models. The Zarr laboratory uses an embedded ANM/EOCube snapshot and modeled offline access, not a live cloud client. MIT applies only to original software; original educational text and graphics are CC BY 4.0; third-party resources retain their own licenses and permissions. The mixed archive is not exclusively MIT-licensed.",
   "authors": [
     {
       "family-names": "Budileanu",
@@ -19,5 +19,13 @@
     "educație",
     "GIS",
     "QGIS"
+  ],
+  "version": "3.0.0",
+  "identifiers": [
+    {
+      "type": "doi",
+      "value": "10.5281/zenodo.23422847",
+      "description": "Concept DOI for all versions of the project; not a version-specific DOI for v3.0.0."
+    }
   ]
 }

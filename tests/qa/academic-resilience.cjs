@@ -33,8 +33,10 @@ const cff=JSON.parse(read('CITATION.cff')); // JSON is a strict subset of YAML 1
 assert.equal(cff['cff-version'],'1.2.0');assert.equal(cff.type,'software');assert.equal(cff.title,'Explorare geospațială');checks+=3;
 // Owner-verified affiliation was completed in the final v2.0.0 documentation commit.
 assert.deepEqual(cff.authors,[{'family-names':'Budileanu','given-names':'Marius','affiliation':'University of Bucharest, Faculty of Geography'}]);checks++;
-for(const forbidden of ['doi','version','date-released','preferred-citation'])ok(!(forbidden in cff),'No invented release metadata: '+forbidden);
+for(const forbidden of ['doi','date-released','preferred-citation'])ok(!(forbidden in cff),'No invented release metadata: '+forbidden);
 ok(!/email|orcid/i.test(JSON.stringify(cff)),'No private identifiers');
+assert.equal(cff.version,'3.0.0');checks++;assert.equal(cff.version,manifest().version);checks++;
+assert.deepEqual(cff.identifiers,[{"type": "doi", "value": "10.5281/zenodo.23422847", "description": "Concept DOI for all versions of the project; not a version-specific DOI for v3.0.0."}]);checks++;
 const registry=JSON.parse(read('data/data-registry.json'));
 const originalIds=['adizmb-schools','adizmb-medical','adizmb-sports','administrative-boundaries','census2021','hansen-loss','copernicus-dem'];
 const contextIds=['protected-areas-context','hydrography-context','relief-context','landforms-context'];
