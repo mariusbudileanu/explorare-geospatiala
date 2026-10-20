@@ -160,12 +160,7 @@ for (const group of window.CARTO_CONTENT.groups) {
   content.groups.find(g=>g.id==='intro').lessons.push('digital-companion');
   for(const [id,keywords] of Object.entries({'projection-crs-lab':['proiecții interactive'],'classification-lab':['clasificare interactivă'],'map-diagnostics':['diagnostic hartă'],'challenges':['challenge']}))byId.get(id).keywords.push(...keywords);
   const escape=text=>String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  content.navigationMarkup=({prefix='',currentId=''}={})=>content.groups.map(group=>`<details class="nav-group" open><summary>${escape(group.label)}</summary>${group.lessons.map(id=>{
-    const lesson=content.lessons.find(l=>l.id===id),active=id===currentId;
-    const associated=content.companion.primary.some(key=>byId.get(key).companion.contexts.includes(id));
-    const title=(lesson.editorial_number?lesson.editorial_number+' ':'')+lesson.title;
-    return `<a class="nav-item${active?' active':''}" href="${escape(prefix+lesson.href)}"${active?' aria-current="page"':''}${associated?` data-interactive="LAB" aria-label="${escape(title)} · Experiență interactivă asociată"`:''}>${escape(title)}</a>`;
-  }).join('')}</details>`).join('');
+
 })(window.CARTO_CONTENT);
 
 // Stable v3 IDs extend existing canonical destinations; no duplicate lesson entries.
@@ -221,3 +216,83 @@ for(const [id,lab,title,keywords,description] of [
  ['georeferencing-lab','L19','Laborator de georeferențiere',['georeferențiere','georeferencing','GCP','RMSE','Stereo 70','PNG','world file'],'Georeferențiază două hărți fictive Stereo 70 și verifică independent rezultatul.']
 ]){window.CARTO_CONTENT.lessons.push({id,lab_id:lab,title,short_title:title,href:id+'.html',part:'Date geospațiale',source_section:'',source_pages:[],figures:[],keywords,content_types:['concept','exercițiu'],interactive_components:[id],qgis_correspondence:true,modern_sources_status:'verified',status:'implemented',theme:'date',companion:{category:'Laborator v3 · '+lab,description,contexts:['geospatial-data']}});window.CARTO_CONTENT.groups.find(g=>g.id==='geospatial-data').lessons.push(id);}
 window.CARTO_CONTENT.companion.p07=['zarr-cloud-data','georeferencing-lab'];
+/* v4 organization: identity stays in lessons; these lists contain IDs only.
+ * P02–P07 records and adapters above retain their dependency order.
+ */
+(function(content) {
+  const previous = content.groups;
+  const chapters = previous.filter(g => ['fundamentals','map','projections','methods','geospatial-data','analysis','practice'].includes(g.id));
+  const labs = {
+    fundamentals: [], map:['L01','L02'], projections:['L03','L04'],
+    methods:['L05','L06','L07','L08','L11'],
+    'geospatial-data':['L09','L10','L12','L13','L19'],
+    analysis:['L15','L16','L17','L18','L20'], practice:[]
+  };
+  const byId = new Map(content.lessons.map(l=>[l.id,l]));
+  const labId = code => content.lessons.find(l=>l.lab_id===code).id;
+  chapters.forEach((group,index)=>{
+    group.number=index+1;group.kind='chapter';
+    const theory=content.lessons.filter(l=>l.editorial_number?.startsWith((index+1)+'.')).sort((a,b)=>Number(a.editorial_number.split('.')[1])-Number(b.editorial_number.split('.')[1])).map(l=>l.id);
+    group.lessons = index<4 ? theory : index===4 ? ['geospatial-data'] : index===5 ? ['analysis'] : ['tutorials','workflow','T01','T02','T03','T04','T05','T06','final-project'];
+    if(group.id==='methods')group.lessons.push('transparency-blending');
+    group.laboratories=labs[group.id].map(labId);group.lessons.push(...group.laboratories);
+    if(group.id==='analysis')group.lessons.push('challenges');
+    group.anchor='capitol-'+group.number;
+  });
+  content.groups=[
+    {id:'orientation',kind:'orientation',label:'Orientare',lessons:['learning-path','digital-companion']},
+    ...chapters,
+    {id:'reference',kind:'reference',label:'Referințe',lessons:['glossary','resources','about']}
+  ];
+  for(const lesson of content.lessons){
+    const group=content.groups.find(g=>g.lessons.includes(lesson.id));
+    lesson.source_part=lesson.part;
+    lesson.canonicalSection=group?.id||null;
+    lesson.navigationOrder=group?.lessons.indexOf(lesson.id)??null;
+    lesson.kind=lesson.lab_id?(lesson.id==='analysis'?'mixed':'laboratory'):/^T0[1-6]$/.test(lesson.id)?'workshop':lesson.editorial_number||lesson.id==='geospatial-data'?'lesson':lesson.id==='final-project'?'project':lesson.id==='workflow'||lesson.id==='transparency-blending'?'extension':lesson.id==='challenges'?'collection':'reference';
+    lesson.thematicLabel=group?.label||'Orientare';
+    lesson.editorial_part=group?.kind==='chapter'?group.label:undefined;
+    if(lesson.companion?.category?.startsWith('Laborator v3'))lesson.companion.category='Laborator interactiv';
+  }
+  byId.get('gis-lab').canonical_id='digital-companion';
+  byId.get('digital-companion').title='Catalogul laboratoarelor';
+  byId.get('digital-companion').short_title='Catalogul laboratoarelor';
+  byId.get('digital-companion').keywords.push('Laborator GIS');
+  byId.get('digital-companion').description='Cele 20 de laboratoare din browser, organizate după temă și dificultate; nu necesită instalarea QGIS.';
+  content.chapters=chapters;
+  content.canonicalId=id=>byId.get(id)?.canonical_id||id;
+  content.chapterFor=id=>chapters.find(g=>g.id===byId.get(content.canonicalId(id))?.canonicalSection);
+  content.resourceLabel=id=>{const l=byId.get(id);return [l.lab_id||l.editorial_number,l.title].filter(Boolean).join(' · ');};
+  const escape=text=>String(text??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  content.navigationMarkup=({prefix='',currentId=''}={})=>{
+    currentId=content.canonicalId(currentId);
+    const item=id=>`<a class="nav-item${id===currentId?' active':''}" href="${escape(prefix+byId.get(id).href)}"${id===currentId?' aria-current="page"':''}>${escape(content.resourceLabel(id))}</a>`;
+    return content.groups.map(group=>{
+      if(group.kind!=='chapter')return `<div class="nav-links" aria-label="${escape(group.label)}"><p class="nav-section-label">${escape(group.label)}</p>${group.lessons.map(item).join('')}</div>`;
+      const families=group.id==='projections'?group.lessons.filter(id=>Number(byId.get(id).editorial_number?.split('.')[1])>=4&&byId.get(id).editorial_number?.startsWith('3.')):[];
+      let familyPrinted=false,labPrinted=false;
+      const body=group.lessons.map(id=>{
+        if(families.includes(id)){
+          if(familyPrinted)return '';familyPrinted=true;
+          return `<details class="nav-subgroup" data-nav-key="projection-families"${families.includes(currentId)?' open':''}><summary>Familii de proiecții — Aprofundare matematică</summary>${families.map(item).join('')}</details>`;
+        }
+        const separator=group.laboratories.includes(id)&&!labPrinted;
+        if(separator)labPrinted=true;
+        return (separator?'<p class="nav-section-label">Laboratoare</p>':'')+item(id);
+      }).join('');
+      return `<details class="nav-group" data-nav-key="${group.id}"${group.lessons.includes(currentId)?' open':''}><summary>${escape(group.label)}</summary>${body}</details>`;
+    }).join('');
+  };
+  content.breadcrumbMarkup=(id,prefix='')=>{
+    const canonical=content.canonicalId(id),lesson=byId.get(canonical),group=content.groups.find(g=>g.id===lesson?.canonicalSection);
+    if(!lesson)return '';
+    return `<nav class="lesson-breadcrumb" aria-label="Poziție în platformă"><a href="${prefix}index.html">Explorare geospațială</a>${group?` <span aria-hidden="true">→</span> ${group.anchor?`<a href="${prefix}index.html#${group.anchor}">${escape(group.label)}</a>`:escape(group.label)}`:''} <span aria-hidden="true">→</span> <span aria-current="page">${escape(content.resourceLabel(canonical))}</span></nav>`;
+  };
+  content.chapterContinuation=id=>{
+    const group=content.chapterFor(id);if(!group)return null;
+    const index=group.lessons.indexOf(id),next=group.lessons[index+1];
+    if(next)return {id:next,label:'Următoarea resursă din capitol'};
+    const following=chapters[chapters.indexOf(group)+1];
+    return following?{id:following.lessons[0],label:'Explorează capitolul următor'}:null;
+  };
+})(window.CARTO_CONTENT);

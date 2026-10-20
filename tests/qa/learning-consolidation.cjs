@@ -1,7 +1,7 @@
 // Operation 3: test educational contracts, actual controls and rendered geometry.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),http=require('node:http'),assert=require('node:assert/strict');
 const {root,playwright,browserOptions,manifest,inspectNavigation}=require('./expectations.cjs');
-const read=p=>fs.readFileSync(path.join(root,p),'utf8');
+const read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/\r\n/g,'\n');
 const context={window:{}};for(const p of ['data/content-manifest.js','data/glossary.js','data/learning-model.js','data/learning-pages.js'])vm.runInNewContext(read(p),context);
 const model=JSON.parse(JSON.stringify(context.window.CARTO_LEARNING)),glossary=JSON.parse(JSON.stringify(context.window.CARTO_GLOSSARY)),content=manifest();
 let checks=0;const ok=(value,message)=>{checks++;assert.ok(value,message);};
@@ -11,15 +11,16 @@ const workshopLevels={T01:'Începător',T02:'Intermediar',T03:'Intermediar',T04:
 equal(Object.values(model.levels).map(l=>l.label),['Începător','Intermediar','Avansat'],'Three textual levels');
 // The discovery Hub links to classified experiences; it is not another lesson.
 const referenceOnly=new Set(['home','about','resources','digital-companion']);
-equal(Object.keys(model.items).sort(),content.lessons.filter(l=>!referenceOnly.has(l.id)).map(l=>l.id).sort(),'Every classifiable destination, no extra route');
+equal(Object.keys(model.items).sort(),content.lessons.map(l=>l.id).sort(),'Every destination has metadata; reference levels may be null');
 // P02 adds actual geometry editing and per-cell/per-feature calculation.
 // Keep the observable-action whitelist; do not accept vague cognitive outcomes.
 const observable=/^(Identifici|Explici|Interpretezi|Convertești|Distingi|Verifici|Compari|Alegi|Clasifici|Reproduci|Construiești|Formulezi|Justifici|Separi|Documentezi|Încarci|Creezi|Filtrezi|Editezi|Calculezi)/;
 ok(!observable.test('Înțelegi datele')&&!observable.test('Cunoști GIS'),'Non-observable outcomes remain excluded');
 for(const [id,item] of Object.entries(model.items)){
+ if(item.level===null){ok(['reference','collection'].includes(content.lessons.find(l=>l.id===id).kind),id+' intentionally has no global level');continue;}
  ok(model.levels[item.level],id+' valid level');ok(item.reason.length>20,id+' substantive classification');
  ok(item.outcomes.length>=2&&item.outcomes.every(t=>observable.test(t)),id+' observable outcomes');
- for(const p of [...item.prerequisites,item.next])ok(model.items[p]&&p!==id,id+' real prerequisite/continuation '+p);
+ for(const p of [...item.prerequisites,...(item.next?[item.next]:[])])ok((model.items[p]||model.segments[p])&&p!==id,id+' real resource/segment prerequisite or derived continuation '+p);
  if(item.level!=='beginner')ok(item.prerequisites.length>0,id+' explicit prior knowledge');
 }
 for(const stage of model.stages)for(const id of stage.items)ok(model.items[id],'Real path destination: '+id);
@@ -94,7 +95,7 @@ async function workshopLevel(page,id){
   ok((await page.locator('#search-results small').innerText()).includes('<test & topic>'),'Escape rendered metadata safely');
   equal(await page.locator('#search-results small test').count(),0,'Metadata does not become HTML');
   for(const lesson of content.lessons){await page.goto(base+lesson.href);ok(await page.locator('main h1').count()===1,'One heading '+lesson.id);await inspectNavigation(page,content,base);checks++;
-   if(model.items[lesson.id]){equal(await page.locator('main > .learning-context .level-badge').innerText(),model.levels[model.items[lesson.id].level].label,'Correct visible level '+lesson.id);equal(await page.locator('.learning-continuation').count(),1,'One continuation '+lesson.id);}
+   if(model.items[lesson.id]?.level){equal(await page.locator('main > .learning-context .level-badge').innerText(),model.levels[model.items[lesson.id].level].label,'Correct visible level '+lesson.id);equal(await page.locator('.learning-continuation').count(),1,'One continuation '+lesson.id);}
    if(/^T0[1-6]$/.test(lesson.id)){equal(await page.locator('.tutorial-meta > span').first().innerText(),model.levels[model.items[lesson.id].level].label,'Workshop hero has the same level');await workshopLevel(page,lesson.id);}
    if(lesson.id==='tutorials')for(const card of await page.locator('.workshop-card-top').all()){const id=await card.locator('.workshop-id').innerText();ok((await card.innerText()).includes(model.levels[model.items[id].level].label),'Workshop card has the same level: '+id);}
   }

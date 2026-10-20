@@ -32,7 +32,7 @@ module.exports=async function({browser,page,base,ok}){
   ok(caption.includes('fără unitate')&&caption.includes('Scări independente')&&caption.includes('Nu sunt procente'),'Variables, units and independent scales declared');
   const baseline=execFileSync('git',['show','61fa8092aabd464da0116fa8fab3f01e1e990e55:js/method-demos.js'],{cwd:root}).toString('utf8');
   const current=fs.readFileSync(path.join(root,'js/method-demos.js'),'utf8');
-  const energy=s=>s.slice(s.indexOf('  function drawCartodiagram('),s.indexOf('\n  function ',s.indexOf('  function drawCartodiagram(')+1)).replace(/\r\n/g,'\n');
+  const energy=source=>{const s=source.replace(/\r\n/g,'\n');return s.slice(s.indexOf('  function drawCartodiagram('),s.indexOf('\n  function ',s.indexOf('  function drawCartodiagram(')+1));};
   ok(energy(current).replace('r=proportionalRadius(total,maxTotal,maxSize)','r=Math.sqrt(total/maxTotal)*maxSize')===energy(baseline),'Separate GWh/year energy sectors unchanged except exact shared-radius delegation');
   await page.goto(base+'lesson.html?id=method-flows');
   for(const scale of [1,1.5,3]){

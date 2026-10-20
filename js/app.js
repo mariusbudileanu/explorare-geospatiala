@@ -26,6 +26,7 @@
   const manifest = window.CARTO_CONTENT;
   const lessonById = Object.fromEntries(manifest.lessons.map(lesson => [lesson.id, lesson]));
   $('#chapter-nav').innerHTML = manifest.navigationMarkup({currentId:'coordinates'});
+  // The manifest opens only the current chapter. Manual expansion is page-local.
   $('#future-lessons').innerHTML = [
     ['Coordonatele rectangulare', 'CRS, grilă metrică și transformări', 'rectangular-coordinates'],
     ['Sfera', 'Zone, calote, trapeze și fuse sferice', 'sphere'],
@@ -41,10 +42,11 @@
   }
   const narrow = matchMedia('(max-width: 900px)');
   setNav(narrow.matches);
+  document.body.classList.add('nav-enhanced');
   narrow.addEventListener('change', event => setNav(event.matches));
   $('#nav-toggle').addEventListener('click', () => setNav(!document.body.classList.contains('nav-collapsed')));
   $('#chapter-nav').addEventListener('click', event => { if (event.target.closest('a') && narrow.matches) setNav(true); });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && narrow.matches) setNav(true); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && narrow.matches && !document.body.classList.contains('nav-collapsed')) { setNav(true); $('#nav-toggle').focus(); } });
   function setTheme(dark) {
     document.body.classList.toggle('dark', dark);
     $('#theme-toggle').setAttribute('aria-pressed', String(dark));

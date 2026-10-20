@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import {buildWorkshops} from './workshop-content.mjs';
 import {buildLearning} from './learning-content.mjs';
 import {extractSearchContent} from './search-content.mjs';
+import {decorateNavigation} from './navigation-content.mjs';
 import path from 'node:path';
 import http from 'node:http';
 import vm from 'node:vm';
@@ -20,7 +21,7 @@ buildLearning(root,{check});
 const context={window:{}};vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'data/content-manifest.js'),'utf8'),context);
 const manifest=context.window.CARTO_CONTENT;
 const qgisBridges=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).bridges;
-const write=(relative,content)=>{const p=path.join(root,relative);if(check){if(fs.readFileSync(p,'utf8')!==content){if(relative==='data/search-index.js'){const decode=text=>JSON.parse(text.slice(text.indexOf(' = ')+3).replace(/;\s*$/,''));const old=decode(fs.readFileSync(p,'utf8')),next=decode(content);for(const r of next){const prev=old.find(x=>x.id===r.id);if(JSON.stringify(prev)!==JSON.stringify(r))console.error('Changed search content: '+r.id+' '+JSON.stringify({added:r.paragraphs.filter(x=>!prev?.paragraphs.includes(x)),removed:prev?.paragraphs.filter(x=>!r.paragraphs.includes(x))}));}}throw Error('Generated file is stale: '+relative);}}else fs.writeFileSync(p,content);};
+const write=(relative,content)=>{const p=path.join(root,relative),actual=fs.readFileSync(p,'utf8');if(actual.replace(/\r\n/g,'\n')===content.replace(/\r\n/g,'\n'))return;if(check)throw Error('Generated file is stale: '+relative);fs.writeFileSync(p,content);};
 const registry=JSON.parse(fs.readFileSync(path.join(root,'data/data-registry.json'),'utf8'));
 write('data/data-registry.js','/* Generated from data-registry.json. */\nwindow.CARTO_DATA_REGISTRY = '+JSON.stringify(registry,null,2)+';\n');
 const server=http.createServer((req,res)=>{
@@ -49,8 +50,7 @@ try {
   if(generated.has(file)){const id=file==='about.html'?'lesson-root':'resources-root';html=html.replace(new RegExp(`(<main[^>]+id="${id}"[^>]*>)[\\s\\S]*?</main>`),(_,open)=>open+generated.get(file)+'</main>');}
   // Static navigation is also generated from the manifest, never maintained separately.
   const prefix=file.startsWith('tutorials/')?'../':'';
-  const nav=manifest.navigationMarkup({prefix});
-  html=html.replace(/(<nav[^>]+id="chapter-nav"[^>]*>)[\s\S]*?<\/nav>/,(_,open)=>open+nav+'</nav>');
+  html=decorateNavigation(html,manifest,file);
   if(file==='index.html'){
    html=html.replace(/<section class="overview-section"(?: id="cuprins")?>/,'<section class="overview-section" id="cuprins">');
    for(const [id,markup] of homeSections)html=html.replace(new RegExp(`(<div id="${id}"[^>]*>)[\\s\\S]*?</div>(?=<(?:p|/section))`),(_,open)=>open+markup+'</div>');
@@ -62,6 +62,7 @@ try {
  }
  const records=[];
  for(const lesson of manifest.lessons){
+  if(lesson.canonical_id)continue;
   await page.goto(base+lesson.href);
   if(lesson.id==='resources')await page.waitForFunction(()=>document.querySelectorAll('.resource-card[data-category="Provocări GIS"]').length===9);
   // This pedagogical section is attached after the QGIS registry fetch resolves.

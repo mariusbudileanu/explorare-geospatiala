@@ -62,7 +62,8 @@ body.dark{--surface-alt:#223441;--qgis:#93bd8d}.site-topbar .about-link{color:va
 
 /* A mobile drawer is safe only after its interactive controls are initialized. */
 @media (max-width:900px) {
-  body:not(.nav-enhanced) .sidebar { display:none; }
+  body:not(.nav-enhanced) .sidebar { display:block;position:static;width:auto;height:auto;max-height:none;border-bottom:1px solid var(--line); }
+  body:not(.nav-enhanced) .workspace { display:block; }
 }
 
 @media (min-width:901px) {

@@ -75,19 +75,17 @@
   function initSidebarPosition() {
     const sidebar = $('#sidebar'), nav = $('#chapter-nav');
     if (!sidebar || !nav) return {save() {}, restore() {}};
-    const key = 'cartografie-sidebar-state';
-    const groups = $$('.nav-group', nav);
+    const key = 'cartografie-sidebar-state-v4';
+    const groups = $$('.nav-group,.nav-subgroup', nav);
     let saved = {}, restored = false;
     try { saved = JSON.parse(sessionStorage.getItem(key)) || {}; } catch {}
-    groups.forEach((group, index) => {
-      if (typeof saved.groups?.[index] === 'boolean') group.open = saved.groups[index];
-      if (group.querySelector('[aria-current="page"]')) group.open = true;
-    });
+    // Expansion comes exclusively from navigationMarkup for this page.
+    // Ignore legacy saved.groups; only the sidebar scroll position persists.
     const visible = () => sidebar.getClientRects().length > 0;
     const save = () => {
       // A closed mobile drawer reports zero; retain its last visible position.
       if (!restored || !visible()) return;
-      saved = {top: sidebar.scrollTop, groups: groups.map(group => group.open)};
+      saved = {top: sidebar.scrollTop};
       try { sessionStorage.setItem(key, JSON.stringify(saved)); } catch {}
     };
     const restore = () => {
@@ -122,6 +120,7 @@
     setNav(narrow.matches); narrow.addEventListener('change', event => setNav(event.matches));
     $('#nav-toggle')?.addEventListener('click', () => setNav(!document.body.classList.contains('nav-collapsed')));
     $('#chapter-nav')?.addEventListener('click', event => { if (event.target.closest('a') && narrow.matches) setNav(true); });
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&narrow.matches&&!document.body.classList.contains('nav-collapsed')){setNav(true);$('#nav-toggle')?.focus();}});
     document.body.classList.add('nav-enhanced');
     const setTheme = dark => { document.body.classList.toggle('dark', dark); $('#theme-toggle')?.setAttribute('aria-pressed', String(dark)); if ($('#theme-label')) $('#theme-label').textContent = dark ? 'Mod luminos' : 'Mod întunecat'; };
     try { setTheme(localStorage.getItem('cartografie-theme') === 'dark'); } catch { setTheme(false); }
@@ -144,7 +143,7 @@
       ['06','Analiza datelor geospațiale','De la întrebare și selecție la operație, rezultat și interpretare.','analysis','Sinteză'],
       ['07','Ateliere QGIS','Șase exerciții practice, de la prima hartă la raster și vector.','tutorials','6 tutoriale']
     ];
-    $('#theme-overview').innerHTML = themes.map(([number,title,text,id,count]) => `<a class="theme-card" href="${lessonById[id].href}"><span class="theme-number">${number}</span><div><h3>${title}</h3><p>${text}</p></div><footer><span>${count}</span><strong>Explorează →</strong></footer></a>`).join('');
+    $('#theme-overview').innerHTML = themes.map(([number,title,text,id,count]) => `<a class="theme-card" id="capitol-${Number(number)}" href="${lessonById[id].href}"><span class="theme-number">${number}</span><div><h3>${title}</h3><p>${text}</p></div><footer><span>${count}</span><strong>Explorează →</strong></footer></a>`).join('');
     const features = [['Sferă interactivă','Delimitează zone, calote, trapeze și fuse.','sphere'],['De la Pământ la hartă','Compară geoidul, Mercator, Equal Earth și rutele de navigație.','earth-to-map'],['Anatomia unei hărți','Identifică elementele într-o machetă și încearcă modul test.','map-frame'],['Vector sau raster?','Explorează entități, pixeli și operații GIS.','geospatial-data']];
     $('#feature-cards').innerHTML = features.map(([title,text,id]) => `<a class="feature-card" href="${lessonById[id].href}"><h3>${title}</h3><p>${text}</p></a>`).join('');
     $('#future-cards').innerHTML = manifest.future.map(item => `<article class="future-card"><h3>${item.title}</h3><p>${item.status}</p>${item.href?`<a href="${esc(item.href)}">Explorează →</a>`:'<span>Planificat</span>'}</article>`).join('');
@@ -157,7 +156,7 @@
   function lessonIntro(lesson, lead) {
     const pages = lesson.source_pages.map(item => `p. tipărite ${item.printed} · PDF ${item.pdf}`).join('; ');
     const historical = lesson.source_section ? `<span class="meta-chip">Sursa originală: Năstase &amp; Cernea, 1974, § ${esc(lesson.source_section)} · ${pages}</span>` : '<span class="meta-chip">Extensie contemporană · nu provine din manualul din 1974</span>';
-    return `<div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> <span>→</span> ${esc(lesson.editorial_part || lesson.part)}</div><section class="lesson-hero"><span class="eyebrow">${esc(lesson.editorial_part || lesson.part)} ${lesson.editorial_number ? ` / ${esc(lesson.editorial_number)}` : ''}</span><h1>${lesson.editorial_number ? `${esc(lesson.editorial_number)} ` : ''}${esc(lesson.title)}</h1><p class="lead">${lead}</p><div class="lesson-meta">${historical}<span class="meta-chip">${lesson.interactive_components.length} module interactive</span></div></section>`;
+    return `<div class="lesson-breadcrumb"><a href="index.html">Explorare geospațială</a> <span>→</span> ${esc(lesson.thematicLabel)}</div><section class="lesson-hero"><span class="eyebrow">${esc(lesson.thematicLabel)} ${lesson.editorial_number ? ` / ${esc(lesson.editorial_number)}` : ''}</span><h1>${lesson.editorial_number ? `${esc(lesson.editorial_number)} ` : ''}${esc(lesson.title)}</h1><p class="lead">${lead}</p><div class="lesson-meta">${historical}<span class="meta-chip">${lesson.interactive_components.length} module interactive</span></div></section>`;
   }
 
   function siteFooter() {
@@ -175,9 +174,6 @@
   }
 
   function lessonTail(lesson) {
-    const group = manifest.groups.find(group => group.lessons.includes(lesson.id));
-    const index = group ? group.lessons.indexOf(lesson.id) : -1;
-    const ids = group ? [group.lessons[index-1],group.lessons[index+1]].filter(Boolean) : [];
     const lessonVocabulary = normalize([lesson.title, ...lesson.keywords].join(' '));
     const terms = glossary.filter(item => lessonVocabulary.includes(normalize(item.term_ro))).slice(0, 5);
     const glossarySection = terms.length ? `<section class="lesson-section glossary-section"><span class="eyebrow">GLOSAR ISTORIC</span><h2>Termeni ai lecției</h2><p>Treci cu indicatorul sau focalizează un termen pentru definiția și trimiterea din manual.</p><div class="glossary-list">${terms.map(item => glossaryMarkup(item.term_ro)).join('')}</div></section>` : '';
@@ -191,7 +187,8 @@
     const practiceSection=practice.length?`<section class="lesson-section"><span class="eyebrow">DIN TEORIE ÎN PRACTICĂ</span><h2>Vezi conceptul într-un atelier QGIS</h2><div class="next-lessons">${practice.map(item=>`<a class="next-card" href="${item.href}"><strong>${esc(item.title)}</strong><span>Exercițiu practic contemporan · ${item.id}</span></a>`).join('')}</div></section>`:'';
     const bridge=lesson.theme==='proiectii'||lesson.id==='rectangular-coordinates'?['projection-intro.html','De la Pământ la hartă · explicația modernă']:lesson.id==='method-isolines'?['geospatial-data.html#raster-lab','DEM → curbe de nivel · date geospațiale']:lesson.id==='relief-models'?['geospatial-data.html#raster-lab','DEM și hillshade · date geospațiale']:['method-signs','method-areas','method-qualitative'].includes(lesson.id)?['geospatial-data.html#vector','Modelul vectorial · date geospațiale']:null;
     const bridgeSection=bridge?`<section class="lesson-section"><span class="eyebrow">LEGĂTURĂ CONTEMPORANĂ</span><div class="next-lessons"><a class="next-card" href="${bridge[0]}"><strong>${bridge[1]}</strong><span>Explicație actuală separată de manualul din 1974</span></a></div></section>`:'';
-    return `${glossarySection}${practiceSection}${bridgeSection}<section class="lesson-section"><span class="eyebrow">CONTINUĂ</span><h2>Lecții apropiate</h2><div class="next-lessons">${ids.map(id=>{const next=lessonById[id];const number=next.editorial_number;const prefix=(typeof number==='string' && number.trim()) || (typeof number==='number' && Number.isFinite(number));return `<a class="next-card" href="${next.href}"><strong>${prefix ? `${esc(number)} ` : ''}${esc(next.title)}</strong><span>${esc(next.editorial_part || next.part)}</span></a>`;}).join('') || '<a class="next-card" href="index.html"><strong>Privire de ansamblu</strong><span>Toate traseele</span></a>'}</div></section>${siteFooter()}<div class="filter-empty" id="filter-empty">Niciun card nu corespunde filtrelor active.</div>`;
+    const orientation=lesson.id==='about'?`<section class="lesson-section"><h2>Explorează platforma</h2><div class="next-lessons">${['home','resources'].map(id=>{const target=lessonById[id];return `<a class="next-card" href="${target.href}"><strong>${esc(target.title)}</strong><span>${esc(target.thematicLabel)}</span></a>`;}).join('')}</div></section>`:'';
+    return `${glossarySection}${practiceSection}${bridgeSection}${orientation}${siteFooter()}<div class="filter-empty" id="filter-empty">Niciun card nu corespunde filtrelor active.</div>`;
   }
 
   function renderAbout(lesson) {

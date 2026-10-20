@@ -81,16 +81,22 @@ async function openNav(page) {
       }
       await inspect(page,label+' projections');
       await page.goto(base+'index.html'); await openNav(page);
+      // Deliberately create a long native menu before testing scroll restoration.
+      await page.locator('#chapter-nav details').evaluateAll(groups=>groups.forEach(group=>group.open=true));
       await page.locator('#sidebar').evaluate(sidebar=>{const target=sidebar.querySelector('a[href="tutorials/t01.html"]');sidebar.scrollTop+=target.getBoundingClientRect().top-sidebar.getBoundingClientRect().top-sidebar.clientHeight/2;});
       for(const route of ['tutorials/t01.html','tutorials/t02.html']) {
         const before=await page.locator('#sidebar').evaluate(e=>e.scrollTop);
         check(before>500,label+' start near lower chapters');
         await page.locator(`#chapter-nav a[href$="${route}"]`).click(); await page.waitForURL(base+route); await openNav(page);
         const after=await page.locator('#sidebar').evaluate(e=>{const a=e.querySelector('[aria-current=page]'),r=a.getBoundingClientRect(),b=e.getBoundingClientRect();return {top:e.scrollTop,max:e.scrollHeight-e.clientHeight,activeTop:r.top-b.top,activeBottom:r.bottom-b.top,height:e.clientHeight,main:scrollY};});
-        check(Math.abs(after.top-Math.min(before,after.max))<2,label+' sidebar restoration '+JSON.stringify({before,after}));
+        check(after.top>=0&&after.top<=after.max,label+' scroll is clamped to the new contextual layout '+JSON.stringify({before,after}));
+        check(JSON.stringify(await page.locator('#chapter-nav > .nav-group[open]').evaluateAll(g=>g.map(x=>x.dataset.navKey)))===JSON.stringify(['practice']),label+' expansion is contextual, not restored');
         check(after.activeTop>=0&&after.activeBottom<=after.height,label+' active visible');
         check(after.main===0,label+' main scroll untouched');
         measurements.push({label,route,before,after});
+        // Manual expansion still works, but is deliberately repeated on each page.
+        await page.locator('#chapter-nav details').evaluateAll(groups=>groups.forEach(group=>group.open=true));
+        await page.locator('#sidebar').evaluate(sidebar=>{const active=sidebar.querySelector('[aria-current=page]');sidebar.scrollTop+=active.getBoundingClientRect().top-sidebar.getBoundingClientRect().top-sidebar.clientHeight/2;});
       }
       const collapse=await page.locator('#chapter-nav .nav-group').last().locator('summary');
       await collapse.click();

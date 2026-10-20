@@ -138,3 +138,65 @@ for(const [id,lab,prerequisites,outcomes]of [
  ['zarr-cloud-data','L12',['formats-interoperability'],['Compari chunks, volume utile și costuri modelate.','Separi ziua solicitată de agregatul încorporat și perioada observată.']],
  ['georeferencing-lab','L19',['projection-crs-lab'],['Editezi GCP-uri și interpretezi puncte independente.','Verifici inversabilitatea, RMSE și exportul PNG + PGW în Stereo 70.']]
 ])window.CARTO_LEARNING.items[id]={lab_id:lab,level:'intermediate',reason:'Verifici ipotezele și rezultatele unui experiment controlat.',prerequisites,outcomes,next:'data-quality',quality:true};
+/* PEDAGOGICAL_MATRIX v4. Editorial segments are plans, never completion tokens. */
+(function(model,content){
+  const lookup=Object.fromEntries(content.lessons.flatMap(l=>[[l.id,l.id],...(l.editorial_number?[[l.editorial_number,l.id]]:[]),...(l.lab_id?[[l.lab_id,l.id]]:[])]));
+  Object.assign(lookup,{D:'geospatial-data',WF:'workflow',TR:'transparency-blending',C:'challenges',PF:'final-project'});
+  const ref=key=>{const [id,scope]=key.split('@');if(!lookup[id])throw Error('Unknown pedagogical reference: '+key);return lookup[id]+(scope?'@'+scope:'');};
+  const matrix=[["1.1",[],["2.1"],"F"],["1.2",["1.1","3.2"],["3.3","1.6"],"F","intermediate"],["1.3",[],["1.1"],"P"],["1.4",[],["1.3"],"P"],["1.5",[],["1.4"],"P"],["1.6",[],[],"P"],["2.1",[],["1.1"],"F"],["2.2",["2.1"],[],"F"],["2.3",["2.1"],["2.2"],"E"],["2.4",["2.1"],["2.2"],"F"],["2.5",["2.1"],["2.4"],"F"],["2.6",["2.1"],["2.5","1.1"],"F"],["3.1",["1.1","2.1"],["1.3","1.6"],"F"],["3.2",["3.1"],["1.4","1.5"],"F"],["3.3",["3.2"],["1.3"],"F"],["3.4",["3.2","3.3"],["1.3"],"P"],["3.5",["3.2","3.3"],["1.3"],"P"],["3.6",["3.2","3.3"],["1.3"],"P"],["3.7",["3.2","3.3"],["1.3"],"P"],["3.10",["3.2","3.3"],["1.3"],"P"],["3.11",["3.2","3.3"],["1.3"],"P"],["3.12",["3.2","3.3"],["1.3"],"P"],["3.8",["3.2","3.3"],["1.4"],"P"],["3.9",["3.2","3.3"],["1.5"],"P"],["4.1",["D"],["2.1"],"F"],["4.2",["D","2.1"],["4.1"],"F"],["4.3",["D","4.1"],["4.2"],"E"],["4.4",["D","2.1"],[],"F"],["4.5",["2.1"],["D","4.4"],"E"],["4.6",["D","2.1"],["4.5"],"F"],["4.7",["D","4.4"],["4.1"],"E"],["4.8",["D","2.6"],[],"E"],["4.9",["D","4.4"],["4.2"],"E"],["4.10",["2.6"],["D"],"P"],["D",[],["2.1","1.1"],"F"],["L01",["2.1","D"],["2.2"],"A"],["L02",["L01","D"],["L09"],"A"],["L03",["1.2","3.1"],["3.3","L01"],"A"],["L04",["L03"],["L01"],"A"],["L05",["4.2","D"],["4.1"],"A"],["L06",["L05","4.4"],["4.1","4.7","4.8","4.9"],"A"],["L07",["D","4.4"],["4.2","4.6","L05"],"A"],["L08",["D","L03","L05"],["L07","L09","L11","L13"],"A"],["L09",["D","1.2","L14"],["L02","WF"],"P"],["L10",["D"],["1.2","WF@intro"],"E"],["L11",["D","L01"],["4.2","4.6","TR"],"A"],["L12",["D"],["L10","L01","L13"],"E"],["L13",["D"],["1.2","L03"],"F"],["L14",["D","1.2","L20"],["WF","T01@core","L03"],"A","intermediate"],["L15",["L11","L20","1.2"],["L13"],"A"],["L16",["L05","D"],["L06","L14"],"P"],["L17",["D","L04"],["L14"],"A","intermediate"],["L18",["L17","L13"],["L20"],"P"],["L19",["L03","D"],["L13","L04"],"E","intermediate"],["L20",["D"],["4.2"],"A"],["T01",["D","1.2@intro","2.4","4.4"],["4.6","WF@intro","L20"],"A","beginner"],["T02",["T01@core","4.2","D"],["L05","L20","WF"],"A"],["T03",["T01@core","D","4.4"],["L07","L20","WF"],"A"],["T04",["T01@core","D","4.6"],["L07","1.2"],"A"],["T05",["T01@core","1.2","L14","L05"],["T02","T03","WF","L13"],"A"],["T06",["T01@core","1.2","L11"],["L15","L13","WF"],"A"],["WF",["T01@core","D"],["1.2"],"F"],["TR",["D"],["L07","L11"],"E"],["C",[],["D"],"A",null],["PF",["L14","L13","WF"],["L08"],"A"]];
+  const roles={F:'fundamental',A:'applied',E:'extension',P:'deepening'};
+  for(const [key,required,recommended,role,level] of matrix){
+    const id=ref(key),item=model.items[id];
+    item.prerequisites=required.map(ref);item.recommendedPrerequisites=recommended.map(ref);item.role=roles[role];
+    if(level!==undefined)item.level=level;
+  }
+  for(const l of content.lessons){
+    const item=model.items[l.id]??=( {outcomes:[],reason:'',prerequisites:[],recommendedPrerequisites:[],role:null} );
+    if(['reference','collection'].includes(l.kind))item.level=null;
+    item.recommendedPrerequisites??=[];delete item.next;
+    if(l.lab_id)item.lab_id=l.lab_id;
+  }
+  model.levels.beginner.color='#4D9074';model.levels.beginner.icon='book-open';
+  model.levels.intermediate.color='#C48B32';model.levels.intermediate.icon='layers';
+  model.levels.advanced.color='#B45B59';model.levels.advanced.icon='graduation-cap';
+  model.items['rectangular-coordinates'].reason='Resursa integrală include catalogul CRS și transformări ghidate; introducerea distinctă este planificată.';
+  model.items.analysis.reason='Operații ghidate pe scene controlate; proiectarea autonomă este aprofundată în proiectul final.';
+  model.items['network-accessibility'].reason='Compari distanța, timpul și conectivitatea unei rețele sintetice cu metode oferite.';
+  model.levels.intermediate.description='Aplicații ghidate: compari metode, alegi parametri și verifici rezultate folosind conceptele de bază. Instalarea QGIS este necesară numai atelierelor.';
+  model.segments={};
+  for(const [key,value] of Object.entries({"1.2@intro":{"required":["1.1"],"recommended":["2.1"],"anchors":["concept-rect","grila"]},"WF@intro":{"required":["D"],"recommended":[],"anchors":["etape","proiect-date"]},"T01@core":{"required":["D","1.2@intro","2.4","4.4"],"recommended":["4.6","WF@intro"],"anchors":["section-8","section-9","section-10","section-11","section-24","section-18","section-19","section-20"]},"PF@medical":{"required":["L14","L13","WF","T03","L04"],"recommended":["L08"],"terminal":true},"PF@population":{"required":["L14","L13","WF","T05","L04"],"recommended":["L08"],"terminal":true},"PF@raster":{"required":["L14","L13","WF","T06","L15"],"recommended":["L08"],"terminal":true},"C@V1":{"required":["D"]},"C@V2":{"required":["D","1.2","L04","L14"]},"C@V3":{"required":["C@V1","C@V2","4.2"]},"C@V4":{"required":["D","L04","L14"]},"C@V5":{"required":["D","L14","L04"]},"C@V6":{"required":["C@V5","L20"]},"C@R1":{"required":["D","L01"]},"C@R2":{"required":["C@R1","1.2@intro"]},"C@R3":{"required":["D","L01"]},"C@R4":{"required":["C@R3","L20"]},"C@R5":{"required":["C@R3"]},"C@R6":{"required":["C@R1","C@R3","L15"]}})){
+    const id=ref(key),resourceId=id.split('@')[0];
+    const available=key==='WF@intro'||key.startsWith('C@');
+    model.segments[id]={resourceId,available,prerequisites:value.required.map(ref),recommendedPrerequisites:(value.recommended||[]).map(ref),...(available&&value.anchors?{anchors:value.anchors}:{}),terminal:!!value.terminal};
+  }
+  model.plan={
+    stages:[["1.1","2.1","2.2","2.4","2.5","2.6"],["D","L01","1.2@intro"],["4.4","4.6","WF@intro"],["T01@core"],["3.1","3.2","1.2","L03","L04","WF"],["4.2","L05","L20","L14","L13"]].map((items,i)=>({
+      title:['Orientare și hartă','Date și experimente în browser','Reprezentare și pregătire','Prima hartă în QGIS','CRS și consolidare','Analiză și calitate'][i],
+      items:items.map(ref),
+      task:['Localizezi un punct și explici scara, cadrul și legenda.','Distingi entități și pixeli; compari scara cu rezoluția.','Alegi simboluri după tipul atributului.','Exporți o hartă cu legendă, sursă și limită de interpretare.','Verifici unitățile și compari măsurători în CRS potrivite.','Verifici operații, expresii și calitatea rezultatului.'][i]
+    })),
+    endings:Object.fromEntries(Object.entries({"medical":["T03","PF@medical"],"population":["T02","T05","PF@population"],"raster":["L11","L15","T06","PF@raster"]}).map(([key,items])=>[key,items.map(ref)])),
+    branches:Object.fromEntries(Object.entries({"vector":["L02","L09"],"representation":["4.1","4.3","L06","L07","TR","L08"],"statistics":["L16"],"networks":["L17","L18"],"formats":["L10","L12"],"georeferencing":["L19"],"geometry":["1.3","1.4","1.5","1.6"],"sport":["T04"],"T01extension":["T01"],"vectorChallenges":["C@V1","C@V2","C@V3","C@V4","C@V5","C@V6"],"rasterChallenges":["L11","L15","C@R1","C@R2","C@R3","C@R4","C@R5","C@R6"],"projection-4":["3.3","3.4"],"projection-5":["3.3","3.5"],"projection-6":["3.3","3.6"],"projection-7":["3.3","3.7"],"projection-8":["3.3","3.8"],"projection-9":["3.3","3.9"],"projection-10":["3.3","3.10"],"projection-11":["3.3","3.11"],"projection-12":["3.3","3.12"],"2.3":["2.3"],"4.5":["4.5"],"4.7":["4.7"],"4.8":["4.8"],"4.9":["4.9"],"4.10":["4.10"]}).map(([key,items])=>[key,items.map(ref)]))
+  };
+  model.segments['final-project@medical'].operations={anyOf:['vector-nearest','vector-buffer']};
+  model.segments['final-project@population'].operations={allOf:['vector-buffer','vector-dissolve','vector-intersection']};
+  model.segments['final-project@raster'].operations={whenSelected:['raster-slope']};
+  model.editorialDependencies={
+    'rectangular-coordinates@intro':'Delimitarea editorială a introducerii fără CRS/EPSG.',
+    'T01@core':'Simbolizare nominală, legendă și checkpoint proprii.',
+    'final-project@medical':'Instrucțiuni pentru prima executare a operațiilor QGIS.',
+    'final-project@population':'Instrucțiuni de geoprocesare și alocare a populației.',
+    'final-project@raster':'Instrucțiuni pentru operațiile raster alese.',
+    analysis:'Revizia rezultatelor de învățare pentru operațiile ghidate.'
+  };
+  // Publish only the supported prefix. Never skip a pending segment to join later stages.
+  let pending=false;
+  model.stages=model.plan.stages.map(stage=>({...stage,items:stage.items.filter(id=>{
+    if(model.segments[id]&&!model.segments[id].available)pending=true;
+    return !pending;
+  })})).filter(stage=>stage.items.length);
+  model.activePath=model.stages.flatMap(stage=>stage.items);
+  model.recommendedNext=id=>{const i=model.activePath.indexOf(id);return i<0?null:model.activePath[i+1]||null;};
+  // Legacy readers may inspect next, but cannot maintain another chain.
+  for(const [id,item] of Object.entries(model.items))Object.defineProperty(item,'next',{enumerable:true,get:()=>model.recommendedNext(id)});
+})(window.CARTO_LEARNING,window.CARTO_CONTENT);

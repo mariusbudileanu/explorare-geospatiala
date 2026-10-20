@@ -78,3 +78,6 @@ desktop.ini
 !/tools/workshop-content.mjs
 !/tools/learning-content.mjs
 !/tools/search-content.mjs
+
+!/tools/validate-learning.cjs
+!/tools/navigation-content.mjs

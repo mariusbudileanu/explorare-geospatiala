@@ -41,38 +41,37 @@ function checkNavigation(groups, activeLinks, content, base, currentURL) {
   assert.equal(byId.size, content.lessons.length, 'Duplicate manifest lesson ID');
   const ids = content.groups.flatMap(group => group.lessons);
   assert.equal(new Set(ids).size, ids.length, 'Duplicate manifest navigation membership');
-  assert.deepEqual([...ids].sort(), [...byId.keys()].sort(), 'All manifest lessons belong to navigation');
-  const lab = content.groups.find(group => group.id === 'gis-lab');
-  assert.ok(lab, 'Laborator GIS group is required');
-  for (const [id, href] of Object.entries(laboratoryDestinations)) {
-    assert.equal(byId.get(id)?.href, href, 'Required laboratory destination: ' + id);
-    assert.ok(lab.lessons.includes(id), 'Required laboratory group membership: ' + id);
-  }
+  assert.deepEqual([...ids].sort(), [...byId.values()].filter(l=>!['home','gis-lab'].includes(l.id)).map(l=>l.id).sort(), '71 canonical menu resources; home via brand and legacy hub via compatible URL');
+  assert.equal(content.groups.filter(g=>g.kind==='chapter').length,7,'Seven thematic accordions');
+  assert.equal(content.lessons.filter(l=>l.lab_id).length,20,'Twenty stable laboratory identities');
+  for (const [id, href] of Object.entries(laboratoryDestinations)) assert.equal(byId.get(id)?.href,href,'Preserved legacy destination '+id);
   const expected = content.groups.map(group => ({
     label: group.label,
     links: group.lessons.map(id => {
       const lesson = byId.get(id);
       assert.ok(lesson, 'Unknown navigation lesson: ' + id);
       return {href: new URL(lesson.href, base).href,
-        text: (lesson.editorial_number ? lesson.editorial_number + ' ' : '') + lesson.title};
+        text: [lesson.lab_id||lesson.editorial_number,lesson.title].filter(Boolean).join(' · ')};
     })
   }));
   assert.deepEqual(groups, expected, 'Exact navigation groups, ordering, labels and destinations');
   const hrefs = groups.flatMap(group => group.links.map(link => link.href));
   assert.equal(new Set(hrefs).size, hrefs.length, 'Duplicate navigation destination');
-  const current = new URL(currentURL);
+  const requested=new URL(currentURL);
+  const currentRecord=content.lessons.find(l=>{const target=new URL(l.href,base);return target.pathname===requested.pathname&&target.searchParams.get('id')===requested.searchParams.get('id');});
+  const current = new URL(currentRecord?.canonical_id?byId.get(currentRecord.canonical_id).href:currentURL,base);
   const currentDestinations = hrefs.filter(href => {
     const target = new URL(href);
     return target.origin === current.origin && target.pathname === current.pathname &&
       target.searchParams.get('id') === current.searchParams.get('id');
   });
-  assert.equal(currentDestinations.length, 1, 'Current route identifies exactly one navigation lesson');
+  assert.equal(currentDestinations.length,currentRecord?.id==='home'||!currentRecord?0:1,'Current route identifies its canonical menu entry');
   assert.deepEqual(activeLinks, currentDestinations, 'Exactly the current page is marked active');
 }
 async function inspectNavigation(page, content, base) {
   const state = await page.locator('#chapter-nav').evaluate(nav => ({
-    groups: [...nav.querySelectorAll('.nav-group')].map(group => ({
-      label: group.querySelector('summary').textContent.trim(),
+    groups: [...nav.children].filter(group=>group.matches('.nav-group,.nav-links')).map(group => ({
+      label: group.matches('.nav-group')?group.querySelector('summary').textContent.trim():group.getAttribute('aria-label'),
       links: [...group.querySelectorAll('a')].map(link => ({href: link.href, text: link.textContent.trim()}))
     })),
     activeLinks: [...nav.querySelectorAll('a[aria-current="page"]')].map(link => link.href)
