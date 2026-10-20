@@ -261,6 +261,12 @@ window.CARTO_CONTENT.companion.p07=['zarr-cloud-data','georeferencing-lab'];
   byId.get('digital-companion').description='Cele 20 de laboratoare din browser, organizate după temă și dificultate; nu necesită instalarea QGIS.';
   content.chapters=chapters;
   content.canonicalId=id=>byId.get(id)?.canonical_id||id;
+  content.resourceEyebrow=id=>{const lesson=byId.get(content.canonicalId(id));return [lesson?.thematicLabel,lesson?.lab_id&&'Laborator '+lesson.lab_id].filter(Boolean).join(' · ');};
+  content.contextualEyebrow=(id,label)=>{
+    if(!/DIGITAL COMPANION|^CONSOLIDARE · ÎNVĂȚARE ȘI APLICARE|^LABORATOR GIS\b|^Laboratoare v3\b|^P0[2-7]\b/i.test(label))return label;
+    const suffix=label.startsWith('LABORATOR GIS')?label.split(' · ').slice(1).filter(part=>!/^QGIS\b/.test(part)).join(' · '):label.includes('MAP DESIGN STUDIO')?'Map Design Studio':'';
+    return [content.resourceEyebrow(id),suffix].filter(Boolean).join(' · ');
+  };
   content.chapterFor=id=>chapters.find(g=>g.id===byId.get(content.canonicalId(id))?.canonicalSection);
   content.resourceLabel=id=>{const l=byId.get(id);return [l.lab_id||l.editorial_number,l.title].filter(Boolean).join(' · ');};
   const escape=text=>String(text??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

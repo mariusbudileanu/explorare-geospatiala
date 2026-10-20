@@ -196,3 +196,117 @@ Cele 42 de pagini de mai jos sunt regenerate din sursele comune, pentru navigare
 - `tutorials/t06.html`
 - `workflow.html`
 - `zarr-cloud-data.html`
+
+## Etapa 5 — Lotul 5.1: corectitudine GIS și progresie introductivă
+
+Statut: audit independent Opus încheiat — **ACCEPTAT CU REZERVE**. Proprietarul autorizează un singur commit local după documentare și retestare, fără corecții funcționale suplimentare înainte de commit. Lotul 5.2 nu este început; fără push, merge, tag, release sau publicare.
+
+### Preflight și domeniu
+
+- Branch `restructure/v4.0.0`, HEAD `2810ce2546f928453b3bbd5f5c633191d7a80e07`, working tree inițial curat. `main`, `origin/main` și `v3.0.0^{}` rămân la `6c36a95c2bb58d31208efbee4b9f3595130bb814`.
+- Consultate planul director v2, auditul pedagogic Opus și constatările E4-01–07. Cererea acestui lot autorizează corecția științifică punctuală L09, separarea 1.2i, rezultatele L14 și curățarea editorială; nu autorizează continuarea T01/QGIS.
+- Surse generatoare: `js/crs-lesson.js` pentru lecția dinamică, `data/learning-model.js` și `js/learning.js` pentru rezultatele învățării, `tools/learning-content.mjs` și `tools/navigation-content.mjs` pentru HTML static. Identitatea și poziția tematică provin din manifest.
+- Înaintea modificărilor, verificarea celor șapte răspunsuri declarate a reprodus defectul: numai Gap G1 returna `correct=false`, cu aria corectă 2400; restul erau corecte. Validatorul de integritate Etapa 4 trecea, dar testul P02 existent verifica numai existența unei erori, fără verdictul răspunsului.
+
+### Intervenții și delimitări
+
+- **E4-02 / L09:** `sameRing` compară aceeași succesiune ciclică de vârfuri, în ambele sensuri și din orice vârf. Închiderea repetată a inelului este eliminată numai pentru comparație. Se păstrează `E.same`, deci toleranța strictă existentă `1e-9`; nu se folosesc aria, bounding box-ul, sortarea vârfurilor sau toleranțe noi pentru a decide echivalența. Datele și regula care calculează gap/overlap rămân intacte.
+- Suita versionată P02 verifică verdictul fiecărui candidat din toate cele șapte runde. Pentru gap și overlap verifică ambele orientări, fiecare start, reprezentările închise/deschise, rotunjiri sub toleranța existentă și respingerea inelelor trunchiate, degenerate, deplasate cu aceeași arie, cu vârf greșit, reordonate sau repetate. În browser, T9 primește întâi un răspuns greșit, apoi cel corect în fiecare rundă; G1 afișează și aria 2400. Celelalte reguli și reparații sunt testate de aceeași suită.
+- **1.2i:** `#concept-rect` și `#grila` formează un segment DOM explicit `rectangular-coordinates@intro`, cu origine, X/Y, unități, grilă locală de 10 m, citirea perechii și deplasarea separată a coordonatelor. Nu conține selector CRS sau explicații datum/EPSG. Textul vechi privind sistemele de referință este păstrat în `#sisteme-rect`; experimentul CRS complet este în `#crs-grid`, cu toate ID-urile controalelor existente. Comparația, cele opt sisteme, zonele României și transformarea sunt păstrate.
+- Lecția rămâne la același URL/ID/număr și nivel Intermediar pentru resursa integrală. Contextul pedagogic distinge pregătirea lecției integrale de introducerea accesibilă după 1.1. Modelul marchează segmentul drept disponibil editorial, cu ancorele existente; `activeThrough='scale-resolution'` păstrează exact prefixul activ de opt resurse. Nu se activează continuări suplimentare sau contorizarea finalizării.
+- Fragmentul dinamic se rezolvă explicit după DOMContentLoaded, încărcarea fonturilor și layout. Testul cere scroll efectiv și alinierea la suma offseturilor CSS existente, plus secțiunea în jumătatea superioară a viewportului. La 375 px, offsetul măsurat este 216 + 145 ≈ 361 px; pragul inițial de 150 px al testului era incorect, nu o dovadă de pierdere a ancorei. Testul nu se limitează la existența unui ID.
+- **L14:** rezultatele devin „Alegi ghidat operația potrivită pentru întrebarea și scena oferite” și „Verifici rezultatul pe scenă și explici limitele interpretării”. Sunt derivate din model atât în pagină, cât și în inventarele pedagogice. Proiectarea autonomă rămâne obiectivul proiectului final; scenele și operațiile L14 nu sunt modificate.
+- **E4-05:** etichetele structurale vechi din eyebrow sunt înlocuite cu capitolul și codul de laborator derivate din manifest. Linkurile catalogului folosesc titlul canonic; subsolul comun folosește „Cartografie și GIS”. O mențiune pur internă „geometrie P02” devine „geometrie sintetică”, păstrând descrierea modelului. Sunt păstrate mențiunile P07 care documentează proveniența datelor, atribuirile, licențele și referințele istorice. Patch-urile P02–P07 rămân infrastructură, conform E4-06.
+
+### Închiderea după auditul Opus — decizii și transferuri
+
+- **E5-01 — Lotul 5.2:** rămân texte generate la runtime în sursele JS reale: L10 afirmă fals că L12 Zarr este planificat și indisponibil; L07 afișează eticheta tehnică P05; L14 păstrează referința tehnică P02/Turf. Corecția se face în sursele care generează efectiv aceste texte, nu exclusiv în HTML. După corectarea surselor, se verifică eliminarea workaround-ului `replaceAll` din `tools/navigation-content.mjs`. Curățarea HTML din 5.1 și PASS-urile existente nu închid aceste constatări runtime.
+- **E5-02 — Lotul 5.2:** se adaugă ulterior în introducerea 1.2 o explicație scurtă: în convenția Stereo 70, X indică nordul și Y estul, spre deosebire de desenul cartezian introductiv. Lecția nu se modifică în închiderea 5.1.
+- **E5-03 — decizie de compatibilitate:** în v3, `#grila` desemna experimentul cu selector CRS. În 5.1, aceeași ancoră desemnează grila introductivă X/Y, iar experimentul avansat este la noua ancoră `#crs-grid`; `#sisteme-rect` este de asemenea nouă. Reutilizarea lui `#grila` susține progresia pedagogică de la plan/axe/unități spre CRS/EPSG. URL-ul continuă să funcționeze, dar semnificația țintei s-a schimbat: păstrarea identificatorului nu certifică păstrarea semanticii. Compatibilitatea semantică a deep linkurilor se verifică explicit la QA-ul final.
+- **Limita L09:** comparația acceptă inversarea orientării și schimbarea vârfului inițial pentru aceeași succesiune ciclică de vârfuri, în toleranța existentă. Nu este un algoritm general de echivalență topologică pentru geometrii arbitrare; de exemplu, nu normalizează adăugarea/eliminarea unor vârfuri coliniare. Datele și regulile gap/overlap sunt păstrate.
+- Rezultatele PASS de mai jos sunt păstrate, cu domeniul lor concret; verdictul Opus și rezervele de mai sus nu sunt înlocuite de acestea. E4-04 și dependențele loturilor 5.2/5.3 rămân deschise.
+- Preflight de închidere: HEAD și branch conforme, 42 fișiere modificate + `tests/lot51-browser.cjs` nou, index gol, `main`/`origin/main`/tagul v3 neschimbate. Cererea nu numește cele șapte fișiere raportate de Opus numai cu CRLF/LF; controlul a fost extins la toate cele 303 fișiere text versionate. Niciunul dintre cele 42 din lot nu este modificat exclusiv prin CRLF/LF; diferențele de checkout fără modificări de conținut nu se includ în staging. Nu sunt efectuate resetări sau curățări.
+- Commit local autorizat, după verificările PASS și controlul listei staged: `fix(v4): correct topology diagnostics and refine learning content`. Nu se includ alte modificări funcționale față de lotul auditat.
+- Retestare la închidere: PASS `tests/v4-model.cjs` (1422 aserțiuni, 201 fișiere nemodificate + două excepții exacte), `tools/validate-learning.cjs`, L09/P02 (1275 verificări) și `tests/lot51-browser.cjs` (354 verificări). `git diff --check` trece; inventarul de 43 fișiere corespunde listei lotului, fără fișiere exclusiv CRLF/LF. Loguri: `tmp/qa/v4/lot51-close-*.log`.
+
+### Contractul v3 și excepțiile exacte
+
+Snapshotul `tests/fixtures/v3-contract.json` nu se modifică. Hash-urile celor 203 fișiere rămân ancorate în obiectele Git v3. Dintre acestea, 201 sunt neschimbate; numai următoarele două fișiere au excepții cu preimagine v3 și hash exact al implementării în `tests/protected-files.cjs`:
+
+| Fișier | Modificare autorizată în lot |
+|---|---|
+| `js/topology-repair-engine.js` | Corecția strictă E4-02; fără alte reguli, date sau UI schimbate |
+| `js/crs-lesson.js` | Introducere editorială și grilă locală, păstrarea aprofundării și scroll după randare |
+
+Orice altă modificare în aceste fișiere este respinsă. Testele verifică preimaginile, hash-urile curente și mutații suplimentare neautorizate; protecția celorlalte fișiere și testul negativ real pe disc rămân active. În plus, sufixul de cod de la `const locationSelect` în jos este comparat byte-for-byte, cu CRLF/LF normalizat, cu v3: toate calculele și gestionarea controalelor CRS existente sunt identice. Niciun tutorial QGIS, set de date sau algoritm de transformare nu este schimbat.
+
+### Rezultate și limite
+
+| Verificare executată | Rezultat | Dovadă |
+|---|---|---|
+| `node tests/v4-model.cjs` și validator | PASS | 1422 aserțiuni, nouă cazuri negative de graf, 73 destinații/34 numerotări; 203 fișiere verificate, 201 nemodificate și două excepții exacte; prefix activ neschimbat |
+| `node tests/qa/p02-labs.cjs` | PASS | 1275 verificări (860 unitare), toate răspunsurile celor șapte runde, teste ciclice și negative, G1 în T9; 38 cazuri de matrice topologică, gap/overlap și opt reparații, 48 combinații de prezentare; fără erori sau resurse lipsă |
+| `node tests/lot51-browser.cjs` | PASS | 354 verificări, 375/390/768/1280/1440 px × light/dark efectiv, scroll real către fragment după JS, grilă X/Y, opt CRS și formular păstrate, rezultate L14 identice cu modelul, etichete și linkuri verificate pe toate cele 73 de destinații |
+| `node tests/v4-navigation.cjs` | PASS | 4696 aserțiuni; identități, ancore v3, scripturi în aceeași ordine, 71 intrări, breadcrumb, catalog 20/20, no-JS |
+| `node tests/v4-browser.cjs` | PASS | 2638 verificări, 364 combinații, toate cele 29 operații parametrizate; zero erori/overflow |
+| P01 / P03 / P04 / P05 / P06 / P07 | PASS | 1327 / 3243 / 591 / 149487 / 31465 / 5370 verificări; împreună cu P02 acoperă L01–L20, restaurarea parametrilor, GCP și exporturile PNG/PGW |
+| `learning-consolidation` / `companion-hub` / `final-ui-check` | PASS | 2836 / 915 / 739 verificări; rezultate observabile, 329 verificări de căutare, meniuri desktop/mobil, tastatură, Escape/focus și 73 rute |
+| `projection-lab` | PASS | 1306 verificări; referințe independente, 27 transformări și 320 valori CRS existente; eroare maximă de coordonate ≈1,86e-9 |
+| `node tests/v4-build.cjs` | PASS local | Două build-uri identice byte-for-byte pentru 42 HTML / 47 fișiere generate, --check fără scriere; index cu 90 înregistrări |
+
+Pentru suitele existente a fost folosit și `node tests/run-existing.cjs p01-labs p03-labs p04-labs`, respectiv P05/P06/P07 și consolidare/catalog/UI/proiecții. În testul nou al fragmentului, fiecare temă este verificată prin navigare directă din altă pagină; un simplu `goto` către același URL nu reexecută obligatoriu JS, iar reload-ul poate restaura legitim poziția ulterioară a cititorului. Tema aplicată este verificată explicit, fără acumularea unor init scripts contradictorii.
+
+Logurile și capturile tehnice sunt în `tmp/qa/v4/lot51-*.log` și `tmp/qa/lot51/`, excluse din Git. Capturile 390 px light/dark au fost inspectate vizual. Nu există FAIL final în suitele executate. QGIS desktop, dispozitivele fizice și determinismul între medii cu fonturi diferite rămân NETESTAT. Nu au apărut diferențe între cele două build-uri locale; modificările indexului provin din introducere, rezultatele L14 și etichetele/linkurile canonice. E4-04 rămâne obligatoriu pentru QA-ul final v4; loturile 5.2/5.3 păstrează T01n, CASE, datele originale și integrarea proiectului final.
+
+### Fișierele lotului 5.1 și rolul fiecăruia
+
+43 fișiere: 42 modificate și un test nou. Dintre ele, 28 HTML și indexul de căutare sunt rezultate generate; nu sunt rescrieri divergente de conținut.
+
+| Fișier | Rolul modificării |
+|---|---|
+| `DECISIONS_AND_QA.md` | Domeniu, excepții exacte, probe și limite pentru auditul acestui lot |
+| `css/site.css` | Grila introductivă responsive, etichete lizibile și culori existente light/dark |
+| `data/content-manifest.js` | Derivarea etichetelor tematice din identitatea canonică |
+| `data/learning-model.js` | Rezultate L14, disponibilitatea editorială 1.2i și limită explicită a prefixului activ |
+| `js/crs-lesson.js` | Separare introductiv/aprofundare, exercițiu X/Y și fragment după randare |
+| `js/learning.js` | Clarificarea pregătirii pentru introducere vs lecția integrală, etichete runtime și titlul catalogului |
+| `js/topology-repair-engine.js` | Compararea strictă a inelelor independent de orientare/start |
+| `tools/learning-content.mjs` | Eyebrow generat din manifest, fără fallback structural vechi |
+| `tools/navigation-content.mjs` | Decorare comună a etichetelor, linkurilor catalogului și subsolului, păstrând citările |
+| `tools/validate-learning.cjs` | Verificarea limitei explicite a parcursului activ |
+| `tests/protected-files.cjs` | Două excepții cu preimagine v3 și hash curent exact; fără schimbarea snapshotului |
+| `tests/qa/p02-labs.cjs` | Verdictul real al diagnosticului, variații de inele, cazuri negative și T9 în browser |
+| `tests/v4-model.cjs` | Disponibilitate 1.2i, excepții limitate și respingerea modificărilor suplimentare |
+| `tests/lot51-browser.cjs` (nou) | Delimitare editorială, ancoră dinamică, teme/viewports, L14 și etichete pe 73 destinații |
+| `data/search-index.js` | Index regenerat din conținutul și etichetele actualizate; același inventar canonic |
+
+Pentru fiecare pagină generată de mai jos, rolul este actualizarea etichetelor, numelui catalogului sau subsolului prin sursa comună. În `analysis.html` se actualizează și rezultatele L14; în `learning-path.html`, inventarul reflectă aceleași rezultate și motivarea lecției integrale 1.2. Procedurile, controalele și datele paginilor sunt păstrate.
+
+- `analysis.html`
+- `classification-lab.html`
+- `data-quality.html`
+- `digital-companion.html`
+- `final-project.html`
+- `formats-interoperability.html`
+- `generalization-lab.html`
+- `georeferencing-lab.html`
+- `geospatial-data.html`
+- `gis-calculator.html`
+- `gis-lab.html`
+- `glossary.html`
+- `index.html`
+- `learning-path.html`
+- `map-diagnostics.html`
+- `measurement-lab.html`
+- `network-accessibility.html`
+- `projection-crs-lab.html`
+- `raster-analysis.html`
+- `raster-styling.html`
+- `scale-resolution.html`
+- `spatial-decision.html`
+- `spatial-statistics.html`
+- `styling-labeling.html`
+- `thematic-methods.html`
+- `topology.html`
+- `transparency-blending.html`
+- `zarr-cloud-data.html`

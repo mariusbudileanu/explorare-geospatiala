@@ -28,11 +28,16 @@ equal(model.activePath,['coordinates','map-definition','map-classification','map
 equal(Object.values(model.items).reduce((counts,item)=>{const key=item.level||'none';counts[key]=(counts[key]||0)+1;return counts;},{}),{beginner:20,intermediate:38,advanced:6,none:9},'Approved levels, no artificial reference levels');
 equal(baseline.commit,protection.BASELINE,'Immutable baseline source');
 equal(baseline.protectedHashPolicy,protection.POLICY,'Explicit portable hash policy');
+equal(Object.keys(protection.intentionalUpdates).sort(),['js/crs-lesson.js','js/topology-repair-engine.js'],'Only two scoped Lot 5.1 exceptions');
+ok(model.segments['rectangular-coordinates@intro'].available,'Introduction has real editorial support');
+equal(model.segments['rectangular-coordinates@intro'].anchors,['concept-rect','grila'],'Existing anchors identify the introduction');
 for(const [file,hash] of Object.entries(baseline.protectedFiles)){
   equal(baseline.protectedFileKinds[file],protection.kind(file),'Explicit text/binary policy '+file);
   const original=protection.gitBytes(file);
   equal(protection.digest(file,original),hash,'Fixture derives from v3 Git object '+file);
-  equal(protection.digest(file,fs.readFileSync(path.join(root,file))),hash,'Protected scientific/data file '+file);
+  const current=fs.readFileSync(path.join(root,file)),expected=protection.expectedHash(file,hash);
+  equal(protection.digest(file,current),expected,'Protected scientific/data file '+file);
+  if(protection.intentionalUpdates[file])ok(protection.digest(file,Buffer.concat([current,Buffer.from('\n// unauthorized edit\n')]))!==expected,'Scoped exception rejects any further content change '+file);
   if(protection.kind(file)==='text'){
     const lf=protection.normalized(file,original);
     equal(protection.digest(file,lf),hash,'LF checkout '+file);

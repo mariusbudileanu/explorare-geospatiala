@@ -46,7 +46,7 @@ window.CARTO_LEARNING = (() => {
   add('method-dots','intermediate','Poziția punctelor cere o ipoteză de distribuție.',['method-signs','geospatial-data'],['Alegi valoarea unui punct.','Distingi distribuția observată de repartizarea sintetică.'],'T05',true);
   add('relief-models','intermediate','Leagă nivelurile de modelul 3D și de exagerarea verticală.',['map-interior','geospatial-data'],['Construiești conceptual un relief din niveluri.','Verifici efectul scării verticale asupra percepției.'],'raster-styling');
   add('geospatial-data','beginner','Introduce entități, pixeli, atribute și modele; operațiile sunt ramura intermediară.',[],['Alegi între vector și raster după fenomen.','Identifici geometria, atributele și semnificația unei valori lipsă.'],'gis-lab',true);
-  add('analysis','advanced','Alege și justifică un lanț de operații și limitele concluziei.',['geospatial-data','rectangular-coordinates','workflow'],['Formulezi o întrebare spațială verificabilă.','Justifici operațiile și limitele interpretării.'],'final-project',true);
+  add('analysis','advanced','Alege și justifică un lanț de operații și limitele concluziei.',['geospatial-data','rectangular-coordinates','workflow'],['Alegi ghidat operația potrivită pentru întrebarea și scena oferite.','Verifici rezultatul pe scenă și explici limitele interpretării.'],'final-project',true);
   add('workflow','intermediate','Organizează surse, procesare, control și export într-un flux reproductibil.',['T01','geospatial-data'],['Separi datele originale de produsele derivate.','Documentezi parametrii și verifici rezultatul exportat.'],'analysis',true);
   add('tutorials','beginner','Orientează alegerea unui atelier după competența urmărită.',[],['Alegi un atelier potrivit experienței tale.','Identifici datele și documentația necesare.'],'T01');
   add('T01','beginner','Prima hartă: import, atribute, categorii și export.',[],['Încarci datele oficiale și verifici atributele.','Creezi o hartă categorială și verifici exportul.'],'T02');
@@ -159,14 +159,14 @@ for(const [id,lab,prerequisites,outcomes]of [
   model.levels.beginner.color='#4D9074';model.levels.beginner.icon='book-open';
   model.levels.intermediate.color='#C48B32';model.levels.intermediate.icon='layers';
   model.levels.advanced.color='#B45B59';model.levels.advanced.icon='graduation-cap';
-  model.items['rectangular-coordinates'].reason='Resursa integrală include catalogul CRS și transformări ghidate; introducerea distinctă este planificată.';
+  model.items['rectangular-coordinates'].reason='Resursa integrală include catalogul CRS și transformări ghidate; introducerea X/Y se poate studia separat.';
   model.items.analysis.reason='Operații ghidate pe scene controlate; proiectarea autonomă este aprofundată în proiectul final.';
   model.items['network-accessibility'].reason='Compari distanța, timpul și conectivitatea unei rețele sintetice cu metode oferite.';
   model.levels.intermediate.description='Aplicații ghidate: compari metode, alegi parametri și verifici rezultate folosind conceptele de bază. Instalarea QGIS este necesară numai atelierelor.';
   model.segments={};
   for(const [key,value] of Object.entries({"1.2@intro":{"required":["1.1"],"recommended":["2.1"],"anchors":["concept-rect","grila"]},"WF@intro":{"required":["D"],"recommended":[],"anchors":["etape","proiect-date"]},"T01@core":{"required":["D","1.2@intro","2.4","4.4"],"recommended":["4.6","WF@intro"],"anchors":["section-8","section-9","section-10","section-11","section-24","section-18","section-19","section-20"]},"PF@medical":{"required":["L14","L13","WF","T03","L04"],"recommended":["L08"],"terminal":true},"PF@population":{"required":["L14","L13","WF","T05","L04"],"recommended":["L08"],"terminal":true},"PF@raster":{"required":["L14","L13","WF","T06","L15"],"recommended":["L08"],"terminal":true},"C@V1":{"required":["D"]},"C@V2":{"required":["D","1.2","L04","L14"]},"C@V3":{"required":["C@V1","C@V2","4.2"]},"C@V4":{"required":["D","L04","L14"]},"C@V5":{"required":["D","L14","L04"]},"C@V6":{"required":["C@V5","L20"]},"C@R1":{"required":["D","L01"]},"C@R2":{"required":["C@R1","1.2@intro"]},"C@R3":{"required":["D","L01"]},"C@R4":{"required":["C@R3","L20"]},"C@R5":{"required":["C@R3"]},"C@R6":{"required":["C@R1","C@R3","L15"]}})){
     const id=ref(key),resourceId=id.split('@')[0];
-    const available=key==='WF@intro'||key.startsWith('C@');
+    const available=key==='1.2@intro'||key==='WF@intro'||key.startsWith('C@');
     model.segments[id]={resourceId,available,prerequisites:value.required.map(ref),recommendedPrerequisites:(value.recommended||[]).map(ref),...(available&&value.anchors?{anchors:value.anchors}:{}),terminal:!!value.terminal};
   }
   model.plan={
@@ -182,18 +182,20 @@ for(const [id,lab,prerequisites,outcomes]of [
   model.segments['final-project@population'].operations={allOf:['vector-buffer','vector-dissolve','vector-intersection']};
   model.segments['final-project@raster'].operations={whenSelected:['raster-slope']};
   model.editorialDependencies={
-    'rectangular-coordinates@intro':'Delimitarea editorială a introducerii fără CRS/EPSG.',
     'T01@core':'Simbolizare nominală, legendă și checkpoint proprii.',
     'final-project@medical':'Instrucțiuni pentru prima executare a operațiilor QGIS.',
     'final-project@population':'Instrucțiuni de geoprocesare și alocare a populației.',
-    'final-project@raster':'Instrucțiuni pentru operațiile raster alese.',
-    analysis:'Revizia rezultatelor de învățare pentru operațiile ghidate.'
+    'final-project@raster':'Instrucțiuni pentru operațiile raster alese.'
   };
-  // Publish only the supported prefix. Never skip a pending segment to join later stages.
+  // Editorial readiness does not automatically publish additional route stages.
+  // Keep the audited Stage 4 prefix until the integration in batch 5.3.
+  model.activeThrough='scale-resolution';
   let pending=false;
   model.stages=model.plan.stages.map(stage=>({...stage,items:stage.items.filter(id=>{
     if(model.segments[id]&&!model.segments[id].available)pending=true;
-    return !pending;
+    const include=!pending;
+    if(id===model.activeThrough)pending=true;
+    return include;
   })})).filter(stage=>stage.items.length);
   model.activePath=model.stages.flatMap(stage=>stage.items);
   model.recommendedNext=id=>{const i=model.activePath.indexOf(id);return i<0?null:model.activePath[i+1]||null;};

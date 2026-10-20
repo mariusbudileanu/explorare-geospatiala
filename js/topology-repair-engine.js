@@ -18,8 +18,17 @@
     return g;
   }
   function solution(g=F.initial()){return F.problems.reduce((state,p)=>repair(state,p.id),g);}
+  // Compare the same cyclic vertex sequence, allowing either winding and start.
+  // Keep the engine's coordinate tolerance; area or an unordered vertex set is insufficient.
+  function sameRing(a,b){
+    const vertices=ring=>E.same(ring[0],ring.at(-1))?ring.slice(0,-1):ring;
+    if(!Array.isArray(a)||!Array.isArray(b)||a.length<3||b.length<3)return false;
+    const left=vertices(a),right=vertices(b),n=left.length;
+    if(n<3||n!==right.length)return false;
+    return right.some((p,start)=>E.same(left[0],p)&&[1,-1].some(direction=>left.every((v,i)=>E.same(v,right[(start+direction*i+n)%n]))));
+  }
   function diagnose(round,answer=''){const result=C.evaluate(round),candidate=round.candidates.find(c=>c.id===answer),error=result.errors[0];if(result.errors.length!==1)throw Error('Runda trebuie să aibă o singură eroare calculată.');let correct=false;
-    if(candidate){if(['duplicate','point-outside'].includes(error.type))correct=error.affectedFeatureIds.every(id=>candidate.featureIds.includes(id));else if(['dangle','pseudo-node'].includes(error.type))correct=candidate.kind==='point'&&E.same(candidate.location,error.location);else if(['gap','overlap'].includes(error.type))correct=candidate.kind==='area'&&candidate.location.every((p,i)=>E.same(p,error.location[i]));}
+    if(candidate){if(['duplicate','point-outside'].includes(error.type))correct=error.affectedFeatureIds.every(id=>candidate.featureIds.includes(id));else if(['dangle','pseudo-node'].includes(error.type))correct=candidate.kind==='point'&&E.same(candidate.location,error.location);else if(['gap','overlap'].includes(error.type))correct=candidate.kind==='area'&&sameRing(candidate.location,error.location);}
     return {...result,correct,candidate,feedback:!answer?'Unde este problema? Selectează un feature, endpoint sau o zonă.':(correct?'✓ Identificat. '+round.why:round.wrong)};
   }
   Object.assign(E,{repairChecks:{evaluate,repair,solution,diagnose,clone}});

@@ -573,8 +573,8 @@ window.CARTO_SEARCH_INDEX = [
       "De la reprezentare la întrebare, operație și interpretare",
       "O hartă poate arăta unde se află obiecte sau valori. Analiza pornește de la o întrebare, alege datele și operația potrivite, apoi verifică ce susține rezultatul. Explorează modelele de date și operațiile →",
       "Ce vei ști să faci",
-      "Formulezi o întrebare spațială verificabilă.",
-      "Justifici operațiile și limitele interpretării.",
+      "Alegi ghidat operația potrivită pentru întrebarea și scena oferite.",
+      "Verifici rezultatul pe scenă și explici limitele interpretării.",
       "Cunoștințe necesare",
       "Date geospațiale · Coordonatele rectangulare · Calculator GIS",
       "Pregătire recomandată",
@@ -617,7 +617,7 @@ window.CARTO_SEARCH_INDEX = [
       "Scene sintetice locale în EPSG:4326, ordine [longitudine, latitudine]. Overlay și predicate: segmente drepte în lon/lat, geometrie P02 și Turf local. Arie și distanță: modelul sferic Turf (R = 6371008,8 m), nu metri calculați direct din grade. Bufferul este un cerc geodezic sferic aproximat cu 64 laturi. Inside exclude frontiera; covered o include. Join numără punctele și însumează numai valori cunoscute, raportând separat lipsurile. Nearest caută alt punct în aceeași scenă, nu accesibilitate.",
       "Doar puncte și poligoane simple cu găuri/multipoligoane disjuncte în scenele controlate. Poligoanele invalide sunt refuzate. Clip și Intersect păstrează atributele, fără realocarea populației; Intersect adaugă ID-ul limitei. Contactul numai pe frontieră nu produce poligon. Suma ariilor pe features include suprapuneri, nu este aria reuniunii. NULL, câmp absent și rezultat gol sunt distincte. Cache: maximum 16 rezultate, cheie cu scena, operația și toți parametrii.",
       "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
-      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion",
+      "L20 · Calculator GIS · Calitate și incertitudine · Catalogul laboratoarelor",
       "Verifică suportul și accesibilitatea",
       "L16 · Agregare și MAUP · L17 · Costuri și rețele",
       "De la analiză la diagnostic și decizie",
@@ -2732,9 +2732,10 @@ window.CARTO_SEARCH_INDEX = [
   {
     "id": "rectangular-coordinates",
     "href": "lesson.html?id=rectangular-coordinates",
-    "description": "De la un punct pe Pământ la valori X/Y în metri: explorează grila, compară sisteme de referință și transformă coordonate local, în browser.",
+    "description": "Începe cu axele X/Y, unitățile și citirea unei grile locale. Continuă apoi cu sistemele de referință și transformările pe Pământ, în browser.",
     "paragraphs": [
-      "De la un punct pe Pământ la valori X/Y în metri: explorează grila, compară sisteme de referință și transformă coordonate local, în browser.",
+      "Începe cu axele X/Y, unitățile și citirea unei grile locale. Continuă apoi cu sistemele de referință și transformările pe Pământ, în browser.",
+      "Introducerea X/Y se poate studia separat, după Coordonatele geografice. Nivelul și pregătirea de mai jos se referă la lecția integrală, inclusiv aprofundarea sistemelor de referință.",
       "Ce vei ști să faci",
       "Distingi gradele de coordonatele metrice.",
       "Verifici CRS-ul și zona de utilizare înaintea unei măsurători.",
@@ -2745,7 +2746,17 @@ window.CARTO_SEARCH_INDEX = [
       "Prerechizitele descriu pregătirea necesară; accesul la resursă rămâne liber.",
       "Proiecții & CRS · Compară sisteme de coordonate, distanțe și suprafețe și observă cum alegerea CRS influențează măsurarea și reprezentarea.",
       "Compară sisteme de coordonate, distanțe și suprafețe și observă cum alegerea CRS influențează măsurarea și reprezentarea.",
-      "Ce sunt coordonatele rectangulare?",
+      "Un punct pe un plan: axele X și Y",
+      "Desenează două axe perpendiculare. Intersecția lor este originea O = (0, 0). În exemplul de mai jos, axa X crește spre dreapta, iar axa Y în sus. O pereche se citește în ordinea (X, Y): întâi deplasarea orizontală, apoi cea verticală.",
+      "Unitatea trebuie precizată: o valoare de 40 poate însemna 40 de metri sau 40 de centimetri. Pe această grilă locală folosim metri; fiecare pătrat are latura de 10 m. Punctul A = (40 m, 30 m) este la 40 m la dreapta originii și la 30 m deasupra ei. Distanțele pe plan sunt diferite de unghiurile latitudine/longitudine din lecția 1.1.",
+      "Acest plan local este un exemplu didactic, fără legătură cu o localitate. Pentru a poziționa date pe Pământ avem nevoie de convențiile explicate după introducere.",
+      "Citește și mută un punct pe grilă",
+      "Pornește de la origine, urmărește X spre dreapta, apoi Y în sus. Mută o singură coordonată și observă direcția deplasării; grila și unitatea rămân aceleași.",
+      "X · metri",
+      "Y · metri",
+      "Verifică: mută A în (70 m, 20 m). Descrie ce se schimbă dacă păstrezi X = 70 m și mărești Y la 50 m. Revino la (40 m, 30 m) și explică ordinea celor două valori.",
+      "Introducerea se încheie aici. Continuă cu sistemele de referință și transformările când vrei să legi grila de poziții pe Pământ.",
+      "De la planul X/Y la coordonate pe Pământ",
       "O grilă carteziană are două axe perpendiculare și o origine. Poziția unui punct este dată de două distanțe măsurate de la origine. Într-un CRS proiectat, aceste valori sunt de regulă în metri: Easting spre est și Northing spre nord. Originea și deplasările convenționale (false easting, false northing) pot face valorile pozitive într-o zonă de lucru.",
       "Coordonate geografice",
       "Latitudine / longitudine",
@@ -4736,7 +4747,7 @@ window.CARTO_SEARCH_INDEX = [
       "Grilă 7×7, pas orizontal 30 m, altitudini în metri. Factorul vertical este o exagerare controlată a modelului sintetic (1 = m/m), nu o calibrare a unui DEM real. Horn 3×3 din motorul raster existent calculează gradientul est/nord. Pantă = atan(normă gradient); procent = 100 × normă. Aspectul indică coborârea: 0° nord, 90° est, sens orar. Hillshade folosește iluminarea existentă, azimut orar de la nord, altitudine deasupra orizontului.",
       "Marginile și vecinătățile 3×3 incomplete rămân necunoscute; aspectul terenului plat este nedefinit. Bilinear cere patru centre valide, inclusiv la margine, fără înlocuirea NoData cu zero. Grila resamplată 12×12 păstrează extentul de 210 m; un pas mai fin nu adaugă observații. Codurile tematice nu sunt altitudini. Subseturile reale și semantica zero/NoData din laboratorul existent rămân separate.",
       "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
-      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion"
+      "L20 · Calculator GIS · Calitate și incertitudine · Catalogul laboratoarelor"
     ]
   },
   {
@@ -5401,7 +5412,7 @@ window.CARTO_SEARCH_INDEX = [
       "Aceleași 25 de servicii sintetice și aceleași poziții în A/B; coordonatele SVG nu sunt distanțe geografice. Mărimea exprimă accent semantic, nu populație sau capacitate. Clasele principal / secondary / local sunt documentate în tabel. Schema secvențială ordonează importanța; cea divergentă este un contraexemplu: aceste categorii nu au un zero cantitativ. Paleta calitativă separă categorii fără ordine. Legenda listează culorile, razele, opacitatea și numărul real de obiecte pentru fiecare categorie.",
       "Plasarea reutilizează motorul determinist de etichetare: prioritate semantică sau egală, poziții alternative ori fixate, plafon de etichete. Coliziunile folosesc bounding boxes estimative, nu formele exacte ale literelor; nu este QGIS PAL. Contrastul este raportul luminanțelor sRGB pentru interiorul simbolului compus pe fundalul contextual uniform și pentru contur; suprapunerile și textura nu sunt modelate. Pragul 3:1 este orientativ pentru simboluri, nu certificare WCAG a hărții. Textul, IDs și tabelul completează culoarea. Vezi L06 pentru simboluri cantitative proporționale, fluxuri și clasificare L05; aceste formule rămân neschimbate.",
       "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
+      "Catalogul laboratoarelor · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
       "Presetări ca puncte de plecare, fără verdict universal",
       "Balanced",
       "Context discret, simboluri moderate, maximum 12 etichete și prioritate semantică: un compromis pentru citirea temei.",
@@ -5965,7 +5976,7 @@ window.CARTO_SEARCH_INDEX = [
       "Date exclusiv sintetice, aceleași ca în L16 și L17. Densitate: beneficiari / km², nu număr absolut și nu rata față de populația eligibilă. MAUP: totalul și aria se conservă, dar suportul și vecinătatea se schimbă; Moran I este descriptiv, cu vecini Rook și ponderi standardizate pe rând. Rețea: Dijkstra reutilizat, muchii în metri și minute; costurile și accesul se recalculează. Punctul de referință este nodul 0 în ambele vederi, nu o poziție geografică reală.",
       "Separă operația invalidă (unități incompatibile, numitor zero), limita metodei (proximitatea nu stabilește accesul), alegerea contextuală (număr, densitate ori rată pentru întrebări diferite) și simplificarea didactică (rețea inventată). Nu există scor universal de calitate sau design unic corect. Răspunsul așteptat este derivat din parametrii și rezultatele curente, nu din culoarea hărții. Aceeași zonare poate produce aceeași statistică; nu pretindem semnificație ori cauzalitate.",
       "Interactivitatea și controalele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L16 · MAUP · L17 · Rețele / Networks · L18 · Decizie / Decision · Calitate / Quality · Surse și licențe / Sources"
+      "Catalogul laboratoarelor · L16 · MAUP · L17 · Rețele / Networks · L18 · Decizie / Decision · Calitate / Quality · Surse și licențe / Sources"
     ]
   },
   {
@@ -6607,7 +6618,7 @@ window.CARTO_SEARCH_INDEX = [
       "Equal Interval, Quantile R7 și Jenks folosesc motorul existent, fără alte praguri în renderer. Prima clasă include ambele capete; celelalte sunt (limita inferioară, limita superioară]. Egalitățile rămân împreună. Numărul efectiv de clase poate fi mai mic decât k; unele intervale pot fi goale. Histograma arată frecvențele claselor calculate.",
       "12 observații, k între 1 și 7, valori finite între −1000000 și 1000000: costul Jenks este limitat. Harta este o grilă schematică de zone egale, nu un teritoriu real. O hartă echilibrată cromatic nu este automat o analiză statistică mai bună. Numitorul invalid și NULL sunt excluse, nu devin zero.",
       "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
-      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion",
+      "L20 · Calculator GIS · Calitate și incertitudine · Catalogul laboratoarelor",
       "Verifică-ți înțelegerea",
       "Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.",
       "Două zone aflate în clase diferite sunt neapărat foarte diferite numeric?",
@@ -6802,7 +6813,7 @@ window.CARTO_SEARCH_INDEX = [
       "Încarci datele oficiale și verifici atributele.",
       "Intermediar · Aplicații ghidate: compari metode, alegi parametri și verifici rezultate folosind conceptele de bază. Instalarea QGIS este necesară numai atelierelor.",
       "Coordonatele rectangulare",
-      "Resursa integrală include catalogul CRS și transformări ghidate; introducerea distinctă este planificată.",
+      "Resursa integrală include catalogul CRS și transformări ghidate; introducerea X/Y se poate studia separat.",
       "Distingi gradele de coordonatele metrice.",
       "Generalizare cartografică",
       "Alegi și verifici operații și interpretări pe exemple controlate.",
@@ -6891,7 +6902,7 @@ window.CARTO_SEARCH_INDEX = [
       "Editezi GCP-uri și interpretezi puncte independente.",
       "Analiza datelor geospațiale",
       "Operații ghidate pe scene controlate; proiectarea autonomă este aprofundată în proiectul final.",
-      "Formulezi o întrebare spațială verificabilă.",
+      "Alegi ghidat operația potrivită pentru întrebarea și scena oferite.",
       "Analiză raster",
       "Calculezi măști, expresii și suprafețe pe grile native.",
       "Rețele și accesibilitate",
@@ -7363,7 +7374,7 @@ window.CARTO_SEARCH_INDEX = [
       "Calitatea și incertitudinea datelor geospațiale",
       "Distingi acuratețea, precizia și rezoluția.",
       "Analiza datelor geospațiale",
-      "Formulezi o întrebare spațială verificabilă.",
+      "Alegi ghidat operația potrivită pentru întrebarea și scena oferite.",
       "Temă: 6. ANALIZA DATELOR GEOSPAȚIALE",
       "Concepte și legături: Date geospațiale · Coordonatele rectangulare · Calculator GIS",
       "Analiză raster",
@@ -7453,7 +7464,7 @@ window.CARTO_SEARCH_INDEX = [
       "Distanță pe hartă (mm) = distanță pe teren (m) × 1000 / numitor. Pixeli tipăriți = lățime în mm / 25,4 × DPI, rotunjit la întreg. Regiunea este un plan cartezian sintetic în metri, fără un datum geodezic. Suprafața are 12×12 celule de 10 m. Agregarea folosește media blocului; nearest alege celula de la centrul blocului (la egalitate, dreapta/jos).",
       "Cadrul este un model de tipar, nu o scară fizică exactă a ecranului: aceasta necesită calibrare. Extentul și selecția detaliilor se schimbă; geometria sursă nu este simplificată. Simbolul are 1 mm în model, etichetele apar de la 0,5 mm. Zoom nu creează detaliu nou. Rezoluția nu este acuratețe pozițională.",
       "Experimentele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
-      "L20 · Calculator GIS · Calitate și incertitudine · Digital Companion"
+      "L20 · Calculator GIS · Calitate și incertitudine · Catalogul laboratoarelor"
     ]
   },
   {
@@ -7475,7 +7486,7 @@ window.CARTO_SEARCH_INDEX = [
       "Plan cartezian sintetic în metri, fără geolocalizare. Simplificare Turf: cleanCoords elimină noduri coliniare, apoi Douglas–Peucker highQuality. Chiar la toleranță zero se pot elimina noduri coliniare. Pentru inele, Turf reduce intern toleranța dacă este necesar; nu garantăm o limită Hausdorff. Agregarea este reuniune geometrică pe atributul A/B; se pierd limitele și identitățile individuale, păstrând lista IDs sursă. Selecția păstrează obiecte cu arie de tipar ≥ prag (mm²), derivată din scara L01.",
       "L09 verifică validitatea și relația cu un punct-probă fix. Simplificarea poate schimba acoperirea unui punct/interiorul unui poligon. Aspectul plauzibil nu garantează topologia. Abaterea liniei este maximul distanțelor vârfurilor originale la segmentele rezultatului, nu Hausdorff simetric. În experimentul de deplasare se mută doar reprezentarea simbolului p pe verticală, nu sursa; diametrul simbolic este 16 m în model. Nu este un solver universal de conflicte.",
       "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
-      "Digital Companion · Surse și licențe"
+      "Catalogul laboratoarelor · Surse și licențe"
     ]
   },
   {
@@ -7503,7 +7514,7 @@ window.CARTO_SEARCH_INDEX = [
       "Modifică intervalul; verifică nivelurile și numărul segmentelor interpolate pe același câmp.",
       "Modifică mărimea diagramelor; separă volumul total de structura energetică.",
       "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
-      "Digital Companion · Surse și licențe"
+      "Catalogul laboratoarelor · Surse și licențe"
     ]
   },
   {
@@ -7525,7 +7536,7 @@ window.CARTO_SEARCH_INDEX = [
       "Procesare în worker pe toate celulele native, mascate de conturul Rîșca. L20 evaluează expresii în blocuri de maximum 512 celule, cu maximum 40 noduri AST; parserul nu este duplicat. Grilele sunt verificate pentru CRS, affine/extent/origine/pas, dimensiuni, tip numeric și mască. Grilele rotite ori incompatibile sunt refuzate, fără resampling implicit. Horn 3×3 reutilizează L11. Aria celulei = valoarea absolută a determinantului affine; hectare = pixeli selectați × aria celulei / 10000.",
       "Forest Loss: codificarea anilor este citită din metadatele existente; 0 înseamnă fără pierdere detectată, nu un an. Clip-ul local nu a recodat produsul. Filtrul existent analizează numai anii pozitivi; celulele zero și cele excluse sunt grupate în sumar și nu pot fi numite toate NoData. 2013 și 2014 se combină prin OR, fără dublă numărare; aceeași celulă are un singur cod de an. Sumarul folosește grila completă, dar imaginile 16×12 sunt doar eșantioane nearest ale centrelor native, nu un raster resamplat pentru analiză. Numărul pixelilor cu an de pierdere nu reprezintă toți pixelii terestri valizi. Preview nu înlocuiește harta completă; overlay nu demonstrează cauzalitate. Datele complete de atelier nu sunt distribuite aici.",
       "Interactivitatea RO/EN necesită JavaScript. Metoda și navigarea rămân disponibile.",
-      "Digital Companion · Surse și licențe"
+      "Catalogul laboratoarelor · Surse și licențe"
     ]
   },
   {
@@ -7547,7 +7558,7 @@ window.CARTO_SEARCH_INDEX = [
       "Suport sintetic: 4×4 dreptunghiuri contigue într-un plan cartezian metric de 4×4 km. Coloane de 0,5 / 1 / 1,5 / 1 km; rânduri de 1 / 0,5 / 1,5 / 1 km. Fiecare unitate are un număr fictiv de beneficiari (subset al persoanelor eligibile) și un numitor fictiv de persoane eligibile; aria vine din dimensiunile metrice. Agregarea însumează numărătorul, numitorul și aria. Densitate = SUM(beneficiari) / SUM(km²); rată = 100 × SUM(beneficiari) / SUM(eligibili). Nu folosim media neponderată a ratelor.",
       "Moran I = (n/S0) × SUM(wij zi zj) / SUM(zi²), zi = xi − media unităților; diagonala ponderilor este zero. Rook: frontieră comună; Queen: frontieră sau colț. Vecinătatea agregată rezultă din contactele celulelor membre. Ponderi binare sau standardizare pe rând; S0 este suma efectivă. Opțiunea insulă elimină legăturile ultimei unități: rând zero, unitatea rămâne în n și în centrare (convenție explicită). Fără vecini sau varianță zero: I nedefinit, nu zero. Nu calculăm p-value sau semnificație; I descriptiv nu demonstrează cauzalitate. Cu numai patru unități agregate, I este foarte sensibil la zonare și ponderi; semnul singur nu stabilește o concluzie inferențială. MAUP: aceeași populație poate produce statistici diferite prin scară și zonare. Două zonări pot întâmplător avea același I; nu promitem o diferență universală.",
       "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
+      "Catalogul laboratoarelor · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
       "De la analiză la diagnostic și decizie",
       "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces."
     ]
@@ -7571,7 +7582,7 @@ window.CARTO_SEARCH_INDEX = [
       "Nu există rețea rutieră adecvată în registrul actual: folosim exclusiv un graf educațional sintetic, nedirecționat, cu 14 noduri și 18 muchii inițiale. Coordonate carteziene în metri; lungime = distanța dintre capetele fiecărei muchii drepte. Viteze inventate explicit pentru demonstrație: 3 sau 6 km/h; muchia 5–6 poate fi încetinită la 1 km/h. Minute = metri / (km/h × 1000/60). Algoritm Dijkstra pentru costuri strict pozitive; intersecții numai la noduri, fără conectare automată după desen.",
       "Zona de serviciu este mulțimea nodurilor și fragmentelor de muchii cu cost minim ≤ buget. Costul este uniform de-a lungul fiecărei muchii; uniunea intervalelor accesibile din ambele capete evită dubla numărare. Nu desenăm un buffer euclidian și nu atribuim accesibilitate unor suprafețe fără rețea. Nodurile 12–13 sunt o componentă separată; destinațiile inaccesibile sunt marcate explicit. Barierele elimină muchiile 1–2 și 9–10; traversarea 5–6 rămâne. Școala: nodurile 3 și 12; serviciu medical: nodul 11. Accesibilitatea aici nu include capacitate, orar, eligibilitate, trafic sau acces real la servicii. Distanța în linie dreaptă nu este timp și nu garantează accesibilitate.",
       "Controalele RO/EN necesită JavaScript; metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
+      "Catalogul laboratoarelor · L06 · Metode tematice · Calitate și incertitudine · Surse și licențe",
       "De la analiză la diagnostic și decizie",
       "L08 · Diagnostic controlat · L18 · Decizie multicriterială. Prerechizitele sunt recomandări, nu condiții de acces."
     ]
@@ -7595,7 +7606,7 @@ window.CARTO_SEARCH_INDEX = [
       "Criterii: timp minim pe rețea din nodul 0 (minute, cost), gospodării potențiale atribuite sintetic (beneficiu, nu populație observată) și investiție sintetică (mii EUR, cost). Normalizare min–max: beneficiu n=(x−min)/(max−min); cost n=(max−x)/(max−min). Domeniile folosesc toate valorile finite ale scenariului înaintea restricțiilor; criteriu constant → 0,5 (convenție neutră explicită). Ponderi finite nenegative, wj=aj/Σaj; toate zero → fără scor/rang. Combinație liniară ponderată Si=Σwj nij; contribuțiile sunt afișate. Unitățile nu se adună direct. Ranguri de competiție, egalitate la toleranță absolută 10⁻¹² față de primul scor al grupului; ordinea IDs nu rupe egalitățile.",
       "NULL/NoData nu sunt zero. Date lipsă, nefinite ori tip invalid la un criteriu activ împiedică evaluarea alternativei; un criteriu cu pondere zero nu cere valoarea. Nodurile 12–13 sunt cunoscute ca neconectate la originea 0: sunt excluse printr-o condiție de eligibilitate, chiar dacă timpul are pondere zero. Timpul NULL nu este aici o măsurătoare necunoscută. Restricțiile dure (zonă protejată fictivă, plafon investiție) sunt separate de preferințe; atributele necunoscute necesare restricției exclud, nu devin zero. Scorul exclus este absent, nu mic. Sensibilitatea enumeră cinci ponderi pentru fiecare criteriu, redistribuind restul proporțional (egal când restul este zero); nu este probabilitate, încredere statistică ori dovadă de robustețe globală. Compensarea criteriilor, dependența de alternativele domeniului, incertitudinea intrărilor și preferințele utilizatorului limitează concluzia.",
       "Interactivitatea și controalele RO/EN necesită JavaScript. Metoda, limitele și navigarea rămân disponibile.",
-      "Digital Companion · L16 · MAUP · L17 · Rețele / Networks · L08 · Diagnostic · Calitate / Quality · Surse și licențe / Sources",
+      "Catalogul laboratoarelor · L16 · MAUP · L17 · Rețele / Networks · L08 · Diagnostic · Calitate / Quality · Surse și licențe / Sources",
       "Metodologie / Methodology: OECD / EU / JRC · Handbook on Constructing Composite Indicators (2008) ↗. Nu reprezintă validarea externă a scenariului sintetic / not external validation of the synthetic scenario."
     ]
   },

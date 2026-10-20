@@ -41,7 +41,24 @@ throws(()=>T.ruleChecks.evaluate({rule:'overlap',target:[shifted]}),'Invalid ove
 const network=[line('l1',[[0,0],[10,0]]),line('l2',[[5,0],[5,5]])];const d=T.ruleChecks.evaluate({rule:'dangles',target:network});ok(!d.errors.some(e=>JSON.stringify(e.location)==='[5,0]'),'Endpoint on line interior is connected');
 const pseudo=T.ruleChecks.evaluate({rule:'pseudos',target:[line('a',[[0,0],[5,0]]),line('b',[[5,0],[10,0]]),line('c',[[5,0],[5,5]])]});eq(pseudo.valid,true,'Three-way endpoint junction is not pseudo');
 for(const round of c.window.CARTO_TOPOLOGY.rounds)for(const side of ['A','B'])ok(T.evaluateRound(round,side,round.expected[side]).correct,'Nine v2 relation rounds');
-for(const round of c.window.CARTO_TOPOLOGY_DIAGNOSTICS.rounds)ok(T.repairChecks.diagnose(round).errors.length===1,'Legacy diagnosis');
+for(const round of c.window.CARTO_TOPOLOGY_DIAGNOSTICS.rounds){
+ ok(T.repairChecks.diagnose(round).errors.length===1,'Legacy diagnosis');
+ for(const candidate of round.candidates)eq(T.repairChecks.diagnose(round,candidate.id).correct,candidate.id===round.correct,'Diagnostic verdict '+round.id+'/'+candidate.id);
+}
+// Exercise the actual diagnose() path, not a separate geometry helper.
+for(const id of ['gap','overlap']){
+ const original=c.window.CARTO_TOPOLOGY_DIAGNOSTICS.rounds.find(r=>r.id===id),candidate=original.candidates.find(c=>c.id===original.correct),ring=candidate.location.slice(0,-1);
+ const verdict=location=>{const round=JSON.parse(JSON.stringify(original));round.candidates.find(c=>c.id===round.correct).location=location;return T.repairChecks.diagnose(round,round.correct).correct;};
+ for(const direction of [ring,ring.slice().reverse()])for(let start=0;start<ring.length;start++){
+  const rotated=direction.slice(start).concat(direction.slice(0,start));
+  ok(verdict([...rotated,rotated[0]]),'Same ring winding/start '+id+'/'+start);
+  ok(verdict(rotated),'Same open ring winding/start '+id+'/'+start);
+ }
+ const wrongVertex=JSON.parse(JSON.stringify(candidate.location));wrongVertex[1][0]+=.001;
+ const tinyRounding=candidate.location.map(p=>p.map(v=>v+1e-10));
+ ok(verdict(tinyRounding),'Existing 1e-9 tolerance retained '+id);
+ for(const bad of [[],ring.slice(0,2),[ring[0],ring[0],ring[0]],wrongVertex,candidate.location.map(p=>[p[0]+1,p[1]]),[ring[0],ring[2],ring[1],ring[3],ring[0]],[...candidate.location,...candidate.location.slice(1)]])ok(!verdict(bad),'Reject distinct/truncated/reordered/repeated ring '+id);
+}
 ok(T.repairChecks.evaluate(T.repairChecks.solution()).valid,'All eight controlled repairs still solve their rules');
 for(const problem of c.window.CARTO_TOPOLOGY_DIAGNOSTICS.problems){const changed=T.repairChecks.repair(c.window.CARTO_TOPOLOGY_DIAGNOSTICS.initial(),problem.id);ok(T.repairChecks.evaluate(changed).checks.find(x=>x.id===problem.id).valid,'Individual v2 repair '+problem.id);}
 const evaluate=(source,fields={})=>E.evaluate(E.compile(source),name=>Object.hasOwn(fields,name)?fields[name]:undefined);
@@ -90,6 +107,16 @@ try{
    await section.locator('[data-key=mode]').selectOption('toggle');await section.locator('[data-key=active]').selectOption('B');ok(await section.locator('[data-view=A]').isHidden()&&await section.locator('[data-view=B]').isVisible(),'A/B accessible toggle');
   }
   if(id==='L09'){
+   const diagnostic=page.locator('#T9');
+   for(const [i,round] of c.window.CARTO_TOPOLOGY_DIAGNOSTICS.rounds.entries()){
+    await diagnostic.locator('[data-key=round]').selectOption(String(i));
+    const wrong=round.candidates.find(candidate=>candidate.id!==round.correct);
+    await diagnostic.locator('[data-pick="'+wrong.id+'"]').click();
+    ok(!(await diagnostic.locator('.lab-status').innerText()).includes('✓ Identificat'),'Browser diagnostic rejects '+round.id);
+    await diagnostic.locator('[data-pick="'+round.correct+'"]').click();
+    ok((await diagnostic.locator('.lab-status').innerText()).includes('✓ Identificat'),'Browser diagnostic accepts '+round.id);
+    if(round.id==='gap')ok((await diagnostic.innerText()).includes('2400'),'Browser G1 computed area retained');
+   }
    for(const type of ['Point','LineString','Polygon']){await section.locator('[data-key=type]').selectOption(type);const rules=await section.locator('[data-key=rule] option').evaluateAll(es=>es.map(e=>e.value));for(const rule of rules){await section.locator('[data-key=rule]').selectOption(rule);await section.locator('[data-key=variant]').selectOption('problem');await section.locator('[data-action=apply]').click();ok(!(await page.evaluate(()=>window.CARTO_P02.controllers.L09.getResult().valid)),'Browser rule detects '+type+'/'+rule);await section.locator('[data-action=repair]').click();ok(await page.evaluate(()=>window.CARTO_P02.controllers.L09.getResult().valid),'Controlled repair '+type+'/'+rule);}}
    await section.locator('[data-key=type]').selectOption('Point');await section.locator('[data-key=rule]').selectOption('inside');const edited=await page.evaluate(()=>window.CARTO_P02.controllers.L09.getState().scene);edited.target[0].coordinates=[190,140];await section.locator('[data-key=scene]').fill(JSON.stringify(edited));await section.locator('[data-action=apply]').click();eq(await section.locator('[data-key=variant]').inputValue(),'custom','Edited scene not mislabeled as a valid preset');ok(!await page.evaluate(()=>window.CARTO_P02.controllers.L09.getResult().valid),'Actual edited point in hole detected');await section.locator('[data-action=repair]').click();
   }

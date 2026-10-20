@@ -48,6 +48,7 @@ function validateLearning(content,model,operations=[]) {
     items.forEach(add);route(expanded,'branch '+name);
   }
   route(model.activePath,'active',{active:true});
+  if(model.activeThrough){checkRef(model.activeThrough,'activation boundary');if(model.activePath.at(-1)!==model.activeThrough)fail('Active path exceeds or misses explicit activation boundary');}
   if(JSON.stringify(model.activePath)!==JSON.stringify(common.slice(0,model.activePath.length)))fail('Active path is not a supported common prefix');
   for(const [id,item] of Object.entries(model.items)){
     const index=model.activePath.indexOf(id),expected=index<0?null:model.activePath[index+1]||null;
