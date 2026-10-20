@@ -15,7 +15,8 @@
     "after_section": 15,
     "caption_ro": "Categoriile educaționale sunt configurate în simbolizarea punctelor.",
     "alt_ro": "Fereastra de simbolizare categorială a școlilor și punctele colorate pe harta Bucureștiului.",
-    "priority": "essential"
+    "priority": "optional",
+    "usage_note": "Captură istorică a variantei inițiale pe categorii educaționale. Nu reprezintă harta nominală după proprietate și nu validează expresia CASE revizuită."
   },
   {
     "tutorial_id": "T01",
@@ -24,7 +25,8 @@
     "after_section": 18,
     "caption_ro": "Prima compoziție cartografică în fereastra de layout QGIS.",
     "alt_ro": "Fereastra Print Layout cu pagina unei hărți a școlilor din București.",
-    "priority": "essential"
+    "priority": "optional",
+    "usage_note": "Captură istorică a variantei inițiale pe categorii educaționale. Nu reprezintă harta nominală după proprietate și nu validează expresia CASE revizuită."
   },
   {
     "tutorial_id": "T02",

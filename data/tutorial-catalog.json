@@ -5,7 +5,7 @@
     "level": "Începător",
     "duration": "60–90 min",
     "sequence": 1,
-    "summary": "Construiește o hartă descriptivă a unităților școlare din București, de la tabelul de atribute și categorii până la layout și export.",
+    "summary": "Prima hartă după tipul de proprietate: inspectare, Categorized nominal, legendă, layout și export; filtrele și CASE sunt extensii.",
     "skills": [
       "încărcare GeoPackage",
       "inspectare tabel de atribute",
@@ -17,10 +17,11 @@
     ],
     "concepts": [
       "punct versus poligon",
-      "atribute text, numerice și 0/1",
+      "atribut nominal versus numeric",
+      "proprietate declarată",
       "NULL versus zero",
-      "clasificare CASE ordonată",
-      "hartă descriptivă"
+      "legendă coerentă",
+      "CASE cu domeniu restrâns, ca extensie"
     ],
     "dataset_ids": [
       "schools_bucharest_2022_2023"
@@ -34,12 +35,12 @@
       {
         "id": "T01-02",
         "filename": "T01_02_categorized_schools.png",
-        "priority": "essential"
+        "priority": "optional"
       },
       {
         "id": "T01-03",
         "filename": "T01_03_first_map_layout.png",
-        "priority": "essential"
+        "priority": "optional"
       }
     ],
     "status": "source-reviewed"

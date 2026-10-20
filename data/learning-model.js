@@ -178,11 +178,12 @@ for(const [id,lab,prerequisites,outcomes]of [
     endings:Object.fromEntries(Object.entries({"medical":["T03","PF@medical"],"population":["T02","T05","PF@population"],"raster":["L11","L15","T06","PF@raster"]}).map(([key,items])=>[key,items.map(ref)])),
     branches:Object.fromEntries(Object.entries({"vector":["L02","L09"],"representation":["4.1","4.3","L06","L07","TR","L08"],"statistics":["L16"],"networks":["L17","L18"],"formats":["L10","L12"],"georeferencing":["L19"],"geometry":["1.3","1.4","1.5","1.6"],"sport":["T04"],"T01extension":["T01"],"vectorChallenges":["C@V1","C@V2","C@V3","C@V4","C@V5","C@V6"],"rasterChallenges":["L11","L15","C@R1","C@R2","C@R3","C@R4","C@R5","C@R6"],"projection-4":["3.3","3.4"],"projection-5":["3.3","3.5"],"projection-6":["3.3","3.6"],"projection-7":["3.3","3.7"],"projection-8":["3.3","3.8"],"projection-9":["3.3","3.9"],"projection-10":["3.3","3.10"],"projection-11":["3.3","3.11"],"projection-12":["3.3","3.12"],"2.3":["2.3"],"4.5":["4.5"],"4.7":["4.7"],"4.8":["4.8"],"4.9":["4.9"],"4.10":["4.10"]}).map(([key,items])=>[key,items.map(ref)]))
   };
+  model.segments['T01@core'].anchors=['t01-core'];
   model.segments['final-project@medical'].operations={anyOf:['vector-nearest','vector-buffer']};
   model.segments['final-project@population'].operations={allOf:['vector-buffer','vector-dissolve','vector-intersection']};
   model.segments['final-project@raster'].operations={whenSelected:['raster-slope']};
   model.editorialDependencies={
-    'T01@core':'Simbolizare nominală, legendă și checkpoint proprii.',
+    'T01@core':'Nucleu după proprietate implementat; aprobare curriculară, verificarea interfeței QGIS 3.44 și integrare în Lotul 5.3.',
     'final-project@medical':'Instrucțiuni pentru prima executare a operațiilor QGIS.',
     'final-project@population':'Instrucțiuni de geoprocesare și alocare a populației.',
     'final-project@raster':'Instrucțiuni pentru operațiile raster alese.'

@@ -310,3 +310,138 @@ Pentru fiecare pagină generată de mai jos, rolul este actualizarea etichetelor
 - `topology.html`
 - `transparency-blending.html`
 - `zarr-cloud-data.html`
+
+## Etapa 5 — Lotul 5.2: ateliere QGIS și corecții editoriale (2026-10-20)
+
+Implementare locală pentru audit, fără staging sau commit. Preflight: branch `restructure/v4.0.0`, HEAD `0b3f4a528cdc93237e3a3a18f993861cde54094d`, working tree inițial curat și index gol. `main`, `origin/main` și tagul v3.0.0 indică în continuare `6c36a95c2bb58d31208efbee4b9f3595130bb814`. Nu se începe Lotul 5.3.
+
+### E5-01 / E5-02 și limitele schimbării
+
+- **E5-01 implementat în surse:** L10 trimite către L12 disponibil, cu snapshot offline și acces modelat, în română și engleză; legenda L07 spune „Stil / Style”; metoda L14 descrie segmentele lon/lat și modelul sferic fără numele interne P02/Turf. Sunt păstrate raza, unitățile și limitele științifice. Workaround-ul punctual `replaceAll` din generatorul navigării este eliminat. Nu se elimină atribuirile ori proveniența datelor și nu se modifică algoritmii sau adaptoarele.
+- **E5-02 implementat:** introducerea 1.2 explică pe scurt X orizontal/Y vertical în desen versus X nordic/Y estic în Stereo 70. Autoritatea EPSG inclusă în GDAL raportează pentru EPSG:3844 axele Northing/Easting; explicația existentă din L19 este concordantă. Site-ul EPSG/resolverul OGC au răspuns HTTP 403 la accesarea automată; nu sunt declarate drept pagini consultate cu succes. Sufixul calculelor și controalelor CRS este verificat identic cu v3.
+- **E5-03 rămâne deschis pentru QA final:** sensul `#grila` din Lotul 5.1 nu este schimbat în acest lot; selectorul avansat rămâne la `#crs-grid`. Existența fragmentului nu certifică echivalența lui semantică cu v3.
+
+### Date originale: domeniu, identitate și reproducere
+
+Verificările sunt adăugate în inventarul existent `data/tutorial-dataset-inventory.json`, nu într-un registru paralel. Arhivele și GeoPackage-urile descărcate se află numai în `tmp/qa/lot52/sources/`, ignorat de Git; nu sunt modificate sau redistribuite. Hashurile fișierelor înainte/după testele QGIS sunt identice. Schema și statisticile tehnice sunt în `tmp/qa/lot52/source-inspection.json`; rezultatele execuției, în `tmp/qa/lot52/qgis-results.json`.
+
+| Original verificat | Rezultat și domeniu | SHA-256 al descărcării |
+|---|---|---|
+| ADIZMB școli/circumscripții, arhiva 2022–2023 rev1 | 757 puncte școli; 174 puncte și 174 poligoane de circumscripții; limite municipale; EPSG:4326 | `c1d164f936e39e8997a6071272fa0ac464d56cb71195c7ebc347e0afcf5f7b00` |
+| ADIZMB medical, arhiva 2023–2024 | 1380 cabinete primare, 1082 secundare, 158 spitale; puncte EPSG:4326; limita `Limita_IF` din pachet este EPSG:3844 | `c8a30698554f0bc8a9f482d2ee98c8f9dd9d71edef3b83aa61191f25dc05d644` |
+| ADIZMB baze sportive, arhiva 1991–2024 | 157 poligoane și două obiecte administrative, EPSG:4326; diferența 1990 din numele GPKG / 1991 din numele stratului este păstrată explicit | `0f69d53c3c15552a45926091d75b4cac6b1682cf424f81fad24f3e0ac334f56c` |
+| Recensământ 2021, `Recensamant2021_GridData.gpkg` original național | 240290 poligoane EPSG:3844; schema și operațiile testate efectiv pe zona București | `249408aefcfec5df3fc8b29867c58599fa7c2e90abd531c2b91ca67488d433a4` |
+
+Sursele, condițiile de acces, licențele și atribuirile rămân în `data/data-registry.json`; acesta și proiecția sa JS nu sunt schimbate. Sursele ADIZMB sunt identificate prin paginile oficiale și descărcările lor. Pentru produsul exact Recensământ, registrul păstrează rezerva privind licența: descărcarea nu este echivalată cu dreptul de redistribuire. Pentru Suceava se păstrează distinct documentația furnizorului, schema/capturile istorice și antetul Hansen consemnat în registru la 2026-10-09; copia DEM/măștii complete nu este disponibilă. Nu se pretinde o verificare nouă a întregului raster sau execuția T06 pe originalele Suceava. Rîșca nu este utilizată ca substitut.
+
+### T01: nucleu nominal real, extensii și CASE
+
+- Alegerea curriculară aprobată definitiv este **`Regim Juridic - Tip de proprietate`**, String, cu exact 465 „Public de interes național și local” și 292 „Privat”, fără NULL, în cele 757 obiecte ale originalului complet. `Sector` este Integer64 cu valorile nominale 1–6 și efectivele 164/141/142/108/78/124, fără NULL. Nu este cantitate și nu se clasifică prin Graduated. Alegerea proprietății adaugă informație tematică față de localizare și pregătește comparațiile T04; distribuția nu este extrapolată din Sectorul 1.
+- Nucleul `#t01-core` are șapte acțiuni QGIS cu rezultat observabil: încărcare, inspecție, Categorized direct pe proprietate, cadru/scară, legendă/atribuire, export, verificare externă PNG/PDF. Fiecare are ancoră descriptivă; acestea nu sunt unități de progres și nu adaugă checkbox-uri. Nu există expresie de copiat ori captură educațională prezentată ca dovadă a nucleului.
+- Layoutul final folosește EPSG:3844 pentru cadru/proiect; originalele EPSG:4326 rămân nemodificate. Pagina are unități mm, scara grafică este legată de hartă și etichetată în km. **E52-01:** în EPSG:4326 scara diferă între direcțiile est–vest și nord–sud; posibilitatea tehnică de a desena o bară în km nu demonstrează fidelitatea ei pentru ambele direcții. Formularea anterioară, care sugera că unitățile și metoda sunt suficiente, este corectată în pasul4 și §18. Instrucțiunile păstrează distincția strat/proiect/cadru și cer verificarea transformării, orientării, legendei și atribuirea CC BY 4.0.
+- Filtrele AND/OR, nivelurile educaționale, simbolurile după numărul de elevi, etichetele și Sector/Coduri rămân extensii. Cele 24 de secțiuni și ID-urile lor sunt păstrate. `#section-22` păstrează limitele privind accesibilitatea, timpul, capacitatea, calitatea, echitatea și domiciliul elevilor; finalizarea hărții nu cere CASE.
+- CASE analizează strict cele cinci câmpuri binare Antepreșcolar, Preșcolar, Primar, Gimnazial, Liceal. După verificarea valorilor, ordinea este descrescătoare, Liceal → Antepreșcolar. Profesional este o filieră paralelă, Postliceal nu se inserează în această scară, Special este ortogonal, iar Club nu este nivel; ele nu sunt clasate implicit și se discută separat prin `Coduri`.
+- Orice marcaj nenul în afara 0/1 produce „Valori de verificat”. Dacă nu există asemenea valoare, orice NULL în cele cinci câmpuri produce conservator „Date incomplete”, chiar când alt nivel este marcat; nu se presupune că nivelul lipsă nu este oferit. Cinci zerouri produc „Fără nivel marcat în cele cinci câmpuri”, fără a pretinde „alt tip” ori lipsa învățământului. Legenda menționează domeniul celor cinci câmpuri; numai clasele de nivel cunoscut formează progresia ordinală, iar categoriile de calitate a datelor se diferențiază separat.
+- Pe original: Preșcolar 336, Liceal 123, Gimnazial 199, Primar 35, fără nivel în cele cinci câmpuri 37, Antepreșcolar 27. Cele cinci marcaje sunt complete și binare; cazurile NULL/invalide sunt verificate suplimentar în motorul QGIS pe obiecte sintetice. Sunt executate toate cele 512 combinații binare ale celor nouă câmpuri analizate, plus cazurile-limită NULL/2/−1. Modelarea JS nu este utilizată ca probă de execuție QGIS.
+- Capturile originale T01_02/T01_03 sunt păstrate ca ilustrații istorice opționale ale temei educaționale, cu precizare și în modal; ele nu validează noua hartă nominală sau rezultatul noii expresii. Nu se inventează capturi. PNG/PDF realizate automat sunt probe tehnice în `tmp`, nu imagini publicate în tutorial.
+- **Compatibilitate semantică:** `#section-14`/`#section-15` rămân expresia și simbolizarea educațională, dar semantica devine explicit „cel mai înalt nivel documentat în cinci câmpuri”. `#section-18` păstrează layoutul, cu legendă după proprietate pentru nucleu și legendă educațională numai în varianta de extensie. Nu se promite aceeași clasificare ca în capturile istorice. `#section-24` păstrează Sector ca extensie și adaugă discuția compoziției. URL-ul T01, numerotarea, fișierele de export și ancorele existente rămân.
+- `T01@core.available=false`; modelul înregistrează ținta reală și dependența de aprobare/QA. Nivelul T01 rămâne Începător, derivat din model în catalog, antet și secțiunea existentă despre dificultate. Prefixul activ de opt resurse și `activeThrough='scale-resolution'` sunt neschimbate. Nu este activat T01n sau întregul parcurs.
+
+### Revizia focalizată T02–T06
+
+| Atelier | Deja corect, păstrat | Corecție/clarificare și probă | Rămas netestat |
+|---|---|---|---|
+| T02 | Formula elevi/săli și protecția numitorului; clasificare graduală a ratei | În original sunt 174 circumscripții, una cu numitor NULL; NULL nu este zero, iar zero elevi/numitor pozitiv produce zero. Indicatorul școlii nu este densitate areală; expresia rulează efectiv în QGIS | Parcurgerea interfeței 3.44 de către un începător |
+| T03 | Filtrele și diferențierea serviciului de capacitate | ContractEcograf reprezintă contract CAS, nu disponibilitate live: 132/1082 cabinete secundare. Spitale: CT 29, RMN 22, NULL 90/91; paturi NULL 93/158. NULL exclus de filtru nu devine absență. Limita IF există în pachet, CRS3844 | Interfața 3.44 și verificarea medicală a disponibilității actuale, pe care datele istorice nu o demonstrează |
+| T04 | Patru stări nominale; expresia ariei în CRS metric, hectare | Proprietate: Public71/Privat69/Mixt17; filtrul ILIKE nu include implicit Mixt; Sector are două NULL. Aria se execută în QGIS pentru toate cele 157 poligoane | Parcurgerea interfeței 3.44 |
+| T05 | Număr absolut versus ponderi, limitele Clip și demonstrația existentă | Școlile includ unități publice și private. CRS-ul proiectului nu rescrie fișierele. Clip real: 530 celule în bbox, 301 rezultate, 117 trunchiate; toate atributele originale sunt păstrate. Nu este realocare de populație | Interfața 3.44 și orice estimare reală a populației din fragmente |
+| T06 | Metoda documentată DEM continuu/bilinear, loss-year discret/nearest, 2000+cod; 0/no-loss distinct de NoData exterior255; hillshade XY/Z metric | §13 separă originalele4326 de copiile3844. Titlul/interpretarea de bază sunt Suceava, hillshade + loss-year; ariile protejate și hidrografia apar numai când sunt folosite. Contextul opțional nu condiționează rezultatul | Întregul flux pe DEM/măștile Suceava originale și interfața3.44; fără substituție Rîșca |
+
+### Generare, protecții și teste
+
+Generatorul existent `tools/workshop-content.mjs` citește reviziile din contractul existent. Păstrează wrapper-ele codurilor originale, secțiunile și identitatea figurilor; nu apare un generator sau registru independent. Iterația locală a identificat dublarea figurilor la înlocuirea corpului unui pas: corectată prin separarea explicită a corpului de figurile-soră. Verificarea repetată a generatorului confirmă exact trei figuri T01 și rezultat identic. Tabelele, modalul și progresul existent rămân funcționale.
+
+Snapshotul v3 nu se modifică. Din cele 203 fișiere protejate, **195 rămân identice cu v3**, iar opt au preimagini și hashuri exacte în `tests/protected-files.cjs`: excepția L09 din5.1 rămâne neschimbată; CRS include nota E5-02; șase excepții noi acoperă exclusiv cele trei surse editoriale runtime și contractul/inventarul/capturile atelierelor. Nu sunt relaxate protecțiile algoritmilor ori ale datelor. Testele compară fiecare preimagine cu obiectele Git v3 și resping orice modificare suplimentară, inclusiv pentru excepții.
+
+QGIS executat efectiv: **3.40.11-Bratislava**, GDAL3.11.3, mod offscreen; nu QGIS3.44 și nu o parcurgere GUI. Launcher-ul Windows necesită `PYTHONNOUSERSITE=1` pentru a evita conflictul NumPy2 din profil cu GDAL/NumPy1 al QGIS; `QT_QPA_PLATFORM=offscreen`, `PYTHONIOENCODING=utf-8`. Testul versionat folosește originalele locale identificate prin hash, nu subseturile aplicației. Exporturile au font Arial cu caractere românești verificate și au fost inspectate vizual. Două mesaje GDAL privind accesul update PNG sunt nefatale: API-ul raportează succes, fișierele PNG/PDF sunt valide și vizibile. Exporturile tehnice sunt la150dpi; tutorialul cere300dpi.
+
+Nu se confundă testele de mai jos cu validarea interfeței QGIS3.44, cu aprobarea curriculară sau cu activarea parcursului.
+
+| Verificare | Rezultat final | Dovadă și limită |
+|---|---|---|
+| `tests/v4-model.cjs`, `tools/validate-learning.cjs` | PASS | 1428 aserțiuni, nouă cazuri negative; 203 preimagini v3, 195 fișiere identice și opt excepții exacte; prefix activ neschimbat |
+| `tests/lot52-browser.cjs` | PASS | 748 verificări; toate ancorele atelierelor față de commitul5.1, niveluri unice, șapte pași T01, 375/390/768/1024/1440px × light/dark efectiv, no-JS, modal istoric și texte runtime RO/EN; zero erori/resurse lipsă |
+| `tests/qa/lot52-qgis.py` | PASS în QGIS3.40.11 | 3030 verificări; originale și hashuri, 512 combinații CASE + NULL/invalide, axele autorității EPSG, Categorized pe proprietate, PNG/PDF/legendă/scară km în4326 și3844, formulele/filtrele T02–T05 și Clip real |
+| `workshop-reproducibility` | PASS | 3611 verificări, 48 combinații ale celor șase ateliere, no-JS/offline, surse, licențe, tabele și demonstrația Clip; zero erori/resurse lipsă |
+| `tests/v4-navigation.cjs` | PASS | 4696 aserțiuni; 73 destinații, ancore v3, ordinea scripturilor, 71 intrări, catalog20/20 și navigare statică |
+| `tests/v4-browser.cjs` | PASS | 2638 verificări, 364 combinații și toate cele29 operații parametrizate; zero erori/overflow |
+| `tests/lot51-browser.cjs` | PASS | 354 verificări; fragment dinamic real, 375/390/768/1280/1440px × două teme, grila introductivă, opt CRS, transformări și rezultate L14 păstrate |
+| P01 / P03 / P05 | PASS | 1327 / 3243 / 149487 verificări; modelele numerice și interacțiunile laboratoarelor ale căror texte sunt schimbate |
+| P02 / P07 | PASS | 1275 / 5370 verificări; L09 păstrat, Zarr funcțional, L19/GCP/parametri și exporturi PNG/PGW fără regresie |
+| `learning-consolidation` / `companion-hub` / `final-ui-check` | PASS | 2833 / 915 / 739 verificări; parcurs, metadate, căutare329 verificări, 73rute, tastatură și prezentare |
+| `tests/v4-build.cjs` | PASS local | Două build-uri identice byte-for-byte pentru42HTML/47fișiere generate; `--check` fără scriere; index90 înregistrări |
+| Git / contract | PASS | `git diff --check` și `git diff --cached --check`; index gol; snapshot v3 neschimbat; niciun fișier modificat numai CRLF/LF; originale și probe tehnice ignorate de Git |
+| QGIS3.44 GUI / T06 complet Suceava / dispozitive fizice | NETESTAT | Este instalat motorul3.40.11, nu o sesiune interactivă3.44; lipsesc DEM-ul și măștile originale ale atelierului Suceava; niciun substitut Rîșca |
+
+Loguri tehnice: `tmp/qa/lot52/build-final.log`, `browser-final.log`, `workshop-final.log`, `existing.log`, `integration.log`, `p07.log`, `v4-navigation.log`, `v4-browser.log`, `lot51-browser.log` și `qgis.log`; rapoarte și imagini în același director și directoarele QA existente. Capturile T01 mobile390 light/dark și ambele PNG QGIS au fost inspectate vizual. Într-o comandă intermediară, numele inexistent `p07-zarr` a produs MODULE_NOT_FOUND; suita reală `p07-labs` a fost apoi executată și a trecut. Selectoarele/aserțiunile testului nou au fost ajustate la ID-uri HTML reale, secțiunea efectivă de dificultate și separatorul zecimal românesc; verificările existente nu au fost rescrise pentru a ascunde regresii. Nu există FAIL funcțional final în domeniul executat.
+
+### Inventarul modificărilor pentru audit
+
+25 fișiere: 23 modificate și două teste noi. Opt rezultate generate: cele șase tutoriale, `analysis.html` și indexul de căutare. Nu sunt incluse date originale, capturi noi publicate, cache-uri sau diferențe exclusiv CRLF/LF.
+
+| Fișier | Rol |
+|---|---|
+| `DECISIONS_AND_QA.md` | Domeniu, probe, excepții, compatibilitate semantică și limite ale lotului |
+| `css/tutorials.css` | Prezentarea nucleului și notelor, folosind suprafețele/culorile existente |
+| `data/learning-model.js` | Ținta reală T01@core și dependența încă neactivată; fără schimbarea nivelului sau a prefixului |
+| `data/p03-content.js` | Metoda L14 fără numele tehnice interne, cu aceleași limite |
+| `data/tutorial-catalog.json` | Descrierea/competențele T01 și statutul opțional al capturilor istorice; nivelul derivat |
+| `data/tutorial-dataset-inventory.json` | Dovezi în inventarul existent: originale/schemă/număr/CRS/hash versus documentație/NETESTAT |
+| `data/tutorial-screenshots.json` | Domeniul istoric și opțional pentru T01_02/T01_03; imagini nemodificate |
+| `data/workshop-reproducibility.json` | Sursa nucleului T01, expresiei CASE și reviziilor punctuale T01–T06 |
+| `js/crs-lesson.js` | Nota scurtă despre axele Stereo70; fără calcule modificate |
+| `js/p01-labs.js` | L10: disponibilitatea reală și legătura L12, RO/EN |
+| `js/p05-labs.js` | L07: legendă lizibilă în loc de P05 |
+| `tools/navigation-content.mjs` | Eliminarea workaround-ului pentru textul L14, corectat acum la sursă |
+| `tools/workshop-content.mjs` | Generarea reviziilor și nucleului prin contractul existent, cu păstrarea codurilor, figurilor și ancorelor |
+| `tests/protected-files.cjs` | Opt excepții exacte cu preimagini v3, dintre care șase noi în acest lot |
+| `tests/v4-model.cjs` | Lista limitativă a excepțiilor autorizate, păstrând toate verificările negative |
+| `tests/lot52-browser.cjs` (nou) | Comportament real T01, compatibilitate, niveluri și corecțiile runtime |
+| `tests/qa/lot52-qgis.py` (nou) | Expresii, renderer, layout/exporturi și geoprocesare pe originalele verificate |
+| `analysis.html` | Textul L14 regenerat din sursa corectată |
+| `data/search-index.js` | Conținutul educațional actualizat în același inventar canonic de90 înregistrări |
+| `tutorials/t01.html` | Nucleu nominal real și extensii corecte, generate din contract; aceleași24 secțiuni |
+| `tutorials/t02.html` | Sursa verificată și nota despre numitor/NULL/interpretare |
+| `tutorials/t03.html` | Surse verificate, contract versus disponibilitate, capacitate și NULL |
+| `tutorials/t04.html` | Surse verificate, proprietate Mixt și filtre nominale |
+| `tutorials/t05.html` | Surse verificate, tipul școlilor, CRS și limitele Clip |
+| `tutorials/t06.html` | Domeniu NETESTAT explicit, surse versus copii reproiectate, titlu/interpretare fără contexte obligatorii |
+
+### Oprire și decizii rămase
+
+Auditul independent Opus a emis **ACCEPTAT CU REZERVE**. Proprietarul a aprobat definitiv atributul nominal al nucleului, clasificarea descrescătoare în cele cinci niveluri și politica NULL conservatoare; T02–T06 sunt acceptate cu limitările documentate. Aceste decizii nu se redeschid. Rămân reverificarea punctuală E52-01, parcurgerea GUI3.44 de către un începător, durata reală a nucleului, T06 pe originalele Suceava și compatibilitatea semantică E5-03 la QA final. Integrarea/activarea T01n și a parcursului complet, precum și instrucțiunile variantelor proiectului final aparțin Lotului5.3 și nu sunt începute aici.
+
+Starea de livrare: `restructure/v4.0.0`, HEAD `0b3f4a528cdc93237e3a3a18f993861cde54094d`, 23modificate +2noi, index gol. `main`, `origin/main` și v3.0.0 sunt nemodificate. Fără staging, commit, push, merge, tag, release sau Zenodo. Se așteaptă reverificarea punctuală Opus a E52-01, apoi autorizarea commitului local.
+
+### Corecții după auditul Opus — E52-01–E52-04
+
+- **E52-01 — corectat la sursă:** contractul existent `data/workshop-reproducibility.json` conține în pasul4 al nucleului și §18 explicația: „În EPSG:4326, coordonatele sunt exprimate în grade, iar scara diferă între direcțiile est–vest și nord–sud. O bară grafică în kilometri nu poate descrie fidel ambele direcții. Pentru harta finală folosim EPSG:3844, un sistem proiectat cu unități metrice.” Metadatele CRS ale T01 nu mai repetă afirmația anterioară. Configurația finală EPSG:3844, distincția CRS strat/proiect/cadru, datele și toate ancorele sunt păstrate. Dovezile sunt verificarea textelor în cele două ținte DOM, absența celor trei formulări vechi din HTML/index și build-ul determinist.
+- **E52-02 — limită a probei:** exportul PyQGIS verifică motorul, geometria hărții, CRS-ul și construirea scării grafice, dar nu validează complet aspectul final cerut studentului. Bara randată în4326 nu demonstrează o scară fidelă în ambele direcții. Imaginea tehnică nu este un model vizual perfect al nucleului T01n și nu înlocuiește verificarea completă a compoziției, legendei, notei metodologice, atribuirii și exportului300dpi. Nu s-a regenerat imaginea QA în această corecție.
+- **E52-03 — neblocant:** QGIS poate afișa un dialog pentru alegerea transformării de datum. Comportamentul și alegerea potrivită se verifică în GUI3.44 la QA final, împreună cu CRS-ul și poziția rezultatului. Nu există o instrucțiune de a accepta orbește o transformare; instrucțiunile existente de verificare a CRS-ului/rezultatului rămân valabile.
+- **E52-04 — neblocant:** legenda bilingvă L07 „Stil / Style” rămâne în acest lot; optimizarea localizării se transferă în Lotul5.3 sau QA final. Nu se modifică acum controllerul L07.
+- **NULL și CASE — aprobate:** §15 explică printr-un singur paragraf că un NULL în oricare dintre cele cinci câmpuri produce „Date incomplete”, chiar dacă alt nivel este1; regula verifică completitudinea, nu doar maximul identificabil. §14 folosește formularea clară „Verificăm nivelurile începând cu Liceal și continuăm descrescător.” Expresia aprobată rămâne identică byte-for-byte: SHA-256 `a2b2e9f1d6e99c3be2d1395bbcc6e501bd799a0009f3e6f741c7735b56fd4171`.
+- **Limitări păstrate:** T05 Clip păstrează atributele și nu redistribuie populația; procentele/estimările pe fragmente nu devin observații reale. T06 nu este validat pe DEM/măștile originale Suceava complete, iar Rîșca nu este substitut. T01@core rămâne neactivat; nu se începe Lotul5.3.
+- Excepția controlată pentru contractul atelierelor primește numai noul hash exact; preimaginea v3 și celelalte șapte excepții rămân identice. Snapshotul v3 și originalele sunt păstrate. Testul nou verifică separat hashul CASE aprobat și cele două formulări științifice; nu se relaxează verificările existente.
+
+| Reverificare după corecție | Rezultat | Dovadă |
+|---|---|---|
+| `tests/lot52-browser.cjs` | PASS,795 verificări | Textul E52-01 în `#t01-core-layout` și `#section-18`, cele trei formulări anterioare absente din HTML/index, NULL explicat în §15, ordine clară în §14; șapte etape,24secțiuni, nivel Începător și ancore păstrate; zero erori/resurse lipsă |
+| `workshop-reproducibility` | PASS,3611 verificări | Cele șase ateliere,48 combinații, no-JS/offline, surse și demonstrația Clip |
+| `tests/v4-model.cjs` și validator | PASS,1428 aserțiuni | Contract v3,203 fișiere protejate, opt excepții exacte,195 fișiere identice; prefixul activ neschimbat |
+| `tests/v4-build.cjs` | PASS | Două build-uri identice pentru42HTML/47fișiere; `--check` fără scriere; index90 înregistrări |
+| Controlul domeniului și datelor | PASS | CASE cu hash aprobat identic; toate cele nouă GPKG originale păstrează hashurile din execuția PyQGIS; snapshotul v3 nemodificat; nicio schimbare suplimentară în T02–T06 ori datele aplicației |
+| `git diff --check` și index | PASS | Fără erori whitespace; index gol, fără staging/commit; aceleași referințe Git |
+
+Fișiere modificate suplimentar față de lotul trimis la audit: `data/workshop-reproducibility.json` (sursa), `tutorials/t01.html` și `data/search-index.js` (generate), `tests/protected-files.cjs` (hash exact), `tests/lot52-browser.cjs` (regresie punctuală), `DECISIONS_AND_QA.md` (audit și aprobări). Dovada domeniului este în `tmp/qa/lot52/opus-scope-results.json`; loguri: `opus-build.log`, `opus-model.log`, `opus-browser.log`, `opus-workshops.log`. Totalul working tree rămâne23modificate +2noi. Motorul QGIS și exportul de referință nu sunt rerulate în această corecție editorială; limitările E52-02/E52-03 și T05/T06 rămân explicite. Oprire înainte de staging și commit pentru reverificarea punctuală Opus; fără Lotul5.3.
+
+**Închidere Lot5.2 — verdict final Opus: ACCEPTAT CU REZERVE.** Conform rezultatului comunicat de proprietar, reverificarea punctuală independentă a confirmat E52-01 **CORECTAT** în ambele locuri din T01. Auditul și reverificarea sunt încheiate; commitul local este autorizat după verificările finale, cu aprobările curriculare și limitările E52-02/E52-03/E52-04 și T05/T06 deja documentate. Fără publicare și fără începerea Lotului5.3.

@@ -13,6 +13,5 @@ export function decorateNavigation(html,manifest,file) {
   }
   const catalogue=manifest.lessons.find(l=>l.id==='digital-companion').title;
   html=html.replace(/(<a\b[^>]*href="(?:\.\.\/)?(?:gis-lab|digital-companion)\.html(?:#[^"]*)?"[^>]*>)([^<]*)(<\/a>)/g,(_,open,label,close)=>open+label.replace(/Digital Companion|Laborator GIS/gi,/^Deschide /.test(label)?catalogue.toLocaleLowerCase('ro-RO'):catalogue)+close);
-  html=html.replaceAll('geometrie P02 și Turf local','geometrie sintetică și Turf local');
   return html.replaceAll('Explorare geospațială · Laborator GIS','Explorare geospațială · Cartografie și GIS').replace(/href="(\.\.\/)?gis-lab\.html"/g,(_,prefix='')=>`href="${prefix}digital-companion.html"`);
 }

@@ -6,25 +6,25 @@
   "workshops": {
     "T01": {
       "objectives": [
-        "Încarci punctele școlilor și limita Bucureștiului din sursa oficială.",
-        "Alegi și verifici o expresie CASE pentru simbolizarea pe categorii.",
-        "Aplici filtre temporare fără să modifici datele originale.",
-        "Creezi și verifici layoutul exportat PNG/PDF."
+        "Încarci și inspectezi datele originale, geometria, atributele și CRS-ul.",
+        "Simbolizezi nominal după tipul de proprietate, fără expresii CASE.",
+        "Construiești o legendă coerentă și un layout simplu.",
+        "Exporți PNG/PDF și verifici rezultatul; filtrele și nivelurile educaționale rămân extensii."
       ],
-      "working_crs": "EPSG:4326 pentru afișare; fără calcule metrice. Limita alternativă EPSG:3844 se poate afișa prin reproiectare dinamică.",
+      "working_crs": "Surse originale EPSG:4326; proiectul și cadrul hărții finale folosesc EPSG:3844, cu unități metrice și scară grafică în km. CRS-ul proiectului și al cadrului controlează afișarea; datele originale rămân nemodificate.",
       "prepare": [
         "Deschide pagina ADIZMB pentru anul școlar 2022–2023. Alege descărcarea datelor deschise și dezarhivează în data_raw; păstrează și documentația/termenii.",
-        "În Browser sau Add Vector Layer, inspectează GeoPackage-urile din arhivă. Alege stratul punctual al unităților preuniversitare și stratul limitei Bucureștiului, nu poligoanele circumscripțiilor. Denumirile istorice de mai jos te ajută să le recunoști.",
+        "În GeoPackage-ul școlilor alege stratul punctual Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023 și poligonul Limită Administrativă - Municipiul București. Verifică exact câmpul text Regim Juridic - Tip de proprietate, valorile distincte și NULL; nu confunda originalul cu subsetul incomplet Sector 1.",
         "Dacă portalul livrează Shapefile, păstrează toate componentele împreună și exportă o copie cu Export → Save Features As… în GeoPackage în data_processed, fără reproiecție inutilă. Verifică numele reale ale câmpurilor, inclusiv eventualele aliasuri, înainte să copiezi expresiile.",
         "Dacă arhiva școlilor nu include limita, folosește catalogul de limite administrative: alege poligoane UAT / București cu limita reunită, verifică denumirea și exportă doar Bucureștiul. Nu folosi un singur sector drept limită a municipiului."
       ],
       "checks": [
-        "În Layer Properties → Information, punctele sunt EPSG:4326 și au câmpurile Nivel Preșcolar, Nivel Primar, Nivel Gimnazial și Număr total elevi sau echivalente documentate; limita este poligonală și acoperă municipiul.",
-        "Filtrul Nivel Preșcolar = 1 ascunde numai obiectele care nu satisfac expresia; ștergerea filtrului restabilește afișarea completă.",
-        "Categorized folosește expresia CASE în ordinea §14, iar legenda și exporturile PNG/PDF reflectă categoriile, sursa și nota metodologică."
+        "Punctele școlilor și limita municipiului au geometria și CRS-ul consemnate; nu folosești subsetul Sector 1 ca înlocuitor pentru București.",
+        "Categorized folosește direct Regim Juridic - Tip de proprietate. Ediția ADIZMB rev1 verificată conține 757 puncte: 465 Public de interes național și local și 292 Privat; zero NULL în acest câmp.",
+        "Niciun filtru de extensie nu rămâne activ. Legenda indică tipul de proprietate, iar PNG și PDF păstrează aceeași temă, scară, sursă și limită de interpretare."
       ],
-      "reference": "Captura T01_03 arată layoutul; punctele sunt diferențiate pe categorii educaționale, cu limita orașului în fundal. Numărul de puncte și distribuția pot varia cu ediția.",
-      "limit": "Localizarea școlilor nu măsoară accesibilitatea pietonală, capacitatea sau echitatea. CASE simplifică unitățile care au mai multe niveluri educaționale.",
+      "reference": "Rezultatul nucleului este o hartă cu două categorii nominale de proprietate în ediția rev1 verificată. Capturile istorice cu niveluri educaționale nu sunt dovezi pentru acest rezultat; controlează exporturile proprii. Pentru alte ediții verifică din nou valorile și NULL.",
+      "limit": "Proprietatea declarată nu măsoară calitatea, capacitatea, accesibilitatea sau echitatea. Categoriile sunt nominale. Clasificarea nivelurilor educaționale aparține unei extensii separate și limitate ca domeniu.",
       "next": "T02",
       "dataset_ids": [
         "schools_bucharest_2022_2023"
@@ -32,7 +32,112 @@
       "supplementary_registry_ids": [
         "administrative-boundaries"
       ],
-      "optional_dataset_ids": []
+      "optional_dataset_ids": [],
+      "expressions": {
+        "highest_documented_level": "CASE\nWHEN (\"Nivel Antepreșcolar\" IS NOT NULL AND \"Nivel Antepreșcolar\" NOT IN (0, 1)) OR\n     (\"Nivel Preșcolar\" IS NOT NULL AND \"Nivel Preșcolar\" NOT IN (0, 1)) OR\n     (\"Nivel Primar\" IS NOT NULL AND \"Nivel Primar\" NOT IN (0, 1)) OR\n     (\"Nivel Gimnazial\" IS NOT NULL AND \"Nivel Gimnazial\" NOT IN (0, 1)) OR\n     (\"Nivel Liceal\" IS NOT NULL AND \"Nivel Liceal\" NOT IN (0, 1)) THEN 'Valori de verificat'\nWHEN \"Nivel Antepreșcolar\" IS NULL OR \"Nivel Preșcolar\" IS NULL OR \"Nivel Primar\" IS NULL OR \"Nivel Gimnazial\" IS NULL OR \"Nivel Liceal\" IS NULL THEN 'Date incomplete'\nWHEN \"Nivel Liceal\" = 1 THEN 'Liceal'\nWHEN \"Nivel Gimnazial\" = 1 THEN 'Gimnazial'\nWHEN \"Nivel Primar\" = 1 THEN 'Primar'\nWHEN \"Nivel Preșcolar\" = 1 THEN 'Preșcolar'\nWHEN \"Nivel Antepreșcolar\" = 1 THEN 'Antepreșcolar'\nELSE 'Fără nivel marcat în cele cinci câmpuri'\nEND"
+      },
+      "introductory_core": {
+        "title": "Prima hartă: unitățile de învățământ după tipul de proprietate",
+        "description": "Parcurge acești șapte pași pentru o hartă completă, fără expresii CASE. Folosește originalul ADIZMB pentru București, cu sursa și licența indicate mai sus. Păstrează datele originale în data_raw și produsele proprii separat.",
+        "steps": [
+          {
+            "id": "t01-core-load",
+            "title": "1. Proiect nou și încărcarea datelor",
+            "action_html": "<p>Descarcă arhiva ADIZMB 2022–2023 din cardul sursei de mai sus și dezarhiveaz-o. În QGIS alege <strong>Project &gt; New</strong>, apoi <strong>Project &gt; Save As…</strong> și salvează <code>P01_scoli_bucuresti.qgz</code> în folderul proiectului. Prin <strong>Layer &gt; Add Layer &gt; Add Vector Layer…</strong>, deschide <code>02_Unități Învățământ_Preuniv_București_2022-2023.gpkg</code> și adaugă separat punctele <code>Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023</code> și <code>Limită Administrativă - Municipiul București</code>. Nu activa editarea.</p>",
+            "result": "În Layers apar două straturi: punctele școlilor și poligonul întregului municipiu; Zoom to Layer arată Bucureștiul, nu numai Sectorul 1."
+          },
+          {
+            "id": "t01-core-inspect",
+            "title": "2. Geometrie, atribute și CRS",
+            "action_html": "<p>Deschide <strong>Layer Properties &gt; Information</strong> pentru fiecare strat: originalele verificate sunt în EPSG:4326. Deschide <strong>Open Attribute Table</strong> la puncte și identifică <code>Regim Juridic - Tip de proprietate</code>, un câmp text. Verifică numărul de rânduri, valorile distincte și eventualele NULL. În arhiva rev1 verificată sunt 757 de unități: 465 <code>Public de interes național și local</code> și 292 <code>Privat</code>, fără NULL în acest câmp. Dacă ediția ta diferă, consemnează diferența; nu copia aceste numere ca rezultat propriu.</p>",
+            "result": "Identifici punctele, poligonul, CRS-ul și câmpul nominal; nu folosești câmpul Sector ca mărime numerică și nu presupui că subsetul Sector 1 are schema completă."
+          },
+          {
+            "id": "t01-core-categories",
+            "title": "3. Simbolizare Categorized după proprietate",
+            "action_html": "<p>Pune punctele deasupra limitei. La limită, în <strong>Properties &gt; Symbology</strong>, alege umplere transparentă și contur discret. La puncte alege <strong>Properties &gt; Symbology &gt; Categorized</strong>. În <strong>Value</strong> selectează direct <code>Regim Juridic - Tip de proprietate</code>, apoi <strong>Classify</strong>. Alege două simboluri de aceeași formă și dimensiune, cu culori distincte, apoi <strong>Apply</strong>. Nu deschide editorul CASE. Nu utiliza Graduated pentru aceste etichete nominale. Păstrează o categorie explicită pentru NULL dacă există în ediția ta.</p>",
+            "result": "Punctele sunt diferențiate după cele două valori reale ale proprietății; dimensiunea și culorile nu sugerează performanță sau o ierarhie."
+          },
+          {
+            "id": "t01-core-layout",
+            "title": "4. Cadru de hartă și scară",
+            "action_html": "<p>Alege EPSG:3844 pentru proiect din selectorul CRS; aceasta schimbă afișarea, nu coordonatele originale. Cu <strong>Project &gt; New Print Layout…</strong> creează <code>T01_harta_scoli_bucuresti</code>, pagină A4 landscape. Folosește <strong>Add Map</strong>, apoi setează extinderea cadrului pentru întregul București. Verifică CRS-ul cadrului și adaugă <strong>Add Scale Bar</strong>, legată de acest cadru, cu unități km și etichete lizibile. Pagina se dimensionează în mm; acestea nu sunt unitățile datelor. Adaugă un indicator de nord legat de hartă și verifică orientarea dacă rotești cadrul.</p><p>În EPSG:4326, coordonatele sunt exprimate în grade, iar scara diferă între direcțiile est–vest și nord–sud. O bară grafică în kilometri nu poate descrie fidel ambele direcții. Pentru harta finală folosim EPSG:3844, un sistem proiectat cu unități metrice. Nu utiliza Set Layer CRS pentru a transforma datele.</p>",
+            "result": "Cadrul cuprinde municipiul, scara este legată de harta corectă și etichetată în km, iar dimensiunea paginii rămâne A4 landscape."
+          },
+          {
+            "id": "t01-core-legend",
+            "title": "5. Legendă, titlu și atribuire",
+            "action_html": "<p>Cu <strong>Add Legend</strong>, denumește tema <code>Tip de proprietate</code>. Păstrează etichetele reale <code>Public de interes național și local</code> și <code>Privat</code> plus conturul administrativ. Dacă editezi manual legenda, dezactivează Auto update numai după stabilizarea stilului; verifică din nou corespondența simbolurilor. Poți omite intrarea goală „all other values” numai după ce ai verificat că nu reprezintă obiecte. Nu ascunde NULL sau valori noi pentru a obține artificial două categorii.</p><p>Cu <strong>Add Label</strong>, adaugă titlul „Unități de învățământ în București după tipul de proprietate, 2022–2023”, sursa și atribuirea ADIZMB/Observatorul Urban Metropolitan București, licența CC BY 4.0 și ediția folosită. Include nota: „Proprietatea este cea declarată în date; localizarea nu măsoară accesibilitatea, capacitatea sau calitatea.”</p>",
+            "result": "Legenda descrie proprietatea, nu niveluri educaționale; titlul, simbolurile, sursa și nota metodologică se referă la aceeași hartă."
+          },
+          {
+            "id": "t01-core-export",
+            "title": "6. Export PNG și PDF",
+            "action_html": "<p>Salvează proiectul. Din layout alege <strong>Layout &gt; Export as Image…</strong>, PNG la 300 dpi, cu numele <code>T01_harta_scoli_bucuresti.png</code>. Alege apoi <strong>Layout &gt; Export as PDF…</strong> și salvează <code>T01_harta_scoli_bucuresti.pdf</code> în output. Exportul hărții nu înseamnă export/reproiectare a GeoPackage-ului.</p>",
+            "result": "Ai două fișiere proprii, PNG și PDF, fără modificarea datelor originale."
+          },
+          {
+            "id": "t01-core-check",
+            "title": "7. Verificarea rezultatului",
+            "action_html": "<p>Deschide PNG și PDF în afara QGIS. Compară-le cu layoutul: municipiul nu este tăiat, cele două simboluri sunt lizibile, legenda corespunde proprietății, iar titlul, scara și sursa nu sunt trunchiate. Verifică în QGIS că nu a rămas un filtru din extensii. Dacă ai schimbat scara sau stilul după editarea manuală a legendei, actualizează și reexportă ambele fișiere. Capturile istorice de mai jos arată o altă temă și nu validează acest nucleu.</p>",
+            "result": "Cele două exporturi comunică aceeași variabilă nominală și includ atribuirea; poți explica limita interpretării fără a invoca o expresie CASE."
+          }
+        ]
+      },
+      "step_revisions": {
+        "1": {
+          "body_html": "<p>Construiește o hartă descriptivă a unităților de învățământ din București. <a href=\"#t01-core\">Nucleul introductiv</a> duce de la datele originale la simbolizare după proprietate, layout și export. Filtrele, expresia pentru niveluri educaționale, simbolurile după elevi și etichetele sunt extensii opționale. Harta nu demonstrează singură accesibilitatea, capacitatea sau echitatea.</p>"
+        },
+        "2": {
+          "body_html": "<p>Nivelul este <strong>Începător</strong> pentru nucleul introductiv. Estimarea istorică de <strong>60–90 de minute</strong> privește tutorialul cu aprofundări; nucleul separat nu are încă o durată cronometrată. Poți realiza prima hartă fără expresii CASE.</p>"
+        },
+        "3": {
+          "body_html": "<p>Încarci și verifici straturile, diferențiezi valori nominale de valori numerice, simbolizezi proprietatea direct prin Categorized și verifici două exporturi cu legendă și atribuire. După prima hartă poți explora filtre, nivelurile educaționale și simboluri proporționale.</p>"
+        },
+        "10": {
+          "body_html": "<p>Pentru nucleu folosește <code>Regim Juridic - Tip de proprietate</code>: text nominal, cu valorile originale <code>Public de interes național și local</code> și <code>Privat</code>. <code>Denumirea unității de învățământ</code> și <code>Cod SIIIR</code> identifică obiectele. <code>Sector</code> este tot nominal, chiar dacă stocat ca număr: 6 nu înseamnă „mai mult” decât 1.</p><p>În aprofundare, cele cinci câmpuri <code>Nivel Antepreșcolar</code>, <code>Nivel Preșcolar</code>, <code>Nivel Primar</code>, <code>Nivel Gimnazial</code> și <code>Nivel Liceal</code> sunt marcaje 0/1. <code>Coduri</code> descrie compoziția; <code>Învățământ Profesional</code>, <code>Nivel Postliceal</code>, <code>Învățământ Special</code> și <code>Club</code> nu se ordonează simplu împreună cu primele cinci niveluri. <code>Număr total elevi</code> este o mărime numerică, iar NULL înseamnă informație lipsă, nu zero. Un filtru de extensie poate folosi, de exemplu:</p>{{code:1}}"
+        },
+        "12": {
+          "title": "Extensie opțională: filtrarea unităților preșcolare"
+        },
+        "13": {
+          "title": "Extensie opțională: filtre OR și AND"
+        },
+        "14": {
+          "title": "Extensie: cel mai înalt nivel documentat în cinci câmpuri",
+          "expression": "highest_documented_level",
+          "body_html": "<p>Această expresie este opțională după prima hartă. Domeniul este strict <strong>Antepreșcolar → Preșcolar → Primar → Gimnazial → Liceal</strong>. Verificăm nivelurile începând cu Liceal și continuăm descrescător. Nu este o clasificare completă a instituției:</p>{{code:1}}<p>Valorile în afara 0/1 sunt de verificat. Orice NULL în cele cinci câmpuri produce separat <strong>Date incomplete</strong>: abordarea este conservatoare, chiar dacă un alt câmp are 1. Doar după verificarea completitudinii și validității alegem nivelul cel mai înalt. Dacă toate cinci sunt 0, rezultatul este <strong>Fără nivel marcat în cele cinci câmpuri</strong>; nu îl confundăm cu lipsa datelor.</p><p><strong>Profesional</strong> este paralel cu Liceal; <strong>Postliceal</strong> este în afara domeniului restrâns; <strong>Special</strong> descrie un regim transversal; <strong>Club</strong> nu este nivel de învățământ. Aceste marcaje pot coexista cu nivelurile alese și nu sunt eliminate din date. O aprofundare separată poate simboliza direct <code>Coduri</code>, după verificarea convențiilor din metadate și a numărului de combinații, fără a pretinde o ierarhie."
+        },
+        "15": {
+          "title": "Extensie: simbolizarea nivelului documentat",
+          "body_html": "<p>Duplică stratul în proiect sau salvează o variantă de stil; nu suprascrie harta după proprietate. În <strong>Properties &gt; Symbology &gt; Categorized</strong>, deschide expresia Value, copiază expresia revizuită din §14 și apasă <strong>Classify</strong>. Pentru cele cinci niveluri ordonate poți folosi o progresie deschis → închis. Păstrează distinct categoriile fără nivel marcat, date incomplete și valori de verificat; nu le include într-o scară educațională.</p><p>Legenda trebuie intitulată <strong>Cel mai înalt nivel documentat: Antepreșcolar–Liceal</strong>. Nu folosi titlul „tipul școlii” sau „nivel maxim complet oferit”. Numărul de categorii se verifică în ediția folosită.</p><p>Dacă oricare dintre cele cinci câmpuri analizate conține NULL, înregistrarea este clasificată ca «Date incomplete», chiar dacă un alt nivel este marcat cu 1. Această regulă verifică completitudinea informației, nu doar nivelul maxim identificabil.</p>"
+        },
+        "16": {
+          "replace": [
+            [
+              "Pentru harta finală a acestui tutorial, recomandarea este să păstrați simbolizarea pe categorii educaționale, deoarece este mai potrivită pentru o primă hartă tematică.",
+              "Pentru harta nucleului păstrează simbolizarea nominală după proprietate. Varianta numerică și cea pe niveluri educaționale sunt extensii, cu legende și interpretări proprii."
+            ]
+          ]
+        },
+        "18": {
+          "body_html": "<p>Pentru harta nucleului, urmează pașii <a href=\"#t01-core-layout\">4–5</a>. Creează layoutul cu Project &gt; New Print Layout…, A4 landscape, numit:</p>{{code:1}}<p>Adaugă un cadru cu întregul municipiu, în EPSG:3844 pentru verificarea simplă a unităților metrice. Adaugă titlul hărții nominale:</p>{{code:2}}<p>Legenda nucleului conține <strong>Tip de proprietate</strong>, etichetele reale public/privat și limita administrativă; nu categorii educaționale. Leagă scara grafică de hartă, selectează km și verifică metoda de calcul. Pagina este în mm, datele originale rămân în EPSG:4326. În EPSG:4326, coordonatele sunt exprimate în grade, iar scara diferă între direcțiile est–vest și nord–sud. O bară grafică în kilometri nu poate descrie fidel ambele direcții. Pentru harta finală folosim EPSG:3844, un sistem proiectat cu unități metrice. Nordul și extinderea se verifică după rotire.</p><p>Păstrează sursa și atribuirea completă din cardul ADIZMB și licența CC BY 4.0; formularea istorică a sursei este:</p>{{code:3}}<p>Folosește nota metodologică de mai jos pentru nucleu. Pentru extensia educațională, adaptează explicit titlul, legenda și nota la domeniul §14.</p>{{code:4}}",
+          "code_values": {
+            "2": "Unități de învățământ în București după tipul de proprietate, 2022–2023",
+            "4": "Proprietatea este cea declarată în date; localizarea nu măsoară accesibilitatea, capacitatea sau calitatea."
+          }
+        },
+        "21": {
+          "body_html": "<p>Harta nucleului arată distribuția unităților după <strong>proprietatea declarată</strong>. Ea nu clasifică nivelurile educaționale, nu măsoară calitatea sau accesibilitatea și nu arată capacitatea disponibilă. Compară legenda cu câmpul folosit. Pentru extensia §14 interpretează numai nivelul documentat în cele cinci câmpuri, păstrând explicit limitele clasificării.</p>"
+        },
+        "22": {
+          "body_html": "<p>Această hartă nu demonstrează accesibilitatea pietonală la școli, timpul real de deplasare al elevilor, capacitatea reală de deservire a fiecărei unități, calitatea actului educațional sau echitatea distribuției serviciilor educaționale.</p><p>De asemenea, harta nu arată relația dintre domiciliul elevilor și școala frecventată. Pentru astfel de întrebări ar fi necesare date suplimentare: populație pe grupe de vârstă, rețea stradală, circumscripții școlare, capacitate școlară și eventual analize de accesibilitate.</p><p>După nucleu poți încărca și inspecta date, alege un atribut nominal, crea o legendă coerentă și verifica PNG/PDF. Poți continua cu filtrele și comparațiile opționale sau cu T02. Finalizarea primei hărți nu presupune parcurgerea expresiei CASE.</p>"
+        },
+        "24": {
+          "title": "Extensie opțională: Sector și compoziția nivelurilor",
+          "body_html": "<p>Duplică stratul în proiect și alege Categorized după <code>Sector</code>. În originalul rev1 sunt numerele întregi 1–6, fără NULL, dar ele sunt identificatori nominali: nu folosi o rampă cantitativă ori operații aritmetice pentru a sugera ordine între sectoare. Subsetul Sector 1 nu poate reproduce această comparație. Expresia/câmpul istoric pentru această variantă este:</p>{{code:1}}<p>Compară mesajul hărții după sector cu harta după proprietate. Separat poți explora <code>Coduri</code> pentru compoziția nivelurilor; citește convențiile din metadatele ADIZMB, inclusiv învățământul special, și nu transforma combinațiile într-o ierarhie implicită.</p>"
+        }
+      }
     },
     "T02": {
       "objectives": [
@@ -62,7 +167,12 @@
       "supplementary_registry_ids": [
         "administrative-boundaries"
       ],
-      "optional_dataset_ids": []
+      "optional_dataset_ids": [],
+      "step_revisions": {
+        "16": {
+          "note": "În originalul rev1 verificat, cele 174 de circumscripții au atributele unității școlare asociate, iar o înregistrare are numărul sălilor NULL. Raportul ei rămâne NULL, nu zero. Un numărător NULL rămâne tot informație lipsă; un numărător 0 cu numitor pozitiv produce 0. Nu include valorile lipsă în clasa numerică zero și nu interpreta raportul ca densitate a populației circumscripției."
+        }
+      }
     },
     "T03": {
       "objectives": [
@@ -76,7 +186,7 @@
         "Din pagina ADIZMB Infrastructură de sănătate mun. București și jud. Ilfov, descarcă datele deschise 2023–2024 și dezarhivează. Registrul intern consemnează anul 2024; nu îl confunda cu un recensământ al serviciilor din anul curent.",
         "Încarcă separat punctele Cabinete Medicină de Familie (Primary Care), Cabinete și Ambulatorii de Specialitate (Secondary Care) și Spitale București-Ilfov (Tertiary Care). Nu face merge între cele trei scheme.",
         "Verifică Contract Ecograf pe secondary care, CT - Computer Tomograf și RMN - Rezonanță Magnetică Nucleară pe spitale, respectiv Spitalizare continua (paturi) pentru varianta opțională.",
-        "Din catalogul administrativ alege poligonul județului Ilfov și/sau Bucureștiului pentru context; exportă selecția în data_processed/limita_bucuresti_ilfov.gpkg. Poți redenumi stratul în proiect Limita_IF pentru corespondența cu pașii. Schema medicală nu depinde de câmpurile limitei."
+        "Pachetul medical verificat include Limită_Administrativă.gpkg, strat Limita_IF în EPSG:3844; punctele medicale sunt EPSG:4326. Folosește reproiectarea dinamică pentru afișare. Dacă ediția ta nu include limita, obține poligoanele București/Ilfov din catalogul administrativ și documentează separat sursa."
       ],
       "checks": [
         "Toate cele trei straturi sunt punctuale și au câmpurile folosite la filtre; verifică valorile 0/1 și NULL separat.",
@@ -93,7 +203,18 @@
         "medical_admin_boundary_if"
       ],
       "supplementary_registry_ids": [],
-      "optional_dataset_ids": []
+      "optional_dataset_ids": [],
+      "step_revisions": {
+        "17": {
+          "note": "În originalul verificat, 93 din cele 158 de înregistrări au Spitalizare continua (paturi) NULL. Acestea nu sunt spitale cu zero paturi. Păstrează simbolul fix pentru comparația de bază sau identifică explicit datele lipsă în varianta numerică; numărul de paturi declarat nu este capacitate disponibilă la data citirii hărții."
+        },
+        "18": {
+          "note": "Contract Ecograf descrie contractul declarat cu CAS pentru ecografie, nu verificarea programului sau disponibilității în timp real. În originalul secondary care sunt 132 valori 1 și 950 valori 0. Filtrul selectează contractele marcate 1, nu toate locurile unde s-ar putea efectua o ecografie."
+        },
+        "19": {
+          "note": "În originalul spitalelor, CT are 29 valori 1, 39 valori 0 și 90 NULL; RMN are 22 valori 1, 45 valori 0 și 91 NULL. Filtrul OR păstrează orice 1 documentat. Excluderea unui rând cu NULL nu dovedește absența serviciului; nu transforma NULL în 0 pentru a obține o categorie de eligibilitate."
+        }
+      }
     },
     "T04": {
       "objectives": [
@@ -122,7 +243,12 @@
         "sports_admin_boundary"
       ],
       "supplementary_registry_ids": [],
-      "optional_dataset_ids": []
+      "optional_dataset_ids": [],
+      "step_revisions": {
+        "15": {
+          "note": "În original sunt 71 Public, 69 Privat și 17 Mixt. Filtrele ILIKE de mai sus nu includ automat categoria Mixt și nu stabilesc drepturi juridice. Sector este identificator nominal, inclusiv în fișierele unde este stocat numeric; în această ediție există și două valori Sector NULL."
+        }
+      }
     },
     "T05": {
       "objectives": [
@@ -155,7 +281,20 @@
       "supplementary_registry_ids": [
         "administrative-boundaries"
       ],
-      "optional_dataset_ids": []
+      "optional_dataset_ids": [],
+      "step_revisions": {
+        "20": {
+          "replace": [
+            [
+              "școlile sunt servicii publice punctuale.",
+              "punctele includ servicii educaționale publice și private, conform atributului de proprietate."
+            ]
+          ]
+        },
+        "27": {
+          "note": "Pentru Clip verifică CRS-urile efective ale intrării și măștii și, dacă este necesar, exportă o copie a măștii în CRS-ul gridului. Schimbarea CRS-ului proiectului ajustează afișarea; nu reproiectează fișierele originale și nu realocă atributele populației."
+        }
+      }
     },
     "T06": {
       "objectives": [
@@ -200,7 +339,24 @@
         "lakes_ro",
         "relief_units_ro",
         "geomorphometry_landforms_ro"
-      ]
+      ],
+      "step_revisions": {
+        "13": {
+          "body_html": "<p>Verifică separat fiecare sursă în <strong>Layer Properties &gt; Information / Source</strong>. Originalele Copernicus GLO-30 și Hansen sunt georeferențiate în <strong>EPSG:4326</strong>, cu pas unghiular. Copiile de lucru create în §16 pentru Suceava și hillshade sunt în <strong>EPSG:3844</strong>, cu XY în metri. Numele istoric cu sufix Stereo70 nu dovedește singur că fișierul este reproiectat corect.</p><p>Verifică unitățile elevației, tipul benzii, NoData și parametrii din metadate. QGIS poate suprapune surse cu CRS-uri diferite; suprapunerea vizuală nu înlocuiește controlul metadatelor. Nu atribui Set Layer CRS pentru a schimba coordonatele. Dacă un strat este deplasat, folosește Zoom to Layer și verifică sursa și transformarea înainte de hillshade.</p>"
+        },
+        "23": {
+          "replace": [
+            [
+              "Relief, arii naturale protejate și pierdere forestieră",
+              "Relief și pierdere forestieră în județul Suceava, 2001–2024"
+            ]
+          ],
+          "note": "Titlul de bază corespunde hillshade-ului și Forest Loss pentru Suceava. Adaugă arii protejate, hidrografie sau alte contexte în titlu și legendă numai dacă ai inclus efectiv acele straturi, cu surse verificate."
+        },
+        "26": {
+          "body_html": "<p>Rezultatul de bază compară vizual pierderea forestieră cu hillshade-ul în județul Suceava. Dacă ai adăugat contexte cu proveniență verificată, poți observa separat poziția ariilor protejate ori hidrografia. Lipsa straturilor opționale nu împiedică finalizarea comparației principale.</p><p>Descrie ce se vede și ce nu se poate deduce: suprapunerea nu demonstrează cauzalitate, legalitatea tăierilor, impact asupra biodiversității ori o estimare statistică oficială de suprafață. Rîșca rămâne un subset demonstrativ distinct și nu substituie datele atelierului Suceava.</p>"
+        }
+      }
     }
   }
 }

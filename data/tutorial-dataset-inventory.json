@@ -21,7 +21,48 @@
       "notes": "Keep both exact layer names; T05 reuses this source rather than a second copy.",
       "role_ro": "Puncte de școli și limita Bucureștiului; limita este și masca pentru Clip în T05.",
       "crs_ro": "EPSG:4326, menționat în T05; T01 nu precizează codul.",
-      "registry_id": "adizmb-schools"
+      "registry_id": "adizmb-schools",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "c1d164f936e39e8997a6071272fa0ac464d56cb71195c7ebc347e0afcf5f7b00",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023: 757 obiecte, EPSG:4326; Limită Administrativă - Municipiul București: 1 obiect, EPSG:4326.",
+        "layers": [
+          {
+            "name": "Unitățile de Învățământ Preuniversitar din Municipiul București 2022-2023",
+            "features": 757,
+            "geometry": "Point",
+            "crs": "EPSG:4326"
+          },
+          {
+            "name": "Limită Administrativă - Municipiul București",
+            "features": 1,
+            "geometry": "Multi Polygon",
+            "crs": "EPSG:4326"
+          }
+        ],
+        "nominal_field": {
+          "name": "Regim Juridic - Tip de proprietate",
+          "type": "String",
+          "values": {
+            "Public de interes național și local": 465,
+            "Privat": 292
+          },
+          "nulls": 0,
+          "Sector": {
+            "type": "Integer64",
+            "values": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "nulls": 0
+          }
+        }
+      }
     },
     {
       "dataset_id": "school_catchments_bucharest_2022_2023",
@@ -42,7 +83,33 @@
       "notes": "Its boundary layer has the same display name as one in the separate T01/T05 package; identity is not assumed.",
       "role_ro": "Circumscripții școlare, puncte de școli și limita orașului pentru harta elevilor pe sală de clasă.",
       "crs_ro": "EPSG:4326, menționat în T02 pentru toate cele trei layere.",
-      "registry_id": "adizmb-schools"
+      "registry_id": "adizmb-schools",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "c1d164f936e39e8997a6071272fa0ac464d56cb71195c7ebc347e0afcf5f7b00",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023: 174 obiecte, EPSG:4326; Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023: 174 obiecte, EPSG:4326; Limită Administrativă - Municipiul București: 1 obiect, EPSG:4326.",
+        "layers": [
+          {
+            "name": "Unitățile Școlare cu Circumscripții din Municipiul București 2022-2023",
+            "features": 174,
+            "geometry": "Point",
+            "crs": "EPSG:4326"
+          },
+          {
+            "name": "Delimitarea Circumscripțiilor Școlare din Municipiul București 2022-2023",
+            "features": 174,
+            "geometry": "Multi Polygon",
+            "crs": "EPSG:4326"
+          },
+          {
+            "name": "Limită Administrativă - Municipiul București",
+            "features": 1,
+            "geometry": "Multi Polygon",
+            "crs": "EPSG:4326"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "medical_primary_care",
@@ -62,7 +129,21 @@
       "notes": "Do not duplicate for T05.",
       "role_ro": "Puncte ale cabinetelor de medicină de familie, folosite și în comparația populație–servicii.",
       "crs_ro": "EPSG:4326, menționat în T05; T03 nu precizează codul.",
-      "registry_id": "adizmb-medical"
+      "registry_id": "adizmb-medical",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "c8a30698554f0bc8a9f482d2ee98c8f9dd9d71edef3b83aa61191f25dc05d644",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Cabinete Medicină de Familie (Primary Care): 1380 obiecte, EPSG:4326.",
+        "layers": [
+          {
+            "name": "Cabinete Medicină de Familie (Primary Care)",
+            "features": 1380,
+            "geometry": "Point",
+            "crs": "EPSG:4326"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "medical_secondary_care",
@@ -81,7 +162,21 @@
       "notes": "T03 uses Contract Ecograf on this secondary-care layer.",
       "role_ro": "Cabinete de specialitate și ambulatorii; exemplu de filtrare a serviciilor de ecografie.",
       "crs_ro": "Codul CRS nu este precizat în T03; verifică proprietățile stratului.",
-      "registry_id": "adizmb-medical"
+      "registry_id": "adizmb-medical",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "c8a30698554f0bc8a9f482d2ee98c8f9dd9d71edef3b83aa61191f25dc05d644",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Cabinete și Ambulatorii de Specialitate (Secondary Care): 1082 obiecte, EPSG:4326.",
+        "layers": [
+          {
+            "name": "Cabinete și Ambulatorii de Specialitate (Secondary Care)",
+            "features": 1082,
+            "geometry": "Point",
+            "crs": "EPSG:4326"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "medical_tertiary_care",
@@ -100,7 +195,21 @@
       "notes": "Bed-count styling is an optional map variant in the source.",
       "role_ro": "Spitale; filtre CT/RMN și simboluri opționale dimensionate după numărul de paturi.",
       "crs_ro": "Codul CRS nu este precizat în T03; verifică proprietățile stratului.",
-      "registry_id": "adizmb-medical"
+      "registry_id": "adizmb-medical",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "c8a30698554f0bc8a9f482d2ee98c8f9dd9d71edef3b83aa61191f25dc05d644",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Spitale București-Ilfov (Tertiary Care): 158 obiecte, EPSG:4326.",
+        "layers": [
+          {
+            "name": "Spitale București-Ilfov (Tertiary Care)",
+            "features": 158,
+            "geometry": "Point",
+            "crs": "EPSG:4326"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "medical_admin_boundary_if",
@@ -119,7 +228,21 @@
       "notes": "T03 allows an unspecified alternative boundary as an option; no unidentified alternative is inventoried.",
       "role_ro": "Context administrativ pentru harta medicală București–Ilfov.",
       "crs_ro": "Codul CRS nu este precizat în T03; verifică proprietățile stratului.",
-      "registry_id": "administrative-boundaries"
+      "registry_id": "administrative-boundaries",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "c8a30698554f0bc8a9f482d2ee98c8f9dd9d71edef3b83aa61191f25dc05d644",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Limita_IF: 1 obiect, EPSG:3844.",
+        "layers": [
+          {
+            "name": "Limita_IF",
+            "features": 1,
+            "geometry": "Multi Polygon",
+            "crs": "EPSG:3844"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "sports_sites_bucharest",
@@ -138,7 +261,21 @@
       "notes": "The tutorial filename uses 1990-2024 while named internal layer uses 1991-2024; verify actual package without silently renaming.",
       "role_ro": "Poligoane ale bazelor sportive; hărți după stare și proprietate, cu calcul opțional de arie.",
       "crs_ro": "EPSG:4326, menționat în T04.",
-      "registry_id": "adizmb-sports"
+      "registry_id": "adizmb-sports",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "0f69d53c3c15552a45926091d75b4cac6b1682cf424f81fad24f3e0ac334f56c",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. 02_Baze_Sportive_București_1991-2024: 157 obiecte, EPSG:4326.",
+        "layers": [
+          {
+            "name": "02_Baze_Sportive_București_1991-2024",
+            "features": 157,
+            "geometry": "Polygon",
+            "crs": "EPSG:4326"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "sports_admin_boundary",
@@ -157,7 +294,21 @@
       "notes": "Separate filename and layer name from the T03 and T01/T05 boundary sources.",
       "role_ro": "Limita administrativă folosită sub poligoanele bazelor sportive.",
       "crs_ro": "EPSG:4326, menționat în T04.",
-      "registry_id": "administrative-boundaries"
+      "registry_id": "administrative-boundaries",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "archive_sha256": "0f69d53c3c15552a45926091d75b4cac6b1682cf424f81fad24f3e0ac334f56c",
+        "summary": "Verificat în arhiva originală ADIZMB, nu extrapolat din Sectorul 1. Limită Administrativă: 2 obiecte, EPSG:4326.",
+        "layers": [
+          {
+            "name": "Limită Administrativă",
+            "features": 2,
+            "geometry": "Multi Polygon",
+            "crs": "EPSG:4326"
+          }
+        ]
+      }
     },
     {
       "dataset_id": "census_2021_grid",
@@ -176,7 +327,13 @@
       "notes": "Tutorialul reports many features and possible slow rendering. `grid_recensamant_bucuresti.gpkg` is a derived output, not this source.",
       "role_ro": "Grid vectorial de recensământ, cu populația totală și grupe de vârstă; se poate decupa la București.",
       "crs_ro": "EPSG:3844, menționat în T05.",
-      "registry_id": "census2021"
+      "registry_id": "census2021",
+      "verification": {
+        "scope": "original",
+        "checked_on": "2026-10-20",
+        "file_sha256": "249408aefcfec5df3fc8b29867c58599fa7c2e90abd531c2b91ca67488d433a4",
+        "summary": "Original național verificat: 240290 poligoane EPSG:3844; câmpurile populației sunt întregi. Clip și ponderea sub 15 ani au fost executate în PyQGIS 3.40.11 pe zona București, fără schimbarea atributelor. Licența exactă rămâne în registrul sursei; originalul nu se redistribuie."
+      }
     },
     {
       "dataset_id": "copernicus_dem_30m",
@@ -195,7 +352,12 @@
       "notes": "Studentul creează un subset local Suceava; do not assign one of the owner-provided individual raster sizes to this file.",
       "role_ro": "DEM pentru hipsometrie, hillshade și decupare la masca județului Suceava.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.",
-      "registry_id": "copernicus-dem"
+      "registry_id": "copernicus-dem",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "hansen_lossyear_2024",
@@ -214,7 +376,12 @@
       "notes": "Verify product metadata, 0/no-loss meaning and 1–24/year mapping before styling or captions; do not assign an individual size.",
       "role_ro": "Raster tematic cu anul pierderii forestiere, grupat pe perioade și comparat vizual cu date de context.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.",
-      "registry_id": "hansen-loss"
+      "registry_id": "hansen-loss",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "protected_areas_ro",
@@ -233,7 +400,12 @@
       "notes": "National source named in T06; use transparent fill for map context.",
       "role_ro": "Contururi poligonale ale ariilor protejate pentru contextul hărții Sucevei.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
-      "registry_id": "protected-areas-context"
+      "registry_id": "protected-areas-context",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "relief_units_ro",
@@ -252,7 +424,12 @@
       "notes": "Listed in the Tutorialul but not required for the final map.",
       "role_ro": "Unități de relief, ca strat contextual opțional.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
-      "registry_id": "relief-context"
+      "registry_id": "relief-context",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "geomorphometry_landforms_ro",
@@ -271,7 +448,12 @@
       "notes": "Alternative to relief units in the core workflow; not required for the final map.",
       "role_ro": "Forme de relief geomorfometrice, pentru comparația avansată opțională.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
-      "registry_id": "landforms-context"
+      "registry_id": "landforms-context",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "counties_ro",
@@ -290,7 +472,12 @@
       "notes": "`judet_suceava.gpkg` is a derived mask, not a source dataset.",
       "role_ro": "Poligoane de județe; selecția Suceava formează masca de decupare a rasterelor.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
-      "registry_id": "administrative-boundaries"
+      "registry_id": "administrative-boundaries",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "rivers_ro",
@@ -309,7 +496,12 @@
       "notes": "Do not label all rivers; `nameText` is mentioned for identification.",
       "role_ro": "Linii de râuri, ca strat de context pentru Suceava.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
-      "registry_id": "hydrography-context"
+      "registry_id": "hydrography-context",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     },
     {
       "dataset_id": "lakes_ro",
@@ -328,7 +520,12 @@
       "notes": "Keep symbology subdued; `nameText` is mentioned for identification.",
       "role_ro": "Poligoane de lacuri, ca strat de context pentru Suceava.",
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
-      "registry_id": "hydrography-context"
+      "registry_id": "hydrography-context",
+      "verification": {
+        "scope": "documentation",
+        "checked_on": "2026-10-20",
+        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+      }
     }
   ]
 }

@@ -26,3 +26,4 @@
 @media(max-width:700px){.clip-demo-grid{grid-template-columns:1fr}.workshop-preparation,.workshop-requirements,.clip-population-demo{padding:14px}}
 
 .tutorial-table-scroll:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.tutorial-core{margin:28px 0}.tutorial-core-step{min-width:0;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:18px;margin:12px 0;font-size:14px;line-height:1.7}.tutorial-core-step h3{font-size:18px;margin:0 0 12px}.tutorial-core-step code{overflow-wrap:anywhere}.workshop-review-note{border-top:1px solid var(--line);padding-top:12px;font-size:14px;line-height:1.7}

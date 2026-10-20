@@ -28,7 +28,7 @@ equal(model.activePath,['coordinates','map-definition','map-classification','map
 equal(Object.values(model.items).reduce((counts,item)=>{const key=item.level||'none';counts[key]=(counts[key]||0)+1;return counts;},{}),{beginner:20,intermediate:38,advanced:6,none:9},'Approved levels, no artificial reference levels');
 equal(baseline.commit,protection.BASELINE,'Immutable baseline source');
 equal(baseline.protectedHashPolicy,protection.POLICY,'Explicit portable hash policy');
-equal(Object.keys(protection.intentionalUpdates).sort(),['js/crs-lesson.js','js/topology-repair-engine.js'],'Only two scoped Lot 5.1 exceptions');
+equal(Object.keys(protection.intentionalUpdates).sort(),['data/p03-content.js','data/tutorial-dataset-inventory.json','data/tutorial-screenshots.json','data/workshop-reproducibility.json','js/crs-lesson.js','js/p01-labs.js','js/p05-labs.js','js/topology-repair-engine.js'],'Eight exact authorized exceptions; 195 remaining protected files unchanged');
 ok(model.segments['rectangular-coordinates@intro'].available,'Introduction has real editorial support');
 equal(model.segments['rectangular-coordinates@intro'].anchors,['concept-rect','grila'],'Existing anchors identify the introduction');
 for(const [file,hash] of Object.entries(baseline.protectedFiles)){
