@@ -121,7 +121,7 @@ export function buildLearning(root,{check=false}={}) {
   const catalog=JSON.parse(fs.readFileSync(path.join(root,'data/tutorial-catalog.json'),'utf8'));
   for(const workshop of catalog)workshop.level=model.levels[model.items[workshop.id].level].label;
   write('data/tutorial-catalog.json',JSON.stringify(catalog,null,2)+'\n');
-  const strip=html=>html.replace(/<!-- learning-(intro|tail|home):start -->[\s\S]*?<!-- learning-\1:end -->/g,'');
+  const strip=html=>html.replace(/<!-- learning-scope:start -->[\s\S]*?<!-- learning-scope:end -->/g,'').replace(/<!-- learning-(intro|tail|home):start -->[\s\S]*?<!-- learning-\1:end -->/g,'');
   const mark=(kind,html)=>`<!-- learning-${kind}:start -->${html}<!-- learning-${kind}:end -->`;
   const assets=(html,prefix)=>{
     if(!html.includes('css/learning.css'))html=html.replace('</head>',`<link rel="stylesheet" href="${prefix}css/learning.css">\n</head>`);
@@ -140,6 +140,11 @@ export function buildLearning(root,{check=false}={}) {
   };
   const insert=(html,id,prefix)=>{
     html=strip(html);
+    html=html.replace(/<!-- workflow-full:start -->[\s\S]*?<!-- workflow-full:end -->/g,'');
+    if(id==='workflow')html=html.replace(/(<section[^>]*id="proiect-date"[\s\S]*?<\/section>)/, '$1<!-- workflow-full:start --><section id="workflow-integral" class="lesson-section"><h2>Workflow integral: de la prima hartă la un rezultat reproductibil</h2><p>După nucleul T01, revino la cele opt noduri de mai sus și verifică pe propriul proiect: sursele originale separate de produse, CRS-ul și transformările, filtrele, parametrii procesării, simbolurile, layoutul și exporturile. Consemnează intrările, ordinea, versiunile și rezultatul verificării fiecărui pas. Orientarea introductivă WFi prezintă etapele și distincția fișier/proiect; nu certifică aceste competențe de aplicare.</p></section><!-- workflow-full:end -->');
+    if(id==='workflow')html=html.replace(/(<section[^>]*id="proiect-date"[\s\S]*?)(<\/section>)/,(_,body,end)=>body+ui.scopeTail('workflow@intro',prefix)+end);
+    if(id==='T01')html=html.replace('</section><!-- workshop-core:end -->',ui.scopeTail('T01@core',prefix)+'</section><!-- workshop-core:end -->');
+
     if(id==='earth-to-map')html=html.replace(/<nav class="geo-next"[^>]*>[\s\S]*?<\/nav>/g,'');
     if(id==='home')return html.replace(/(<section class="overview-section")/,mark('home',ui.companionHome()+ui.home())+'$1');
     if(['digital-companion','gis-lab'].includes(id))return html;
@@ -160,6 +165,8 @@ export function buildLearning(root,{check=false}={}) {
     let body=page.body.replace('{{levels}}',ui.levels()).replace('{{stages}}',ui.stages()).replace('{{inventory}}',ui.inventory()).replace('{{glossary}}',ui.glossary());
     body=body.replace('{{companion-hub}}',ui.companionHub()).replace('{{branches}}',ui.branches());
     if(body.includes('{{diagnostic-content}}'))body=body.replace('{{diagnostic-content}}',context.window.CARTO_DIAGNOSTIC_CONTENT.content());
+    body=body.replace(/\{\{operation:([\w-]+)\}\}/g,(_,id)=>{const op=JSON.parse(fs.readFileSync(path.join(root,'data/processing-operations.json'),'utf8')).find(o=>o.id===id&&o.qgis_url);if(!op)throw Error('Unknown project operation '+id);return '<a data-project-operation="'+id+'" href="geospatial-data.html?operation='+id+'">'+escape(op.name_ro)+'</a> (<a href="'+escape(op.qgis_url)+'" target="_blank" rel="noopener noreferrer">documentația QGIS</a>)';});
+    body=body.replace(/\{\{prepare:(medical|population|raster)\}\}/g,(_,name)=>ui.projectPreparation(name));
     body=body.replace(/\{\{qgis:([\w-]+)\}\}/g,(_,id)=>{const source=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).links.find(s=>s.id===id&&s.verified);if(!source)throw Error('Unknown QGIS source: '+id);return `<a href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(source.title)}; se deschide într-o filă nouă">${escape(source.title)} ↗</a>`;});
     if(body.includes('{{projection-crs-sources}}')){const registry=JSON.parse(fs.readFileSync(path.join(root,'data/crs-registry.json'),'utf8'));body=body.replace('{{projection-crs-sources}}','<ul>'+registry.crs.filter(c=>[4326,3857,3844,32634,32635].includes(c.epsg)).map(c=>`<li><a href="${escape(c.source_url)}" target="_blank" rel="noopener noreferrer">${escape(c.id)} · ${escape(c.name)} ↗</a></li>`).join('')+'</ul>');}
     let html=assets(template,'').replace(/\s*<link rel="canonical"[^>]*>\s*/g,'\n').replace(/<title>[\s\S]*?<\/title>/,`<title>${page.title} · Explorare geospațială</title>`).replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${page.description}">`).replace(/data-page="[^"]*" data-page-id="[^"]*"/,`data-page="learning" data-page-id="${id}"`);

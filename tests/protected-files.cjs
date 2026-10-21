@@ -35,8 +35,8 @@ const intentionalUpdates={
   },
   'js/p05-labs.js':{
     baseline:'dc6f1471fdf2e932480417f4b3432fdd4fde1f2e99b084ff43ed16bc775323f4',
-    current:'e9eb2d3e2a0b70d7b1dd7f9c6f2e129f021581854e582850e912e8a7d193c922',
-    reason:'E5-01: replace internal P05 label in style legends; interactions unchanged.'
+    current:'0e9fd814ddab872bc4685bc5013a58a28aa7ba5e237e21deadc4df3b9ab365ca',
+    reason:'E5-01/E52-04: readable style legends localized by the existing RO/EN state; map interactions unchanged.'
   },
   'data/p03-content.js':{
     baseline:'d29d066b28eaac8df42034325fb53288e7d9dc75b3ea02087fd10faf22475c43',
@@ -45,8 +45,8 @@ const intentionalUpdates={
   },
   'data/workshop-reproducibility.json':{
     baseline:'4bd7d6186864f59010462dd2154803189784470ac6e4684f5afe39c23e3dec1a',
-    current:'f7ed798f22c0fbf8a4f32680a9a108349940f578f73313518cd41c9cab44fe56',
-    reason:'Lot 5.2 and E52-01: T01 core, approved unchanged CASE, directional scale limitation and NULL explanation; focused workshop corrections.'
+    current:'acefb888b66136bc7d5047f4e3227b062ea1369792e8e5bfc0621d5c3f84bf0c',
+    reason:'Lots 5.2/5.3: approved T01 core/CASE, scale/NULL explanations and cautious datum-dialog note; focused workshop corrections.'
   },
   'data/tutorial-dataset-inventory.json':{
     baseline:'916ee897e2092b05b82e71797b4a5a866c212cf03435c752a3473b539afeef13',

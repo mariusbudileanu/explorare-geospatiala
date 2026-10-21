@@ -4,7 +4,7 @@
   if(!model||!manifest)return;
   const lessons=new Map(manifest.lessons.map(item=>[item.id,item]));
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const link=(id,prefix='')=>{const l=lessons.get(id);if(!l)throw Error('Unknown learning destination: '+id);return `<a href="${prefix}${esc(l.href)}">${esc(l.title)}</a>`;};
+  const link=(id,prefix='')=>{const href=model.target(id);if(!href)throw Error('Unknown learning destination: '+id);return `<a href="${prefix}${esc(href)}">${esc(model.label(id))}</a>`;};
   const icons={
     'book-open':'<path d="M12 7v14m0-14C9 4 5 4 2 5v15c3-1 7-1 10 1 3-2 7-2 10-1V5c-3-1-7-1-10 2Z"/>',
     layers:'<path d="m12 3 10 6-10 6L2 9 12 3Zm-10 12 10 6 10-6M2 12l10 6 10-6"/>',
@@ -33,11 +33,11 @@
   const companionHome=()=>`<section class="companion-home lesson-section" aria-labelledby="companion-home-title"><h2 id="companion-home-title">Două căi de explorare</h2><div class="companion-primary-grid"><article class="learning-card"><h3>Învață pe capitole</h3><p>Parcurge conceptele în ordinea structurii academice.</p><a class="outline-button" href="#cuprins">Vezi cuprinsul →</a></article><article class="learning-card"><h3>${esc(lessons.get('digital-companion').title)}</h3><p>Experimentează cu proiecții, clasificare, design și diagnostic.</p><a class="outline-button" href="${esc(lessons.get('digital-companion').href)}">Deschide ${esc(lessons.get('digital-companion').title.toLocaleLowerCase('ro-RO'))} →</a></article></div></section>`;
   const intro=(id,prefix='')=>{
     const item=model.items[id];if(!item?.level)return '';
-    const preparation=(refs,title)=>{const available=refs.filter(id=>lessons.has(id));return available.length?`<div class="learning-prerequisites"><h2>${title}</h2><p>${available.map(p=>link(p,prefix)).join(' · ')}</p></div>`:'';};
-    const introduction=id==='rectangular-coordinates'&&model.segments[id+'@intro'];
-    const scope=introduction?.available?`<p><a href="#concept-rect">Introducerea X/Y</a> se poate studia separat, după ${introduction.prerequisites.map(p=>link(p,prefix)).join(' · ')}. Nivelul și pregătirea de mai jos se referă la lecția integrală, inclusiv aprofundarea sistemelor de referință.</p>`:'';
+    const preparation=(refs,title)=>{const available=refs.filter(id=>model.target(id));return available.length?`<div class="learning-prerequisites"><h2>${title}</h2><p>${available.map(p=>link(p,prefix)).join(' · ')}</p></div>`:'';};
+    const introduction=['rectangular-coordinates','workflow'].includes(id)&&model.segments[id+'@intro'];
+    const scope=introduction?.available?`<p><a href="${id==='workflow'?'#etape':'#concept-rect'}">${id==='workflow'?'Orientarea WFi':'Introducerea X/Y'}</a> se poate studia separat, după ${introduction.prerequisites.map(p=>link(p,prefix)).join(' · ')}. Nivelul și pregătirea de mai jos se referă la resursa integrală, nu la introducere.</p>`:'';
     const outcomes=/^T0[1-6]$/.test(id)?'':`<div><h2>Ce vei ști să faci</h2><ul>${item.outcomes.map(text=>`<li>${esc(text)}</li>`).join('')}</ul></div>`;
-    return `<aside class="learning-context resource-level" style="--level-color:${model.levels[item.level].color}" aria-label="Nivel și pregătire"><div class="learning-context-top">${badge(item.level)}<a href="${prefix}learning-path.html">Parcurs recomandat →</a></div>${scope}${outcomes}${preparation(item.prerequisites,'Cunoștințe necesare')}${preparation(item.recommendedPrerequisites,'Pregătire recomandată')}${item.prerequisites.length?'<p class="small">Prerechizitele descriu pregătirea necesară; accesul la resursă rămâne liber.</p>':''}</aside>${callouts(id,prefix)}`;
+    return `<aside class="learning-context resource-level" style="--level-color:${model.levels[item.level].color}" aria-label="Nivel și pregătire"><div class="learning-context-top">${badge(item.level)}<a href="${prefix}learning-path.html">Parcurs recomandat →</a></div>${scope}${outcomes}${item.related?.length?'<div class="learning-related"><h2>Leagă teoria de practică</h2><p>'+item.related.map(p=>link(p,prefix)).join(' · ')+'</p></div>':''}${preparation(item.prerequisites,'Cunoștințe necesare')}${preparation(item.recommendedPrerequisites,'Pregătire recomandată')}${item.prerequisites.length?'<p class="small">Prerechizitele descriu pregătirea necesară; accesul la resursă rămâne liber.</p>':''}</aside>${callouts(id,prefix)}`;
   };
   const optionText=option=>typeof option==='string'?option:option.text;
   const form=q=>`<form class="formative-check" data-learning-question="${esc(q.id)}"><fieldset><legend>${esc(q.prompt)}</legend>${q.options.map((option,i)=>`<label><input type="radio" name="learning-${esc(q.id)}" value="${i}"> <span>${esc(optionText(option))}</span></label>`).join('')}</fieldset><div class="formative-actions" hidden><button type="submit">Verifică alegerea</button><button type="reset">Reia întrebarea</button></div><p class="learning-feedback" role="status" aria-live="polite"></p><details class="formative-explanation"><summary>Explicație și justificare</summary>${Number.isInteger(q.answer)?`<p><strong>Alegerea justificată:</strong> ${esc(optionText(q.options[q.answer]))}</p>`:''}<p>${esc(q.explanation)}</p>${q.options.some(o=>typeof o==='object')?'<ul>'+q.options.map(o=>`<li><strong>${esc(o.text)}:</strong> ${esc(o.feedback)}</li>`).join('')+'</ul>':''}</details></form>`;
@@ -54,16 +54,24 @@
     const questions=model.checks[id]||[];if(!questions.length)return '';
     return `<section class="learning-checks lesson-section" aria-labelledby="learning-checks-title"><h2 id="learning-checks-title">Verifică-ți înțelegerea</h2><p>Alege o variantă și verifică justificarea. Aceste verificări sunt formative; răspunsurile nu sunt salvate.</p>${questions.map(form).join('')}</section>`;
   };
+  const scopeTail=(ref,prefix='')=>{
+    const options=model.continuations(ref);
+    return '<!-- learning-scope:start --><nav class="learning-scope-continuation" data-learning-scope="'+esc(ref)+'" aria-label="Continuarea segmentului"><p><strong>'+esc(model.label(ref))+'</strong> · Segmentul nu echivalează cu resursa integrală; deschiderea lui nu certifică finalizarea.</p>'+options.map(o=>'<a class="outline-button continuation-primary" data-route-ref="'+esc(o.ref)+'" href="'+prefix+esc(model.target(o.ref))+'">'+esc(o.label)+' · '+esc(model.label(o.ref))+'</a>').join('')+'</nav><!-- learning-scope:end -->';
+  };
   const tail=(id,prefix='')=>{
     if(!model.items[id])return '';
-    const seen=new Set([id]),actions=[];
-    const add=(target,label,primary=false)=>{if(!target||seen.has(target)||!lessons.has(target))return;seen.add(target);actions.push(`<a${primary?' class="outline-button continuation-primary"':''} href="${prefix}${esc(lessons.get(target).href)}"><span>${label}</span> · ${esc(manifest.resourceLabel(target))}</a>`);};
-    add(model.recommendedNext(id),'Continuă parcursul recomandat',true);
-    const chapter=manifest.chapterContinuation(id);if(chapter)add(chapter.id,chapter.label);
-    return checks(id)+`<nav class="learning-continuation" aria-label="Continuă învățarea">${actions.join('')}${id==='final-project'?'<p>Ai încheiat proiectul integrator. Poți alege o altă temă prin explorare liberă.</p>':id===model.activePath.at(-1)?'<p>Ai încheiat secvența introductivă disponibilă. Continuă explorarea liberă prin capitole sau prin catalogul laboratoarelor.</p>':''}</nav>`;
+    const seen=new Set([model.target(id)]),actions=[];
+    const add=(ref,label,primary=false,href=model.target(ref))=>{if(!href||seen.has(href))return;seen.add(href);actions.push('<a'+(primary?' class="outline-button continuation-primary"':'')+' data-route-ref="'+esc(ref)+'" href="'+prefix+esc(href)+'"><span>'+esc(label)+'</span> · '+esc(model.label(ref))+'</a>');};
+    for(const option of model.continuations(id))add(option.ref,option.label,true);
+    const chapter=manifest.chapterContinuation(id);if(chapter&&id!=='final-project')add(chapter.id,chapter.label,false,lessons.get(chapter.id).href);
+    return checks(id)+'<nav class="learning-continuation" data-learning-resource="'+esc(id)+'" aria-label="Continuă învățarea">'+(['workflow','rectangular-coordinates'].includes(id)?'<p>Continuarea de mai jos privește resursa integrală. Introducerea are continuarea proprie lângă conținut.</p>':'')+actions.join('')+(id==='final-project'?'<p>După realizarea și verificarea proiectului, parcursul se încheie aici. Alte teme pot fi explorate liber; nu se salvează automat finalizarea.</p>':'')+'</nav>';
+  };
+  const projectPreparation=name=>{
+    const recommended=model.segments['final-project@'+name].recommendedPrerequisites;
+    return '<div class="project-preparation" data-project-variant="'+name+'"><p>Pregătire obligatorie: <a href="learning-path.html#etape">trunchiul comun</a> + '+model.plan.endings[name].slice(0,-1).map(id=>link(id)).join(' · ')+'.</p><p>Consolidare recomandată: '+recommended.map(id=>link(id)).join(' · ')+'.</p></div>';
   };
   const levels=()=>`<div class="learning-grid level-cards">${Object.entries(model.levels).map(([key,value])=>`<article class="learning-card">${badge(key)}<p>${esc(value.description)}</p><a href="learning-path.html#nivel-${key}">Materiale pentru ${esc(value.label.toLocaleLowerCase('ro'))} →</a></article>`).join('')}</div>`;
-  const stages=()=>`<ol class="learning-stages">${model.stages.map((stage,i)=>`<li><article class="learning-card"><h3>${i+1}. ${esc(stage.title)}</h3><p>${esc(stage.task)}</p><p>${stage.items.map(id=>link(id)).join(' · ')}</p></article></li>`).join('')}</ol><p>Secvența ghidată disponibilă se încheie aici. Continuările introductive către coordonate rectangulare și prima hartă QGIS sunt în pregătire. Poți explora liber toate resursele existente.</p>`;
+  const stages=()=>'<ol class="learning-stages">'+model.stages.map((stage,i)=>'<li><article class="learning-card"><h3>'+(i+1)+'. '+esc(stage.title)+'</h3><p>'+esc(stage.task)+'</p><p>'+stage.items.map(id=>link(id)).join(' · ')+'</p></article></li>').join('')+'<li><article class="learning-card"><h3>7. Aplicație și proiect</h3><p>Alege o singură aplicație. Pregătirea ei completează trunchiul comun; nu sunt trei parcursuri concurente.</p>'+Object.entries(model.plan.endings).map(([name,route])=>'<p>'+esc(model.variantLabels[name])+': '+route.map(id=>link(id)).join(' → ')+'</p>').join('')+'</article></li></ol><p>Recomandarea nu blochează accesul și nu certifică executarea activităților. Introducerile și revenirile la resursele integrale au obiective diferite.</p>';
   const inventory=()=>Object.entries(model.levels).map(([level,descriptor])=>`<section id="nivel-${level}"><h3>${esc(descriptor.label)}</h3><p>${esc(descriptor.description)}</p><div class="learning-inventory-grid">${manifest.groups.flatMap(g=>g.lessons).filter(id=>model.items[id]?.level===level).map(id=>`<article class="learning-card"><h4>${link(id)}</h4>${badge(level)}<p>${esc(model.items[id].reason)}</p><p>${esc(model.items[id].outcomes[0])}</p></article>`).join('')}</div></section>`).join('');
   const branches=()=>`<div class="learning-grid">${[
     ['Vector și structuri de date',['vector','formats','georeferencing']],
@@ -73,8 +81,8 @@
     ['Aplicații pe date reale',['sport','vectorChallenges']]
   ].map(([title,keys])=>{const ids=[...new Set(keys.flatMap(key=>model.plan.branches[key]).map(id=>model.segments[id]?.resourceId||id))];return `<article class="learning-card"><h3>${title}</h3><p>${ids.map(id=>link(id)).join(' · ')}</p></article>`;}).join('')}</div>`;
   const glossary=()=>`<dl id="glossary-list" class="glossary-list">${window.CARTO_GLOSSARY.map((item,i)=>`<div class="glossary-entry" id="termen-${i+1}"><dt><strong>${esc(item.term_ro)}</strong> <span lang="en">${esc(item.term_en)}</span></dt><dd><p>${esc(item.modern_definition||item.historical_definition)}</p>${item.historical_definition?`<p class="small">Referință istorică: Năstase &amp; Cernea (1974), ${esc(item.source)}. <a href="https://biblioteca-digitala.ro/?pub=10971-cartografie-generala">Consultă sursa</a>.</p>`:''}${item.lesson_id?`<p>${link(item.lesson_id)} →</p>`:''}</dd></div>`).join('')}</dl>`;
-  const home=()=>`<section class="learning-home lesson-section" id="incepe"><span class="eyebrow">UN PUNCT DE PORNIRE</span><h2>Începe aici, apoi alege direcția</h2><p>Pentru primul contact cu GIS, începe cu <a href="learning-path.html">secvența introductivă</a>: poziție geografică, hartă și date. Experimentează în <a href="digital-companion.html">laboratoarele din browser</a>. Dacă ai experiență, poți intra direct în orice modul.</p>${levels()}<p class="learning-home-route">Fundamente → date și reprezentare → CRS → operații GIS → analiză → ateliere → proiect integrator</p><p><a class="outline-button" href="learning-path.html">Parcurge etapele recomandate →</a> <a class="outline-button" href="final-project.html">Proiect final integrator →</a></p></section>`;
-  window.CARTO_LEARNING_UI={intro,tail,badge,levels,stages,branches,inventory,glossary,home,form,bindChecks,experience,experienceCard,callouts,companionHub,companionHome};
+  const home=()=>`<section class="learning-home lesson-section" id="incepe"><span class="eyebrow">UN PUNCT DE PORNIRE</span><h2>Începe aici, apoi alege direcția</h2><p>Pentru primul contact cu GIS, începe cu <a href="learning-path.html">parcursul recomandat</a>: poziție geografică, hartă și date. Experimentează în <a href="digital-companion.html">laboratoarele din browser</a>. Dacă ai experiență, poți intra direct în orice modul.</p>${levels()}<p class="learning-home-route">Fundamente → date și reprezentare → CRS → operații GIS → analiză → ateliere → proiect integrator</p><p><a class="outline-button" href="learning-path.html">Parcurge etapele recomandate →</a> <a class="outline-button" href="final-project.html">Proiect final integrator →</a></p></section>`;
+  window.CARTO_LEARNING_UI={intro,tail,scopeTail,projectPreparation,badge,levels,stages,branches,inventory,glossary,home,form,bindChecks,experience,experienceCard,callouts,companionHub,companionHome};
   if(typeof document==='undefined')return;
   function initialize() {
     const id=document.body.dataset.pageId || (['home','resources'].includes(document.body.dataset.page)?document.body.dataset.page:new URLSearchParams(location.search).get('id'));
@@ -107,6 +115,10 @@
       const update=()=>{let count=0;for(const card of cards){const show=(!theme.value||card.dataset.theme===theme.value)&&(!level.value||card.dataset.level===level.value);card.hidden=!show;if(show)count++;}document.querySelector('#catalog-status').textContent=count+' din 20 de laboratoare';document.querySelector('#catalog-empty').hidden=count>0;};
       catalog.hidden=false;catalog.addEventListener('change',update);catalog.addEventListener('reset',()=>{theme.value='';level.value='';update();});update();
     }
+    const attachScope=(ref,node)=>{if(node&&!main.querySelector('[data-learning-scope="'+ref+'"]'))node.insertAdjacentHTML('beforeend',scopeTail(ref,prefix));};
+    attachScope('rectangular-coordinates@intro',main?.querySelector('[data-learning-segment="rectangular-coordinates@intro"]'));
+    if(id==='workflow')attachScope('workflow@intro',main?.querySelector('#proiect-date'));
+    if(id==='T01')attachScope('T01@core',main?.querySelector('#t01-core'));
     bindChecks(document,model.checks[id]||[]);
     const filter=document.querySelector('#glossary-filter');
     if(filter){

@@ -13,6 +13,7 @@ function validateLearning(content,model,operations=[]) {
     for(const ref of [...(item.prerequisites||[]),...(item.recommendedPrerequisites||[]),...(item.related||[])])checkRef(ref,id);
     if(new Set(item.prerequisites||[]).size!==(item.prerequisites||[]).length)fail('Repeated prerequisite '+id);
     if(item.resourceId&&(!ids.has(item.resourceId)||alias(item.resourceId)))fail('Invalid segment resource '+id);
+    if(item.resourceId&&id.split('@')[0]!==item.resourceId)fail('Confused segment identity '+id);
     if(item.available===false&&!model.editorialDependencies[id])fail('Missing editorial dependency '+id);
     for(const refs of Object.values(item.operations||{}))for(const op of refs)if(!operations.some(o=>o.id===op&&o.qgis_url))fail('Unknown operation '+op);
   }
@@ -36,8 +37,14 @@ function validateLearning(content,model,operations=[]) {
   }
   const common=model.plan.stages.flatMap(s=>s.items);
   route(common,'planned common');
+  for(const ref of ['rectangular-coordinates@intro','workflow@intro','T01@core']){
+    if(!common.includes(ref)||!segments[ref]?.available||!segments[ref]?.anchors?.length)fail('Missing supported introductory segment '+ref);
+    const full=ref.split('@')[0];
+    if(common.includes(full)&&common.indexOf(full)<common.indexOf(ref))fail('Integral resource precedes introduction '+full);
+  }
+  if(JSON.stringify(Object.keys(model.plan.endings).sort())!==JSON.stringify(['medical','population','raster']))fail('Three project applications required');
   for(const [name,items] of Object.entries(model.plan.endings)){
-    route([...common,...items],name);
+    route([...common,...items],name,{active:true});
     if(!segments[items.at(-1)]?.terminal)fail('Missing explicit end '+name);
   }
   // Optional branches insert only their own required preparation, not every optional resource.
@@ -50,9 +57,35 @@ function validateLearning(content,model,operations=[]) {
   route(model.activePath,'active',{active:true});
   if(model.activeThrough){checkRef(model.activeThrough,'activation boundary');if(model.activePath.at(-1)!==model.activeThrough)fail('Active path exceeds or misses explicit activation boundary');}
   if(JSON.stringify(model.activePath)!==JSON.stringify(common.slice(0,model.activePath.length)))fail('Active path is not a supported common prefix');
+  if(JSON.stringify(model.stages.flatMap(s=>s.items))!==JSON.stringify(model.activePath))fail('Displayed stages diverge from active path');
+  if(model.activePath.length!==common.length)fail('Integrated common path is incomplete');
+  const expandedBranch=name=>{
+    const seen=new Set(common),out=[];
+    function add(id){if(seen.has(id))return;seen.add(id);for(const p of nodes[id]?.prerequisites||[])add(p);out.push(id);}
+    model.plan.branches[name].forEach(add);return out;
+  };
+  const expectedNext=id=>{
+    if(id==='final-project'||segments[id]?.terminal)return null;
+    const i=common.indexOf(id);if(i>=0)return common[i+1]||'final-project';
+    for(const route of Object.values(model.plan.endings)){const i=route.indexOf(id);if(i>=0&&route[i+1])return route[i+1];}
+    for(const name of Object.keys(model.plan.branches)){const route=expandedBranch(name),i=route.indexOf(id);if(i>=0&&route[i+1])return route[i+1];}
+    return null;
+  };
   for(const [id,item] of Object.entries(model.items)){
-    const index=model.activePath.indexOf(id),expected=index<0?null:model.activePath[index+1]||null;
+    const expected=expectedNext(id);
     if(item.next!==expected)fail('Independent continuation/cycle '+id);
+  }
+  if(typeof model.continuations==='function'){
+    const edges={};
+    for(const id of Object.keys(nodes)){
+      const options=model.continuations(id);edges[id]=options.map(o=>o.ref);
+      for(const ref of edges[id])checkRef(ref,'continuation '+id);
+      if((edges[id][0]||null)!==expectedNext(id))fail('Derived continuation mismatch '+id);
+      if((id==='final-project'||segments[id]?.terminal)&&edges[id].length)fail('Terminal continuation '+id);
+    }
+    const done=new Set(),stack=new Set();
+    function walk(id){if(stack.has(id)){fail('Continuation cycle '+id);return;}if(done.has(id))return;stack.add(id);for(const to of edges[id]||[])walk(to);stack.delete(id);done.add(id);}
+    Object.keys(edges).forEach(walk);
   }
   if(model.items['final-project'].next!==null)fail('Final project must end explicitly');
   return errors;

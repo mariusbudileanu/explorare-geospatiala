@@ -24,7 +24,9 @@ equal(navigation.length,71,'71 menu destinations');equal(new Set(navigation).siz
 equal(content.chapters.length,7,'Seven chapters');
 const operations=JSON.parse(fs.readFileSync(path.join(root,'data/processing-operations.json'),'utf8'));
 equal(validateLearning(content,model,operations),[],'Approved graph');
-equal(model.activePath,['coordinates','map-definition','map-classification','map-exterior','map-frame','map-interior','geospatial-data','scale-resolution'],'Supported prefix ends before 1.2i');
+equal(model.activePath,model.plan.stages.flatMap(s=>s.items),'Full approved common path active');
+equal(model.activePath.length,24,'Twenty-four scoped steps, including explicit returns');
+ok(model.segments['T01@core'].available,'Approved real core available');
 equal(Object.values(model.items).reduce((counts,item)=>{const key=item.level||'none';counts[key]=(counts[key]||0)+1;return counts;},{}),{beginner:20,intermediate:38,advanced:6,none:9},'Approved levels, no artificial reference levels');
 equal(baseline.commit,protection.BASELINE,'Immutable baseline source');
 equal(baseline.protectedHashPolicy,protection.POLICY,'Explicit portable hash policy');
@@ -63,7 +65,13 @@ const negatives=[
   m=>m.activePath.push('rectangular-coordinates@intro'),
   m=>m.segments['final-project@medical'].terminal=false,
   m=>m.segments['final-project@medical'].operations.anyOf.push('invalid-operation'),
-  m=>m.items['styling-labeling'].next='styling-labeling'
+  m=>m.items['styling-labeling'].next='styling-labeling',
+  m=>m.plan.endings.medical.splice(0,1),
+  m=>m.plan.stages[2].items[m.plan.stages[2].items.indexOf('workflow@intro')]='workflow',
+  m=>m.segments['T01@core'].resourceId='workflow',
+  m=>m.stages[0].items.reverse(),
+  m=>m.items['final-project'].next='coordinates'
 ];
 for(const [i,mutate] of negatives.entries()){const m=plain(model);mutate(m);ok(validateLearning(content,m,operations).length,'Negative validator fixture '+i);}
+for(const mode of ['alias','missing','restart']){const fresh=loadModel().CARTO_LEARNING,original=fresh.continuations;fresh.continuations=id=>id==='final-project'?[{ref:mode==='alias'?'gis-lab':mode==='missing'?'missing@scope':'coordinates'}]:original(id);ok(validateLearning(content,fresh,operations).length,'Reject live continuation '+mode);}
 console.log(`PASS lot 4.1: ${checks} assertions, ${negatives.length} negative validator cases, 203 protected hashes`);

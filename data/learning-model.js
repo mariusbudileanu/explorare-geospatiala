@@ -166,7 +166,7 @@ for(const [id,lab,prerequisites,outcomes]of [
   model.segments={};
   for(const [key,value] of Object.entries({"1.2@intro":{"required":["1.1"],"recommended":["2.1"],"anchors":["concept-rect","grila"]},"WF@intro":{"required":["D"],"recommended":[],"anchors":["etape","proiect-date"]},"T01@core":{"required":["D","1.2@intro","2.4","4.4"],"recommended":["4.6","WF@intro"],"anchors":["section-8","section-9","section-10","section-11","section-24","section-18","section-19","section-20"]},"PF@medical":{"required":["L14","L13","WF","T03","L04"],"recommended":["L08"],"terminal":true},"PF@population":{"required":["L14","L13","WF","T05","L04"],"recommended":["L08"],"terminal":true},"PF@raster":{"required":["L14","L13","WF","T06","L15"],"recommended":["L08"],"terminal":true},"C@V1":{"required":["D"]},"C@V2":{"required":["D","1.2","L04","L14"]},"C@V3":{"required":["C@V1","C@V2","4.2"]},"C@V4":{"required":["D","L04","L14"]},"C@V5":{"required":["D","L14","L04"]},"C@V6":{"required":["C@V5","L20"]},"C@R1":{"required":["D","L01"]},"C@R2":{"required":["C@R1","1.2@intro"]},"C@R3":{"required":["D","L01"]},"C@R4":{"required":["C@R3","L20"]},"C@R5":{"required":["C@R3"]},"C@R6":{"required":["C@R1","C@R3","L15"]}})){
     const id=ref(key),resourceId=id.split('@')[0];
-    const available=key==='1.2@intro'||key==='WF@intro'||key.startsWith('C@');
+    const available=true;
     model.segments[id]={resourceId,available,prerequisites:value.required.map(ref),recommendedPrerequisites:(value.recommended||[]).map(ref),...(available&&value.anchors?{anchors:value.anchors}:{}),terminal:!!value.terminal};
   }
   model.plan={
@@ -175,31 +175,48 @@ for(const [id,lab,prerequisites,outcomes]of [
       items:items.map(ref),
       task:['Localizezi un punct și explici scara, cadrul și legenda.','Distingi entități și pixeli; compari scara cu rezoluția.','Alegi simboluri după tipul atributului.','Exporți o hartă cu legendă, sursă și limită de interpretare.','Verifici unitățile și compari măsurători în CRS potrivite.','Verifici operații, expresii și calitatea rezultatului.'][i]
     })),
-    endings:Object.fromEntries(Object.entries({"medical":["T03","PF@medical"],"population":["T02","T05","PF@population"],"raster":["L11","L15","T06","PF@raster"]}).map(([key,items])=>[key,items.map(ref)])),
+    endings:Object.fromEntries(Object.entries({"medical":["T03","PF@medical"],"population":["T05","PF@population"],"raster":["L11","L15","T06","PF@raster"]}).map(([key,items])=>[key,items.map(ref)])),
     branches:Object.fromEntries(Object.entries({"vector":["L02","L09"],"representation":["4.1","4.3","L06","L07","TR","L08"],"statistics":["L16"],"networks":["L17","L18"],"formats":["L10","L12"],"georeferencing":["L19"],"geometry":["1.3","1.4","1.5","1.6"],"sport":["T04"],"T01extension":["T01"],"vectorChallenges":["C@V1","C@V2","C@V3","C@V4","C@V5","C@V6"],"rasterChallenges":["L11","L15","C@R1","C@R2","C@R3","C@R4","C@R5","C@R6"],"projection-4":["3.3","3.4"],"projection-5":["3.3","3.5"],"projection-6":["3.3","3.6"],"projection-7":["3.3","3.7"],"projection-8":["3.3","3.8"],"projection-9":["3.3","3.9"],"projection-10":["3.3","3.10"],"projection-11":["3.3","3.11"],"projection-12":["3.3","3.12"],"2.3":["2.3"],"4.5":["4.5"],"4.7":["4.7"],"4.8":["4.8"],"4.9":["4.9"],"4.10":["4.10"]}).map(([key,items])=>[key,items.map(ref)]))
   };
   model.segments['T01@core'].anchors=['t01-core'];
+  for(const name of ['medical','population','raster'])model.segments['final-project@'+name].anchors=['proiect-'+name];
   model.segments['final-project@medical'].operations={anyOf:['vector-nearest','vector-buffer']};
   model.segments['final-project@population'].operations={allOf:['vector-buffer','vector-dissolve','vector-intersection']};
+  model.segments['final-project@population'].recommendedPrerequisites.push('T02');
   model.segments['final-project@raster'].operations={whenSelected:['raster-slope']};
-  model.editorialDependencies={
-    'T01@core':'Nucleu după proprietate implementat; aprobare curriculară, verificarea interfeței QGIS 3.44 și integrare în Lotul 5.3.',
-    'final-project@medical':'Instrucțiuni pentru prima executare a operațiilor QGIS.',
-    'final-project@population':'Instrucțiuni de geoprocesare și alocare a populației.',
-    'final-project@raster':'Instrucțiuni pentru operațiile raster alese.'
-  };
-  // Editorial readiness does not automatically publish additional route stages.
-  // Keep the audited Stage 4 prefix until the integration in batch 5.3.
-  model.activeThrough='scale-resolution';
-  let pending=false;
-  model.stages=model.plan.stages.map(stage=>({...stage,items:stage.items.filter(id=>{
-    if(model.segments[id]&&!model.segments[id].available)pending=true;
-    const include=!pending;
-    if(id===model.activeThrough)pending=true;
-    return include;
-  })})).filter(stage=>stage.items.length);
+  model.variantLabels={medical:'Servicii medicale',population:'Populație și școli',raster:'Relief și pierdere forestieră'};
+  for(const [a,bs] of [['coordinates',['projection-crs-lab','measurement-lab']],['rectangular-coordinates',['projection-crs-lab','measurement-lab','georeferencing-lab']],['method-choropleth',['classification-lab','T02']],['method-signs',['styling-labeling','T01']],['method-qualitative',['T04']],['geospatial-data',['analysis','T05']],['data-quality',['final-project']],[ref('L11'),[ref('L15'),'T06']],['raster-styling',[ref('L11'),'T06']],['formats-interoperability',['zarr-cloud-data']],['T03',['final-project']],['T05',['final-project']],['T06',['final-project']]])for(const b of bs){if(a===b)continue;model.items[a].related=[...new Set([...(model.items[a].related||[]),b])];model.items[b].related=[...new Set([...(model.items[b].related||[]),a])];}
+  model.editorialDependencies={};
+  // Availability denotes prepared content, never student execution or completion.
+  model.activeThrough='data-quality';
+  model.stages=model.plan.stages.map(stage=>({...stage,items:[...stage.items]}));
   model.activePath=model.stages.flatMap(stage=>stage.items);
-  model.recommendedNext=id=>{const i=model.activePath.indexOf(id);return i<0?null:model.activePath[i+1]||null;};
+  model.resourceId=ref=>model.segments[ref]?.resourceId||ref;
+  model.target=ref=>{
+    const resource=content.lessons.find(l=>l.id===model.resourceId(ref));if(!resource)return null;
+    const anchor=model.segments[ref]?.anchors?.[0]||(ref==='rectangular-coordinates'?'sisteme-rect':ref==='workflow'?'workflow-integral':null);
+    return resource.href+(anchor?'#'+anchor:'');
+  };
+  model.label=ref=>{
+    const resource=content.lessons.find(l=>l.id===model.resourceId(ref));
+    return ({'rectangular-coordinates@intro':'1.2i · Introducere X/Y','workflow@intro':'WFi · Orientare în fluxul QGIS','T01@core':'T01n · Prima hartă după proprietate','rectangular-coordinates':'1.2 · Lecția integrală: sisteme de referință','workflow':'Workflow integral: reproductibilitate'})[ref]||
+      (ref.startsWith('final-project@')?'Proiect final · '+model.variantLabels[ref.split('@')[1]]:content.resourceLabel(model.resourceId(ref)));
+  };
+  model.branchRoute=name=>{
+    const seen=new Set(model.activePath),route=[];
+    const add=id=>{if(seen.has(id))return;seen.add(id);for(const p of (model.segments[id]||model.items[id])?.prerequisites||[])add(p);route.push(id);};
+    (model.plan.branches[name]||[]).forEach(add);return route;
+  };
+  model.continuations=ref=>{
+    if(model.segments[ref]?.terminal||ref==='final-project')return [];
+    const i=model.activePath.indexOf(ref);
+    if(i>=0)return [{ref:model.activePath[i+1]||'final-project',label:i===model.activePath.length-1?'Alege aplicația proiectului final':'Continuă parcursul recomandat'}];
+    for(const route of Object.values(model.plan.endings)){const i=route.indexOf(ref);if(i>=0&&route[i+1])return [{ref:route[i+1],label:'Continuă parcursul recomandat'}];}
+    const options=[];
+    for(const name of Object.keys(model.plan.branches)){const route=model.branchRoute(name),i=route.indexOf(ref);if(i>=0&&route[i+1]&&!options.some(o=>o.ref===route[i+1]))options.push({ref:route[i+1],label:'Continuă aprofundarea'});}
+    return options;
+  };
+  model.recommendedNext=id=>model.continuations(id)[0]?.ref||null;
   // Legacy readers may inspect next, but cannot maintain another chain.
   for(const [id,item] of Object.entries(model.items))Object.defineProperty(item,'next',{enumerable:true,get:()=>model.recommendedNext(id)});
 })(window.CARTO_LEARNING,window.CARTO_CONTENT);

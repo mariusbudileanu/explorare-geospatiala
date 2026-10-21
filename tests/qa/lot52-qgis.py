@@ -24,7 +24,7 @@ from qgis.core import (
 )
 from qgis.PyQt.QtCore import QVariant
 from qgis.PyQt.QtGui import QColor, QFont, QFontDatabase, QFontMetrics
-from osgeo import ogr, osr
+from osgeo import ogr, osr, gdal
 
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[2]
@@ -58,7 +58,8 @@ def load(folder, layer_name):
         if dataset.GetLayerByName(layer_name) is not None:
             layer = QgsVectorLayer(str(file) + "|layername=" + layer_name, layer_name, "ogr")
             check(layer.isValid(), "Load original " + layer_name)
-            return layer
+            # Work only on a memory copy: provider subset filters may touch SQLite headers.
+            return layer.materialize(QgsFeatureRequest())
     raise FileNotFoundError(layer_name)
 
 
@@ -248,6 +249,89 @@ def run_checks():
     shares = [share(f) for f in subset.getFeatures()]
     check(all(v is None or 0 <= v <= 100 for v in shares), "Actual under-15 percentages")
     report["T05"] = {"national_features": 240290, "bbox_cells": len(candidates), "clipped_cells": clipped.featureCount(), "truncated_cells": truncated, "attributes_unchanged": True}
+    # Lot 5.3: project operations, real originals for vectors; synthetic terrain only.
+    metric_school = processing.run("native:reprojectlayer", {"INPUT": school, "TARGET_CRS": QgsCoordinateReferenceSystem("EPSG:3844"), "OUTPUT": "memory:"})["OUTPUT"]
+    buffers = processing.run("native:buffer", {"INPUT": metric_school, "DISTANCE": 500, "SEGMENTS": 20, "END_CAP_STYLE": 0, "JOIN_STYLE": 0, "MITER_LIMIT": 2, "DISSOLVE": False, "OUTPUT": "memory:"})["OUTPUT"]
+    union = processing.run("native:dissolve", {"INPUT": buffers, "FIELD": [], "OUTPUT": "memory:"})["OUTPUT"]
+    check(buffers.featureCount() == 757, "Original school Buffer: one output per point")
+    union_area = sum(f.geometry().area() for f in union.getFeatures())
+    check(0 < union_area < sum(f.geometry().area() for f in buffers.getFeatures()), "Dissolve eliminates overlapping buffer areas")
+    prepared_grid = processing.run("native:fieldcalculator", {"INPUT": subset, "FIELD_NAME": "aria_originala", "FIELD_TYPE": 0, "FIELD_LENGTH": 24, "FIELD_PRECISION": 6, "FORMULA": "area($geometry)", "OUTPUT": "memory:"})["OUTPUT"]
+    intersection = processing.run("native:intersection", {"INPUT": prepared_grid, "OVERLAY": union, "OUTPUT": "memory:"})["OUTPUT"]
+    weights = collections.defaultdict(float)
+    estimate = evaluator('"Populatia_totala_T" * area($geometry) / "aria_originala"', intersection)
+    for feature in intersection.getFeatures():
+        original = by_id[feature["GRD_ID"]]
+        check(feature["Populatia_totala_T"] == original["Populatia_totala_T"], "Intersection preserves population, no redistribution")
+        fraction = feature.geometry().area() / original.geometry().area()
+        check(abs(feature["aria_originala"] - original.geometry().area()) < 0.01, "Original area field copied unchanged")
+        expected = original["Populatia_totala_T"] * fraction
+        check(abs(estimate(feature) - expected) < 1e-6, "QGIS area-weighted estimate matches independent geometry reference")
+        weights[feature["GRD_ID"]] += fraction
+    check(all(0 < w <= 1 + 1e-8 for w in weights.values()), "Dissolved coverage weights never double-count a cell")
+    medical = load("medical", "Cabinete și Ambulatorii de Specialitate (Secondary Care)")
+    check(medical.setSubsetString('"Contract Ecograf" = 1'), 'Valid actual medical subset field')
+    hubs = processing.run("native:reprojectlayer", {"INPUT": medical, "TARGET_CRS": QgsCoordinateReferenceSystem("EPSG:3844"), "OUTPUT": "memory:"})["OUTPUT"]
+    hubs = processing.run("native:fieldcalculator", {"INPUT": hubs, "FIELD_NAME": "hub_id", "FIELD_TYPE": 2, "FIELD_LENGTH": 30, "FIELD_PRECISION": 0, "FORMULA": "to_string($id)", "OUTPUT": "memory:"})["OUTPUT"]
+    origins = QgsVectorLayer("Point?crs=EPSG:3844", "Five original school locations", "memory")
+    origins.dataProvider().addAttributes([QgsField("origin_id", QVariant.String)])
+    origins.updateFields()
+    origin_features = []
+    for source in itertools.islice(metric_school.getFeatures(), 5):
+        origin = QgsFeature(origins.fields()); origin.setGeometry(source.geometry())
+        origin["origin_id"] = str(source.id()); origin_features.append(origin)
+    origins.dataProvider().addFeatures(origin_features)
+    medical_buffers = processing.run("native:buffer", {"INPUT": hubs, "DISTANCE": 500, "SEGMENTS": 20, "END_CAP_STYLE": 0, "JOIN_STYLE": 0, "MITER_LIMIT": 2, "DISSOLVE": False, "OUTPUT": "memory:"})["OUTPUT"]
+    check(medical_buffers.featureCount() == 132, "Alternative Buffer on original eligible medical points")
+    # E53-02: select service buffers, not the origins or a dissolved union.
+    processing.run("native:selectbylocation", {"INPUT": medical_buffers, "PREDICATE": [0], "INTERSECT": origins, "METHOD": 0})
+    selected_services = processing.run("native:saveselectedfeatures", {"INPUT": medical_buffers, "OUTPUT": "memory:"})["OUTPUT"]
+    origin_geometries = [f.geometry() for f in origins.getFeatures()]
+    expected_services = {str(f["hub_id"]) for f in medical_buffers.getFeatures() if any(f.geometry().intersects(g) for g in origin_geometries)}
+    selected_ids = {str(f["hub_id"]) for f in selected_services.getFeatures()}
+    check(selected_ids == expected_services, "Select by Location retains exactly the intersecting service IDs")
+    check(0 < len(selected_ids) < 132, "Original test points select a nontrivial subset of the 132 eligible services")
+    check(selected_services.featureCount() == len(selected_ids), "One selected buffer per service, never a dissolved union")
+    hub_geometries = {str(f["hub_id"]): f.geometry() for f in hubs.getFeatures()}
+    for feature in selected_services.getFeatures():
+        check(str(feature["hub_id"]) in hub_geometries, "Selected buffer identifies an eligible original service")
+        check(any(hub_geometries[str(feature["hub_id"])].distance(g) <= 500 + 1e-7 for g in origin_geometries), "Selected service satisfies the Euclidean threshold")
+    print("PF selected service IDs", sorted(selected_ids), flush=True)
+    nearest = processing.run("qgis:distancetonearesthubpoints", {"INPUT": origins, "HUBS": hubs, "FIELD": "hub_id", "UNIT": 0, "OUTPUT": "memory:"})["OUTPUT"]
+    known_hubs = {str(f["hub_id"]) for f in hubs.getFeatures()}
+    print("PF nearest counts", origins.featureCount(), hubs.featureCount(), nearest.featureCount(), flush=True)
+    check(nearest.featureCount() == 5 and hubs.featureCount() == 132, "Nearest on real origins and eligible services")
+    for feature in nearest.getFeatures():
+        check(str(feature["HubName"]) in known_hubs and feature["HubDist"] >= 0, "Nearest reports documented eligible hub and distance")
+    # Synthetic 9x9 DEM: slope of a plane, never a replacement for Suceava originals.
+    dem_path, slope_path = OUT / "pf-synthetic-dem.tif", OUT / "pf-synthetic-slope.tif"
+    import numpy as np
+    values = np.tile(np.arange(9, dtype="float32") * 30 + 100, (9, 1))
+    values[6, 6] = -9999
+    dem = gdal.GetDriverByName("GTiff").Create(str(dem_path), 9, 9, 1, gdal.GDT_Float32)
+    dem.SetGeoTransform((500000, 30, 0, 500000, 0, -30))
+    metric_srs = osr.SpatialReference(); metric_srs.ImportFromEPSG(3844)
+    dem.SetProjection(metric_srs.ExportToWkt())
+    dem.GetRasterBand(1).SetNoDataValue(-9999); dem.GetRasterBand(1).WriteArray(values); dem = None
+    processing.run("native:slope", {"INPUT": str(dem_path), "Z_FACTOR": 1, "OUTPUT": str(slope_path)})
+    slope = gdal.Open(str(slope_path)); band = slope.GetRasterBand(1); arr = band.ReadAsArray()
+    check(abs(float(arr[2, 2]) - 45) < 0.001, "QGIS Slope outputs degrees, independent plane reference")
+    raw_missing_center = float(arr[6, 6])
+    from qgis.analysis import QgsRasterCalculator, QgsRasterCalculatorEntry
+    from qgis.core import QgsRasterLayer
+    dem_layer = QgsRasterLayer(str(dem_path), "dem")
+    slope_layer = QgsRasterLayer(str(slope_path), "slope")
+    entries = []
+    for ref, layer in [("dem@1", dem_layer), ("slope@1", slope_layer)]:
+        entry = QgsRasterCalculatorEntry(); entry.ref = ref; entry.raster = layer; entry.bandNumber = 1; entries.append(entry)
+    masked_path = OUT / "pf-synthetic-slope-masked.tif"
+    calculator = QgsRasterCalculator('"dem@1" * 0 + "slope@1"', str(masked_path), "GTiff", dem_layer.extent(), 9, 9, entries, project.transformContext())
+    check(calculator.processCalculation() == 0, "Explicit valid DEM mask via QGIS Raster Calculator")
+    masked = gdal.Open(str(masked_path)); masked_band = masked.GetRasterBand(1); masked_values = masked_band.ReadAsArray()
+    check(float(masked_values[6, 6]) == masked_band.GetNoDataValue(), "Explicit mask excludes missing DEM center")
+    check(abs(float(masked_values[2, 2]) - 45) < 0.001, "Mask preserves valid slope")
+
+    report["PF"] = {"vectors": "PASS on original ADIZMB schools/medical and original census cells around București", "buffers": buffers.featureCount(), "medical_buffers": medical_buffers.featureCount(), "selected_service_ids": sorted(selected_ids), "selection_method": "Select by Location: individual service buffers intersect five original school points; IDs preserved in memory export", "union_area_m2": union_area, "intersection_features": intersection.featureCount(), "nearest_origins": nearest.featureCount(), "raster_slope": "PASS synthetic plane only; full Suceava NETESTAT", "raw_slope_at_missing_dem": raw_missing_center, "explicit_dem_mask": "PASS", "qgis_gui_344": "NETESTAT"}
     report["T06"] = {"status": "NETESTAT full Suceava workflow", "reason": "No original Suceava DEM/mask and no interactive 3.44 session; Rîșca is not substituted. Provider documentation/header evidence is separate."}
     for file, digest in before.items():
         report["originals"].append({"file": file.name, "sha256": digest})
@@ -266,3 +350,9 @@ except Exception:
     os._exit(1)
 QgsProject.instance().clear()
 app.exitQgis()
+
+# Verify originals again after provider/application teardown, not only inside run_checks.
+for original in report["originals"]:
+    file = next(p for p in SOURCES.rglob("*.gpkg") if p.name == original["file"])
+    if hashlib.sha256(file.read_bytes()).hexdigest() != original["sha256"]:
+        raise AssertionError("Original changed during QGIS teardown: " + original["file"])

@@ -10,7 +10,7 @@ const original=protection.gitBytes('js/crs-lesson.js').toString('utf8').replace(
 const start='    const locationSelect =';
 equal(source.slice(source.indexOf(start)),original.slice(original.indexOf(start)),'Existing CRS draw, transforms, labels and handlers unchanged byte-for-byte');
 ok(model.segments['rectangular-coordinates@intro'].available,'Intro segment editorially ready');
-ok(!model.activePath.includes('rectangular-coordinates@intro')&&model.activePath.length===8,'No additional path stage activated');
+ok(model.activePath.includes('rectangular-coordinates@intro')&&model.activePath.length===24,'Approved scoped common path integrated in Lot 5.3');
 (async()=>{
  const service=await browserServer(),errors=[],out=path.join(root,'tmp/qa/lot51');fs.mkdirSync(out,{recursive:true});
  try{
