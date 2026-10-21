@@ -63,10 +63,10 @@ mutation(m=>m.plan.endings.medical.push('coordinates'));
    eq(await page.locator('[data-learning-scope="workflow@intro"] a.continuation-primary').getAttribute('href'),model.target('T01@core'),'Intro continuation survives panel');
   }
  }
- for(const hash of ['concept-rect','grila','sisteme-rect','crs-grid']){
+ for(const hash of ['concept-rect','grila-intro','sisteme-rect','grila','crs-grid']){
   await page.goto(service.base+'index.html');await page.goto(service.base+'lesson.html?id=rectangular-coordinates#'+hash);
-  await page.waitForFunction(id=>{const e=document.getElementById(id);return e&&scrollY>100&&e.getBoundingClientRect().top<innerHeight;},hash);
-  ok(await page.locator('#'+hash).isVisible(),'Dynamic fragment works '+hash);
+  await page.waitForFunction(id=>{const e=document.getElementById(id==='grila'?'crs-grid':id);return e&&scrollY>100&&e.getBoundingClientRect().top<innerHeight;},hash);
+  ok(await page.locator('#'+(hash==='grila'?'crs-grid':hash)).isVisible(),'Dynamic fragment works '+hash);
  }
  // E53-01: beginners get a usable instruction and real links to later CRS study.
  await page.goto(service.base+'tutorials/t01.html#t01-core-layout');

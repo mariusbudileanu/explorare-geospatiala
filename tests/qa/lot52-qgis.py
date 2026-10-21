@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 import re
 import sys
+os.environ["GDAL_PAM_ENABLED"] = "NO"  # Never create/update sidecars on original rasters.
 
 from qgis.core import (
     NULL, Qgis, QgsApplication, QgsCategorizedSymbolRenderer, QgsCoordinateReferenceSystem,
@@ -20,7 +21,7 @@ from qgis.core import (
     QgsFeature, QgsFeatureRequest, QgsField, QgsGeometry, QgsLayout, QgsLayoutExporter,
     QgsLayoutItemLabel, QgsLayoutItemLegend, QgsLayoutItemMap, QgsLayoutItemPage, QgsLayoutItemScaleBar,
     QgsLayoutPoint, QgsLayoutSize, QgsLegendStyle, QgsFillSymbol, QgsPointXY, QgsProject, QgsRendererCategory,
-    QgsSymbol, QgsVectorLayer,
+    QgsSymbol, QgsVectorLayer, QgsMemoryProviderUtils,
 )
 from qgis.PyQt.QtCore import QVariant
 from qgis.PyQt.QtGui import QColor, QFont, QFontDatabase, QFontMetrics
@@ -52,12 +53,25 @@ def check(value, message):
         raise AssertionError(message)
 
 
-def load(folder, layer_name):
+def load(folder, layer_name, source_ids=False):
     for file in (SOURCES / folder).rglob("*.gpkg"):
         dataset = ogr.Open(str(file), 0)
         if dataset.GetLayerByName(layer_name) is not None:
             layer = QgsVectorLayer(str(file) + "|layername=" + layer_name, layer_name, "ogr")
             check(layer.isValid(), "Load original " + layer_name)
+            if source_ids:
+                fields = layer.fields()
+                fields.append(QgsField("source_fid", QVariant.String))
+                copy = QgsMemoryProviderUtils.createMemoryLayer(layer_name, fields, layer.wkbType(), layer.crs())
+                features = []
+                for source in layer.getFeatures():
+                    feature = QgsFeature(fields)
+                    feature.setGeometry(source.geometry())
+                    feature.setAttributes(source.attributes() + [str(source.id())])
+                    features.append(feature)
+                copy.dataProvider().addFeatures(features)
+                check(len({f["source_fid"] for f in copy.getFeatures()}) == layer.featureCount(), "Unique source GeoPackage primary keys copied before filtering")
+                return copy
             # Work only on a memory copy: provider subset filters may touch SQLite headers.
             return layer.materialize(QgsFeatureRequest())
     raise FileNotFoundError(layer_name)
@@ -82,6 +96,102 @@ def copied_expression(tutorial, section):
     source = (ROOT / "tutorials" / (tutorial.lower() + ".html")).read_text(encoding="utf-8")
     block = re.search(r'<article class="tutorial-step\b[^>]*id="section-' + str(section) + r'"[^>]*>[\s\S]*?</article>', source)[0]
     return html.unescape(re.search(r'<pre><code[^>]*>([\s\S]*?)</code>', block)[1]).strip()
+
+
+def verify_suceava(data_root, project):
+    """Representative 6 km ROI on local originals; never a full-county/GUI claim."""
+    import numpy as np
+    from qgis.core import QgsRasterLayer, QgsRectangle, QgsPalettedRasterRenderer
+    from qgis.analysis import QgsRasterCalculator, QgsRasterCalculatorEntry
+    folder = Path(data_root)
+    originals = {
+        "dem": folder / "date_raster/cop30m_3844-002.tif",
+        "loss": folder / "date_raster/Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif",
+        "mask": folder / "date_vector/judet_suceava.gpkg",
+        "prepared_dem": folder / "date_raster/dem_suceava.tif",
+        "prepared_loss": folder / "date_raster/forest_loss_suceava.tif",
+    }
+    check(all(p.is_file() for p in originals.values()), "All configured Suceava originals exist")
+    def sha(file):
+        h = hashlib.sha256()
+        with file.open("rb") as stream:
+            for block in iter(lambda: stream.read(4 * 1024 * 1024), b""):
+                h.update(block)
+        return h.hexdigest()
+    protected = list(originals.values()) + [p for f in originals.values() for p in [Path(str(f) + ".aux.xml")] if p.exists()]
+    before = {str(p): sha(p) for p in protected}
+    inventory = json.loads((ROOT / "data/tutorial-dataset-inventory.json").read_text(encoding="utf-8"))["datasets"]
+    for dataset_id, key in [("copernicus_dem_30m", "dem"), ("hansen_lossyear_2024", "loss"), ("counties_ro", "mask")]:
+        entry = next(d for d in inventory if d["dataset_id"] == dataset_id)["verification"]
+        check(entry["local_source_filename"] == originals[key].name and entry["sha256"] == before[str(originals[key])], "Existing inventory identifies checksummed Suceava source " + key)
+    metadata = {}
+    for key in ["dem", "loss", "prepared_dem", "prepared_loss"]:
+        ds = gdal.Open(str(originals[key]), gdal.GA_ReadOnly)
+        metadata[key] = {"size": [ds.RasterXSize, ds.RasterYSize], "affine": ds.GetGeoTransform(), "crs": ds.GetSpatialRef().GetAuthorityCode(None), "nodata": ds.GetRasterBand(1).GetNoDataValue()}
+        check(metadata[key]["crs"] == "3844", "Suceava input already projected in EPSG:3844: " + key)
+        ds = None
+    check(metadata["prepared_dem"]["affine"] != metadata["prepared_loss"]["affine"], "Original prepared rasters genuinely require grid alignment")
+    original_mask = QgsVectorLayer(str(originals["mask"]), "Suceava original", "ogr")
+    check(original_mask.isValid() and original_mask.crs().authid() == "EPSG:3844", "Original Suceava mask CRS")
+    mask = original_mask.materialize(QgsFeatureRequest()); original_mask = None
+    geometry = QgsGeometry.unaryUnion([f.geometry() for f in mask.getFeatures()])
+    boundary = geometry.convertToType(Qgis.GeometryType.Line)
+    ds = gdal.Open(str(originals["prepared_loss"]), gdal.GA_ReadOnly)
+    sample = ds.ReadAsArray(buf_xsize=128, buf_ysize=128)
+    gt = ds.GetGeoTransform(); sx, sy = ds.RasterXSize / 128, ds.RasterYSize / 128; ds = None
+    candidates = []
+    for row, col in np.argwhere((sample > 0) & (sample <= 24)):
+        x, y = gt[0] + (int(col) + .5) * sx * gt[1], gt[3] + (int(row) + .5) * sy * gt[5]
+        point = QgsGeometry.fromPointXY(QgsPointXY(x, y))
+        if geometry.contains(point): candidates.append((boundary.distance(point), x, y))
+    check(bool(candidates), "Original loss sample intersects Suceava")
+    _, x, y = min(candidates)
+    xmin, ymin = math.floor((x - 3000) / 30) * 30, math.floor((y - 3000) / 30) * 30
+    extent = (xmin, ymin, xmin + 6000, ymin + 6000)
+    out = OUT / "suceava"; out.mkdir(exist_ok=True)
+    arrays, rasters = {}, {}
+    for key, resampling, nodata, dtype in [("dem", "bilinear", -9999, gdal.GDT_Float32), ("loss", "near", 255, gdal.GDT_Byte)]:
+        target = out / (key + "-aligned.tif")
+        result = gdal.Warp(str(target), str(originals[key]), format="GTiff", dstSRS="EPSG:3844", outputBounds=extent, xRes=30, yRes=30, cutlineDSName=str(originals["mask"]), cropToCutline=False, resampleAlg=resampling, dstNodata=nodata, outputType=dtype, creationOptions=["COMPRESS=DEFLATE"])
+        check(result is not None, "Warp/alignment and county cutline on original " + key)
+        arrays[key] = result.ReadAsArray(); result = None
+        rasters[key] = QgsRasterLayer(str(target), key)
+    check(arrays["dem"].shape == arrays["loss"].shape == (200, 200), "Identical aligned 30m grid")
+    valid_dem, valid_loss = arrays["dem"] != -9999, arrays["loss"] != 255
+    check(valid_dem.any() and (~valid_dem).any(), "Representative ROI includes both mask interior and exterior")
+    check(set(np.unique(arrays["loss"][valid_loss])).issubset(set(range(25))), "Nearest preserves original loss-year codes")
+    check((arrays["loss"] == 0).any() and (~valid_loss).any(), "Valid no-loss zero distinct from output NoData255")
+    for operation, params in [("hillshade", {"AZIMUTH": 315, "V_ANGLE": 45}), ("slope", {})]:
+        target = out / (operation + ".tif")
+        processing.run("native:" + operation, {"INPUT": str(out / "dem-aligned.tif"), "Z_FACTOR": 1, **params, "OUTPUT": str(target)})
+        rasters[operation] = QgsRasterLayer(str(target), operation)
+        check(rasters[operation].isValid(), "QGIS terrain operation on original Suceava ROI: " + operation)
+    def calculate(expression, names, target):
+        entries = []
+        for name in names:
+            e = QgsRasterCalculatorEntry(); e.ref = name + "@1"; e.raster = rasters[name]; e.bandNumber = 1; entries.append(e)
+        calc = QgsRasterCalculator(expression, str(target), "GTiff", QgsRectangle(*extent), 200, 200, entries, project.transformContext())
+        check(calc.processCalculation() == 0, "Suceava Raster Calculator " + expression)
+        ds = gdal.Open(str(target)); band = ds.GetRasterBand(1); a, missing = band.ReadAsArray(), band.GetNoDataValue(); ds = None
+        return a, missing
+    slope, slope_nodata = calculate('"dem@1" * 0 + "slope@1"', ["dem", "slope"], out / "slope-masked.tif")
+    check(np.all(slope[~valid_dem] == slope_nodata), "Explicit DEM mask excludes missing elevation from slope")
+    check(np.all((slope[slope != slope_nodata] >= 0) & (slope[slope != slope_nodata] <= 90)), "Slope output in degrees")
+    period, period_nodata = calculate('("loss@1" >= 13) AND ("loss@1" <= 14)', ["loss"], out / "loss-2013-2014.tif")
+    reference = valid_loss & (arrays["loss"] >= 13) & (arrays["loss"] <= 14)
+    check(np.array_equal(period[valid_loss] == 1, reference[valid_loss]), "Original-data year selection equals independent NumPy reference")
+    check(np.all(period[~valid_loss] == period_nodata) and np.all(period[arrays["loss"] == 0] == 0), "NoData propagates while zero remains a valid no-loss observation")
+    project.addMapLayers([rasters["hillshade"], rasters["loss"]])
+    classes = [QgsPalettedRasterRenderer.Class(code, QColor("#B45B59") if code in [13, 14] else QColor(0, 0, 0, 0), str(2000 + code) if code else "Fără pierdere detectată") for code in range(25)]
+    rasters["loss"].setRenderer(QgsPalettedRasterRenderer(rasters["loss"].dataProvider(), 1, classes))
+    layout = QgsLayout(project); layout.initializeDefaults()
+    item = QgsLayoutItemMap(layout); layout.addLayoutItem(item); item.attemptMove(QgsLayoutPoint(15, 25)); item.attemptResize(QgsLayoutSize(170, 170)); item.setCrs(QgsCoordinateReferenceSystem("EPSG:3844")); item.setLayers([rasters["loss"], rasters["hillshade"]]); item.zoomToExtent(QgsRectangle(*extent))
+    label = QgsLayoutItemLabel(layout); label.setText("QA Suceava: ROI 6 km / EPSG:3844 / Copernicus DEM + Hansen v1.12\nRoșu: pierdere detectată 2013–2014; probă tehnică, nu modelul final T06"); layout.addLayoutItem(label); label.attemptMove(QgsLayoutPoint(15, 10)); label.adjustSizeToText()
+    exporter = QgsLayoutExporter(layout)
+    check(exporter.exportToImage(str(out / "qa.png"), QgsLayoutExporter.ImageExportSettings()) == QgsLayoutExporter.Success, "Suceava representative PNG export")
+    check(exporter.exportToPdf(str(out / "qa.pdf"), QgsLayoutExporter.PdfExportSettings()) == QgsLayoutExporter.Success, "Suceava representative PDF export")
+    check(all(sha(Path(p)) == digest for p, digest in before.items()), "Suceava originals and sidecars unchanged")
+    return {"status": "PASS representative original-data ROI, not full-county recomputation or GUI3.44", "original_files": before, "metadata": metadata, "extent": extent, "grid": "200x200; 30m; EPSG:3844", "loss_2013_2014_pixels": int(reference.sum()), "valid_no_loss_pixels": int((arrays["loss"] == 0).sum()), "mapped_pixel_area_m2": 900, "interpretation": "Descriptive mapped cells, not an unbiased estimate of true forest loss; no causality/legal conclusion", "reprojection": "Sources already EPSG:3844; Warp aligns grids, not a test of the upstream geographic-to-Stereo70 conversion", "datamask": "Hansen separate datamask not present locally; no-loss0 is not proof of valid mapped land without that mask"}
 
 
 def run_checks():
@@ -269,10 +379,11 @@ def run_checks():
         check(abs(estimate(feature) - expected) < 1e-6, "QGIS area-weighted estimate matches independent geometry reference")
         weights[feature["GRD_ID"]] += fraction
     check(all(0 < w <= 1 + 1e-8 for w in weights.values()), "Dissolved coverage weights never double-count a cell")
-    medical = load("medical", "Cabinete și Ambulatorii de Specialitate (Secondary Care)")
+    medical = load("medical", "Cabinete și Ambulatorii de Specialitate (Secondary Care)", source_ids=True)
     check(medical.setSubsetString('"Contract Ecograf" = 1'), 'Valid actual medical subset field')
     hubs = processing.run("native:reprojectlayer", {"INPUT": medical, "TARGET_CRS": QgsCoordinateReferenceSystem("EPSG:3844"), "OUTPUT": "memory:"})["OUTPUT"]
-    hubs = processing.run("native:fieldcalculator", {"INPUT": hubs, "FIELD_NAME": "hub_id", "FIELD_TYPE": 2, "FIELD_LENGTH": 30, "FIELD_PRECISION": 0, "FORMULA": "to_string($id)", "OUTPUT": "memory:"})["OUTPUT"]
+    legacy_to_source = {str(f.id()): str(f["source_fid"]) for f in hubs.getFeatures()}
+    hubs = processing.run("native:fieldcalculator", {"INPUT": hubs, "FIELD_NAME": "hub_id", "FIELD_TYPE": 2, "FIELD_LENGTH": 30, "FIELD_PRECISION": 0, "FORMULA": '"source_fid"', "OUTPUT": "memory:"})["OUTPUT"]
     origins = QgsVectorLayer("Point?crs=EPSG:3844", "Five original school locations", "memory")
     origins.dataProvider().addAttributes([QgsField("origin_id", QVariant.String)])
     origins.updateFields()
@@ -292,6 +403,8 @@ def run_checks():
     check(selected_ids == expected_services, "Select by Location retains exactly the intersecting service IDs")
     check(0 < len(selected_ids) < 132, "Original test points select a nontrivial subset of the 132 eligible services")
     check(selected_services.featureCount() == len(selected_ids), "One selected buffer per service, never a dissolved union")
+    check(selected_ids == {legacy_to_source["37"], legacy_to_source["72"]}, "Same two independently audited services, now linked to original fid")
+    check(selected_ids == {"215", "497"}, "Original GeoPackage primary keys independently identified in Op6.1")
     hub_geometries = {str(f["hub_id"]): f.geometry() for f in hubs.getFeatures()}
     for feature in selected_services.getFeatures():
         check(str(feature["hub_id"]) in hub_geometries, "Selected buffer identifies an eligible original service")
@@ -303,6 +416,14 @@ def run_checks():
     check(nearest.featureCount() == 5 and hubs.featureCount() == 132, "Nearest on real origins and eligible services")
     for feature in nearest.getFeatures():
         check(str(feature["HubName"]) in known_hubs and feature["HubDist"] >= 0, "Nearest reports documented eligible hub and distance")
+    reversed_hubs = QgsMemoryProviderUtils.createMemoryLayer("Reversed eligible originals", hubs.fields(), hubs.wkbType(), hubs.crs())
+    reversed_hubs.dataProvider().addFeatures(list(reversed(list(hubs.getFeatures()))))
+    reversed_buffers = processing.run("native:buffer", {"INPUT": reversed_hubs, "DISTANCE": 500, "SEGMENTS": 20, "END_CAP_STYLE": 0, "JOIN_STYLE": 0, "MITER_LIMIT": 2, "DISSOLVE": False, "OUTPUT": "memory:"})["OUTPUT"]
+    processing.run("native:selectbylocation", {"INPUT": reversed_buffers, "PREDICATE": [0], "INTERSECT": origins, "METHOD": 0})
+    check({str(f["hub_id"]) for f in reversed_buffers.getSelectedFeatures()} == selected_ids, "Service selection independent of record order")
+    reversed_nearest = processing.run("qgis:distancetonearesthubpoints", {"INPUT": origins, "HUBS": reversed_hubs, "FIELD": "hub_id", "UNIT": 0, "OUTPUT": "memory:"})["OUTPUT"]
+    check({f["origin_id"]: (str(f["HubName"]), round(f["HubDist"], 7)) for f in nearest.getFeatures()} == {f["origin_id"]: (str(f["HubName"]), round(f["HubDist"], 7)) for f in reversed_nearest.getFeatures()}, "Nearest service identity/distance independent of order in this original-data fixture")
+    report["medical_identity"] = {"key": "original GeoPackage fid copied as source_fid before filtering; hub_id aliases source_fid", "scope": "stable within the checksummed original GeoPackage, not guaranteed across a new source export", "legacy_to_source": {k: legacy_to_source[k] for k in ["37", "72"]}, "selected": [{"source_fid": f["source_fid"], "name": f["Nume firmă"]} for f in selected_services.getFeatures()], "reversed_order": "PASS"}
     # Synthetic 9x9 DEM: slope of a plane, never a replacement for Suceava originals.
     dem_path, slope_path = OUT / "pf-synthetic-dem.tif", OUT / "pf-synthetic-slope.tif"
     import numpy as np
@@ -332,7 +453,9 @@ def run_checks():
     check(abs(float(masked_values[2, 2]) - 45) < 0.001, "Mask preserves valid slope")
 
     report["PF"] = {"vectors": "PASS on original ADIZMB schools/medical and original census cells around București", "buffers": buffers.featureCount(), "medical_buffers": medical_buffers.featureCount(), "selected_service_ids": sorted(selected_ids), "selection_method": "Select by Location: individual service buffers intersect five original school points; IDs preserved in memory export", "union_area_m2": union_area, "intersection_features": intersection.featureCount(), "nearest_origins": nearest.featureCount(), "raster_slope": "PASS synthetic plane only; full Suceava NETESTAT", "raw_slope_at_missing_dem": raw_missing_center, "explicit_dem_mask": "PASS", "qgis_gui_344": "NETESTAT"}
-    report["T06"] = {"status": "NETESTAT full Suceava workflow", "reason": "No original Suceava DEM/mask and no interactive 3.44 session; Rîșca is not substituted. Provider documentation/header evidence is separate."}
+    report["T06"] = verify_suceava(os.environ["QA_SUCEAVA_DATA_ROOT"], project) if os.environ.get("QA_SUCEAVA_DATA_ROOT") else {"status": "NETESTAT without configured Suceava originals", "reason": "Set QA_SUCEAVA_DATA_ROOT for representative original-data execution; no GUI3.44 claim or Rîșca substitution."}
+    if os.environ.get("QA_SUCEAVA_DATA_ROOT"):
+        report["PF"]["raster_slope"] = "PASS synthetic reference and original Suceava ROI; upstream reprojection/full county/GUI3.44 not certified"
     for file, digest in before.items():
         report["originals"].append({"file": file.name, "sha256": digest})
         check(hashlib.sha256(file.read_bytes()).hexdigest() == digest, "Original left byte-identical: " + file.name)
@@ -356,3 +479,8 @@ for original in report["originals"]:
     file = next(p for p in SOURCES.rglob("*.gpkg") if p.name == original["file"])
     if hashlib.sha256(file.read_bytes()).hexdigest() != original["sha256"]:
         raise AssertionError("Original changed during QGIS teardown: " + original["file"])
+for file, expected in report["T06"].get("original_files", {}).items():
+    h = hashlib.sha256()
+    with Path(file).open("rb") as stream:
+        for block in iter(lambda: stream.read(4 * 1024 * 1024), b""): h.update(block)
+    if h.hexdigest() != expected: raise AssertionError("Suceava original changed during teardown: " + file)

@@ -644,3 +644,186 @@ Limitările T05/T06 și distincția dintre exportul tehnic PyQGIS și un model v
 **Verificări finale pentru commit — toate PASS:** validatorul pedagogic și contractul v3 (1438 verificări,14 cazuri negative,203 hashuri:195 nemodificate +8 excepții exacte); traseul24 pași/3 variante/T01n/PF (361); T01/CASE/NULL (795); regresie browser (2638,364 layouturi și toate29 operații parametrizate, fără erori); consolidare pedagogică (2957); ateliere (3787); PyQGIS3.40.11 (3990). Cele nouă GeoPackage-uri originale au aceleași hashuri ca înaintea rulării și după închiderea QGIS. Snapshotul v3 rămâne identic. Două build-uri locale sunt identice pentru42HTML/47fișiere generate, iar --check nu scrie. `git diff --check` PASS. Nicio regresie detectată în domeniul executat; limitele GUI3.44/Suceava și backlogul de mai sus rămân explicite.
 
 Dovezi ignorate de Git în `tmp/qa/`: `lot53-commit-model.log`, `lot53-commit-path.log`, `lot53-commit-t01.log`, `lot53-commit-regression.log`, `lot53-commit-existing.log`, `lot53-commit-qgis.log`, `lot53-commit-build.log`; inventarul exact în `lot53-commit-scope.json`, preimaginile originalelor și referințelor Git protejate în fișierele `lot53-commit-originals-before.json` și `lot53-commit-protected-refs.json`. Domeniul este55 fișiere modificate +testul nou existent, fără fișiere temporare sau modificări exclusiv CRLF/LF; `data/geospatial-formats.js` este exclus explicit. Închiderea Etapei5 se realizează printr-un singur commit local, cu mesajul `feat(v4): integrate guided learning path and final projects`, pe `restructure/v4.0.0`. Hashul final este raportat în conversație. Nu se publică modificările și nu se începe Etapa6.
+
+
+## Operațiunea 6.1 — stabilizare tehnică și QA integrat (21.10.2026)
+
+Preflight: `restructure/v4.0.0`, HEAD `4e67de43f2b3900bbfdc547b594a83252d8bd010`, working tree și index curate; main/origin/main și v3.0.0 la baseline `6c36a95c2bb58d31208efbee4b9f3595130bb814`. Planul director v2 și constatările Opus consemnate în jurnal/conversație au fost consultate; nu sunt pretinse audituri externe noi. Cele șapte capitole, 24 de pași, trei variante, niveluri/culori, T01/proprietate și CASE/NULL rămân identice. Nu se introduce registru sau framework paralel.
+
+**Licențe — clarificare explicită a proprietarului:** cerința inițială 6.1 menționa CC BY-NC 4.0, dar LICENSE/CONTENT_LICENSE.md și baseline-ul declară CC BY 4.0. Proprietarul confirmă păstrarea **CC BY 4.0 existente**. Codul rămâne MIT; materialele terțe își păstrează licențele/atribuirile. Niciun fișier de licență, publicație din 1974, imagine sau set original nu este relicențiat ori înlocuit.
+
+### A. Corecții confirmate și probe PASS
+
+| Constatare | Remediu și dovezi |
+|---|---|
+| E53-03 — sincronizare navigare | Eliminată așteptarea fixă80ms. Testul așteaptă ancorele reale, meniul de71 linkuri, breadcrumb-ul și resursa activă canonică; timeout-ul raportează o condiție lipsă. Patru rulări complete independente: **4709 verificări fiecare**,73 destinații, ancore dinamice și trei variante. În plus, trei traversări efective ale celor24 pași prin click: **361 verificări fiecare**, inclusiv WFi/panouri, revenirile1.2/workflow, proiecte terminale și R1–R6. |
+| E4-04 — index stabil editorial | Cauza reprodusă: tabelele de rezultate pentru etichete, dependente de Canvas/font, modificau valorile/poziția primei apariții în lista de paragrafe deduplicate a L07. Cu Arial/Courier New au variat coliziunile6→12 și ordinea paragrafelor din jurul „Centrul E”; nu era o schimbare editorială. Extracția exclude containerele `.lab-dynamic`, `.repair-results`, `.carto-records`, `.carto-legend` și statusurile, păstrând explicațiile, corespondențele istorice, comenzile și valorile editoriale statice. Se păstrează inclusiv aserțiunea existentă „Alege30” pentru output static. Toate72 resursele canonice au aceeași descriere/listă de paragrafe în două configurații CSS/Canvas;90 înregistrări, titluri/destinații păstrate. Lățimile Canvas144,236 și180,029px demonstrează diferența reală a configurațiilor. Două build-uri independente sunt byte-identice, --check nu scrie. **Windows/Linux nativ și alte browsere rămân NETESTAT.** |
+| E53-04 — T06 | Rendererul comun adaugă întâi ținta pedagogică și deduplică apoi continuarea de capitol după pagină, păstrând query-ul identității. T06 are un singur link de continuare spre `../final-project.html#proiect-raster`. Nu sunt eliminate asocierile cu alt rol din pregătire și nici ancorele A/B/C. |
+| Defect nou confirmat — fragment schimbat înainte de fonts.ready | Callback-ul1.2 reținea ținta inițială și putea suprascrie navigarea ulterioară. Cu fonturile reținute explicit, URL-ul #sisteme-rect ajungea la top1931px într-un viewport720px, iar vechiul #concept-rect rămânea la295px. Callback-ul recitește fragmentul curent la execuție; aceeași probă pune ținta cerută la295px. Există regresie proprie cu gate de fonturi și verificare după două cadre; nu se schimbă IDs, sensul ancorelor sau calculele CRS. |
+| Defect nou confirmat — L19/history înainte de inițializare | Skip-link/history poate emite popstate înaintea importului asincron al API-ului și producea undefined.restore. Handlerul P07 așteaptă inițializarea; ready() citește apoi URL-ul curent. Proba ține modulul blocat, declanșează istoric înainte de API, îl eliberează și verifică pornirea fără erori. Cheile, formatele, GCP și algoritmii nu sunt schimbate. |
+| Defect nou confirmat — text la mărire | Cardurile înguste lăsau cuvintele și numele de fișiere să depășească lățimea. overflow-wrap:anywhere pe carduri și white-space:normal pe codul inline corectează problema. Nu se schimbă paleta, fundalurile sau structura. Reflow375/640px și stres CSS200% sunt verificate; CSS zoom nu este confundat cu zoom-ul nativ care actualizează media queries. |
+
+**GIS A — identificatori medicali:** în originalul Secondary Care, cheia primară GeoPackage `fid` este nenulă și unică pentru1082 obiecte. Este copiată ca `source_fid` înainte de filtrare/reproiectare, iar `hub_id` îi copiază valoarea. Cele132 servicii eligibile sunt păstrate. Maparea probei auditate este37→**215 (S.C.M Povernei)**,72→**497 (Institutul Național de Geriatrie și Gerontologie Ana Aslan)**. Buffer/Select by Location păstrează exact aceste chei; inversarea ordinii tuturor serviciilor nu schimbă selecția sau rezultatele Nearest ale celor cinci origini. Cheia este stabilă în versiunea GeoPackage identificată prin checksum, nu garantată după un nou export al sursei. Originalul nu este editat.
+
+**GIS B — populație:** pe originale,757 buffere, dizolvare,234 fragmente de intersecție în zona de grid examinată; populația/ID-ul și aria originală se păstrează, ponderile sunt confruntate cu o referință geometrică independentă și nu dublează celulele. Aceasta verifică o estimare la suprafață, nu o redistribuire exactă a persoanelor și nici întregul grid național.
+
+**GIS C/T06 — date locale găsite:** căutarea a identificat materialele atelierului în folderul bibliografic local. Sunt disponibile DEM-ul Copernicus deja proiectat, Hansen v1.12/2024 deja proiectat, masca Suceava și copiile de lucru DEM/loss. Nu sunt substituite cu Rîșca. Metadatele arată EPSG:3844, pași diferiți23,559m versus24,060m și lipsa tagului NoData în intrările locale. Se verifică numai un ROI6×6km,200×200 celule la30m: Warp/aliniere, bilinear pentru DEM/nearest pentru ani, cutline Suceava, NoData explicit-9999/255 în ieșiri, Hillshade, Slope în grade, mască DEM explicită și Raster Calculator2013–2014. Cele213 celule selectate coincid cu referința NumPy; zero rămâne cod fără pierdere, separat de exteriorul NoData. Export PNG/PDF realizat și PNG inspectat vizual, cu pierderi2013–2014 peste hillshade; este probă tehnică, nu modelul complet al livrabilului studentului.
+
+Documentația oficială [Hansen v1.12](https://developers.google.com/earth-engine/datasets/catalog/UMD_hansen_global_forest_change_2024_v1_12) confirmă0=fără pierdere și1–24=2001–2024; datamask separat folosește0=lipsă,1=teren și2=apă. [Notele producătorului](https://storage.googleapis.com/earthenginepartners-hansen/GFC-2024-v1.12/download.html) disting celulele cartografiate de estimarea statistică a suprafeței reale. Datamask nu este disponibil local: nu se pretinde că orice zero este teren valid. Intrările sunt deja Stereo70; **reproiectarea geografică inițială, calculul întregului județ și GUI3.44 nu sunt certificate**. Registrul de inventar existent leagă cele trei roluri de numele și hashurile locale, fără date noi redistribuite. Cele nouă GeoPackage-uri anterioare și cele cinci fișiere Suceava cu patru sidecar-uri sunt controlate înainte/după, inclusiv după închiderea QGIS, și rămân identice.
+
+QGIS disponibil:3.40.11 în Program Files, folosit pentru motor; instalarea suplimentară OSGeo4W este3.34.7, verificată prin Qgis.QGIS_VERSION. **QGIS3.44 nu a fost găsit; GUI3.44 este NETESTAT**, nu este înlocuit cu o declarație despre3.40. Nu se instalează și nu se reconfigurează mediul. Exporterul întoarce Success și PNG este decodabil; avertismentul GDAL despre update access la PNG rămâne în log, fără certificarea georeferențierii interne a acelui PNG.
+
+### B. Compatibilitate semantică rămasă și evaluare pentru publicare
+
+**E5-03 — stare anterioară deciziei proprietarului, înlocuită de remedierea punctuală de mai jos:** blobul v3 pentru crs-lesson.js arată că #grila conținea selectorul CRS. În v4, #grila este grila introductivă; #crs-grid conține experimentul CRS. Modelul trimite1.2i la #concept-rect și resursa integrală la #sisteme-rect; salturile interne sunt etichetate „Grilă introductivă” și „Grilă în CRS”. Nu se schimbă din nou ancorele sau cele24 de poziții. Lângă introducere este adăugată informarea pentru linkuri din v3 și o legătură verificată către #crs-grid. Aceasta oferă recuperare, **nu restabilește identitatea semantică a vechiului fragment**.
+
+Contractele afectate sunt ancora v3 din snapshot, salturile din crs-lesson.js, metadatele celor două ancore ale segmentului introductiv și testele de derulare1.2. Nu există linkuri editoriale interne etichetate ca experiment CRS care să trimită acum greșit la #grila. Legăturile externe necunoscute nu pot fi inventariate exhaustiv. Pentru compatibilitate strictă, remediul minim de evaluat este #grila ca alias al experimentului CRS și o ancoră distinctă pentru grila introductivă; prima țintă #concept-rect și ordinea celor24 pași pot rămâne identice. Această remapare nu este implementată fără evaluarea editorială cerută. **Publicarea rămâne condiționată de decizia asupra rezervei semantice; nu blochează parcurgerea internă sau pregătirea candidatului pentru audit.**
+
+Nu rămâne un defect funcțional blocant demonstrat în domeniul executat. Înghețarea candidatului așteaptă reverificarea independentă a Operațiunii6.1; nu se declară release pregătit sau efectuat și nu se încep auditurile finale.
+
+### C. UX, limite și NETESTAT
+
+Auditul tehnic focalizat acoperă homepage, parcurs, catalog, lecția1.2, T01, PF și L19: nume accesibile ale controalelor vizibile, după inițializarea modulului complex; focus natural fără tabindex pozitiv, skip-link, tastatură, Escape, reflow, fragmente și emulare print. Eșantionul de text are contrast minim5,14:1 în light și7,44:1 în dark; indicatoarele păstrează culorile/iconurile aprobate. Nu este o certificare WCAG pentru întreaga platformă. Navigarea statică și catalogul rămân funcționale fără JS; experimentele/lecțiile dinamice păstrează limitele arhitecturale deja documentate. Nu există stylesheet print dedicat în css; emularea verifică păstrarea conținutului, nu o machetă optimizată sau hârtia tipărită.
+
+Rămân **NETESTAT/limitări**: Linux și alte browsere native; GUI QGIS3.44 (Categorized/dialog, CRS/layout, scală, meniuri, Select by Location); conversia inițială a rasterelor geografice și refacerea întregului studiu Suceava; datamask Hansen; tehnologii asistive, dispozitive fizice și zoom nativ/print fizic. Recomandarea QA înainte de release este verificarea GUI pe versiunea țintă și accesibilitatea umană; proprietarul stabilește acceptarea limitelor rămase. Rezerva semantică E5-03 este închisă prin corecția punctuală documentată mai jos. Lipsa recalculării întregului județ este delimitarea probei reprezentative cerute, nu un PASS pentru o execuție neefectuată.
+
+### Protecții și domeniul modificărilor
+
+Cele203 fișiere din snapshot rămân verificate. **Cele opt excepții existente rămân explicite**, cu hash nou pentru inventarul QA actualizat și pentru scroll-ul curent din crs-lesson.js; corecția confirmată a shellului asincron `js/p07-page.js` cere **a noua excepție exactă**, cu preimagine v3 nemodificată și propria regresie delayed-module/early-history plus P07. Rezultă194 fișiere identice și9 excepții, fără rescrierea snapshotului și fără extinderea discreționară a unui whitelist. Algoritmii GIS, datele, imaginile și fișierele de licență nu sunt schimbate.
+
+| Fișier | Rol |
+|---|---|
+| tools/search-content.mjs | Excluderea rezultatelor efemere, păstrând textul editorial și output-urile statice |
+| data/search-index.js | Regenerat,90 destinații/scenarii, fără eliminarea resurselor |
+| js/learning.js | Deduplicare T06 după pagina/rolul continuării și informare de compatibilitate1.2 |
+| tutorials/t06.html | Regenerat din rendererul comun |
+| css/learning.css | Împachetarea textului/codului în carduri la mărire |
+| js/crs-lesson.js | Respectă fragmentul curent după încărcarea fonturilor, fără schimbarea ancorelor sau calculelor |
+| js/p07-page.js | Gardă de inițializare pentru history/popstate; fără schimbarea API/stărilor |
+| data/tutorial-dataset-inventory.json | Probe și hashuri Suceava în registrul existent, cu limite explicite |
+| tests/protected-files.cjs | Hash exact al inventarului și noua excepție justificată P07 |
+| tests/v4-model.cjs | Păstrează verificarea tuturor203 hashuri; enumeră cele9 excepții exacte |
+| tests/v4-navigation.cjs | Condiții observabile și regresii fragmente/variante/deduplicare |
+| tests/v4-build.cjs | Determinism și comparație reală a indexului pe72 resurse/două fonturi |
+| tests/v4-browser.cjs | QA focalizat de accesibilitate, reflow, contrast și cursa P07 |
+| tests/qa/lot52-qgis.py | ID-uri sursă/reordonare, referințe GIS și ROI Suceava opțional prin QA_SUCEAVA_DATA_ROOT |
+| DECISIONS_AND_QA.md | Acest jurnal operațional; fără raport paralel |
+
+**Istoricul FAIL-urilor este păstrat în tmp/qa/op61:** proba inițială de fonturi reproduce variația; primul UX detectează history/restore și textul care depășește cardurile; o aserțiune de ordine a focusului era aplicată greșit unei sosiri cu fragment și a fost separată de testul documentului inițial. Măsurarea zoom-ului este condiționată de starea finală de layout, fără sleep arbitrar. Consolidarea a respins excluderea prea largă a output-urilor; filtrul a fost corectat, nu aserțiunea eliminată. Proba inițială de metadate QGIS a avut o problemă de teardown și prima probă ROI un enum API incorect, remediate în teste; rulările finale verifică și închiderea motorului. Orchestrarea PowerShell a afișat o eroare de redirecționare după cele patru teste de navigare, ale căror loguri individuale conțin PASS; nu este prezentată drept defect al platformei sau drept probă nereușită ascunsă. Regresia1.2 a respins și acronimul CRS introdus în nota de compatibilitate din segmentul începător; nota a fost reformulată fără a slăbi aserțiunea. Nu sunt eliminate teste pentru obținerea PASS.
+
+
+### Rezultatele finale și comenzi de reproducere
+
+| Verificare | Rezultat observat |
+|---|---|
+| `node tools/validate-learning.cjs` și `node tests/v4-model.cjs` | PASS:1439 aserțiuni,14 cazuri negative;73 identități,34 numerotări, L01–L20/T01–T06,7 capitole,24 pași,3 variante, contracte v3 și203 hashuri; log model-conserved.log |
+| `node tests/v4-navigation.cjs` ×4 | PASS:4709 fiecare, inclusiv fonturi reținute/fragment schimbat; navigation-series.json și navigation-stable-1…4.log au cod nativ0 |
+| `node tests/lot51-browser.cjs` | PASS:354; introducere fără concepte premature, fragmente și controale; content-verified.log |
+| `node tests/lot52-browser.cjs` | PASS:795; T01, CASE/NULL, cele7 etape și24 secțiuni, nivel Începător; același log |
+| `node tests/lot53-browser.cjs` | PASS:361; trei traversări repetate și o regresie finală după corecția1.2, zero erori; path-repeat-1…3.log și content-verified.log |
+| `node tests/v4-browser.cjs` | PASS:2921,364 layouturi,29 operații; probe UX focalizate283, contrast și history P07; browser-final.log și browser-results.json |
+| `node tests/v4-build.cjs` | PASS:42HTML/47 fișiere, două build-uri identice și --check fără scriere;72 resurse comparate pe Arial/Courier New,90 înregistrări păstrate; build-verified.log și search-font-results.json |
+| `node tools/build-public-content.mjs --check` | PASS pe sursele finale:check-final.log |
+| `node tests/run-existing.cjs p01-labs p05-labs p07-labs companion-hub workshop-reproducibility challenges-vector` | PASS:P01=1327, P05=149487, P07=5370 (inclusiv stări/exporturi L03/L07/L12/L19 și GCP), hub=916/329 căutări, ateliere=3787, V1–V6; existing.log. R1–R6 sunt executate efectiv în lot53-browser. |
+| `node tests/run-existing.cjs learning-consolidation companion-hub` | PASS:2957 și916;22 verificări formative,60 termeni, păstrarea delimitărilor și căutărilor; editorial-verified.log |
+| PyQGIS `tests/qa/lot52-qgis.py` | PASS:4023 pe3.40.11; ID-uri sursă/reordonare, A/B/C, sintetice separate și ROI Suceava; gis-verified.log și qgis-results.json. QA_SUCEAVA_DATA_ROOT trebuie să indice materialele locale ale atelierului; fără el Suceava este NETESTAT. |
+| Documentație externă esențială | PASS:21 URL-uri HTTPS, inclusiv destinațiile documentare ale celor29 operații, T01 și Select by Location; fără ocolirea TLS. external-links.json |
+
+Logurile Operațiunii6.1 sunt în `tmp/qa/op61/`, rezultatele testelor existente în directoarele lor QA ignorate de Git. Pentru browser sunt folosite CODEX_NODE_MODULES către runtime-ul local Playwright și QA_BROWSER_PATH către Chrome. Pentru QGIS se folosesc PYTHONNOUSERSITE=1, PYTHONIOENCODING=utf-8, QT_QPA_PLATFORM=offscreen și launcherul instalat3.40.11. NumPy și fontul Arial sunt cele ale mediului deja disponibil; nu se instalează dependențe sau date.
+
+**Conservare și oprire:**15 fișiere modificate intenționat, niciun fișier nou de publicat, niciun snapshot nou și nicio diferență exclusiv CRLF/LF. Inventarul exact și comparația hashurilor sunt în final-scope.json; fișierele de date/imaginile/licențele versionate sunt nemodificate. Originalele GIS și probele PNG/PDF rămân în afara staging-ului/publicării. Branch restructure/v4.0.0, HEAD4e67de43f2b3900bbfdc547b594a83252d8bd010; main/origin/main și tagul v3.0.0 nemodificate. Index gol. Fără staging, commit, push, merge, tag, arhivă de release sau Zenodo. Operațiunea6.2 și auditurile finale Astra/Opus nu sunt începute. Rezultatul este pentru reverificarea independentă înaintea oricărui commit sau înghețării candidatului.
+
+
+### Operațiunea 6.1 — corecție punctuală E5-03 (2026-10-21)
+
+**E5-03 — REMEDIAT local; pregătit pentru auditul unic Opus al Operațiunii6.1.** Proprietarul a decis restaurarea semnificației fragmentului publicat în v3, păstrând progresia v4. Această decizie înlocuiește rezerva și soluția de recuperare prin notă consemnate anterior; nu presupune că au fost inventariate sau testate toate linkurile externe necunoscute.
+
+- `#grila` este un alias DOM unic în secțiunea avansată `#crs-grid`, iar resolverul fragmentelor îl derulează la aceeași secțiune canonică. Există un singur selector `#grid-crs` și un singur experiment `#metric-grid`; URL-ul vechi rămâne neschimbat.
+- `#grila-intro` identifică exclusiv grila introductivă X/Y. Saltul „Grilă introductivă”, metadatele segmentului și testele care urmăresc introducerea folosesc noua ancoră. `#concept-rect` și `#sisteme-rect` sunt păstrate. Nota provizorie care explica sosirea linkurilor v3 în introducere este eliminată deoarece nu mai descrie comportamentul real.
+- Handlerul existent pentru ținte generate JS este extins cu un singur listener hashchange pe durata modulului, rezolvare din URL-ul curent după fonturi/layout și invalidarea callbackurilor unui render înlocuit. Back/Forward și reinițializarea nu produc derulare la o țintă veche; schimbarea sistemului în experiment nu inițiază derulări. Nu sunt adăugați parametri URL sau chei de persistență.
+- Comparația integrală a datelor modelului cu HEAD confirmă o singură schimbare: a doua ancoră a segmentului introductiv, grila → grila-intro. Cele24 poziții, toate țintele de etapă, cele3 ramuri, nivelurile, prerechizitele și continuările sunt identice. 1.2i începe tot la concept-rect și continuă spre4.4; revenirea la resursa integrală începe la sisteme-rect.
+
+**Surse și fișiere afectate de această corecție:** `js/crs-lesson.js`, `data/learning-model.js`, `js/learning.js`; testele existente `tests/lot51-browser.cjs`, `tests/lot52-browser.cjs`, `tests/lot53-browser.cjs`, `tests/v4-model.cjs`, `tests/v4-navigation.cjs`, `tests/v4-browser.cjs`; excepția exactă din `tests/protected-files.cjs` și acest jurnal. Nu se editează manual HTML-ul generat. Build-ul nu produce diferențe suplimentare în HTML sau index față de starea de la începutul corecției. Snapshotul v3 nu este rescris.
+
+Hashul curent normalizat al excepției existente `js/crs-lesson.js` este `a5db2292be26f8a74b3e982c51f024791437a875366195316fa94804160c9378`; hashul baseline și lista celor9 excepții rămân neschimbate. Celelalte194 fișiere protejate păstrează contractul v3. Corpul calculelor/handlerelor CRS de la locationSelect până la final este identic cu v3, verificat de testul existent; motoarele și datele nu sunt modificate de această corecție.
+
+**Dovezi de reproducere:** `tmp/qa/e503/` conține preflight-ul înaintea corecției, echivalența modelului, logurile testelor și comparația finală de scop. Aceste fișiere QA sunt ignorate de Git și nu reprezintă rapoarte paralele de publicat. Fallback-ul fără JS păstrează navigarea statică; experimentul și ancorele generate dinamic necesită în continuare JS. Nu se declară certificarea accesibilității pe dispozitive fizice sau a linkurilor externe necunoscute. Probe GIS/PyQGIS suplimentare nu sunt rerulate pentru această schimbare de fragmente; rezultatele și limitele Operațiunii6.1 rămân cele consemnate anterior.
+
+
+| Reverificare după E5-03 | Rezultat executat |
+|---|---|
+| Validator + v4-model | PASS:1439 aserțiuni,14 cazuri negative,73 destinații,203 hashuri (194 intacte +9 excepții exacte); model.log |
+| v4-navigation | PASS:4913; toate73 destinațiile; cele5 fragmente1.2, intrare directă și reload; Back/Forward; aceeași instanță CRS; randare repetată/fonturi reținute;375/390/1280px × light/dark; zero erori și zero ID-uri duplicate; navigation.log |
+| lot51-browser | PASS:354;375/390/768/1280/1440px × două teme, introducerea X/Y fără selector,8 CRS, formular numeric și corpul calculelor neschimbat; lesson.log |
+| lot52-browser + lot53-browser | PASS:795 +362; T01n,24 pași executați,1.2i→4.4, revenirea integrală1.2/workflow,3 variante terminale și pregătire; path-workshops.log |
+| v4-browser | PASS:2921;364 layouturi,29 operații,zero erori sau eșecuri; browser.log |
+| learning-consolidation + companion-hub | PASS:2957 +916;56 layouturi,22 verificări formative,60 termeni,329 căutări și zero linkuri interne defecte; path-workshops.log |
+| v4-build | PASS:42HTML/47 fișiere,2 build-uri identice, --check fără scriere;90 înregistrări/72 resurse în2 configurații de fonturi; build.log |
+| Compararea scopului, Git și contractului | PASS:model-equivalence.json și final-scope.json; snapshot v3, manifestul de identitate, geospatial-formats și licențele neschimbate; fără diferențe exclusiv CRLF/LF; git diff --check PASS |
+
+**Stare finală pentru audit:**19 fișiere modificate în total, fără fișiere noi sau temporare neignorate. Față de cele15 inițiale, intră în diff numai `data/learning-model.js` și cele3 teste existente lot51/lot52/lot53; corecția atinge11 fișiere, enumerate mai sus, incluzând cele deja modificate. Index gol, branch `restructure/v4.0.0`, HEAD `4e67de43f2b3900bbfdc547b594a83252d8bd010`; main/origin/main și v3.0.0 păstrează baseline-ul `6c36a95c2bb58d31208efbee4b9f3595130bb814`, inclusiv obiectul tagului. E5-03 este remediată prin restaurarea contractului semantic publicat și verificarea referințelor interne accesibile; nu se afirmă auditarea exhaustivă a linkurilor externe necunoscute. Fără staging/commit/push/merge/tag/release/Zenodo. Operațiunea6.2 nu este începută. Urmează auditul independent unic Opus al întregii Operațiuni6.1; nu este declarat deja efectuat.
+
+
+### Operațiunea 6.1 — remediere punctuală E61-01 (2026-10-21)
+
+Conform auditului Opus transmis de proprietar, verdictul Operațiunii6.1 este **ACCEPTAT CU REZERVE**. Cele5 eșecuri din6 rulări Linux sunt atribuite aserțiunilor de test, fără un defect funcțional al produsului demonstrat: numărul exact al apelurilor scrollIntoView și ordinea globală a lanțurilor dinamice independente. În proba Linux raportată de Opus au existat două apeluri către grila-intro, la circa8ms distanță, fără revenire la ținta veche; aserțiunea care cerea exact un apel le respingea. Lista document.scripts din snapshot înregistrează și inserări dinamice intercalate, fără a defini o ordine totală de dependențe. Remedierea de aici privește exclusiv `tests/v4-navigation.cjs` și acest jurnal; nu se modifică loaderul, produsul, căutarea, datele GIS, licențele sau metadatele release-ului. Înghețarea candidatului rămâne condiționată de reverificarea Linux.
+
+**A — proprietatea de derulare.** Aserțiunea exactă [grila-intro] este înlocuită cu `assertCurrentScrolls`: minimum un apel valid; fiecare apel din interval trebuie să aibă ținta grila-intro, hashul curent #grila-intro și un element conectat la document. Orice țintă veche grila/crs-grid este respinsă explicit; sunt respinse și alte ținte, un hash greșit sau absența apelurilor. Se acceptă unul sau mai multe apeluri valide. Instrumentarea reține ținta, hashul, conectarea și momentul fiecărui apel după schimbarea fragmentului, inclusiv dacă un hash greșit ar apărea ulterior. Sincronizarea așteaptă evenimentul hashchange, terminarea callbackurilor fonturilor și a frame-urilor pe care acestea le programează, existența unei derulări și poziția observabilă a țintei. Condițiile noi au timeout explicit15s cu FAIL; nu se adaugă sleep sau un număr așteptat de derulări. Instrumentarea este numai în pagina testată.
+
+**Control negativ A:** după proba pozitivă se execută efectiv `document.querySelector('#crs-grid').scrollIntoView(...)` în browser, păstrând hashul #grila-intro. Aceeași funcție de verificare trebuie să emită mesajul `Previous fragment scroll detected`, confirmat prin assert.throws. Lipsa apelurilor este de asemenea respinsă; duplicarea unui apel valid este acceptată explicit. Logurile păstrează separat traseul pozitiv și apelul vechi injectat intenționat; acesta nu este prezentat drept regresie runtime a produsului.
+
+**B — dependențele reale ale diagnosticului.** Sursa `js/map-diagnostics.js` încarcă secvențial grupul projection, iar `js/p06-labs.js` folosește același cache loadScript pentru classification-engine apoi p05-models și așteaptă diagnosticul ready înainte de montarea L08. Cele două lanțuri rulează independent. P06-models definește funcțiile înainte de încărcarea P05, dar folosește P05 numai la execuția diagnose după barieră. `js/p05-models.js` folosește CARTO_CLASSIFY în statistics; relația classification-engine → p05-models este păstrată și verificată.
+
+| Contract de încărcare | Verificarea nouă |
+|---|---|
+| Scripturi științifice statice | Ordinea DOM este comparată cu HTML-ul original din obiectele Git v3; nu cu lista runtime care intercalează scripturi dinamice. Prezența tuturor scripturilor protejate din snapshot rămâne obligatorie. |
+| Registru CRS + Proj4 → CRS_ENGINE | Evenimentele load ale ambelor intrări trebuie să preceadă crs-engine. |
+| GeographicLib → geodesic-adapter | Ordine load verificată. |
+| CRS_ENGINE + geodesic-adapter → projection-lab-engine → projection-view | Muchiile reale sunt verificate separat. |
+| classification-engine → p05-models | Ordine load verificată separat de lanțul projection. Nu se impune o relație p05-models/proj4. |
+| Utilizarea modulelor | Wrappere numai în test înregistrează disponibilitatea API-urilor înainte de fiecare create al adapterului projection și fiecare diagnose L08. Sunt cerute utilizări reale ale ambelor module, rezultate L08 și stare activă a diagnosticului; lipsa lor produce timeout15s. pageerror rămâne FAIL. |
+
+Snapshotul v3 nu este modificat; sursa de ordine statică este chiar HTML-ul v3, nu o nouă listă administrată. Prima rulare locală a observat p05-models înainte de proj4 și a trecut toate muchiile reale. Nu a fost identificat un defect funcțional al loaderului care să necesite intervenție.
+
+**Mediu local:** exclusiv Windows11 Pro10.0.26300, Node24.19.0, Chrome155.0.8059.80, Playwright din runtime-ul existent. Rulările Windows nu certifică reproductibilitatea Linux. Pentru închiderea multiplatformă se solicită Opus **3 rulări consecutive PASS pe Linux**, fără modificarea repository-ului.
+
+**Transfer explicit în Operațiunea6.2, fără rezolvare declarată acum:** E61-02 — conținut editorial omis parțial din index; E61-03 — rasterele istorice Suceava fără NoData declarat și diferența212/213 la marginea măștii; E61-04 — actualizarea CITATION.cff; GUI QGIS3.44, browsere native suplimentare și verificări umane de accesibilitate/dispozitive. Aceste puncte nu sunt modificate prin corectarea testelor.
+
+
+| Reverificare E61-01 | Rezultat local executat |
+|---|---|
+| v4-navigation, rulările1–6 | **PASS6/6**, fiecare5628 aserțiuni și exit0; aceeași sursă în toate rulările. Fiecare rulare include73 destinații, cele5 fragmente1.2, reload, Back/Forward, randare repetată/fonturi, controale negative și cele3 variante PF. |
+| Controlul negativ al derulării | PASS6/6: fiecare injectare reală spre crs-grid cu hashul grila-intro este respinsă de același predicat. Local s-a observat câte un apel valid în fiecare probă; acceptarea apelurilor valide multiple este verificată explicit prin duplicarea unei înregistrări valide. Nu se pretinde observarea locală a celor două apeluri raportate pe Linux. |
+| Dependențe diagnostic | PASS6/6: scripturi prezente și încărcate, muchii reale verificate, două create ale adapterului și un diagnose cu dependențe disponibile înainte de utilizare; fără erori pageerror. |
+| Validator + model/contract v3 | PASS:1439 verificări,14 cazuri negative,203 hashuri (194 intacte și aceleași9 excepții exacte). Snapshotul nu este rescris și hashurile excepțiilor nu sunt actualizate în această remediere. |
+| lot51-browser | PASS:354;375/390/768/1280/1440px, light/dark, grila introductivă distinctă,8 CRS și formularul numeric păstrat. |
+| lot53-browser | PASS:362; parcursul real al celor24 pași, revenirile pentru aprofundare,3 variante PF, zero erori sau eșecuri. |
+| v4-build și --check | PASS:42HTML/47 fișiere, două build-uri identice și --check fără scriere;72 resurse în două configurații locale de fonturi. Produsul generat și indexul sunt identice cu preflight-ul acestui task; aceasta nu închide observația editorială E61-02. |
+| git diff --check și conservare | PASS; numai testul de navigare și jurnalul diferă de preflight. Produsul, modelul pedagogic, datele, licențele, CITATION.cff și snapshotul sunt neschimbate față de începutul acestei remedieri. |
+| Linux | **NETESTAT local**. Sunt necesare cele3 rulări consecutive PASS de către Opus înaintea înghețării candidatului. |
+
+Logurile sunt în `tmp/qa/e6101/`: navigation-1…6.log, navigation-series.json (exituri native, aceleași surse, trasee pozitive/negative și evenimente de încărcare), model.log, build.log, lesson.log, path.log și final-scope.json. Sunt probe QA ignorate de Git; nu se creează documentație paralelă de publicat.
+
+**Stare E61-01:** aserțiuni corectate și verificate local pe Windows; confirmarea Linux rămâne deschisă. **Git:** branch `restructure/v4.0.0`, HEAD `4e67de43f2b3900bbfdc547b594a83252d8bd010`; aceleași19 fișiere modificate intenționat ca la preflight, fără fișiere noi neignorate. Index gol. main/origin/main și tagul v3.0.0 sunt nemodificate. Nu s-a efectuat staging, commit, push, merge, tag, release sau Zenodo. Operațiunea6.2 nu este începută; produsul nu a fost modificat funcțional de această remediere.
+
+
+### Închiderea Operațiunii 6.1 — audit Opus și commit local autorizat (2026-10-21)
+
+Conform rezultatului independent transmis de proprietar, Operațiunea6.1 este **ACCEPTATĂ CU REZERVE**, fără regresii funcționale identificate; commitul local este autorizat. **E61-01 — REZOLVAT:**6/6 PASS pe Windows și3/3 PASS pe Linux, fiecare rulare Linux cu5628 verificări. Cele3 defecte introduse deliberat într-o copie independentă au fost detectate corect. Testele verifică ținta curentă a derulării și dependențele reale ale scripturilor, fără restricții asupra numărului apelurilor valide sau ordinii lanțurilor independente. Rezultatele Linux și controalele negative independente sunt raportate de Opus și confirmate de proprietar; nu sunt prezentate drept execuții locale Windows. Această reverificare închide condiția Linux consemnată în secțiunea anterioară.
+
+| Observație | Stare confirmată la închiderea6.1 |
+|---|---|
+| E5-03 | **REZOLVAT:**semantica v3 a #grila este restaurată prin aliasul experimentului CRS avansat #crs-grid; grila introductivă rămâne distinctă la #grila-intro. |
+| E4-04 | **REZOLVAT:**determinismul indexului este confirmat pe Windows și Linux conform auditului Opus. Aceasta nu afirmă că indexul include exhaustiv tot conținutul editorial; E61-02 rămâne separat. |
+| E53-04 | **REZOLVAT:**continuarea T06 către proiect este deduplicată după pagina-destinație, păstrând varianta raster. |
+| L19 și fragmente | Restaurarea după inițializarea asincronă, evenimentele history timpurii și sincronizarea fragmentului curent după fonturi/randare sunt verificate în probele Operațiunii6.1. Formatele URL și persistența/GCP sunt păstrate. |
+| Identificatori medicali originali | Verificați:source_fid/hub_id provin din fid original; serviciile215 și497 sunt păstrate la reordonare, cu132 servicii eligibile. Dovezile GIS anterioare rămân valabile; nu se rerulează motorul pentru această închidere de documentare/commit. |
+
+**Suceava — rezultate distincte, nu echivalente:**Opus raportează **212 celule cu masca folosită în audit** și **213 fără aplicarea acelei măști**. Rezultatul213 al probei locale anterioare nu este prezentat drept identic cu212. Reconcilierea exactă a regulii de includere la marginea măștii și problema rasterelor istorice fără NoData declarat rămân **E61-03, Operațiunea6.2**. Nu se modifică acum rasterele, masca, algoritmii sau testele GIS pentru a forța egalitatea.
+
+**Transfer în Operațiunea6.2:**E61-02 — conținut editorial omis parțial din index; E61-03 — NoData istoric Suceava și reconcilierea212/213 la marginea măștii; E61-04 — actualizarea CITATION.cff. Verificările GUI QGIS3.44, browsere native suplimentare, dispozitive fizice și accesibilitate umană păstrează limitele deja consemnate. Nu sunt declarate rezolvate prin acest commit.
+
+Preflight-ul închiderii confirmă branch restructure/v4.0.0, HEAD4e67de43f2b3900bbfdc547b594a83252d8bd010, exact19 fișiere modificate și index gol. geospatial-formats.js și tutorials/t01–t05.html au numai diferențe de terminatori față de bloburile HEAD și sunt excluse explicit din staging; nu se execută resetări sau curățări. main/origin/main și obiectul tagului v3.0.0 sunt păstrate. Se pregătește un singur commit local cu mesajul `fix(v4): stabilize navigation and cross-platform QA`, după verificările selective de mai jos, fără push/merge/tag/release sau publicare.
+
+
+**Verificări selective finale pentru commit — toate PASS:**validatorul și contractul v3:1439 verificări/14 cazuri negative;203 hashuri protejate,194 fișiere nemodificate și9 excepții exacte; navigare:5628 verificări,73 destinații, fragmente/reload/Back-Forward și control negativ; lecția1.2:354 verificări pe5 viewporturi și2 teme, fără erori runtime; build:42HTML/47 fișiere, două generări identice și --check fără scriere. Nu au fost rerulate testele GIS anterioare, deoarece algoritmii și datele nu s-au modificat după audit. În această închidere este actualizat numai jurnalul față de preflight-ul celor19 fișiere auditate. `git diff --check` PASS; staging-ul se verifică separat pentru exact aceleași19 fișiere și fără diferențe exclusiv CRLF/LF. Logurile de închidere sunt în `tmp/qa/op61-close/`, ignorate de Git. Fără intervenții funcționale suplimentare și fără începerea Operațiunii6.2 sau a auditurilor finale Astra/Opus.

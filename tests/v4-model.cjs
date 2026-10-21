@@ -30,9 +30,9 @@ ok(model.segments['T01@core'].available,'Approved real core available');
 equal(Object.values(model.items).reduce((counts,item)=>{const key=item.level||'none';counts[key]=(counts[key]||0)+1;return counts;},{}),{beginner:20,intermediate:38,advanced:6,none:9},'Approved levels, no artificial reference levels');
 equal(baseline.commit,protection.BASELINE,'Immutable baseline source');
 equal(baseline.protectedHashPolicy,protection.POLICY,'Explicit portable hash policy');
-equal(Object.keys(protection.intentionalUpdates).sort(),['data/p03-content.js','data/tutorial-dataset-inventory.json','data/tutorial-screenshots.json','data/workshop-reproducibility.json','js/crs-lesson.js','js/p01-labs.js','js/p05-labs.js','js/topology-repair-engine.js'],'Eight exact authorized exceptions; 195 remaining protected files unchanged');
+equal(Object.keys(protection.intentionalUpdates).sort(),['data/p03-content.js','data/tutorial-dataset-inventory.json','data/tutorial-screenshots.json','data/workshop-reproducibility.json','js/crs-lesson.js','js/p01-labs.js','js/p05-labs.js','js/p07-page.js','js/topology-repair-engine.js'],'Eight existing exceptions plus one justified asynchronous shell correction; 194 remaining protected files unchanged');
 ok(model.segments['rectangular-coordinates@intro'].available,'Introduction has real editorial support');
-equal(model.segments['rectangular-coordinates@intro'].anchors,['concept-rect','grila'],'Existing anchors identify the introduction');
+equal(model.segments['rectangular-coordinates@intro'].anchors,['concept-rect','grila-intro'],'Distinct anchors identify the introduction; the v3 alias belongs to advanced CRS');
 for(const [file,hash] of Object.entries(baseline.protectedFiles)){
   equal(baseline.protectedFileKinds[file],protection.kind(file),'Explicit text/binary policy '+file);
   const original=protection.gitBytes(file);

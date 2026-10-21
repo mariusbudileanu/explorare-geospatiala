@@ -15,9 +15,14 @@ function normalized(file,bytes){
 }
 const digest=(file,bytes)=>createHash('sha256').update(normalized(file,bytes)).digest('hex');
 const gitBytes=file=>execFileSync('git',['cat-file','blob',BASELINE+':'+file],{cwd:root,maxBuffer:16*1024*1024});
-// Lots 5.1/5.2: exact, reviewable exceptions. The immutable v3 fixture is never rewritten.
-// Any further edit fails just like an edit to the other 195 protected files.
+// Lots 5.1/5.2/6.1: exact, reviewable exceptions. The immutable v3 fixture is never rewritten.
+// Any further edit fails just like an edit to the other 194 protected files.
 const intentionalUpdates={
+  "js/p07-page.js":{
+    baseline:"e92999434ab4c1d2ca5f0d0147040c4d6abcdd0c1533f997290bfb8e88efdb94",
+    current:"d1cdaeffccea2a6723b610bdef1f50dcca3e45512f8604f711a22129056fc2ef",
+    reason:"Op6.1: guard history restoration until the asynchronous L12/L19 API is initialized; URL formats, persistence and GIS algorithms unchanged. Delayed-module/early-history regression plus P07 exports and restore tests."
+  },
   'js/topology-repair-engine.js':{
     baseline:'33c64d5ba85e214e8bdc4fd0f0434d053b93bde0f033b7a256ded68c8188ba77',
     current:'5f6918837dbaea7a1a7e3280bfc62fe30fab949b18de14fd118a1d3bbf98d68e',
@@ -25,8 +30,8 @@ const intentionalUpdates={
   },
   'js/crs-lesson.js':{
     baseline:'81b949fb354c144de04b45668b295dc682bba6d56a3722c499df78565aee3394',
-    current:'206288c592bc513f721a6e9c7e1b5dd5fdc1bbb90463db6b0418d5dbfa6eb9c2',
-    reason:'1.2i and E5-02: local introduction, dynamic fragments and brief Stereo 70 axis convention; CRS calculations unchanged.'
+    current:'a5db2292be26f8a74b3e982c51f024791437a875366195316fa94804160c9378',
+    reason:'1.2i/E5-02/Op6.1/E5-03: local introduction, Stereo 70 axis note, published grila alias restored to the single advanced crs-grid experiment, distinct grila-intro, latest-fragment scrolling and render cancellation; CRS calculations unchanged. Direct/reload/history/delayed-font regressions.'
   },
   'js/p01-labs.js':{
     baseline:'61307c67fc8833c62584ba90c346a459008dcb4d04227de8889ddc77c24b835c',
@@ -50,8 +55,8 @@ const intentionalUpdates={
   },
   'data/tutorial-dataset-inventory.json':{
     baseline:'916ee897e2092b05b82e71797b4a5a866c212cf03435c752a3473b539afeef13',
-    current:'d650e2553d0f2653d5424fdfe6a07dc9ddcbd2fec5487ea816ec08ee4102e433',
-    reason:'Lot 5.2: verified original-source scope, checksums, schemas and explicit untested Suceava scope in existing inventory.'
+    current:'19f315f7d4a31003346e99e4e5fdde22997fc19c6c7c223b9888ba1309de70d8',
+    reason:'Lots 5.2/6.1: original-source checksums/schemas and tested representative Suceava ROI with explicit GUI/upstream/full-county limitations.'
   },
   'data/tutorial-screenshots.json':{
     baseline:'a8de46e261763f23cbaa43144a65c6bf5eb3cf5b44280757bdfd76ca9ce05abe',

@@ -9,3 +9,43 @@ build();const first=snapshot();build();const second=snapshot();assert.deepEqual(
 build('--check');assert.deepEqual(snapshot(),second,'--check must not modify generated files');
 const report={status:'PASS',htmlFiles:files.filter(f=>f.endsWith('.html')).length,generatedFiles:files.length,byteIdentical:true,checkDoesNotWrite:true};
 fs.mkdirSync(path.join(root,'tmp/qa/v4'),{recursive:true});fs.writeFileSync(path.join(root,'tmp/qa/v4/build-results.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+// E4-04: simulate genuinely different Canvas fallback fonts without changing
+// the lab engines. CSS alone cannot change their explicit system-ui metrics.
+(async()=>{
+ const {browserServer,loadModel}=require('./support.cjs');
+ const {pathToFileURL}=require('node:url');
+ const {extractSearchContent}=await import(pathToFileURL(path.join(root,'tools/search-content.mjs')).href);
+ const {CARTO_CONTENT:content}=loadModel();
+ const bridges=JSON.parse(fs.readFileSync(path.join(root,'data/qgis-links.json'),'utf8')).bridges;
+ const vm=require('node:vm'),indexContext={window:{}};
+ vm.runInNewContext(fs.readFileSync(path.join(root,'data/search-index.js'),'utf8'),indexContext);
+ const index=indexContext.window.CARTO_SEARCH_INDEX;
+ const service=await browserServer(),fonts=[];
+ try{
+  for(const family of ['Arial','Courier New']){
+   const context=await service.browser.newContext();
+   await context.route('**/*.css',async route=>{const response=await route.fetch();await route.fulfill({response,body:await response.text()+'\n*{font-family:"'+family+'" !important;}'});});
+   await context.addInitScript(family=>{const d=Object.getOwnPropertyDescriptor(CanvasRenderingContext2D.prototype,'font');Object.defineProperty(CanvasRenderingContext2D.prototype,'font',{...d,set(value){d.set.call(this,value.replace(/system-ui, sans-serif/g,'"'+family+'"'));}});},family);
+   const page=await context.newPage();let checked=0;
+   for(const lesson of content.lessons.filter(l=>!l.canonical_id)){
+    await page.goto(service.base+lesson.href);
+    if(lesson.id==='resources')await page.waitForFunction(()=>document.querySelectorAll('.resource-card[data-category="Provocări GIS"]').length===9);
+    if(bridges.some(b=>b.lesson_id===lesson.id))await page.locator('main .qgis-bridge').waitFor({state:'attached'});
+    const actual=await page.locator('main').evaluate(extractSearchContent),expected=index.find(r=>r.id===lesson.id);
+    assert.deepEqual(actual,{description:expected.description,paragraphs:JSON.parse(JSON.stringify(expected.paragraphs))},family+' stable editorial content '+lesson.id);checked++;
+    if(lesson.id==='styling-labeling'){
+     assert(actual.paragraphs.some(t=>t.includes('Parallel folosește direcția locală')),'Placement teaching text retained');
+     assert(actual.paragraphs.some(t=>t.includes('Principiu din manual')),'Historical correspondence table retained');
+     const before=JSON.stringify(actual);
+     await page.locator('.lab-dynamic').first().evaluate(e=>{e.innerHTML='<p>EPHEMERAL-RESULT-TEST 999</p>';});
+     assert.equal(JSON.stringify(await page.locator('main').evaluate(extractSearchContent)),before,'Exercise result mutations never enter search');
+    }
+   }
+   const width=await page.evaluate(()=>{const c=document.createElement('canvas').getContext('2d');c.font='600 15px system-ui, sans-serif';return c.measureText('Măsurare și etichete').width;});
+   fonts.push({family,checked,canvasWidth:width});await context.close();
+  }
+  assert.notEqual(fonts[0].canvasWidth,fonts[1].canvasWidth,'Font configurations genuinely differ');
+  const result={status:'PASS',fonts,indexRecords:index.length,scope:'Same Windows/Chrome; two CSS and Canvas fallback fonts. Native Linux/browser differences remain untested.'};
+  fs.writeFileSync(path.join(root,'tmp/qa/v4/search-font-results.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
+ }finally{await service.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

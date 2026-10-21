@@ -1,4 +1,6 @@
 /* Learning components reuse the site's palette, spacing and focus system. */
+.learning-card{overflow-wrap:anywhere}
+.learning-card code{overflow-wrap:anywhere;white-space:normal}
 .learning-context,.learning-card,.formative-check,.glossary-entry{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-card);padding:var(--card-padding);min-width:0}
 .learning-context{margin:20px 0 28px}.learning-context h2{font-size:17px;margin:14px 0 6px}.learning-context ul{margin:8px 0}.learning-context p{margin:6px 0;font-size:14px}
 .learning-context-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.learning-context-top h3{margin:0}

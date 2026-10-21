@@ -67,6 +67,77 @@ const priority=new Set(['home','coordinates','rectangular-coordinates','digital-
    await staticPage.goto(service.base+file);check(await staticPage.locator('#chapter-nav a').count()===71,file+' static 71 links');check(await staticPage.locator('#sidebar').isVisible(),file+' static navigation visible on mobile');check(await staticPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),file+' static mobile no overflow');
   }
   await staticPage.goto(service.base+'digital-companion.html');check(await staticPage.locator('.catalog-card:visible').count()===20,'All catalogue cards without JS');check(await staticPage.locator('.catalog-filters').isHidden(),'Inactive filters hidden without JS');await nojs.close();
+  // Focused technical accessibility audit, not a screen-reader/WCAG certificate.
+  report.accessibility=[];
+  const ux=await service.browser.newContext(),uxPage=await ux.newPage();
+  uxPage.on('pageerror',e=>report.errors.push(uxPage.url()+': '+e.stack));
+  const routes=['index.html','learning-path.html','digital-companion.html','lesson.html?id=rectangular-coordinates#grila','tutorials/t01.html','final-project.html','georeferencing-lab.html'];
+  for(const dark of [false,true])for(const route of routes){
+   await uxPage.setViewportSize({width:1280,height:900});await uxPage.goto(service.base+route);
+   if(route==='georeferencing-lab.html')await uxPage.waitForFunction(()=>window.CARTO_GEO&&document.querySelector('#p07-fallback').hidden);
+   if((await uxPage.locator('body').getAttribute('class')||'').includes('dark')!==dark)await uxPage.locator('#theme-toggle').click();
+   const audit=await uxPage.evaluate(()=>{
+    const visible=e=>e.getClientRects().length&&getComputedStyle(e).visibility!=='hidden';
+    const controls=[...document.querySelectorAll('button,input:not([type="hidden"]),select,textarea,[role="button"]')].filter(e=>visible(e)&&!e.disabled);
+    const name=e=>e.getAttribute('aria-label')||(e.getAttribute('aria-labelledby')||'').split(/\s+/).map(id=>document.getElementById(id)?.textContent||'').join(' ').trim()||[...(e.labels||[])].map(l=>l.textContent).join(' ').trim()||e.getAttribute('title')||(e.matches('button,[role="button"]')?e.textContent:'');
+    const rgba=value=>{const n=value.match(/[\d.]+/g)?.map(Number)||[0,0,0,0];return [n[0],n[1],n[2],n[3]??1];};
+    const over=(a,b)=>a.slice(0,3).map((v,i)=>v*a[3]+b[i]*(1-a[3]));
+    const background=e=>{if(!e)return [255,255,255];const c=rgba(getComputedStyle(e).backgroundColor);return c[3]===1?c.slice(0,3):over(c,background(e.parentElement));};
+    const luminance=c=>c.map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+    const samples=[...document.querySelectorAll('.lead,.learning-card>p,.learning-context p,main>section>p')].filter(e=>visible(e)&&e.textContent.trim().length>15).map(e=>{const s=getComputedStyle(e),bg=background(e),a=luminance(over(rgba(s.color),bg)),b=luminance(bg),ratio=(Math.max(a,b)+.05)/(Math.min(a,b)+.05),large=parseFloat(s.fontSize)>=24||parseFloat(s.fontSize)>=18.66&&Number(s.fontWeight)>=700;return {text:e.textContent.trim().slice(0,70),ratio,required:large?3:4.5};});
+    return {contrast:{samples:samples.length,min:Math.min(...samples.map(s=>s.ratio)),fail:samples.filter(s=>s.ratio<s.required)},missingNames:controls.filter(e=>!/[\p{L}\d]/u.test(name(e))).map(e=>({tag:e.tagName,id:e.id,html:e.outerHTML.slice(0,180)})),positiveTabindex:[...document.querySelectorAll('[tabindex]')].filter(e=>Number(e.tabIndex)>0&&visible(e)).map(e=>e.id),main:document.querySelectorAll('main').length,h1:document.querySelectorAll('main h1').length};
+   });
+   report.accessibility.push({route,dark,...audit});
+   check(audit.missingNames.length===0,'Accessible control names '+route+'/'+dark+' '+JSON.stringify(audit.missingNames));
+   check(audit.contrast.samples>0&&audit.contrast.fail.length===0,'Sampled text contrast '+route+'/'+dark+' '+JSON.stringify(audit.contrast.fail));
+   check(audit.positiveTabindex.length===0,'Natural focus order '+route);check(audit.main===1&&audit.h1===1,'Main landmark and title '+route);
+   // Fragment arrivals legitimately start sequential focus at that fragment.
+   // Check the document's initial focus order on a fresh, fragment-free visit.
+   await uxPage.goto(service.base+route.split('#')[0]);await uxPage.keyboard.press('Tab');
+   check(await uxPage.evaluate(()=>document.activeElement.matches('a.skip-link')),'Skip link first in keyboard order '+route);
+   await uxPage.keyboard.press('Enter');
+   check(await uxPage.evaluate(()=>{const e=document.activeElement;return e.tagName==='MAIN'||e.closest('main')||location.hash==='#main-content'||location.hash==='#lesson-root';}),'Skip target reaches main '+route);
+   for(let i=0;i<8;i++){
+    await uxPage.keyboard.press('Tab');
+    check(await uxPage.evaluate(()=>{const e=document.activeElement;return e===document.body||getComputedStyle(e).visibility!=='hidden'&&e.getClientRects().length>0;}),'Keyboard never focuses hidden control '+route);
+   }
+   await uxPage.setViewportSize({width:375,height:900});
+   check(await uxPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Focused narrow reflow '+route);
+   await uxPage.locator('#nav-toggle').click();await uxPage.keyboard.press('Escape');
+   check(await uxPage.locator('#nav-toggle').getAttribute('aria-expanded')==='false','Focused Escape '+route);
+   // Browser zoom at 200% halves the CSS viewport; CSS zoom alone does not
+   // update media queries and is not an equivalent accessibility test.
+   await uxPage.setViewportSize({width:640,height:900});await uxPage.evaluate(()=>document.fonts.ready);
+   check(await uxPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'200 percent equivalent CSS viewport reflow '+route);
+   await uxPage.setViewportSize({width:1280,height:900});await uxPage.evaluate(()=>document.documentElement.style.zoom='2');
+   if(!route.includes('georeferencing')){
+    await uxPage.waitForFunction(()=>document.documentElement.scrollWidth<=innerWidth+1).catch(async error=>{throw Error('Zoom layout '+route+'/'+dark+' '+JSON.stringify(await uxPage.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth,active:document.activeElement.outerHTML.slice(0,500),pseudo:[...document.querySelectorAll('body *')].filter(e=>{const s=getComputedStyle(e,'::after');return s.content!=='none'&&s.position==='absolute';}).map(e=>({tag:e.tagName,id:e.id,cls:e.className,text:getComputedStyle(e,'::after').content,left:getComputedStyle(e,'::after').left,width:getComputedStyle(e,'::after').width}))})))+' '+error.message);});
+    check(await uxPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Additional CSS zoom stress '+route);
+   }
+   await uxPage.evaluate(()=>document.documentElement.style.zoom='');
+   await uxPage.emulateMedia({media:'print'});
+   check(await uxPage.locator('main h1').isVisible(),'Print retains main title '+route);
+   check(await uxPage.locator('main').evaluate(e=>getComputedStyle(e).display!=='none'),'Print retains content '+route);
+   await uxPage.emulateMedia({media:'screen'});
+  }
+  await uxPage.goto(service.base+'lesson.html?id=rectangular-coordinates#grila');
+  check(await uxPage.locator('#crs-grid #grila').count()===1,'Legacy fragment belongs to the single advanced experiment');
+  check(await uxPage.locator('#crs-grid #grid-crs').isVisible(),'Legacy fragment reaches real CRS selector');
+  await uxPage.waitForFunction(()=>{const e=document.getElementById('crs-grid');return e.getBoundingClientRect().top<innerHeight&&e.getBoundingClientRect().bottom>0;});
+  check(true,'Legacy fragment actually scrolls to the advanced CRS experiment');
+  await ux.close();
+  // Reproduce a real race: history navigation while the L19 module is held.
+  const delayed=await service.browser.newContext();let release;
+  const gate=new Promise(resolve=>{release=resolve;});
+  await delayed.route('**/js/georef/app.js',async route=>{await gate;await route.continue();});
+  const early=await delayed.newPage();early.on('pageerror',e=>report.errors.push('L19 early history: '+e.stack));
+  early.on('console',message=>{if(message.type()==='error')report.errors.push('L19 early history console: '+message.text());});
+  await early.goto(service.base+'georeferencing-lab.html',{waitUntil:'domcontentloaded'});
+  check(await early.evaluate(()=>!window.CARTO_GEO),'Fixture really delays L19 API');
+  await early.locator('.skip-link').focus();await early.keyboard.press('Enter');
+  await early.evaluate(()=>dispatchEvent(new PopStateEvent('popstate')));
+  release();await early.waitForFunction(()=>window.CARTO_GEO&&document.querySelector('#p07-fallback').hidden);
+  check(await early.locator('#p07-app').getAttribute('aria-busy')!=='true','L19 eventually ready after early history');await delayed.close();
   check(report.errors.length===0,'No browser exceptions');report.status=report.failures.length?'FAIL':'PASS';
   fs.writeFileSync(path.join(out,'browser-results.json'),JSON.stringify(report,null,2));
   console.log(JSON.stringify({status:report.status,checks:report.checks,layouts:report.layouts.length,operations:report.operations.length,failures:report.failures,errors:report.errors}));

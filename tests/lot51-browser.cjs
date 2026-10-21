@@ -20,11 +20,11 @@ ok(model.activePath.includes('rectangular-coordinates@intro')&&model.activePath.
    // Enter the fragment as a fresh navigation, rather than reloading a page whose
    // browser history legitimately restores the reader's later scroll position.
    await page.setViewportSize({width,height:900});await page.goto(service.base+'index.html');await page.evaluate(d=>localStorage.setItem('cartografie-theme',d?'dark':'light'),dark);
-   const url=service.base+'lesson.html?id=rectangular-coordinates#grila';
+   const url=service.base+'lesson.html?id=rectangular-coordinates#grila-intro';
    await page.goto(url);
    equal(await page.locator('body').evaluate(e=>e.classList.contains('dark')),dark,width+' requested theme actually applied');
    await page.waitForFunction(()=>{
-    const g=document.querySelector('#grila');if(!g)return false;
+    const g=document.querySelector('#grila-intro');if(!g)return false;
     const offset=(parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop)||0)+(parseFloat(getComputedStyle(g).scrollMarginTop)||0),top=g.getBoundingClientRect().top;
     return scrollY>200&&Math.abs(top-offset)<2&&top<innerHeight/2;
    });
@@ -37,7 +37,7 @@ ok(model.activePath.includes('rectangular-coordinates@intro')&&model.activePath.
    ok((await page.locator('#rect-intro-values').innerText()).includes('(70 m, 50 m)'),width+' interactive coordinate reading');
    equal(await page.locator('#rect-intro-grid circle').getAttribute('cx'),'360',width+' X moves horizontally');
    equal(await page.locator('#rect-intro-grid circle').getAttribute('cy'),'250',width+' Y moves upward');
-   ok(await page.locator('#sisteme-rect').evaluate(e=>e.compareDocumentPosition(document.querySelector('#grila'))&Node.DOCUMENT_POSITION_PRECEDING),width+' CRS follows the complete introduction');
+   ok(await page.locator('#sisteme-rect').evaluate(e=>e.compareDocumentPosition(document.querySelector('#grila-intro'))&Node.DOCUMENT_POSITION_PRECEDING),width+' CRS follows the complete introduction');
    ok(await page.locator('#grid-crs option').count()===8&&await page.locator('.crs-card').count()===8,width+' full CRS tools retained');
    ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),width+' no overflow');
    ok((await page.locator('.learning-context').innerText()).includes('se poate studia separat'),width+' full-lesson prerequisites distinguished from introduction');

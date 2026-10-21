@@ -99,7 +99,7 @@ for(const id of Object.keys(contract.workshops)){
    const visible=await l14.innerText();ok(!/\bP02\b|\bTurf\b/.test(visible),'L14 student copy after JS '+lang);
    ok(/6371008[.,]8/.test(visible),'L14 scientific model remains explicit');
   }
-  await page.goto(service.base+'lesson.html?id=rectangular-coordinates#grila');
+  await page.goto(service.base+'lesson.html?id=rectangular-coordinates#grila-intro');
   const intro=page.locator('[data-learning-segment="rectangular-coordinates@intro"]');
   ok((await intro.innerText()).includes('X reprezintă coordonata nordică'),'Stereo axis convention introduced');
   eq(await intro.locator('select').count(),0,'No advanced controls introduced');

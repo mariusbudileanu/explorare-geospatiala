@@ -2,7 +2,9 @@
 export function extractSearchContent(main) {
   // Live exercise controls, load states and selected dataset rows are not lesson text.
   // They can change between DOMContentLoaded and data completion (or user actions).
-  const excluded='script,style,template,footer,nav,dialog,noscript,.runtime-notice,[aria-live],[data-search-exclude],.feedback,#challenge-workspace,#challenge-catalog';
+  // Placement tables and computed legends depend on Canvas font metrics and
+  // exercise state. Keep the surrounding authored guidance and classic tables.
+  const excluded='script,style,template,footer,nav,dialog,noscript,.runtime-notice,[aria-live],[role="status"],[data-search-exclude],.feedback,.lab-dynamic,.repair-results,.carto-records,.carto-legend,#challenge-workspace,#challenge-catalog';
   const boundaries=new Set(['ADDRESS','ARTICLE','ASIDE','BLOCKQUOTE','BR','DD','DIV','DL','DT','FIGCAPTION','FIGURE','H1','H2','H3','H4','H5','H6','HR','LI','OL','P','SECTION','TABLE','TD','TH','TR','UL','A','BUTTON','LABEL','LEGEND','OUTPUT']);
   const textOf=node=>{
     if(node.nodeType===3)return node.nodeValue;

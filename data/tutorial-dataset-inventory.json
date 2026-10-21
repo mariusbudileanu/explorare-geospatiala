@@ -354,9 +354,15 @@
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.",
       "registry_id": "copernicus-dem",
       "verification": {
-        "scope": "documentation",
-        "checked_on": "2026-10-20",
-        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+        "scope": "engine_representative_roi",
+        "checked_on": "2026-10-21",
+        "summary": "QGIS 3.40.11: flux reprezentativ pe copii locale ale atelierului, ROI 6 km, grilă 200×200 la 30 m; mască Suceava, aliniere, bilinear pentru DEM și nearest pentru ani, hillshade/slope, mască DEM, selecție 2013–2014 și export PNG/PDF. Originalele și sidecar-urile sunt nemodificate. Intrările sunt deja EPSG:3844; conversia geografică inițială, calculul întregului județ și GUI 3.44 nu sunt certificate. Datamask Hansen nu este disponibil local.",
+        "local_source_filename": "cop30m_3844-002.tif",
+        "sha256": "99df54eb3fb8f41c3b17598fa5188a93173f3d08f81f51b2f04f5668078bf3a7",
+        "limitations": [
+          "NoData nu este definit în copiile locale de intrare; copiile QA sunt decupate cu mască explicită și NoData -9999/255.",
+          "Pentru limita județului este verificată masca locală judet_suceava.gpkg, nu întregul pachet național ro_judete_poligon.gpkg."
+        ]
       }
     },
     {
@@ -378,9 +384,15 @@
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică metadatele acestui raster.",
       "registry_id": "hansen-loss",
       "verification": {
-        "scope": "documentation",
-        "checked_on": "2026-10-20",
-        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+        "scope": "engine_representative_roi",
+        "checked_on": "2026-10-21",
+        "summary": "QGIS 3.40.11: flux reprezentativ pe copii locale ale atelierului, ROI 6 km, grilă 200×200 la 30 m; mască Suceava, aliniere, bilinear pentru DEM și nearest pentru ani, hillshade/slope, mască DEM, selecție 2013–2014 și export PNG/PDF. Originalele și sidecar-urile sunt nemodificate. Intrările sunt deja EPSG:3844; conversia geografică inițială, calculul întregului județ și GUI 3.44 nu sunt certificate. Datamask Hansen nu este disponibil local.",
+        "local_source_filename": "Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif",
+        "sha256": "b26823111d8b412ddeca3505443a4a5404be89fa921a632b03394587daeb7db2",
+        "limitations": [
+          "NoData nu este definit în copiile locale de intrare; copiile QA sunt decupate cu mască explicită și NoData -9999/255.",
+          "Pentru limita județului este verificată masca locală judet_suceava.gpkg, nu întregul pachet național ro_judete_poligon.gpkg."
+        ]
       }
     },
     {
@@ -474,9 +486,15 @@
       "crs_ro": "T06 menționează EPSG:3844 în general; verifică CRS-ul fiecărui strat.",
       "registry_id": "administrative-boundaries",
       "verification": {
-        "scope": "documentation",
-        "checked_on": "2026-10-20",
-        "summary": "Documentație și schemă istorică; copia completă folosită în atelierul Suceava nu este disponibilă pentru execuție. NETESTAT în QGIS pe originalele atelierului; subseturile Rîșca nu le înlocuiesc."
+        "scope": "engine_representative_roi",
+        "checked_on": "2026-10-21",
+        "summary": "QGIS 3.40.11: flux reprezentativ pe copii locale ale atelierului, ROI 6 km, grilă 200×200 la 30 m; mască Suceava, aliniere, bilinear pentru DEM și nearest pentru ani, hillshade/slope, mască DEM, selecție 2013–2014 și export PNG/PDF. Originalele și sidecar-urile sunt nemodificate. Intrările sunt deja EPSG:3844; conversia geografică inițială, calculul întregului județ și GUI 3.44 nu sunt certificate. Datamask Hansen nu este disponibil local.",
+        "local_source_filename": "judet_suceava.gpkg",
+        "sha256": "6b727764eb96d3312c265738c90c0dc28c231c560a2546111e5f5da0d1c4764d",
+        "limitations": [
+          "NoData nu este definit în copiile locale de intrare; copiile QA sunt decupate cu mască explicită și NoData -9999/255.",
+          "Pentru limita județului este verificată masca locală judet_suceava.gpkg, nu întregul pachet național ro_judete_poligon.gpkg."
+        ]
       }
     },
     {

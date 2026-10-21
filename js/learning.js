@@ -60,8 +60,11 @@
   };
   const tail=(id,prefix='')=>{
     if(!model.items[id])return '';
-    const seen=new Set([model.target(id)]),actions=[];
-    const add=(ref,label,primary=false,href=model.target(ref))=>{if(!href||seen.has(href))return;seen.add(href);actions.push('<a'+(primary?' class="outline-button continuation-primary"':'')+' data-route-ref="'+esc(ref)+'" href="'+prefix+esc(href)+'"><span>'+esc(label)+'</span> · '+esc(model.label(ref))+'</a>');};
+    // Primary pedagogical targets are added first. A chapter link to the same
+    // page adds no action; keep the primary variant fragment (notably T06).
+    const pageKey=href=>href?.split('#')[0];
+    const seen=new Set([pageKey(model.target(id))]),actions=[];
+    const add=(ref,label,primary=false,href=model.target(ref))=>{if(!href||seen.has(pageKey(href)))return;seen.add(pageKey(href));actions.push('<a'+(primary?' class="outline-button continuation-primary"':'')+' data-route-ref="'+esc(ref)+'" href="'+prefix+esc(href)+'"><span>'+esc(label)+'</span> · '+esc(model.label(ref))+'</a>');};
     for(const option of model.continuations(id))add(option.ref,option.label,true);
     const chapter=manifest.chapterContinuation(id);if(chapter&&id!=='final-project')add(chapter.id,chapter.label,false,lessons.get(chapter.id).href);
     return checks(id)+'<nav class="learning-continuation" data-learning-resource="'+esc(id)+'" aria-label="Continuă învățarea">'+(['workflow','rectangular-coordinates'].includes(id)?'<p>Continuarea de mai jos privește resursa integrală. Introducerea are continuarea proprie lângă conținut.</p>':'')+actions.join('')+(id==='final-project'?'<p>După realizarea și verificarea proiectului, parcursul se încheie aici. Alte teme pot fi explorate liber; nu se salvează automat finalizarea.</p>':'')+'</nav>';

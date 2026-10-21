@@ -91,7 +91,9 @@
     if(url.searchParams.get(id).length>2048){status(lang==='en'?'Too many points for a bounded URL. Work remains saved in this browser.':'Prea multe puncte pentru URL. Lucrul rămâne salvat în acest browser.');return;}
     history.pushState(null,'',url);status(lang==='en'?'Current state is in the URL.':'Starea curentă este în URL.');
   });
-  on(window,'popstate',()=>restore());on(window,'pagehide',e=>{if(!e.persisted)window.CARTO_P07.destroy();});
+  // Hash/skip-link history can fire before the asynchronous lab API exists.
+  // ready() restores the latest URL once; never invoke an uninitialized API.
+  on(window,'popstate',()=>{if(initialized&&!stopped)restore().catch(window.CARTO_P07.error);});on(window,'pagehide',e=>{if(!e.persisted)window.CARTO_P07.destroy();});
   localize();app.setAttribute('aria-busy','true');app.hidden=false;
   if(id==='L12')Promise.resolve().then(()=>{const asset=window.CARTO_DATA_SOURCE.create(window.CARTO_DATA_REGISTRY,new URL('.',location.href)).resolveDataAsset('anm-eocube-snapshot');if(new URL(asset.url).origin!==location.origin)throw Error('Offline snapshot must be local');return fetch(asset.url,{signal:abort.signal});}).then(r=>{if(!r.ok)throw Error('Local snapshot missing');return r.json();}).then(data=>{if(stopped)return;window.CARTO_ANM_SNAPSHOT=data;const script=document.createElement('script');script.src='js/p07-zarr.js';script.onload=()=>ready();script.onerror=()=>window.CARTO_P07.error(Error('Local script missing'));document.head.append(script);}).catch(window.CARTO_P07.error);
   else import('./georef/app.js').catch(window.CARTO_P07.error);
