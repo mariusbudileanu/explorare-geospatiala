@@ -19,7 +19,18 @@ const textHash=value=>crypto.createHash('sha256').update(value.toString('utf8').
 const omitFunctions=(source,names)=>{for(const name of names){const start=source.indexOf('  function '+name+'(');if(start<0)continue;const end=source.indexOf('\n  function ',start+1);source=source.slice(0,start)+source.slice(end+1);}return source;};
 for(const file of protectedFiles){
  let actual=fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n'),before=execFileSync('git',['show','44325c3f1db1ebbd6bf322eda7045632c7858d52:'+file],{cwd:root}).toString('utf8').replace(/\r\n/g,'\n');
- if(file==='CITATION.cff'){const citation=JSON.parse(actual);equal(citation.version,'3.0.0','Authorized v3 release version');equal(citation.identifiers,[{"type": "doi", "value": "10.5281/zenodo.23422847", "description": "Concept DOI for all versions of the project; not a version-specific DOI for v3.0.0."}],'Only verified concept identifier; no invented version DOI');equal(textHash(citation.abstract),'689e583d251cc376dc430c883965ffa67fd82fd4d780d7b53992618c1fe25034','Exact reviewed v3 abstract and license scopes');delete citation.version;delete citation.identifiers;citation.abstract=JSON.parse(before).abstract;equal(citation.authors[0].affiliation,'University of Bucharest, Faculty of Geography','Verified v2.0.0 affiliation');delete citation.authors[0].affiliation;actual=JSON.stringify(citation);before=JSON.stringify(JSON.parse(before));}
+ if(file==='CITATION.cff'){
+  const citation=JSON.parse(actual),legacy=JSON.parse(before);
+  equal(citation.version,'4.0.0','Authorized unpublished v4 candidate version');
+  equal(citation.license,'MIT','Software-only license; content remains separately CC BY 4.0');equal(citation.type,'software','CFF describes software');
+  equal(citation.identifiers,[{"type":"doi","value":"10.5281/zenodo.23422847","description":"Concept DOI for the project across versions. This is not a version-specific DOI for the unpublished 4.0.0 candidate."}],'Verified concept identifier, no candidate version DOI');
+  equal(textHash(citation.abstract),'ab7fcda60db86b608e86b00f36351f663b0d9b7187eae93107cdcee0743519e2','Exact candidate abstract with original license scopes');
+  equal(textHash(citation.message),'7659cd3d79c842668c060a5ab409d16a6a1ba1514e0d7a263435049d49f3919e','Exact unpublished-candidate citation message');
+  ok(!citation['date-released']&&!citation.doi,'No premature publication date or version DOI');
+  delete citation.version;delete citation.identifiers;citation.abstract=legacy.abstract;citation.message=legacy.message;
+  equal(citation.authors[0].affiliation,'University of Bucharest, Faculty of Geography','Verified author affiliation');delete citation.authors[0].affiliation;
+  actual=JSON.stringify(citation);before=JSON.stringify(legacy);
+ }
  if(file==='js/map-diagnostics.js'){
   const old="topology:['data/topology-lab.js','data/topology-rules.js','js/topology-engine.js','js/topology-rule-engine.js','js/topology-scene.js']",updated="topology:['data/topology-lab.js','data/topology-rules.js','js/topology-engine.js','js/vendor/turf.min.js','js/topology-geometry.js','js/topology-rule-engine.js','js/topology-scene.js']";
   equal(actual.split('focus:!!location.hash&&!!hashScene()').length,2,'P06: focus only a recognized diagnostic hash');actual=actual.replace('focus:!!location.hash&&!!hashScene()','focus:!!location.hash');

@@ -20,6 +20,12 @@ fs.mkdirSync(path.join(root,'tmp/qa/v4'),{recursive:true});fs.writeFileSync(path
  const vm=require('node:vm'),indexContext={window:{}};
  vm.runInNewContext(fs.readFileSync(path.join(root,'data/search-index.js'),'utf8'),indexContext);
  const index=indexContext.window.CARTO_SEARCH_INDEX;
+ const citation=JSON.parse(fs.readFileSync(path.join(root,'CITATION.cff'),'utf8'));
+ assert.equal(citation.version,'4.0.0');assert.equal(citation.license,'MIT');assert.equal(citation.type,'software');
+ assert(!citation['date-released']&&!citation.doi,'No premature publication date or version DOI');
+ assert.deepEqual(citation.identifiers.map(x=>x.value),['10.5281/zenodo.23422847'],'Existing concept DOI retained');
+ assert(fs.readFileSync(path.join(root,'README.md'),'utf8').includes('candidată nepublicată'),'README candidate status');
+ assert(fs.readFileSync(path.join(root,'about.html'),'utf8').includes('4.0.0 — candidată nepublicată'),'Generated About candidate status');
  const service=await browserServer(),fonts=[];
  try{
   for(const family of ['Arial','Courier New']){
@@ -33,6 +39,29 @@ fs.mkdirSync(path.join(root,'tmp/qa/v4'),{recursive:true});fs.writeFileSync(path
     if(bridges.some(b=>b.lesson_id===lesson.id))await page.locator('main .qgis-bridge').waitFor({state:'attached'});
     const actual=await page.locator('main').evaluate(extractSearchContent),expected=index.find(r=>r.id===lesson.id);
     assert.deepEqual(actual,{description:expected.description,paragraphs:JSON.parse(JSON.stringify(expected.paragraphs))},family+' stable editorial content '+lesson.id);checked++;
+    const stableCopy={
+     topology:['Geometry validity întreabă cum este construită o geometrie.'],
+     'transparency-blending':['Transparența nu este NoData','Cu aceeași culoare, unele umpleri pot arăta identic','Spre deosebire de T2, acestea sunt două straturi distincte','Layer B este deasupra. În grupul compus','Aceeași culoare de bază, două aparențe rezultate.'],
+     'formats-interoperability':['Modelul și encoding-ul sunt alegeri diferite.']
+    }[lesson.id];
+    if(stableCopy){
+     const includesCopy=value=>stableCopy.every(text=>value.paragraphs.some(p=>p.includes(text)));
+     assert(includesCopy(actual),'Authored invariant paragraphs recovered '+lesson.id);
+     // Exercise real controls; the recovered copy must survive state changes.
+     if(lesson.id==='topology')await page.evaluate(()=>window.CARTO_TOPOLOGY_CONTROLLERS.get('T2').setState({pane:'topology',geometryError:false}));
+     if(lesson.id==='transparency-blending'){
+      await page.selectOption('#T1-concept','blending');await page.selectOption('#T2-mode','fill');
+      await page.locator('#T4-opacity').fill('0');await page.locator('#T6-opacity').fill('100');await page.locator('#T7-opacity').fill('0');
+     }
+     if(lesson.id==='formats-interoperability')await page.evaluate(()=>window.CARTO_FORMATS_LAB.controllers.get('F0').setState({family:'raster'}));
+     assert(includesCopy(await page.locator('main').evaluate(extractSearchContent)),'Recovered copy is state-independent '+lesson.id);
+     const before=await page.locator('main').evaluate(extractSearchContent);
+     await page.locator('.lab-dynamic').last().evaluate(e=>e.insertAdjacentHTML('beforeend','<div><p>LAYOUT-RESULT-99999</p><table><tr><td>FONT-COLLISION-321</td></tr></table></div>'));
+     assert.deepEqual(await page.locator('main').evaluate(extractSearchContent),before,'Unmarked calculated output still excluded '+lesson.id);
+     const query={topology:'Geometry validity','transparency-blending':'Transparența nu este NoData','formats-interoperability':'encoding-ul'}[lesson.id];
+     await page.fill('#search',query);assert(await page.locator('#search-results a[href="'+lesson.href+'"]').count()>0,'Recovered copy searchable at canonical destination '+lesson.id);
+     await page.fill('#search','');
+    }
     if(lesson.id==='styling-labeling'){
      assert(actual.paragraphs.some(t=>t.includes('Parallel folosește direcția locală')),'Placement teaching text retained');
      assert(actual.paragraphs.some(t=>t.includes('Principiu din manual')),'Historical correspondence table retained');

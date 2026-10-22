@@ -30,7 +30,7 @@ from osgeo import ogr, osr, gdal
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "tmp/qa/lot52"
-SOURCES = Path(sys.argv[1]) if len(sys.argv) > 1 else OUT / "sources"
+SOURCES = Path(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else OUT / "sources"
 OUT.mkdir(parents=True, exist_ok=True)
 app = QgsApplication([], False)
 app.initQgis()
@@ -96,6 +96,64 @@ def copied_expression(tutorial, section):
     source = (ROOT / "tutorials" / (tutorial.lower() + ".html")).read_text(encoding="utf-8")
     block = re.search(r'<article class="tutorial-step\b[^>]*id="section-' + str(section) + r'"[^>]*>[\s\S]*?</article>', source)[0]
     return html.unescape(re.search(r'<pre><code[^>]*>([\s\S]*?)</code>', block)[1]).strip()
+
+
+def verify_suceava_mask_conventions(data_root):
+    """Only the frozen 6 km ROI; original data are always read-only."""
+    import numpy as np
+    gdal.UseExceptions()
+    root=Path(data_root);out=OUT/'mask-conventions';out.mkdir(exist_ok=True,parents=True)
+    paths={'source':root/'date_raster/Hansen_GFC-2024-v1.12_lossyear_50N_020E_s70.tif','historic_loss':root/'date_raster/forest_loss_suceava.tif','historic_dem':root/'date_raster/dem_suceava.tif','mask':root/'date_vector/judet_suceava.gpkg'}
+    def sha(p):
+     with p.open('rb') as stream: return hashlib.file_digest(stream,'sha256').hexdigest()
+    protected=list(paths.values())+[root/'date_raster/cop30m_3844-002.tif']+list(SOURCES.rglob('*.gpkg'))
+    protected += [Path(str(p)+'.aux.xml') for p in protected if Path(str(p)+'.aux.xml').exists()]
+    before={str(p):sha(p) for p in protected}
+    prior=json.loads((OUT/'qgis-results.json').read_text(encoding='utf8'))
+    for entry in prior['originals']:
+     matches=[p for p in protected if p.name==entry['file']]
+     check(bool(matches) and before[str(matches[0])]==entry['sha256'],'Original GeoPackage checksum '+entry['file'])
+    extent=(493650,687180,499650,693180);gt=(493650,30,0,693180,0,-30);srs=osr.SpatialReference();srs.ImportFromEPSG(3844)
+    vector=ogr.Open(str(paths['mask']),0);layer=vector.GetLayer();geom=None
+    for f in layer:
+     g=f.GetGeometryRef().Clone();geom=g if geom is None else geom.Union(g)
+    layer.ResetReading()
+    report={'extent':extent,'affine':gt,'grid':[200,200],'metadata':{},'counts':{},'differences':[],'originals':before}
+    for k,p in paths.items():
+     if k=='mask':continue
+     ds=gdal.Open(str(p),gdal.GA_ReadOnly);report['metadata'][k]={'size':[ds.RasterXSize,ds.RasterYSize],'affine':ds.GetGeoTransform(),'nodata':ds.GetRasterBand(1).GetNoDataValue()};ds=None
+    arrays={}
+    for key in ['source','historic_loss']:
+     for cut in [False,True]:
+      ds=gdal.Warp('',str(paths[key]),format='MEM',dstSRS='EPSG:3844',outputBounds=extent,width=200,height=200,resampleAlg='near',dstNodata=255,cutlineDSName=str(paths['mask']) if cut else None)
+      a=ds.ReadAsArray();arrays[key+('_warp_cutline' if cut else '_unmasked')]=a
+    for touched in [False,True]:
+     mask=gdal.GetDriverByName('MEM').Create('',200,200,1,gdal.GDT_Byte);mask.SetGeoTransform(gt);mask.SetProjection(srs.ExportToWkt());gdal.RasterizeLayer(mask,[1],layer,burn_values=[1],options=['ALL_TOUCHED=TRUE'] if touched else []);arrays['mask_'+('all_touched' if touched else 'center')]=mask.ReadAsArray();layer.ResetReading()
+    for name,a in arrays.items():
+     if name.startswith('mask_'):continue
+     sel=(a>=13)&(a<=14);report['counts'][name]={'without_target_mask':int(sel.sum()),'center_target_mask':int((sel&(arrays['mask_center']==1)).sum()),'all_touched_target_mask':int((sel&(arrays['mask_all_touched']==1)).sum())}
+    sel=(arrays['source_warp_cutline']>=13)&(arrays['source_warp_cutline']<=14)
+    for row,col in np.argwhere(sel&(arrays['mask_center']!=1)):
+     x,y=gt[0]+(int(col)+.5)*30,gt[3]-(int(row)+.5)*30;p=ogr.Geometry(ogr.wkbPoint);p.AddPoint_2D(x,y)
+     srcgt=report['metadata']['source']['affine'];sc=int((x-srcgt[0])/srcgt[1]);sr=int((y-srcgt[3])/srcgt[5]);sx,sy=srcgt[0]+(sc+.5)*srcgt[1],srcgt[3]+(sr+.5)*srcgt[5];sp=ogr.Geometry(ogr.wkbPoint);sp.AddPoint_2D(sx,sy)
+     report['differences'].append({'row':int(row),'col':int(col),'code':int(arrays['source_warp_cutline'][row,col]),'center':[x,y],'center_inside':bool(geom.Contains(p)),'distance_boundary':geom.Boundary().Distance(p),'source_nearest_cell':[sr,sc],'source_center':[sx,sy],'source_center_inside':bool(geom.Contains(sp)),'all_touched':int(arrays['mask_all_touched'][row,col])})
+    check(report['counts']['source_warp_cutline']=={'without_target_mask':213,'center_target_mask':212,'all_touched_target_mask':213},'Different source-cutline/target-center/all-touched counts, not forced equality')
+    check(report['counts']['historic_loss_unmasked']==report['counts']['source_warp_cutline'],'Historic copy and source-cutline ROI agree for these year codes')
+    check(report['counts']['source_unmasked']['without_target_mask']==525,'Upstream unmasked ROI is not the historic clipped copy')
+    check(len(report['differences'])==1,'One boundary cell explains the target mask difference')
+    cell=report['differences'][0]
+    check((cell['row'],cell['col'],cell['code'])==(192,197,13),'Identified boundary cell')
+    check(not cell['center_inside'] and cell['source_center_inside'] and cell['all_touched']==1,'Nearest source center inside, target center outside, intersected cell')
+    check(abs(cell['distance_boundary']-5.065045656283305)<1e-5,'Boundary distance in projected metres')
+    for key in ['historic_loss','historic_dem']:
+     ds=gdal.Open(str(paths[key]),gdal.GA_ReadOnly);geo=ds.GetGeoTransform();samples=[]
+     check(ds.GetRasterBand(1).GetNoDataValue() is None,'Historical NoData is undeclared '+key)
+     for row,col in [(0,0),(0,ds.RasterXSize-1),(ds.RasterYSize-1,0),(ds.RasterYSize-1,ds.RasterXSize-1)]:
+      point=ogr.Geometry(ogr.wkbPoint);point.AddPoint_2D(geo[0]+(col+.5)*geo[1],geo[3]+(row+.5)*geo[5]);v=float(ds.GetRasterBand(1).ReadAsArray(col,row,1,1)[0,0])
+      if not geom.Contains(point): samples.append({'row':row,'col':col,'value':v});check(v==0,'Historical exterior corner uses zero '+key)
+     check(bool(samples),'Observed exterior samples '+key);report['metadata'][key]['exterior_samples']=samples;ds=None
+    check(all(sha(Path(p))==h for p,h in before.items()),'All nine original GeoPackages, Suceava rasters and sidecars unchanged')
+    report['status']='PASS read-only mask comparison';report['original_files']=before;return report
 
 
 def verify_suceava(data_root, project):
@@ -464,7 +522,14 @@ def run_checks():
     print(json.dumps(report, ensure_ascii=False))
 
 try:
-    run_checks()
+    if sys.argv[1:2] == ["--mask-conventions-only"]:
+        report["scope"] = "Read-only Suceava 6km mask conventions, not full-county processing or GUI"
+        report["T06"] = verify_suceava_mask_conventions(sys.argv[2])
+        report.update(status="PASS", checks=checks)
+        (OUT / "mask-conventions-results.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({"status":report["status"],"checks":checks,"counts":report["T06"]["counts"],"differences":report["T06"]["differences"]}))
+    else:
+        run_checks()
 except Exception:
     import traceback
     traceback.print_exc()

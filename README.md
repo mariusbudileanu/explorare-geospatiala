@@ -1,4 +1,4 @@
-# Explorare geospațială v3.0.0
+# Explorare geospațială v4.0.0 — candidată nepublicată
 
 **De la concepte clasice la GIS (QGIS)**
 
@@ -6,7 +6,7 @@ Platformă educațională statică de cartografie și GIS, organizată în șapt
 
 Proiectul se adresează studenților de licență și master, în special celor de la Geografie.
 
-**Versiune:** v3.0.0. [Platforma publică](https://mariusbudileanu.github.io/explorare-geospatiala/) reflectă versiunea publicată din `main`. Pentru o versiune fixă, consultă tagul și release-ul corespunzător din repository. [Repository](https://github.com/mariusbudileanu/explorare-geospatiala) · [Changelog](CHANGELOG.md) · [Note de release](docs/releases/v3.0.0.md).
+**Versiune în pregătire:** 4.0.0, candidată nepublicată, fără tag, DOI de versiune sau dată definitivă de publicare. Baseline-ul publicat rămâne v3.0.0 (`6c36a95c2bb58d31208efbee4b9f3595130bb814`). [Platforma publică](https://mariusbudileanu.github.io/explorare-geospatiala/) reflectă versiunea publicată din `main`. Pentru o versiune fixă, consultă tagul și release-ul corespunzător din repository. [Repository](https://github.com/mariusbudileanu/explorare-geospatiala) · [Changelog](CHANGELOG.md) · [Note de release](docs/releases/v3.0.0.md).
 
 ## Parcurs educațional
 
@@ -20,7 +20,7 @@ Proiectul se adresează studenților de licență și master, în special celor 
 
 ## Digital Companion — 20 de laboratoare
 
-Identitățile L01–L20 și destinațiile existente sunt păstrate. Versiunea 3 introduce 11 pagini de laborator și extinde nouă destinații existente în v2; nu toate cele 20 de laboratoare sunt noi. Interfețele și explicațiile laboratoarelor v3 au suport RO/EN. Lecțiile și atelierele mai vechi rămân predominant în română.
+Identitățile L01–L20 și destinațiile existente sunt păstrate. Candidata v4 oferă un parcurs recomandat de 24 de pași, cu introduceri distincte de aprofundare și trei variante ale unui singur proiect final; explorarea tuturor resurselor rămâne liberă. Tabelul de mai jos păstrează istoricul extinderii realizate în v3. Versiunea 3 introduce 11 pagini de laborator și extinde nouă destinații existente în v2; nu toate cele 20 de laboratoare sunt noi. Interfețele și explicațiile laboratoarelor v3 au suport RO/EN. Lecțiile și atelierele mai vechi rămân predominant în română.
 
 | ID | Laborator | Față de v2 |
 | --- | --- | --- |
@@ -83,6 +83,6 @@ Platforma și codul au fost dezvoltate cu asistență AI; conținutul academic, 
 
 Budileanu, M. (2026). *Explorare geospațială*.
 
-Metadatele versiunii sunt în [CITATION.cff](CITATION.cff), cu `version: 3.0.0`. [DOI-ul de concept](https://doi.org/10.5281/zenodo.23422847) identifică familia de versiuni; [DOI-ul v2.0.0](https://doi.org/10.5281/zenodo.23422848) identifică numai release-ul anterior. Pentru DOI-ul specific și data publicării unei versiuni, consultă înregistrarea Zenodo și release-ul GitHub corespunzătoare. URL-ul platformei publice este o adresă evolutivă, nu un permalink al versiunii.
+Metadatele versiunii sunt în [CITATION.cff](CITATION.cff), cu `version: 4.0.0` și statut de candidată nepublicată. Nu există încă DOI de versiune sau dată de publicare pentru v4.0.0; identificatorii istorici nu îi sunt reasignați. [DOI-ul de concept](https://doi.org/10.5281/zenodo.23422847) identifică familia de versiuni; [DOI-ul v2.0.0](https://doi.org/10.5281/zenodo.23422848) identifică numai release-ul anterior. Pentru DOI-ul specific și data publicării unei versiuni, consultă înregistrarea Zenodo și release-ul GitHub corespunzătoare. URL-ul platformei publice este o adresă evolutivă, nu un permalink al versiunii.
 
 [Despre platformă](https://mariusbudileanu.github.io/explorare-geospatiala/about.html) · [Registrul datelor și licențele](https://mariusbudileanu.github.io/explorare-geospatiala/resources.html#registrul-datelor) · [Raportează o problemă](https://github.com/mariusbudileanu/explorare-geospatiala/issues)

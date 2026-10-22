@@ -362,7 +362,48 @@
         "limitations": [
           "NoData nu este definit în copiile locale de intrare; copiile QA sunt decupate cu mască explicită și NoData -9999/255.",
           "Pentru limita județului este verificată masca locală judet_suceava.gpkg, nu întregul pachet național ro_judete_poligon.gpkg."
-        ]
+        ],
+        "historical_copy": {
+          "filename": "dem_suceava.tif",
+          "sha256": "d9ade4f666a930a6149c9ccbe8620afdabeae131026fcae095a0f5f38ab192c4",
+          "nodata_tag": null,
+          "exterior_value": 0,
+          "status": "copie istorică locală, nu output certificat al parametrilor T06 actuali",
+          "interpretation": "Zero poate fi o elevație validă; exteriorul se exclude spațial, nu prin recodificarea globală a zeroului.",
+          "student_output": "Copie nou procesată conform T06: mască spațială explicită, grilă/metadate controlate și NoData exterior -9999 la DEM /255 la lossyear. Verifică fișierul efectiv, fără modificarea originalului."
+        },
+        "mask_comparison": {
+          "scope": "ROI6km;200×200;EPSG:3844;30m;coduri13–14/2013–2014, nu întregul județ",
+          "extent": [
+            493650,
+            687180,
+            499650,
+            693180
+          ],
+          "target_pixel_center": 212,
+          "target_all_touched": 213,
+          "source_cutline_then_nearest_without_target_center_mask": 213,
+          "unmasked_upstream_roi": 525,
+          "rule": "Masca rasterizată pe grila țintă cu regula centrului exclude o celulă intersectată de județ; all_touched o include. Cutline în grila sursă urmat de nearest o poate păstra deoarece centrul sursă este în județ.",
+          "boundary_cell": {
+            "row": 192,
+            "col": 197,
+            "indexing": "zero-based",
+            "code": 13,
+            "target_center": [
+              499575,
+              687405
+            ],
+            "target_center_inside": false,
+            "distance_to_boundary_m": 5.065045656283305,
+            "nearest_source_center": [
+              499586.447086884,
+              687403.8612839745
+            ],
+            "nearest_source_center_inside": true
+          },
+          "limitations": "212 și213 corespund unor reguli diferite.213 fără masca țintă nu înseamnă rasterul upstream complet nemascat; acel ROI upstream are525 coduri13–14. Nu este o suprafață oficială ori un rezultat pentru întregul județ."
+        }
       }
     },
     {
@@ -392,7 +433,48 @@
         "limitations": [
           "NoData nu este definit în copiile locale de intrare; copiile QA sunt decupate cu mască explicită și NoData -9999/255.",
           "Pentru limita județului este verificată masca locală judet_suceava.gpkg, nu întregul pachet național ro_judete_poligon.gpkg."
-        ]
+        ],
+        "historical_copy": {
+          "filename": "forest_loss_suceava.tif",
+          "sha256": "20ef0c33dd6b76ce2e5f377431a9f5b26ce2d80a8e70cbc1f76ebbaa224446e5",
+          "nodata_tag": null,
+          "exterior_value": 0,
+          "status": "copie istorică locală, nu output certificat al parametrilor T06 actuali",
+          "interpretation": "Zero exterior nu se distinge numeric de lossyear0/fără pierdere detectată fără masca spațială; datamask este o bandă separată.",
+          "student_output": "Copie nou procesată conform T06: mască spațială explicită, grilă/metadate controlate și NoData exterior -9999 la DEM /255 la lossyear. Verifică fișierul efectiv, fără modificarea originalului."
+        },
+        "mask_comparison": {
+          "scope": "ROI6km;200×200;EPSG:3844;30m;coduri13–14/2013–2014, nu întregul județ",
+          "extent": [
+            493650,
+            687180,
+            499650,
+            693180
+          ],
+          "target_pixel_center": 212,
+          "target_all_touched": 213,
+          "source_cutline_then_nearest_without_target_center_mask": 213,
+          "unmasked_upstream_roi": 525,
+          "rule": "Masca rasterizată pe grila țintă cu regula centrului exclude o celulă intersectată de județ; all_touched o include. Cutline în grila sursă urmat de nearest o poate păstra deoarece centrul sursă este în județ.",
+          "boundary_cell": {
+            "row": 192,
+            "col": 197,
+            "indexing": "zero-based",
+            "code": 13,
+            "target_center": [
+              499575,
+              687405
+            ],
+            "target_center_inside": false,
+            "distance_to_boundary_m": 5.065045656283305,
+            "nearest_source_center": [
+              499586.447086884,
+              687403.8612839745
+            ],
+            "nearest_source_center_inside": true
+          },
+          "limitations": "212 și213 corespund unor reguli diferite.213 fără masca țintă nu înseamnă rasterul upstream complet nemascat; acel ROI upstream are525 coduri13–14. Nu este o suprafață oficială ori un rezultat pentru întregul județ."
+        }
       }
     },
     {
@@ -494,7 +576,39 @@
         "limitations": [
           "NoData nu este definit în copiile locale de intrare; copiile QA sunt decupate cu mască explicită și NoData -9999/255.",
           "Pentru limita județului este verificată masca locală judet_suceava.gpkg, nu întregul pachet național ro_judete_poligon.gpkg."
-        ]
+        ],
+        "mask_comparison": {
+          "scope": "ROI6km;200×200;EPSG:3844;30m;coduri13–14/2013–2014, nu întregul județ",
+          "extent": [
+            493650,
+            687180,
+            499650,
+            693180
+          ],
+          "target_pixel_center": 212,
+          "target_all_touched": 213,
+          "source_cutline_then_nearest_without_target_center_mask": 213,
+          "unmasked_upstream_roi": 525,
+          "rule": "Masca rasterizată pe grila țintă cu regula centrului exclude o celulă intersectată de județ; all_touched o include. Cutline în grila sursă urmat de nearest o poate păstra deoarece centrul sursă este în județ.",
+          "boundary_cell": {
+            "row": 192,
+            "col": 197,
+            "indexing": "zero-based",
+            "code": 13,
+            "target_center": [
+              499575,
+              687405
+            ],
+            "target_center_inside": false,
+            "distance_to_boundary_m": 5.065045656283305,
+            "nearest_source_center": [
+              499586.447086884,
+              687403.8612839745
+            ],
+            "nearest_source_center_inside": true
+          },
+          "limitations": "212 și213 corespund unor reguli diferite.213 fără masca țintă nu înseamnă rasterul upstream complet nemascat; acel ROI upstream are525 coduri13–14. Nu este o suprafață oficială ori un rezultat pentru întregul județ."
+        }
       }
     },
     {

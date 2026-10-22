@@ -1,5 +1,13 @@
 # Changelog
 
+## v4.0.0 — candidat, nepublicat
+
+- Păstrează cele 73 de destinații, L01–L20, T01–T06 și cele șapte capitole, cu un catalog canonic și navigare contextuală.
+- Integrează parcursul recomandat de 24 de pași, introducerile 1.2i/WFi/T01n și trei aplicații ale proiectului final; accesul rămâne liber.
+- Include corecțiile auditate și stabilizarea tehnică din Etapele 4–6, cu limitele QA și datele originale păstrate.
+- Pregătește citarea software-ului 4.0.0 și documentarea reproductibilității; nu există încă tag, DOI de versiune sau dată de publicare pentru candidată.
+- Baseline-ul publicat v3.0.0 rămâne imuabil. Documentele istorice de release de mai jos nu sunt rescrise.
+
 ## v3.0.0
 
 Changes below summarize the accepted development history since `v2.0.0` (`ee0bf9aaba344042095d5d2804389b7016694d54`). Scientific baseline: `3f4ce5d2a6c4c7deea4ca8ee3fcabf5cfb01e17b`; this release-preparation patch changes documentation and metadata, not laboratory calculations.

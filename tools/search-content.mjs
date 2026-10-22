@@ -4,7 +4,20 @@ export function extractSearchContent(main) {
   // They can change between DOMContentLoaded and data completion (or user actions).
   // Placement tables and computed legends depend on Canvas font metrics and
   // exercise state. Keep the surrounding authored guidance and classic tables.
-  const excluded='script,style,template,footer,nav,dialog,noscript,.runtime-notice,[aria-live],[role="status"],[data-search-exclude],.feedback,.lab-dynamic,.repair-results,.carto-records,.carto-legend,#challenge-workspace,#challenge-catalog';
+  const hardExcluded='script,style,template,footer,nav,dialog,noscript,.runtime-notice,[aria-live],[role="status"],[data-search-exclude],.feedback,.carto-records,.carto-legend,#challenge-workspace,#challenge-catalog';
+  const excluded=hardExcluded+',.lab-dynamic,.repair-results';
+  // These existing paragraph positions contain literal authored copy in every
+  // state of their synchronous renderers. Other dynamic output stays excluded.
+  // Do not whitelist whole demos, computed tables or state-dependent feedback.
+  const stableEditorial=[
+    '#topology-root #T2 .lab-dynamic > p',
+    '#transparency-root #T1 .lab-dynamic > p',
+    '#transparency-root #T2 .lab-dynamic > p:last-child',
+    '#transparency-root #T4 .lab-dynamic > p',
+    '#transparency-root #T6 .lab-dynamic > p',
+    '#transparency-root #T7 .lab-dynamic > p',
+    '#formats-root #F0 .lab-dynamic > p'
+  ].join(',');
   const boundaries=new Set(['ADDRESS','ARTICLE','ASIDE','BLOCKQUOTE','BR','DD','DIV','DL','DT','FIGCAPTION','FIGURE','H1','H2','H3','H4','H5','H6','HR','LI','OL','P','SECTION','TABLE','TD','TH','TR','UL','A','BUTTON','LABEL','LEGEND','OUTPUT']);
   const textOf=node=>{
     if(node.nodeType===3)return node.nodeValue;
@@ -15,7 +28,7 @@ export function extractSearchContent(main) {
   };
   const clean=node=>textOf(node).replace(/\s+/g,' ').replace(/\s+([,.;:!?])/g,'$1').trim();
   const paragraphs=[...main.querySelectorAll('h2,h3,h4,h5,h6,p,li,dt,dd,th,td,figcaption,label,legend')]
-    .filter(e=>!e.closest(excluded)).map(e=>{
+    .filter(e=>!e.closest(excluded)||(e.matches(stableEditorial)&&!e.closest(hardExcluded))).map(e=>{
       const text=clean(e);
       // Discovery headings need their card's explanation, not a bare short title.
       if(e.matches('h2,h3')&&e.closest('[data-experience],[data-companion-callout]')){

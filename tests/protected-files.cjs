@@ -50,13 +50,13 @@ const intentionalUpdates={
   },
   'data/workshop-reproducibility.json':{
     baseline:'4bd7d6186864f59010462dd2154803189784470ac6e4684f5afe39c23e3dec1a',
-    current:'acefb888b66136bc7d5047f4e3227b062ea1369792e8e5bfc0621d5c3f84bf0c',
-    reason:'Lots 5.2/5.3: approved T01 core/CASE, scale/NULL explanations and cautious datum-dialog note; focused workshop corrections.'
+    current:'d9a706a5d1177c4c0574ebb57ec2ec5109510bd7164da5a68cf49966471ffbff',
+    reason:'Lots 5.2/5.3/Op6.2: approved T01 content retained; T06 distinguishes historical zero exterior from explicit NoData and target/source mask conventions. Documentation only; source rasters and algorithms unchanged.'
   },
   'data/tutorial-dataset-inventory.json':{
     baseline:'916ee897e2092b05b82e71797b4a5a866c212cf03435c752a3473b539afeef13',
-    current:'19f315f7d4a31003346e99e4e5fdde22997fc19c6c7c223b9888ba1309de70d8',
-    reason:'Lots 5.2/6.1: original-source checksums/schemas and tested representative Suceava ROI with explicit GUI/upstream/full-county limitations.'
+    current:'5b800623fb7d9cb7e3ecdf8fd3d9d265da5bebf58bf427a885f4da6b3a19fa5a',
+    reason:'Lots 5.2/6.1/6.2: original-source checksums, historical copies and explicit 212/213 mask-convention evidence on the frozen ROI; no source-data changes.'
   },
   'data/tutorial-screenshots.json':{
     baseline:'a8de46e261763f23cbaa43144a65c6bf5eb3cf5b44280757bdfd76ca9ce05abe',
