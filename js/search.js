@@ -14,8 +14,11 @@
     const sections=[...records.values()].filter(r=>r.parentId&&manifest.lessons.some(l=>l.id===r.parentId)).map(r=>({...manifest.lessons.find(l=>l.id===r.parentId),id:r.id,title:r.title,href:r.href,editorial_number:'',keywords:r.keywords,figures:[]}));
     const index=[...manifest.lessons.filter(l=>!l.canonical_id),...sections].map(lesson=>{
       const record=records.get(lesson.id),paragraphs=record?.paragraphs||[];
-      const metadataFields=[lesson.title,lesson.editorial_number,lesson.source_section,...lesson.keywords,...lesson.figures.map(f=>f.caption)].filter(Boolean);
-      return {lesson,paragraphs,description:record?.description||lesson.title,metadataFields,metadata:key(metadataFields.join(' ')),body:key(paragraphs.join(' '))};
+      // Canonical codes come from the manifest, never incidental DOM mentions.
+      // Diagnostic subsections inherit a parent but do not own its lab code.
+      const resourceCode=record?.parentId?'':lesson.lab_id||(/^T\d{2}$/.test(lesson.id)?lesson.id:'');
+      const metadataFields=[resourceCode,lesson.title,lesson.editorial_number,lesson.source_section,...lesson.keywords,...lesson.figures.map(f=>f.caption)].filter(Boolean);
+      return {lesson,resourceCode,paragraphs,description:record?.description||lesson.title,metadataFields,metadata:key(metadataFields.join(' ')),body:key(paragraphs.join(' '))};
     });
     const excerpt=(context,query)=>{
       const words=context.trim().split(/\s+/),position=key(context).indexOf(query);
@@ -26,7 +29,7 @@
     };
     input.addEventListener('input',()=>{
       const query=key(input.value);results.hidden=!query;if(!query){results.innerHTML='';return;}
-      const found=index.map(item=>({...item,score:key(item.lesson.title).includes(query)?3:item.metadata.includes(query)?2:item.body.includes(query)?1:0})).filter(i=>i.score).sort((a,b)=>b.score-a.score).slice(0,8);
+      const found=index.map((item,order)=>({...item,order,score:item.resourceCode&&key(item.resourceCode)===query?4:key(item.lesson.title).includes(query)?3:item.metadata.includes(query)?2:item.body.includes(query)?1:0})).filter(i=>i.score).sort((a,b)=>b.score-a.score||a.order-b.order).slice(0,8);
       results.innerHTML=found.length?found.map(({lesson,paragraphs,metadataFields,description})=>{
         // Prefer actual teaching text; a metadata-only match must explain its topic.
         const title=key(lesson.title),labelKey=text=>key(text).replace(/[.:;!?]+$/u,'');

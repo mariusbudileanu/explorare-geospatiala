@@ -23,13 +23,13 @@ for(const phrase of ['Copii istorice versus rezultate noi','Nu seta global valoa
 for(const id of ['copernicus_dem_30m','hansen_lossyear_2024']){const v=inventory.find(x=>x.dataset_id===id).verification;eq(v.historical_copy.nodata_tag,null,'Historical undeclared NoData');eq(v.historical_copy.exterior_value,0,'Historical zero exterior');eq(v.mask_comparison.target_pixel_center,212,'Target-center rule documented');eq(v.mask_comparison.target_all_touched,213,'All-touched rule separately documented');}
 ok(!t06.includes('Dacă nu apar probleme de performanță, puteți continua și fără decupare'),'Raw degree DEM cannot bypass metric processing');
 const t05=read('tutorials/t05.html');for(const phrase of ['Clip nu redistribuie atributul','SUM(population)','distribuției uniforme','nu este populație reală măsurată','dasymetric'])ok(t05.toLowerCase().includes(phrase.toLowerCase()),'T05 methodological requirement '+phrase);
-const layouts=[],errors=[];
+const layouts=[],reflows=[],errors=[];
 (async()=>{
  const browser=await playwright().chromium.launch(browserOptions());
  try{
  const ctx=await browser.newContext(),page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));
  const failures=[];page.on('response',r=>{if(r.status()>=400&&r.url().startsWith(base))failures.push(r.url());});
- for(const width of [1440,1024,768,390])for(const dark of [false,true])for(const id of ids){
+ for(const width of [1440,1024,768,390,375,320])for(const dark of [false,true])for(const id of ids){
   await page.setViewportSize({width,height:900});await page.goto(base+'tutorials/'+id.toLowerCase()+'.html');await page.evaluate(d=>document.body.classList.toggle('dark',d),dark);
   eq(await page.locator('h1').count(),1,id+' main heading');eq(await page.locator('.tutorial-overview li').count(),contract.workshops[id].objectives.length,id+' objectives rendered');ok(await page.locator('.workshop-requirements').innerText().then(s=>s.includes('3.44 LTR')&&s.includes('engleză')),id+' version and language');
   eq(await page.locator('.workshop-checkpoints li').count(),contract.workshops[id].checks.length,id+' checkpoints rendered');ok((await page.locator('.workshop-reference').innerText()).length>30,id+' reference');ok((await page.locator('.workshop-interpretation').innerText()).length>30,id+' limit');
@@ -39,6 +39,29 @@ const layouts=[],errors=[];
   for(const img of await page.locator('.tutorial-figure img').all())ok((await img.getAttribute('alt')).length>15,'Meaningful QGIS image alt');
   const localLinks=await page.locator('main a[href]').evaluateAll(es=>es.map(e=>e.href).filter(h=>h.startsWith(location.origin)));for(const url of new Set(localLinks)){const u=new URL(url);ok(u.pathname.startsWith('/explorare-geospatiala/'),'Project Pages link');}
  }
+
+ // Final audit reflow: real source text, enlarged text and CSS zoom (not native browser zoom).
+ for(const width of [320,375,390,768,1440])for(const dark of [false,true])for(const route of ['tutorials/t01.html','tutorials/t02.html','tutorials/t05.html','tutorials/t06.html','resources.html'])for(const mode of ['normal','text-200','css-zoom-2']){
+  await page.setViewportSize({width,height:1000});await page.goto(base+route);await page.evaluate(d=>document.body.classList.toggle('dark',d),dark);
+  if(route==='resources.html')await page.waitForFunction(()=>document.querySelectorAll('.resource-card').length>0);
+  if(mode==='text-200')await page.evaluate(()=>{const nodes=[...document.querySelectorAll('main p,main li,main dt,main dd,main th,main td,main h1,main h2,main h3,main a,main code,main strong,main span')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const [e,n]of nodes)e.style.fontSize=n*2+'px';});
+  if(mode==='css-zoom-2')await page.evaluate(()=>document.documentElement.style.zoom='2');
+  const state=await page.evaluate(()=>{
+   const outside=[...document.querySelectorAll('main p,main li,main code,main a,main .qgis-doc-link')].filter(e=>!e.closest('.tutorial-table-scroll,.tutorial-code')).map(e=>({text:e.textContent.slice(0,90),left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,scroll:e.scrollWidth,client:e.clientWidth})).filter(e=>e.left<-.5||e.right>innerWidth+1);
+   return {width:innerWidth,scroll:document.documentElement.scrollWidth,outside:outside.slice(0,5)};
+  });
+  ok(state.scroll<=width+1,'Reflow page '+route+'/'+width+'/'+dark+'/'+mode+' '+JSON.stringify(state));
+  eq(state.outside,[],'Necessary prose and links stay in viewport '+route+'/'+width+'/'+dark+'/'+mode);
+  reflows.push({route,width,dark,mode,...state});
+  if(width===320&&!dark&&route==='tutorials/t05.html'&&mode==='normal'){await page.locator('#pregatirea-datelor').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(root,'tmp/qa/operation2/reflow-t05-320.png')});}
+  if(width===375&&dark&&route==='resources.html'&&mode==='css-zoom-2'){await page.locator('main .resource-card').first().scrollIntoViewIfNeeded();await page.screenshot({path:path.join(root,'tmp/qa/operation2/reflow-resources-375-dark-zoom2.png')});}
+ }
+ await page.goto(base+'tutorials/t06.html');const preparation=await page.locator('#section-3').innerText();
+ ok(preparation.includes('T01n')&&preparation.includes('1.2 integrală')&&preparation.includes('L11'),'T06 actual preparation');
+ ok(preparation.includes('T02–T05 nu sunt prerechizite obligatorii')&&!preparation.includes('tutorialele anterioare'),'No implied all-workshops prerequisite');
+ await page.goto(base+'geospatial-data.html#decision');eq(await page.locator('#decision a[href="data-quality.html"]').count(),1,'L13 contextual destination');
+ ok(!(await page.locator('#decision').innerText()).includes('capitolul planificat'),'L13 is available now');
+ await page.locator('#decision a[href="data-quality.html"]').click();await page.waitForURL(base+'data-quality.html');
  await page.goto(base+'tutorials/t05.html');const slider=page.locator('#clip-share');ok(await slider.isEnabled(),'Slider initialized');eq(await page.locator('#clip-attribute').innerText(),'100');eq(await page.locator('#clip-estimate').innerText(),'30');
  await slider.focus();await page.keyboard.press('ArrowRight');eq(await slider.inputValue(),'40','Native keyboard increments area');eq(await page.locator('#clip-attribute').innerText(),'100','Clip does not reallocate');eq(await page.locator('#clip-estimate').innerText(),'40','Hypothetical calculation');await page.keyboard.press('Home');eq(await slider.inputValue(),'10');await page.keyboard.press('End');eq(await slider.inputValue(),'100');await page.locator('#clip-reset').click();eq(await slider.inputValue(),'30');eq(await page.locator('#clip-retained').getAttribute('width'),'90');eq(await page.locator('.clip-demo-grid [aria-live]').getAttribute('aria-live'),'polite');
  await page.locator('#clip-reset').focus();await page.keyboard.press('Shift+Tab');ok(await slider.evaluate(e=>e===document.activeElement),'Natural keyboard order reaches slider');ok(await slider.evaluate(e=>getComputedStyle(e).outlineStyle!=='none'),'Keyboard focus is visible');
@@ -49,6 +72,6 @@ const layouts=[],errors=[];
  await nojs.close();
  const offline=await browser.newContext({offline:true}),local=await offline.newPage();for(const id of ids){await local.goto(require('node:url').pathToFileURL(path.join(root,'tutorials/'+id.toLowerCase()+'.html')).href);ok(await local.locator('.dataset-card').count()>0,'Offline local sources');ok(await local.locator('.workshop-checkpoints').isVisible(),'Offline local checkpoints');if(id==='T05'){ok(await local.locator('#clip-share').isEnabled(),'File demo needs no server');await local.locator('#clip-reset').click();eq(await local.locator('#clip-attribute').innerText(),'100');}}await offline.close();
  ok(!errors.length,'No browser errors '+errors.join(';'));ok(!failures.length,'No missing project assets '+failures.join(';'));
- fs.writeFileSync(path.join(root,'tmp/qa/operation2/workshop-reproducibility.json'),JSON.stringify({status:'PASS',checks,layouts,errors,failures},null,2));console.log(JSON.stringify({status:'PASS',checks,layouts:layouts.length,errors,failures}));
+ fs.writeFileSync(path.join(root,'tmp/qa/operation2/workshop-reproducibility.json'),JSON.stringify({status:'PASS',checks,layouts,reflows,errors,failures},null,2));console.log(JSON.stringify({status:'PASS',checks,layouts:layouts.length,reflows:reflows.length,errors,failures}));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

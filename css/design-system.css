@@ -98,6 +98,24 @@ button[aria-pressed=true] { font-weight:700; }
 .resource-data-policy p { max-width:var(--content-text); }
 .data-source-note { display:block; margin-top:var(--space-4); padding:var(--space-3); background:var(--surface-alt); border-radius:var(--radius-small); font-size:13px; color:var(--muted); }
 .data-source-note a { display:inline-block; margin-top:6px; }
+/* Preserve full field names and documentation URLs at narrow/reflow widths. */
+.workshop-main,#resources-root,.resource-card a {
+  overflow-wrap:anywhere;
+}
+.workshop-main table { overflow-wrap:normal; }
+.tutorial-links > *,.concept-grid,.qgis-doc-grid,.qgis-doc-link {
+  min-width:0; max-width:100%;
+}
+.step-heading h3,.site-footer > *,.page-footer > * { min-width:0; }
+.workshop-main fieldset { min-width:0; }
+.site-footer,.page-footer { overflow-wrap:anywhere; }
+.site-footer a,.page-footer a { white-space:normal; }
+.topbar { height:auto; min-height:var(--header); }
+.topbar > *,.brand > span { min-width:0; max-width:100%; }
+.brand { white-space:normal; overflow-wrap:anywhere; }
+.brand svg { flex-shrink:0; }
+.global-search input { min-width:0; }
+.site-topbar .resources-link,.site-topbar .about-link { white-space:normal; overflow-wrap:anywhere; }
 .site-footer .license-summary { grid-column:1/-1; flex-basis:100%; width:100%; order:4; font-size:12px; white-space:normal; }
 body.dark .processing-svg .cell-label { fill:#162b38; }
 body.dark .processing-svg { background:var(--surface-alt); }

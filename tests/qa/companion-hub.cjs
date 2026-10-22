@@ -64,6 +64,31 @@ try{
  const searchStart=checks,normalize=text=>text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  const indexContext={window:{}};vm.runInNewContext(read('data/search-index.js'),indexContext);
  const records=indexContext.window.CARTO_SEARCH_INDEX;
+ // ASTRA-V4-01: exact manifest codes outrank incidental mentions, without new records.
+ equal(records.length,90,'Search record cardinality');
+ equal(content.lessons.filter(l=>!l.canonical_id&&records.some(r=>r.id===l.id)).length,72,'Canonical searchable resources');
+ const codeResults=[];
+ for(const lesson of content.lessons.filter(l=>l.lab_id||/^T0[1-6]$/.test(l.id))){
+  const code=lesson.lab_id||lesson.id;
+  for(const query of [code,code.toLowerCase()]){
+   await page.fill('#search',query);const hrefs=await page.locator('#search-results a').evaluateAll(es=>es.map(e=>e.getAttribute('href')));
+   equal(hrefs[0],lesson.href,'Exact canonical code first '+query);equal(new Set(hrefs).size,hrefs.length,'No duplicate result destinations '+query);
+   await page.fill('#search','');await page.fill('#search',query);
+   equal(await page.locator('#search-results a').evaluateAll(es=>es.map(e=>e.getAttribute('href'))),hrefs,'Deterministic order '+query);
+   if(query===code)codeResults.push({code,first:hrefs[0],secondary:hrefs.length-1});
+  }
+ }
+ for(const query of ['L010','L190','T010','zzzz-niciun-rezultat-654321']){
+  await page.fill('#search',query);equal(await page.locator('#search-results a').count(),0,'No partial identifier or fabricated match '+query);
+  ok((await page.locator('#search-results').innerText()).includes('Niciun rezultat.'),'No-results message '+query);
+ }
+ await page.fill('#search','L19');await page.locator('#search').press('ArrowDown');
+ ok(await page.locator('#search-results a').first().evaluate(e=>e===document.activeElement),'ID result ArrowDown focus');
+ await page.keyboard.press('Escape');ok(await page.locator('#search-results').isHidden(),'ID Escape closes');ok(await page.locator('#search').evaluate(e=>e===document.activeElement),'ID Escape returns focus');
+ await page.fill('#search','l19');await page.locator('#search').press('Enter');await page.waitForURL(base+'georeferencing-lab.html');
+ await page.goto(base+'index.html');
+ console.log('PASS canonical code search '+JSON.stringify(codeResults));
+
  const genericSnippetStart=checks;
  for(const query of ['proiecții','PROIECȚII','proiectii']){
   await page.fill('#search',query);const result=page.locator('#search-results a[href="lesson.html?id=projection-classification"]');
@@ -200,5 +225,5 @@ try{
   if(route==='index.html')equal(await fallback.locator('#cuprins .theme-card').count(),7,'No-JS seven usable chapter destinations');
  }
  await nojs.close();equal(errors,[],'Zero browser errors');equal(badResponses,[],'Zero missing public assets');equal(warnings,[],'Zero browser warnings');
- const report={status:'PASS',checks,searchChecks,genericSnippetChecks,semanticChecks,semanticExamples,primary,secondary:content.companion.secondary,search,layouts,hubRequests,hubTiming,external:hubRequests.filter(u=>!u.startsWith(base)),heavyEngines:0,brokenLinks:badResponses.length,errors,warnings};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({status:'PASS',checks,searchChecks,genericSnippetChecks,semanticChecks,errors:errors.length,warnings:warnings.length,brokenLinks:badResponses.length,report:path.relative(root,path.join(out,'result.json'))}));
+ const report={status:'PASS',checks,searchChecks,genericSnippetChecks,semanticChecks,semanticExamples,primary,secondary:content.companion.secondary,search,codeResults,layouts,hubRequests,hubTiming,external:hubRequests.filter(u=>!u.startsWith(base)),heavyEngines:0,brokenLinks:badResponses.length,errors,warnings};fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({status:'PASS',checks,searchChecks,genericSnippetChecks,semanticChecks,errors:errors.length,warnings:warnings.length,brokenLinks:badResponses.length,report:path.relative(root,path.join(out,'result.json'))}));
 }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}})().catch(error=>{console.error(error);process.exitCode=1;});

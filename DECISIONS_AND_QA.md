@@ -872,7 +872,7 @@ Validare cu jsonschema Draft7/FormatChecker din runtime-ul QGIS existent, contra
 | Concordanță metadate/licențe și caz negativ extracție |PASS;5 pagini runtime și41 notificări statice|
 | Excluderi de distribuție și git diff --check |PASS|
 
-Suita companion-hub a respins inițial version4.0.0 deoarece avea așteptări exacte pentru v3. Au fost actualizate exclusiv câmpurile CFF autorizate (versiune, mesaj, abstract și descrierea identificatorului); sunt păstrate protecția restului metadatelor, licența MIT, verificarea afilierei și toate verificările motorului. Nu s-au eliminat aserțiuni GIS pentru obținerea PASS. Verificarea auxiliară a metadatelor a fost corectată pentru obiecte din contexte VM diferite și pentru shellul de lecție care generează footerul la runtime; produsul nu a fost schimbat pentru aceste particularități ale probei. Terminatorii sursei Python preexistente au fost păstrați; nu se include o rescriere accidentală a întregului fișier.
+Suita companion-hub a respins inițial version4.0.0 deoarece avea așteptări exacte pentru v3. Au fost actualizate exclusiv câmpurile CFF autorizate (versiune, mesaj, abstract și descrierea identificatorului); sunt păstrate protecția restului metadatelor, licența MIT, verificarea afilierii și toate verificările motorului. Nu s-au eliminat aserțiuni GIS pentru obținerea PASS. Verificarea auxiliară a metadatelor a fost corectată pentru obiecte din contexte VM diferite și pentru shellul de lecție care generează footerul la runtime; produsul nu a fost schimbat pentru aceste particularități ale probei. Terminatorii sursei Python preexistente au fost păstrați; nu se include o rescriere accidentală a întregului fișier.
 
 Reproducere: comenzile browser folosesc CODEX_NODE_MODULES și QA_BROWSER_PATH din runtime-ul existent; `node tests/v4-build.cjs`, `node tests/v4-navigation.cjs`, `node tests/lot53-browser.cjs`, `node tests/run-existing.cjs companion-hub workshop-reproducibility`. Proba GIS este `tests/qa/lot52-qgis.py --mask-conventions-only <folderul_originalelor_Suceava>`, în launcherul QGIS3.40.11, PYTHONNOUSERSITE=1, PYTHONIOENCODING=utf-8, QT_QPA_PLATFORM=offscreen; GDAL_PAM_ENABLED=NO este setat în test. Dovezile și schema descărcată sunt în tmp/qa/op62/ și tmp/qa/lot52/mask-conventions-results.json, ignorate de Git, fără rapoarte paralele de publicat.
 
@@ -884,7 +884,7 @@ Reproducere: comenzile browser folosesc CODEX_NODE_MODULES și QA_BROWSER_PATH d
 
 ### Închiderea Operațiunii 6.2 — verdict final Opus și candidata pentru audit (2026-10-22)
 
-**Verdict independent Opus: ACCEPTAT**, fără corecții obligatorii înainte de commit, conform rezultatului transmis și autorizat de proprietar. **E61-02, E61-03 și E61-04 — REZOLVATE.** Opus a reprodus independent cei7 paragrafi editoriali recuperați, indexul cu90 înregistrări/72 resurse și cele42 pagini HTML identice pe Linux, confirmând determinismul Windows/Linux. A confirmat rezultatele Suceava **212 / 213 / 213 / 525**, conform convențiilor documentate, inclusiv poziția celulei de margine row192/col197 și distanța de **5,065m**;212 și213 rămân rezultate distincte, nu sunt declarate identice. A confirmat validitatea CFF1.2.0, candidata4.0.0 nepublicată, concordanța MIT pentru cod/CC BY4.0 pentru conținut, integritatea contractului v3 și a originalelor GIS. Aceste rezultate independente sunt atribuite auditului Opus; nu reprezintă execuții Linux locale în această închidere.
+**Verdict independent Opus: ACCEPTAT**, fără corecții obligatorii înainte de commit, conform rezultatului transmis și autorizat de proprietar. **E61-02, E61-03 și E61-04 — REZOLVATE.** Opus a reprodus independent cele 7 paragrafe editoriale recuperate, indexul cu90 înregistrări/72 resurse și cele42 pagini HTML identice pe Linux, confirmând determinismul Windows/Linux. A confirmat rezultatele Suceava **212 / 213 / 213 / 525**, conform convențiilor documentate, inclusiv poziția celulei de margine row192/col197 și distanța de **5,065m**;212 și213 rămân rezultate distincte, nu sunt declarate identice. A confirmat validitatea CFF1.2.0, candidata4.0.0 nepublicată, concordanța MIT pentru cod/CC BY4.0 pentru conținut, integritatea contractului v3 și a originalelor GIS. Aceste rezultate independente sunt atribuite auditului Opus; nu reprezintă execuții Linux locale în această închidere.
 
 **E62-01 — informativ, pentru publicarea efectivă:** statutul de candidată, data publicării și eventualul DOI de versiune vor necesita atunci un commit separat, strict limitat la metadate și fișierele generate corespunzătoare, urmat de verificare punctuală. Nu se simulează publicarea prin metadatele actuale.
 
@@ -896,3 +896,93 @@ Se autorizează un singur commit local, cu mesajul chore(v4): prepare release ca
 
 
 **Verificări finale de închidere6.2 — PASS:** validatorul și modelul/contractul v3:1439 verificări,14 cazuri negative;194 fișiere intacte și9 excepții exacte; navigare:5628 verificări/73 destinații, fragmente/reload/Back-Forward și control negativ; lecția1.2:354 verificări pe5 viewporturi/2 teme; parcurs:362 verificări,24 pași/3 variante; căutare:920 verificări/329 căutări; ateliere:3799 verificări/48 layouturi. Schema oficială CFF1.2.0, politica versiunii/DOI și licențele MIT/CC BY4.0 trec. Indexul păstrează90 înregistrări/72 resurse;42HTML/47 fișiere generate sunt identice între două build-uri, --check nu scrie, iar cele72 resurse sunt verificate în două fonturi. Hashurile celor9 GeoPackage-uri și9 fișiere Suceava/sidecar-uri coincid cu probele existente, fără procesare GIS suplimentară. Snapshotul istoric și referințele protejate sunt intacte. git diff --check PASS. Numai jurnalul diferă față de preflight-ul închiderii; celelalte15 fișiere auditate sunt byte-identice. Logurile locale de închidere sunt în tmp/qa/op62-close/, ignorate de Git. Verificarea staged se efectuează separat, pe lista explicită de16 fișiere și fără cele6 diferențe exclusiv CRLF/LF.
+
+
+### Remediere consolidată după auditurile finale Astra/Opus (2026-10-22)
+
+**Referința auditată:** 0dbdad46f48ddcd72390edeea0e68756c4a09df2, branch restructure/v4.0.0. Ambele audituri independente au verdict ACCEPTAT CU REZERVE, cu cele 6 constatări neblocante transmise de proprietar. Mandatul autorizează numai remedierile punctuale și testele, fără staging/commit sau publicare. Working tree și index curate la preflight; main/origin/main și v3.0.0 rămân la baseline 6c36a95c2bb58d31208efbee4b9f3595130bb814. Artefactul .git/stale-index-lock-audit-opus exista cu exact 0 octeți; după verificarea absenței proceselor Git active a fost eliminat exclusiv acest fișier. Nu a fost șters index.lock și nu s-au făcut resetări.
+
+| Constatare | Intervenție și dovadă locală |
+|---|---|
+| ASTRA-V4-01 | js/search.js consumă explicit lab_id din manifest și id pentru T01–T06; codul exact, normalizat RO/case-insensitive, are prioritate față de titlu/metadate/corp. Subsecțiunile diagnostice nu moștenesc codul canonic pentru ranking exact. Ordinea de inventar este criteriul determinist la egalitate. Sunt păstrate rezultatele secundare, fragmentele diagnostice și navigarea tastatură. Nu se introduce un registru sau un text DOM nou. |
+| ASTRA-V4-02 | În contractul existent data/workshop-reproducibility.json, revizia §3 T06 precizează T01n, 1.2 integrală, L11 și competențele CRS/vector/raster; declară explicit că T02–T05 nu sunt obligatorii. tools/workshop-content.mjs aplică revizia prin mecanismul existent și regenerează tutorials/t06.html. Nivelul Avansat și pașii tehnici sunt păstrați. |
+| ASTRA-V4-03 | Secțiunea statică #decision din geospatial-data.html este sursa autoritativă a acestui text, păstrată de generator; trimiterea la capitolul planificat este înlocuită cu linkul data-quality.html, L13. Nu se editează divergent o secțiune generată și nu se elimină extensii viitoare distincte. Linkul este accesat efectiv în browser; indexul regenerat include formularea nouă. |
+| OPUS-F-01/F-02 | css/design-system.css permite ruperea numelor de câmp/fișier/URL în ateliere și Resources, restrângerea copiilor flex/grid și fieldset, plus textul antetului/footerului în stres. Nicio trunchiere, ascundere orizontală sau alterare a câmpurilor/numerelor. Paleta și iconurile nu sunt schimbate. Primul test extins a reprodus defectul T05 la 320 px: două intrări li cu nume lungi neîncadrate în code; corecția inițială numai pe code era insuficientă. În stresul CSS integral zoom: 2 au fost identificate și constrângeri de lățime în antet/footer; acestea au fost corectate, nu excluse din aserțiunea de overflow. |
+| OPUS-F-03 | Numai tests/qa/p07-labs.cjs se modifică, nu exportul aplicației. PNG: semnătură, structură/chunk-uri complete și CRC, decodare reală în browser, 2362×1772, acoperire opacă și variație vizuală. PGW: exact 6 valori finite, pixel independent din scară/150 dpi, rotații0, nord în sus, originea centrului pixelului și corespondența ambelor margini cu PNG; toleranță explicită pentru rotunjirea PGW la 6 zecimale. Numele de bază PNG/PGW coincid. Hashul binar este diagnostic, fără identitate Windows impusă altor platforme; P07_REFERENCE_PNG_SHA256 permite doar o referință opțională de mediu declarată. Nu este o certificare vizuală pixel-cu-pixel multiplatformă. |
+
+**Căutare — 26/26 coduri canonice PASS**, fiecare și în litere mici, cu primul href corect, destinații fără duplicate exacte și aceeași ordine la repetare:
+
+| Cod | Prima destinație | Cod | Prima destinație |
+|---|---|---|---|
+| L01 | scale-resolution.html | L11 | raster-styling.html |
+| L02 | generalization-lab.html | L12 | zarr-cloud-data.html |
+| L03 | projection-crs-lab.html | L13 | data-quality.html |
+| L04 | measurement-lab.html | L14 | analysis.html |
+| L05 | classification-lab.html | L15 | raster-analysis.html |
+| L06 | thematic-methods.html | L16 | spatial-statistics.html |
+| L07 | styling-labeling.html | L17 | network-accessibility.html |
+| L08 | map-diagnostics.html | L18 | spatial-decision.html |
+| L09 | topology.html | L19 | georeferencing-lab.html |
+| L10 | formats-interoperability.html | L20 | gis-calculator.html |
+| T01 | tutorials/t01.html | T04 | tutorials/t04.html |
+| T02 | tutorials/t02.html | T05 | tutorials/t05.html |
+| T03 | tutorials/t03.html | T06 | tutorials/t06.html |
+
+L010, L190, T010 și interogarea fără rezultate nu produc potriviri parțiale/fabricate; mesajul fără rezultate este verificat. ArrowDown mută focusul pe primul rezultat L19, Escape închide și întoarce focusul, Enter pe l19 deschide laboratorul. Cele90 înregistrări/72 resurse sunt păstrate; toate ID-urile și href-urile din index sunt identice cu referința auditată. Numai textele celor2 înregistrări geospatial-data și T06 diferă. Cele7 paragrafe recuperate în6.2 și excluderea rezultatelor calculate rămân verificate în cele 2 configurații CSS/Canvas de fonturi. O comparație auxiliară între tablouri din contexte VM diferite a necesitat normalizarea obiectelor înainte de deepStrictEqual; aceasta era o particularitate a probei, nu un defect de index/produs.
+
+**Responsive local — PASS:**72 configurații ale tuturor T01–T06, 320/375/390/768/1024/1440 px× light/dark. Suplimentar 150 probe: T01, T02, T05, T06, Resources ×320/375/390/768/1440 px × light/dark × normal/text200%/CSS zoom: 2 pe document. Se verifică lățimea întregului document și poziția textelor/legăturilor necesare; tabelele/code cu derulare explicită rămân accesibile. CSS zoom: 2 nu este prezentat drept zoom nativ. Capturile T05/320 și Resources/375/dark/zoom2 au fost inspectate vizual; numele întregi sunt păstrate prin rupere, fără eliminarea textului.
+
+**Exporturi executate — PASS:**Zarea și Delta, PNG și PGW reale. PNG Zarea are 150 culori cuantizate/interval luminanță 210, Delta114/195; ambele 7854 eșantioane opace. Pe Windows hashul Zarea rămâne chiar 9e3661314ce001c92bb441833f6e4b94287d7371ef436c9b69be5d424a621cdf, fără a-l transforma în condiție multiplatformă. Sunt respinse deliberat pentru fiecare hartă: PNG trunchiat, PNG cu CRC alterat, PGW cu 7 valori, pixel dublat, rotație nenulă, semn vertical inversat, origine deplasată și PNG valid structural dar complet uniform.16 controale negative de export, alături de controalele numerice/GCP deja existente; datele, rezoluția și algoritmii nu se schimbă.
+
+**Conservare:**manifestul, modelul pedagogic, nivelurile, 24 pași/3 proiecte finale, snapshotul v3, metadatele candidatei și toate licențele sunt byte-identice cu referința auditată. Cele194 fișiere v3 intacte și aceleași 9 excepții exacte rămân obligatorii; se actualizează numai hashul excepției documentare deja existente workshop-reproducibility.json pentru ASTRA-V4-02, fără lărgirea listei sau modificarea preimaginii v3. Originalele GIS sunt intacte: 9 GeoPackage-uri și9 surse Suceava/sidecar-uri, prin rehash față de probele existente; fără procesări GIS extinse. Candidată nepublicată, data lansării și DOI-ul de versiune rămân nemodificate.
+
+**Limitări — NETESTAT aici:**Linux/macOS și browsere native suplimentare, zoom nativ de browser (probele locale sunt Chrome headless, CSS zoom și text mărit), GUI QGIS 3.44, fluxul integral Suceava, dispozitive fizice și cititoare de ecran. Determinismul și exporturile acestei remedieri sunt certificate local numai Windows/Chrome; este necesară reverificare punctuală independentă, inclusiv Linux, înainte de desemnarea candidatei finale. Această variantă de working tree nu este încă o candidată finală. Nu se pornește6.3/E62-01, nu se modifică/amendează commitul auditat, nu se efectuează staging/commit/push/merge/tag/release/Zenodo și nu sunt lansate audituri externe de agent.
+
+
+| Verificare consolidată executată | Rezultat final local |
+|---|---|
+| Validator/model/contract v3 | PASS 1439 verificări, 14 cazuri negative, 194 fișiere intacte + 9 excepții exacte |
+| Navigare și fragmente | PASS 5628; 73 destinații, Back/Forward, reload, control negativ al derulării |
+| Lecția 1.2 / parcurs și PF | PASS 354 / PASS 362; 24 pași, 3 variante, 0 erori |
+| Catalog/căutare + ID-uri | PASS 1089; 498 verificări de căutare, 26 coduri×2 forme case, 97 snippeturi, 50 verificări semantice; 0 erori/warnings/linkuri defecte |
+| Ateliere + responsive | PASS 5863; 72 configurații T01–T06 și150 probe de reflow; 0 erori/eșecuri |
+| P07 / PNG și PGW reale | PASS 5377; 4224 Zarr, 830 georeferențiere, 49 controale negative totale inclusiv16 de export; 0 erori/fișiere lipsă/rețea externă |
+| Browser consolidat / operații | PASS 2921; 364 configurații, 29 operații; 0 erori/eșecuri |
+| Build final / --check / fonturi | PASS 42HTML/47 fișiere, 2 build-uri identice,--check fără scriere; 72 resurse× Arial/Courier New cu metrici Canvas diferite; 90 înregistrări |
+| CFF 1.2.0/licențe/date originale | PASS; metadate nepublicate4.0.0 nemodificate, MIT/CC BY4.0; 9 GeoPackage-uri + 9 surse Suceava/sidecar-uri intacte |
+| Scope Git / diff --check | PASS; exact 11 fișiere existente modificate, fără fișiere noi neignorate, index gol, HEAD și referințe protejate neschimbate |
+
+Primul FAIL al suitei responsive extinse era defectul de produs T05/320 reprodus și remediat mai sus; nu au fost relaxate verificările de overflow pentru obținerea PASS. Nu rămân FAIL funcționale locale. Probele și capturile sunt în tmp/qa/final-remediation/, tmp/qa/operation2/, tmp/qa/p07/ și tmp/qa/companion-hub/, ignorate de Git. Comenzile de reproducere sunt cele existente: tools/validate-learning.cjs; tests/v4-model.cjs; tests/v4-navigation.cjs; tests/lot51-browser.cjs; tests/lot53-browser.cjs; tests/qa/companion-hub.cjs; tests/run-existing.cjs workshop-reproducibility; tests/qa/p07-labs.cjs; tests/v4-browser.cjs; tests/v4-build.cjs, cu CODEX_NODE_MODULES/QA_BROWSER_PATH din runtime-ul local. Schema CFF și hashurile originale sunt verificate prin probele existente, fără noi pachete sau date GIS.
+
+**Fișiere modificate:**js/search.js; css/design-system.css; data/workshop-reproducibility.json; geospatial-data.html (conținut static autoritativ #decision); tutorials/t06.html și data/search-index.js (regenerate); tests/protected-files.cjs; tests/qa/companion-hub.cjs; tests/qa/workshop-reproducibility.cjs; tests/qa/p07-labs.cjs; acest jurnal. Nicio altă sursă versionată nu diferă în octeți față de preflight. Generatorul și extractorul determinist nu sunt schimbate. **Git final:**restructure/v4.0.0, HEAD 0dbdad46f48ddcd72390edeea0e68756c4a09df2, 11 modificări intenționate, index gol, main/origin/main/v3.0.0 intacte. Oprire înainte de staging și commit; este necesară reverificarea independentă a remedierilor înaintea unei noi candidate finale.
+
+
+### Închiderea remedierilor post-audit — N-01/N-02/N-03 (2026-10-22)
+
+Conform reverificărilor independente transmise de proprietar: **Astra Low — APROBAT**, ASTRA-V4-01/02/03 rezolvate; **Opus High — ACCEPTAT CU REZERVE**, OPUS-F-01/02/03 rezolvate și confirmate independent pe Linux. Rezultatele Linux sunt atribuite Opus, nu execuțiilor locale Windows. Commitul local este autorizat după corecția N-01 și verificările cerute, fără reimplementarea celor șase remedieri.
+
+**N-01 — corecție aplicată:** imediat după regula generală de rupere se adaugă exclusiv ".workshop-main table { overflow-wrap: normal; }". Tabelele cu layout automat nu mai folosesc fragmentarea artificială a cuvintelor pentru calculul lățimilor. Ruperea identificatorilor din listele de pregătire și a URL-urilor Resources rămâne activă; containerele de derulare explicită ale tabelelor rămân accesibile. Fără overflow:hidden, trunchiere sau modificarea conținutului.
+
+**N-02 — limitare vizuală neblocantă:** Opus confirmă o diferență de 12 px între înălțimea antetului și variabila --header, fără ascunderea controalelor sau compromiterea ancorelor. Implementarea antetului este păstrată integral; N-01 nu o modifică. Această observație nu este declarată rezolvată.
+
+**N-03 — spațiere:** în secțiunea precedentă sunt separate cuvintele/valorile alipite și semnele de punctuație care îngreunau citirea. Verificarea automată confirmă identitatea textului înainte/după ignorarea exclusivă a spațiilor; valorile, identificatorii, hashurile și concluziile tehnice nu sunt schimbate. Au fost corectate și două forme gramaticale din istoricul jurnalului (afilierii; cele 7 paragrafe editoriale recuperate), fără schimbarea valorilor sau a concluziilor. Nu se creează documentație paralelă.
+
+Preflight: restructure/v4.0.0, HEAD 0dbdad46f48ddcd72390edeea0e68756c4a09df2, exact 11 fișiere intenționate, index gol și fără fișiere noi neignorate. Se pregătește un singur commit local cu mesajul fix(v4): resolve final audit findings, cu părinte direct commitul auditat. Nu se amendează referința inițială și nu se începe E62-01/publicarea. Noul commit va fi propus drept candidată finală, sub rezerva verificării punctuale a integrității și reproductibilității.
+
+
+**N-01 — ÎNCHISĂ local:** proba dedicată execută 24 cazuri T03/T04/T05/Resources la 320/375/390 px, light/dark, fără overflow sau erori runtime. În toate cele 6 cazuri T03, textul administrativ ocupă 2 rânduri în interiorul cuvântului cu regula anterioară și 1 rând după remediere; Fundal rămâne întreg. Tabelele au overflow-wrap: normal, listele de pregătire T05 păstrează anywhere. Captura T03-375-N01.png a fost inspectată vizual: despărțirea între cele două cuvinte este permisă, fragmentarea lor artificială nu mai apare. Implementarea antetului este identică în octeți cu preflight-ul după eliminarea exclusivă a noii reguli N-01; N-02 rămâne neblocantă.
+
+| Verificări finale înainte de commit | Rezultat local Windows |
+|---|---|
+| Validator + v4-model / contract v3 | PASS, 1.439 verificări, 14 cazuri negative, 194 fișiere intacte și 9 excepții exacte |
+| v4-navigation | PASS, 5.628 verificări, 73 destinații și fragmente/history/reload |
+| Catalog și căutare canonică | PASS, 1.089 verificări; toate L01–L20 și T01–T06, inclusiv litere mici, prima destinație corectă |
+| v4-browser | PASS, 2.921 verificări, 364 configurații, 29 operații; zero erori/eșecuri |
+| workshop-reproducibility | PASS, 5.863 verificări, 72 configurații și 150 probe de reflow |
+| N-01 reflow dedicat | PASS, 24 cazuri, T03/T04/T05/Resources, 320/375/390 px, light/dark |
+| p07-labs | PASS, 5.377 verificări, exporturi PNG/PGW reale, controale negative păstrate |
+| Build + --check + fonturi | PASS, 42 HTML/47 fișiere, două build-uri identice și --check fără scriere; 72 resurse în două configurații CSS/Canvas de fonturi |
+| Originale GIS și conservare | PASS, 9 GeoPackage-uri + 9 surse Suceava/sidecar-uri; snapshotul v3, modelul, manifestul, metadatele publicării și licențele neschimbate |
+| git diff --check / inventar | PASS, exact aceleași 11 fișiere intenționate, fără diferențe exclusiv CRLF/LF sau fișiere noi neignorate |
+
+Nu au apărut FAIL funcționale și nu au fost modificate testele în această închidere. Numai N-01 în CSS și completările/corecțiile jurnalului diferă față de cele 11 fișiere deja reverificate independent. Probele locale sunt în tmp/qa/post-audit-close/, ignorate de Git. Verificarea staged se efectuează separat pentru lista explicită de 11 fișiere. Se autorizează exclusiv commitul local fix(v4): resolve final audit findings; după commit se verifică părintele direct 0dbdad46f48ddcd72390edeea0e68756c4a09df2, working tree curat, index gol și referințele protejate. Nu se execută E62-01, push, merge, tag, release sau publicare. Hashul nou se raportează fără amendarea commitului pentru a-l introduce în propriul jurnal.

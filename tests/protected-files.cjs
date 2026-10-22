@@ -50,8 +50,8 @@ const intentionalUpdates={
   },
   'data/workshop-reproducibility.json':{
     baseline:'4bd7d6186864f59010462dd2154803189784470ac6e4684f5afe39c23e3dec1a',
-    current:'d9a706a5d1177c4c0574ebb57ec2ec5109510bd7164da5a68cf49966471ffbff',
-    reason:'Lots 5.2/5.3/Op6.2: approved T01 content retained; T06 distinguishes historical zero exterior from explicit NoData and target/source mask conventions. Documentation only; source rasters and algorithms unchanged.'
+    current:'77bf2a9254b108add919e2a738a0a71dbff814c25380faa248e9b2b5465e29b1',
+    reason:'Lots 5.2/5.3/Op6.2: approved T01 content retained; T06 distinguishes historical zero exterior from explicit NoData and target/source mask conventions. ASTRA-V4-02: T06 preparation clarified without changing prerequisites. Documentation only; source rasters and algorithms unchanged.'
   },
   'data/tutorial-dataset-inventory.json':{
     baseline:'916ee897e2092b05b82e71797b4a5a866c212cf03435c752a3473b539afeef13',

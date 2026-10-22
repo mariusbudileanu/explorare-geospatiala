@@ -4,6 +4,48 @@ const {pathToFileURL}=require('url');const {root,playwright,browserOptions}=requ
 const read=p=>fs.readFileSync(path.join(root,p),'utf8'),ref=JSON.parse(read('tests/qa/p07-reference.json'));
 let checks=0,maxError=0;const ok=(v,m)=>{checks++;assert.ok(v,m);},eq=(a,b,m)=>{checks++;assert.deepEqual(a,b,m);},near=(a,b,t=1e-6,m='Independent reference')=>{checks++;maxError=Math.max(maxError,Math.abs(a-b));assert.ok(Number.isFinite(a)&&Math.abs(a-b)<=Math.max(t,Math.abs(b)*2e-12),m+': '+a+' / '+b);};
 const out=path.join(root,'tmp/qa/p07');fs.mkdirSync(out,{recursive:true});
+// Portable export contract: PNG integrity/decoding/content plus independent PGW geometry.
+// The former Windows pixel hash is diagnostic only; fonts are not a cross-OS oracle.
+function pngStructure(png){
+ assert(png.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])),'PNG signature');
+ let offset=8,first=true,idat=false,ended=false;
+ while(offset<png.length){
+  assert(offset+12<=png.length,'Complete PNG chunk');const n=png.readUInt32BE(offset),end=offset+12+n;
+  assert(end<=png.length,'Complete PNG payload');const kind=png.toString('ascii',offset+4,offset+8);
+  assert(!first||kind==='IHDR'&&n===13,'First IHDR');first=false;
+  let crc=0xffffffff;for(const byte of png.subarray(offset+4,end-4)){crc^=byte;for(let bit=0;bit<8;bit++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);}
+  assert.equal((crc^0xffffffff)>>>0,png.readUInt32BE(end-4),'PNG chunk CRC '+kind);
+  if(kind==='IDAT')idat=true;
+  if(kind==='IEND'){assert.equal(n,0);assert.equal(end,png.length);ended=true;}
+  offset=end;
+ }
+ assert(idat&&ended,'PNG image data and terminator');
+ assert.deepEqual([png.readUInt32BE(16),png.readUInt32BE(20)],[2362,1772],'PNG frame dimensions');
+}
+function exportGeometry(pgw,world){
+ assert.equal(pgw.length,6,'Exactly six PGW values');assert(pgw.every(Number.isFinite),'Finite PGW');
+ const pixel=(world==='buc'?10000:100000)*.0254/150,E0=world==='buc'?585000:835000,N1=world==='buc'?326500:428000;
+ const close=(a,b)=>assert(Math.abs(a-b)<1e-6,'PGW expected '+b+' got '+a);
+ close(pgw[0],pixel);assert.deepEqual(pgw.slice(1,3),[0,0],'North-up rotation');close(pgw[3],-pixel);
+ close(pgw[4],E0+pixel/2);close(pgw[5],N1-pixel/2);
+ assert(pgw[0]>0&&pgw[3]<0,'East right, north up');
+ // Both ends of the PNG frame map to the expected pixel-centre coordinates.
+ assert(Math.abs(pgw[4]+(2362-1)*pgw[0]-(E0+(2362-.5)*pixel))<.0012,'PNG right edge / PGW, six-decimal rounding');
+ assert(Math.abs(pgw[5]+(1772-1)*pgw[3]-(N1-(1772-.5)*pixel))<.0009,'PNG bottom edge / PGW, six-decimal rounding');
+}
+async function exportContent(page,png){
+ pngStructure(png);
+ const metrics=await page.evaluate(async encoded=>{
+  const blob=await (await fetch('data:image/png;base64,'+encoded)).blob(),image=await createImageBitmap(blob);
+  const c=document.createElement('canvas');c.width=image.width;c.height=image.height;const ctx=c.getContext('2d');ctx.drawImage(image,0,0);image.close();
+  const a=ctx.getImageData(0,0,c.width,c.height).data,colors=new Set();let opaque=0,min=255,max=0;
+  for(let y=20;y<c.height;y+=23)for(let x=20;x<c.width;x+=23){const i=(y*c.width+x)*4;if(a[i+3]>240)opaque++;const l=(a[i]+a[i+1]+a[i+2])/3;min=Math.min(min,l);max=Math.max(max,l);colors.add([a[i]>>4,a[i+1]>>4,a[i+2]>>4,a[i+3]>>4].join(','));}
+  return {width:c.width,height:c.height,opaque,colors:colors.size,range:max-min};
+ },png.toString('base64'));
+ assert(metrics.opaque>5000,'Real opaque map coverage');assert(metrics.colors>25&&metrics.range>80,'Nonblank varied cartographic content');
+ return metrics;
+}
+
 (async()=>{
  const transform=await import(pathToFileURL(path.join(root,'js/georef/transforms.js'))),raster=await import(pathToFileURL(path.join(root,'js/georef/rectify.js')));
  const source=read('js/p07-zarr.js'),ctx=vm.createContext({});vm.runInContext(source.slice(source.indexOf('const CONFIG'),source.indexOf('/* ===================================================================== texturi ilustrative')),ctx);
@@ -49,7 +91,19 @@ const out=path.join(root,'tmp/qa/p07');fs.mkdirSync(out,{recursive:true});
     for(const world of ['buc','delta']){
      await page.locator('#world').selectOption(world);await page.waitForFunction(world=>CARTO_GEO.getState().world===world&&document.querySelector('#busy').hidden,world);await page.locator('#preset-clean').click();await page.locator('#tab-rect').click();
      for(const selector of ['#x-png','#x-pgw']){const event=page.waitForEvent('download',{timeout:60000});await page.locator(selector).click();const d=await event,p=path.join(out,d.suggestedFilename());await d.saveAs(p);exports.push(p);}
-     const png=fs.readFileSync(exports.at(-2)),pgw=fs.readFileSync(exports.at(-1),'utf8').trim().split(/\s+/).map(Number);eq([png.readUInt32BE(16),png.readUInt32BE(20)],[2362,1772],'Actual PNG frame');ok(pgw.every(Number.isFinite),'Finite PGW');near(pgw[0],world==='buc'?1.693333:16.933333,1e-6);eq(pgw.slice(1,3),[0,0],'North-up rotation');near(pgw[3],-pgw[0],0);near(pgw[4],(world==='buc'?585000:835000)+pgw[0]/2,1e-6);near(pgw[5],(world==='buc'?326500:428000)-pgw[0]/2,1e-6);ok((await page.locator('#export-note').innerText()).includes('EPSG:3844'),'CRS export instruction');if(world==='buc')eq(require('crypto').createHash('sha256').update(png).digest('hex'),'9e3661314ce001c92bb441833f6e4b94287d7371ef436c9b69be5d424a621cdf','Original audited ZAREA image remains byte-identical');
+     const png=fs.readFileSync(exports.at(-2)),pgw=fs.readFileSync(exports.at(-1),'utf8').trim().split(/\s+/).map(Number);
+     const metrics=await exportContent(page,png);checks++;exportGeometry(pgw,world);checks++;
+     eq(path.basename(exports.at(-2),'.png'),path.basename(exports.at(-1),'.pgw'),'PNG/PGW same frame basename');
+     ok((await page.locator('#export-note').innerText()).includes('EPSG:3844'),'CRS export instruction');
+     const imageHash=require('crypto').createHash('sha256').update(png).digest('hex');
+     if(world==='buc'&&process.env.P07_REFERENCE_PNG_SHA256)eq(imageHash,process.env.P07_REFERENCE_PNG_SHA256,'Optional environment-specific visual reference');
+     const reject=fn=>{assert.throws(fn);checks++;negativeChecks++;};
+     reject(()=>pngStructure(png.subarray(0,png.length-12)));
+     const corrupt=Buffer.from(png);corrupt[50]^=1;reject(()=>pngStructure(corrupt));
+     for(const bad of [[...pgw,0],[pgw[0]*2,...pgw.slice(1)],[pgw[0],1,...pgw.slice(2)],[...pgw.slice(0,3),-pgw[3],...pgw.slice(4)],[...pgw.slice(0,4),pgw[4]+100,pgw[5]]])reject(()=>exportGeometry(bad,world));
+     const blank=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=2362;c.height=1772;c.getContext('2d').fillRect(0,0,c.width,c.height);return c.toDataURL('image/png').split(',')[1];});
+     await assert.rejects(()=>exportContent(page,Buffer.from(blank,'base64')),/Nonblank varied/);checks++;negativeChecks++;
+     console.log(JSON.stringify({export:world,status:'PASS',metrics,sha256:imageHash,hashPolicy:'Diagnostic only unless P07_REFERENCE_PNG_SHA256 pins a declared reference environment',negativeExportChecks:8}));
     }
     await page.evaluate(()=>{for(const key of Object.keys(localStorage))if(key.startsWith('georef-lab:v2:'))localStorage.setItem(key,'{}');});await page.reload();await page.waitForFunction(()=>document.querySelector('#p07-fallback').hidden);eq(await page.locator('#pts tr').count(),18,'Corrupt storage recovers safely');
    }
