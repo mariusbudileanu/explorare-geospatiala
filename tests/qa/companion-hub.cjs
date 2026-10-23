@@ -10,6 +10,7 @@ const routes=['index.html','digital-companion.html','projection-crs-lab.html','c
 equal(content.companion.primary,primary,'Four main experiences');equal(content.companion.secondary,['challenges','raster-styling','topology','transparency-blending','formats-interoperability'],'Existing mature secondary experiences');
 equal(content.groups.filter(g=>g.number||/^\d\./.test(g.label)).map(g=>g.label),['1. FUNDAMENTE GEOSPAȚIALE','2. HARTA ȘI ELEMENTELE EI','3. PROIECȚII ȘI SISTEME DE COORDONATE','4. METODE DE REPREZENTARE','5. DATE GEOSPAȚIALE','6. ANALIZA DATELOR GEOSPAȚIALE','7. ATELIERE QGIS · PRACTICĂ'],'Seven academic chapters preserved');
 for(const id of [...primary,...content.companion.secondary]){const experience=ui.experience(id),lesson=content.lessons.find(l=>l.id===id);equal(experience.level,model.items[id].level,'Level authority '+id);equal(experience.description,lesson.companion.description,'Description authority '+id);ok(experience.href.includes('.html')&&!experience.href.startsWith('/'),'Relative destination '+id);}
+const {validateRelease,parseCff}=require('../release-metadata.cjs');const release=validateRelease(root);checks++;
 const protectedFiles=['js/compare-core.js','js/crs-engine.js','js/projection-lab-engine.js','js/geodesic-adapter.js','js/classification-engine.js','js/cartography-labs.js','js/map-diagnostics.js','data/diagnostic-scenes.js','js/data-source.js','CITATION.cff'];
 // Git's text blobs use LF; Windows checkout may use CRLF without a content change.
 const textHash=value=>crypto.createHash('sha256').update(value.toString('utf8').replace(/\r\n/g,'\n')).digest('hex');
@@ -20,13 +21,9 @@ const omitFunctions=(source,names)=>{for(const name of names){const start=source
 for(const file of protectedFiles){
  let actual=fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n'),before=execFileSync('git',['show','44325c3f1db1ebbd6bf322eda7045632c7858d52:'+file],{cwd:root}).toString('utf8').replace(/\r\n/g,'\n');
  if(file==='CITATION.cff'){
-  const citation=JSON.parse(actual),legacy=JSON.parse(before);
-  equal(citation.version,'4.0.0','Authorized unpublished v4 candidate version');
-  equal(citation.license,'MIT','Software-only license; content remains separately CC BY 4.0');equal(citation.type,'software','CFF describes software');
-  equal(citation.identifiers,[{"type":"doi","value":"10.5281/zenodo.23422847","description":"Concept DOI for the project across versions. This is not a version-specific DOI for the unpublished 4.0.0 candidate."}],'Verified concept identifier, no candidate version DOI');
-  equal(textHash(citation.abstract),'ab7fcda60db86b608e86b00f36351f663b0d9b7187eae93107cdcee0743519e2','Exact candidate abstract with original license scopes');
-  equal(textHash(citation.message),'7659cd3d79c842668c060a5ab409d16a6a1ba1514e0d7a263435049d49f3919e','Exact unpublished-candidate citation message');
-  ok(!citation['date-released']&&!citation.doi,'No premature publication date or version DOI');
+  // Full current-state validation precedes normalization for the older frozen contract.
+  const citation=JSON.parse(JSON.stringify(release.cff)),legacy=parseCff(before,root);
+  delete citation['date-released'];delete citation.doi;
   delete citation.version;delete citation.identifiers;citation.abstract=legacy.abstract;citation.message=legacy.message;
   equal(citation.authors[0].affiliation,'University of Bucharest, Faculty of Geography','Verified author affiliation');delete citation.authors[0].affiliation;
   actual=JSON.stringify(citation);before=JSON.stringify(legacy);

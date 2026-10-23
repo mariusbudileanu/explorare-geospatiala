@@ -29,14 +29,15 @@ async function checkFallbackAccess(page, route, width, mode) {
  }
  ok(await page.evaluate(()=>{const before=scrollY;scrollTo(0,document.documentElement.scrollHeight);const after=scrollY;scrollTo(0,0);return after>0&&before>=0;}),'Fallback page can scroll '+mode+'/'+width+'/'+route);
 }
-const cff=JSON.parse(read('CITATION.cff')); // JSON is a strict subset of YAML 1.2, the CFF serialization format.
+const {validateRelease,validateRenderedRelease}=require('../release-metadata.cjs');
+const release=validateRelease(root),cff=release.cff;checks++;
 assert.equal(cff['cff-version'],'1.2.0');assert.equal(cff.type,'software');assert.equal(cff.title,'Explorare geospațială');checks+=3;
 // Owner-verified affiliation was completed in the final v2.0.0 documentation commit.
 assert.deepEqual(cff.authors,[{'family-names':'Budileanu','given-names':'Marius','affiliation':'University of Bucharest, Faculty of Geography'}]);checks++;
-for(const forbidden of ['doi','date-released','preferred-citation'])ok(!(forbidden in cff),'No invented release metadata: '+forbidden);
+ok(!('preferred-citation' in cff),'No unsolicited preferred citation; date/DOI are validated by release state');
 ok(!/email|orcid/i.test(JSON.stringify(cff)),'No private identifiers');
-assert.equal(cff.version,'3.0.0');checks++;assert.equal(cff.version,manifest().version);checks++;
-assert.deepEqual(cff.identifiers,[{"type": "doi", "value": "10.5281/zenodo.23422847", "description": "Concept DOI for all versions of the project; not a version-specific DOI for v3.0.0."}]);checks++;
+assert.equal(cff.version,'4.0.0');checks++;assert.equal(manifest().version,release.history.manifestVersion,'Historical manifest version is independent of publication');checks++;
+assert.equal(cff.identifiers[0].value,'10.5281/zenodo.23422847');checks++;
 const registry=JSON.parse(read('data/data-registry.json'));
 const originalIds=['adizmb-schools','adizmb-medical','adizmb-sports','administrative-boundaries','census2021','hansen-loss','copernicus-dem'];
 const contextIds=['protected-areas-context','hydrography-context','relief-context','landforms-context'];
@@ -62,7 +63,7 @@ ok(read('CONTENT_LICENSE.md').includes('Creative Commons Attribution 4.0 Interna
   }
   await page.locator('#search').fill('inventat_xyz_987');ok((await page.locator('#search-results').innerText()).includes('Niciun rezultat'),'Unknown term');
   await page.locator('#search').fill('NULL');await page.locator('#search').press('ArrowDown');ok(await page.evaluate(()=>!!document.activeElement.closest('#search-results')),'Keyboard search');await page.keyboard.press('Escape');ok(await page.locator('#search').evaluate(e=>e===document.activeElement),'Search returns focus');
-  for(const route of ['about.html','lesson.html?id=about']){await page.goto(base+route);const text=await page.locator('main').innerText();ok(text.includes('Universitatea din București, Facultatea de Geografie')&&text.includes('asistență AI'),'Academic About');ok(!text.includes('0 module')&&!text.includes('Niciun card'),'About is not an empty filtered lesson');ok(await page.locator('.site-context').count()===0||!await page.locator('.site-context').isVisible(),'About has no lesson filters');ok(await page.locator('a[href$="/issues"]').count()>0,'Public feedback');}
+  for(const route of ['about.html','lesson.html?id=about']){await page.goto(base+route);await validateRenderedRelease(page,release);checks++;const text=await page.locator('main').innerText();ok(text.includes('Universitatea din București, Facultatea de Geografie')&&text.includes('asistență AI'),'Academic About');ok(!text.includes('0 module')&&!text.includes('Niciun card'),'About is not an empty filtered lesson');ok(await page.locator('.site-context').count()===0||!await page.locator('.site-context').isVisible(),'About has no lesson filters');ok(await page.locator('a[href$="/issues"]').count()>0,'Public feedback');}
   for(const route of ['lesson.html?id=invalid','lesson.html']){await page.goto(base+route);ok(await page.locator('.lesson-error').isVisible(),'Explicit error '+route);ok(await page.locator('.lesson-error a[href="index.html#cuprins"]').count()===1,'Contents recovery');await page.locator('.lesson-error a').first().focus();ok(await page.locator('.lesson-error a').first().evaluate(e=>e===document.activeElement),'Keyboard recovery');}
   for(const lesson of manifest().lessons.filter(l=>l.href.startsWith('lesson.html'))){await page.goto(base+lesson.href);ok((await page.title()).includes(lesson.title),'Lesson title '+lesson.id);const description=await page.locator('meta[name="description"]').getAttribute('content');ok(description.length>15&&!description.startsWith('Lecție din'),'Relevant description');assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://mariusbudileanu.github.io/explorare-geospatiala/'+lesson.href);checks++;ok((await page.locator('h1').innerText()).includes(lesson.title),'Main heading');}
   await page.goto(base+'lesson.html?id=sphere');await page.locator('[data-source-index]').first().click();ok(await page.locator('#source-dialog').evaluate(e=>e.open),'Historical citation opens');ok((await page.locator('#source-caption').innerText()).includes('Năstase'),'Bibliographic citation');ok(await page.locator('#source-dialog img').count()===0,'No scan in dialog');await page.keyboard.press('Escape');

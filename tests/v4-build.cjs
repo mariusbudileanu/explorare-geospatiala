@@ -20,12 +20,7 @@ fs.mkdirSync(path.join(root,'tmp/qa/v4'),{recursive:true});fs.writeFileSync(path
  const vm=require('node:vm'),indexContext={window:{}};
  vm.runInNewContext(fs.readFileSync(path.join(root,'data/search-index.js'),'utf8'),indexContext);
  const index=indexContext.window.CARTO_SEARCH_INDEX;
- const citation=JSON.parse(fs.readFileSync(path.join(root,'CITATION.cff'),'utf8'));
- assert.equal(citation.version,'4.0.0');assert.equal(citation.license,'MIT');assert.equal(citation.type,'software');
- assert(!citation['date-released']&&!citation.doi,'No premature publication date or version DOI');
- assert.deepEqual(citation.identifiers.map(x=>x.value),['10.5281/zenodo.23422847'],'Existing concept DOI retained');
- assert(fs.readFileSync(path.join(root,'README.md'),'utf8').includes('candidată nepublicată'),'README candidate status');
- assert(fs.readFileSync(path.join(root,'about.html'),'utf8').includes('4.0.0 — candidată nepublicată'),'Generated About candidate status');
+ const release=require('./release-metadata.cjs').validateRelease(root);assert.equal(release.indexRecords,90);assert.equal(release.searchResources,72);
  const service=await browserServer(),fonts=[];
  try{
   for(const family of ['Arial','Courier New']){
